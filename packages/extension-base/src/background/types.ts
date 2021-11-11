@@ -3,7 +3,7 @@
 
 /* eslint-disable no-use-before-define */
 
-import type { InjectedAccount, InjectedMetadataKnown, MetadataDef, ProviderList, ProviderMeta } from '@polkadot/extension-inject/types';
+import type { InjectedAccount, InjectedMetadataKnown, MetadataDef, ProviderList, ProviderMeta } from '@reef-defi/extension-inject/types';
 import type { KeyringPair, KeyringPair$Json, KeyringPair$Meta } from '@polkadot/keyring/types';
 import type { JsonRpcResponse } from '@polkadot/rpc-provider/types';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';

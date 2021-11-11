@@ -1,7 +1,7 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { AccountJson, RequestSign } from '@polkadot/extension-base/background/types';
+import type { AccountJson, RequestSign } from '@reef-defi/extension-base/background/types';
 import type { ExtrinsicPayload } from '@polkadot/types/interfaces';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 import type { HexString } from '@polkadot/util/types';

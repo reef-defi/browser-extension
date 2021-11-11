@@ -1,8 +1,8 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { AccountJson, AccountWithChildren } from '@polkadot/extension-base/background/types';
-import type { Chain } from '@polkadot/extension-chains/types';
+import type { AccountJson, AccountWithChildren } from '@reef-defi/extension-base/background/types';
+import type { Chain } from '@reef-defi/extension-chains/types';
 import type { IconTheme } from '@polkadot/react-identicon/types';
 import type { SettingsStruct } from '@polkadot/ui-settings/types';
 import type { KeypairType } from '@polkadot/util-crypto/types';

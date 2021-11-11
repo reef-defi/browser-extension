@@ -3,11 +3,10 @@
 
 import type { ThemeProps } from '../../types';
 
+import { AccountWithChildren } from '@reef-defi/extension-base/background/types';
+import getNetworkMap from '@reef-defi/extension-ui/util/getNetworkMap';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-
-import { AccountWithChildren } from '@polkadot/extension-base/background/types';
-import getNetworkMap from '@polkadot/extension-ui/util/getNetworkMap';
 
 import { AccountContext } from '../../components';
 import useTranslation from '../../hooks/useTranslation';

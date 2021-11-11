@@ -1,18 +1,18 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { AccountJson, AllowedPath, AuthorizeRequest, MessageTypes, MessageTypesWithNoSubscriptions, MessageTypesWithNullRequest, MessageTypesWithSubscriptions, MetadataRequest, RequestTypes, ResponseAuthorizeList, ResponseDeriveValidate, ResponseJsonGetAccountInfo, ResponseSigningIsLocked, ResponseTypes, SeedLengths, SigningRequest, SubscriptionMessageTypes } from '@polkadot/extension-base/background/types';
-import type { Message } from '@polkadot/extension-base/types';
-import type { Chain } from '@polkadot/extension-chains/types';
+import type { AccountJson, AllowedPath, AuthorizeRequest, MessageTypes, MessageTypesWithNoSubscriptions, MessageTypesWithNullRequest, MessageTypesWithSubscriptions, MetadataRequest, RequestTypes, ResponseAuthorizeList, ResponseDeriveValidate, ResponseJsonGetAccountInfo, ResponseSigningIsLocked, ResponseTypes, SeedLengths, SigningRequest, SubscriptionMessageTypes } from '@reef-defi/extension-base/background/types';
+import type { Message } from '@reef-defi/extension-base/types';
+import type { Chain } from '@reef-defi/extension-chains/types';
 import type { KeyringPair$Json } from '@polkadot/keyring/types';
 import type { KeyringPairs$Json } from '@polkadot/ui-keyring/types';
 import type { HexString } from '@polkadot/util/types';
 import type { KeypairType } from '@polkadot/util-crypto/types';
 
-import { PORT_EXTENSION } from '@polkadot/extension-base/defaults';
-import { metadataExpand } from '@polkadot/extension-chains';
-import chrome from '@polkadot/extension-inject/chrome';
-import { MetadataDef } from '@polkadot/extension-inject/types';
+import { PORT_EXTENSION } from '@reef-defi/extension-base/defaults';
+import { metadataExpand } from '@reef-defi/extension-chains';
+import chrome from '@reef-defi/extension-inject/chrome';
+import { MetadataDef } from '@reef-defi/extension-inject/types';
 
 import allChains from './util/chains';
 import { getSavedMeta, setSavedMeta } from './MetadataCache';

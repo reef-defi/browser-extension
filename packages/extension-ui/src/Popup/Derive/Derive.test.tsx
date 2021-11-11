@@ -3,7 +3,7 @@
 
 import '../../../../../__mocks__/chrome';
 
-import type { AccountJson, ResponseDeriveValidate } from '@polkadot/extension-base/background/types';
+import type { AccountJson, ResponseDeriveValidate } from '@reef-defi/extension-base/background/types';
 
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { configure, mount, ReactWrapper } from 'enzyme';

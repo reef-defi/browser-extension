@@ -3,8 +3,8 @@
 
 import '../../../../__mocks__/chrome';
 
+import type { AccountJson } from '@reef-defi/extension-base/background/types';
 import type { ReactWrapper } from 'enzyme';
-import type { AccountJson } from '@polkadot/extension-base/background/types';
 import type { IconTheme } from '@polkadot/react-identicon/types';
 import type { Props as AddressComponentProps } from './Address';
 
