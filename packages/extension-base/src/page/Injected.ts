@@ -1,7 +1,7 @@
 // Copyright 2019-2021 @polkadot/extension authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { Injected } from '@polkadot/extension-inject/types';
+import type { Injected } from '@reef-defi/extension-inject/types';
 import type { SendRequest } from './types';
 
 import Accounts from './Accounts';

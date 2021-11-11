@@ -1,7 +1,7 @@
 // Copyright 2019-2021 @polkadot/extension authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { InjectedAccount, InjectedAccounts, Unsubcall } from '@polkadot/extension-inject/types';
+import type { InjectedAccount, InjectedAccounts, Unsubcall } from '@reef-defi/extension-inject/types';
 import type { SendRequest } from './types';
 
 // External to class, this.# is not private enough (yet)

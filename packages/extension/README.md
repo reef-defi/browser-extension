@@ -1,3 +1,3 @@
-# @polkadot/extension
+# @reef-defi/extension
 
 A signing extension

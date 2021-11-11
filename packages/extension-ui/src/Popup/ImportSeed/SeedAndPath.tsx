@@ -1,15 +1,17 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import type { KeypairType } from '@polkadot/util-crypto/types';
 import type { ThemeProps } from '../../types';
 import type { AccountInfo } from '.';
 
 import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { validateSeed } from '@reef-defi/extension-ui/messaging';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { validateSeed } from '@polkadot/extension-ui/messaging';
+import { objectSpread } from '@polkadot/util';
 
 import { ButtonArea, Dropdown, InputWithLabel, NextStepButton, TextAreaWithLabel, VerticalSpace, Warning } from '../../components';
 import useGenesisHashOptions from '../../hooks/useGenesisHashOptions';
@@ -19,9 +21,10 @@ interface Props {
   className?: string;
   onNextStep: () => void;
   onAccountChange: (account: AccountInfo | null) => void;
+  type: KeypairType;
 }
 
-function SeedAndPath ({ className, onAccountChange, onNextStep }: Props): React.ReactElement {
+function SeedAndPath ({ className, onAccountChange, onNextStep, type }: Props): React.ReactElement {
   const { t } = useTranslation();
   const genesisOptions = useGenesisHashOptions();
   const [address, setAddress] = useState('');
@@ -42,22 +45,23 @@ function SeedAndPath ({ className, onAccountChange, onNextStep }: Props): React.
 
     const suri = `${seed || ''}${path || ''}`;
 
-    validateSeed(suri).then((validatedAccount) => {
-      setError('');
-      setAddress(validatedAccount.address);
-      // a spread operator here breaks tests, using Object.assign as a workaround
-      const newAccount: AccountInfo = Object.assign(validatedAccount, { genesis });
-
-      onAccountChange(newAccount);
-    }).catch(() => {
-      setAddress('');
-      onAccountChange(null);
-      setError(path
-        ? t<string>('Invalid mnemonic seed or derivation path')
-        : t<string>('Invalid mnemonic seed')
-      );
-    });
-  }, [t, seed, path, onAccountChange, genesis]);
+    validateSeed(suri, type)
+      .then((validatedAccount) => {
+        setError('');
+        setAddress(validatedAccount.address);
+        onAccountChange(
+          objectSpread<AccountInfo>({}, validatedAccount, { genesis, type })
+        );
+      })
+      .catch(() => {
+        setAddress('');
+        onAccountChange(null);
+        setError(path
+          ? t<string>('Invalid mnemonic seed or derivation path')
+          : t<string>('Invalid mnemonic seed')
+        );
+      });
+  }, [t, genesis, seed, path, onAccountChange, type]);
 
   const _onToggleAdvanced = useCallback(() => {
     setAdvances(!advanced);

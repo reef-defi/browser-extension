@@ -1,13 +1,12 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { AccountJson } from '@polkadot/extension-base/background/types';
+import type { AccountJson } from '@reef-defi/extension-base/background/types';
 
+import { canDerive } from '@reef-defi/extension-base/utils';
+import { ThemeProps } from '@reef-defi/extension-ui/types';
 import React, { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
-
-import { canDerive } from '@polkadot/extension-base/utils';
-import { ThemeProps } from '@polkadot/extension-ui/types';
 
 import { Address, Dropdown, Link, MenuDivider } from '../../components';
 import useGenesisHashOptions from '../../hooks/useGenesisHashOptions';

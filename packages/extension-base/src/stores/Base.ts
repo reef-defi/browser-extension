@@ -1,7 +1,7 @@
 // Copyright 2019-2021 @polkadot/extension-base authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import chrome from '@polkadot/extension-inject/chrome';
+import chrome from '@reef-defi/extension-inject/chrome';
 
 type StoreValue = Record<string, unknown>;
 

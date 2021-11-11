@@ -1,10 +1,10 @@
 // Copyright 2019-2021 @polkadot/extension authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { Message } from '@polkadot/extension-base/types';
+import type { Message } from '@reef-defi/extension-base/types';
 
-import { PORT_CONTENT } from '@polkadot/extension-base/defaults';
-import chrome from '@polkadot/extension-inject/chrome';
+import { PORT_CONTENT } from '@reef-defi/extension-base/defaults';
+import chrome from '@reef-defi/extension-inject/chrome';
 
 // connect to the extension
 const port = chrome.runtime.connect({ name: PORT_CONTENT });

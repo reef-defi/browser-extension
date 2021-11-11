@@ -3,10 +3,9 @@
 
 import '../../../__mocks__/chrome';
 
+import chrome from '@reef-defi/extension-inject/chrome';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { configure } from 'enzyme';
-
-import chrome from '@polkadot/extension-inject/chrome';
 
 import { exportAccount } from './messaging';
 

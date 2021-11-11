@@ -3,11 +3,10 @@
 
 import type { ThemeProps } from '../../types';
 
+import { AuthUrlInfo, AuthUrls } from '@reef-defi/extension-base/background/handlers/State';
+import { InputFilter } from '@reef-defi/extension-ui/components';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-import { AuthUrlInfo, AuthUrls } from '@polkadot/extension-base/background/handlers/State';
-import { InputFilter } from '@polkadot/extension-ui/components';
 
 import useTranslation from '../../hooks/useTranslation';
 import { getAuthList, toggleAuthorization } from '../../messaging';
@@ -51,6 +50,7 @@ function AuthManagement ({ className }: Props): React.ReactElement<Props> {
           onChange={_onChangeFilter}
           placeholder={t<string>('example.com')}
           value={filter}
+          withReset
         />
         <div className={className}>
           {

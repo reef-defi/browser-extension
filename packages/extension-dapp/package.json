@@ -1,27 +1,26 @@
 {
-  "author": "Jaco Greeff <jacogr@gmail.com>",
-  "bugs": "https://github.com/polkadot-js/extension/issues",
+  "author": "Reef Finance",
+  "bugs": "https://github.com/reef-defi/browser-extension/issues",
   "contributors": [],
   "description": "Provides an interfaces around the injected globals for ease of access by dapp developers.",
-  "engines": {},
-  "homepage": "https://github.com/polkadot-js/extension/tree/master/packages/extension-dapp#readme",
+  "homepage": "https://github.com/reef-defi/browser-extension/tree/master/packages/extension-dapp#readme",
   "license": "Apache-2",
   "maintainers": [],
-  "name": "@polkadot/extension-dapp",
+  "name": "@reef-defi/extension-dapp",
   "repository": {
     "directory": "packages/extension-dapp",
     "type": "git",
-    "url": "https://github.com/polkadot-js/extension.git"
+    "url": "https://github.com/reef-defi/browser-extension.git"
   },
   "sideEffects": false,
   "type": "module",
-  "version": "0.40.5-2",
+  "version": "0.41.1",
   "main": "index.js",
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "@polkadot/extension-inject": "^0.40.5-2",
-    "@polkadot/util": "^7.6.1",
-    "@polkadot/util-crypto": "^7.6.1"
+    "@polkadot/util": "^7.8.2",
+    "@polkadot/util-crypto": "^7.8.2",
+    "@reef-defi/extension-inject": "^0.41.1"
   },
   "peerDependencies": {
     "@polkadot/api": "*",

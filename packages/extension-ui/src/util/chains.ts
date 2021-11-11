@@ -1,7 +1,7 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { MetadataDefBase } from '@polkadot/extension-inject/types';
+import type { MetadataDefBase } from '@reef-defi/extension-inject/types';
 
 import { selectableNetworks } from '@polkadot/networks';
 

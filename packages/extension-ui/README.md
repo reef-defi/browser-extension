@@ -1,3 +1,3 @@
-# @polkadot/extension-ui
+# @reef-defi/extension-ui
 
-UI for the `@polkadot/extension`
+UI for the `@reef-defi/extension`

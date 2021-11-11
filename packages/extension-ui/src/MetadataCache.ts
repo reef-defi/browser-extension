@@ -1,7 +1,7 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { MetadataDef } from '@polkadot/extension-inject/types';
+import { MetadataDef } from '@reef-defi/extension-inject/types';
 
 const metadataGets = new Map<string, Promise<MetadataDef | null>>();
 

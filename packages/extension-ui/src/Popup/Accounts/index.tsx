@@ -3,7 +3,9 @@
 
 import type { ThemeProps } from '../../types';
 
-import React, { useContext } from 'react';
+import { AccountWithChildren } from '@reef-defi/extension-base/background/types';
+import getNetworkMap from '@reef-defi/extension-ui/util/getNetworkMap';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import { AccountContext } from '../../components';
@@ -18,7 +20,25 @@ interface Props extends ThemeProps {
 
 function Accounts ({ className }: Props): React.ReactElement {
   const { t } = useTranslation();
+  const [filter, setFilter] = useState('');
+  const [filteredAccount, setFilteredAccount] = useState<AccountWithChildren[]>([]);
   const { hierarchy } = useContext(AccountContext);
+  const networkMap = useMemo(() => getNetworkMap(), []);
+
+  useEffect(() => {
+    setFilteredAccount(
+      filter
+        ? hierarchy.filter((account) =>
+          account.name?.toLowerCase().includes(filter) ||
+          (account.genesisHash && networkMap.get(account.genesisHash)?.toLowerCase().includes(filter))
+        )
+        : hierarchy
+    );
+  }, [filter, hierarchy, networkMap]);
+
+  const _onFilter = useCallback((filter: string) => {
+    setFilter(filter.toLowerCase());
+  }, []);
 
   return (
     <>
@@ -27,12 +47,14 @@ function Accounts ({ className }: Props): React.ReactElement {
         : (
           <>
             <Header
+              onFilter={_onFilter}
               showAdd
+              showSearch
               showSettings
               text={t<string>('Accounts')}
             />
             <div className={className}>
-              {hierarchy.map((json, index): React.ReactNode => (
+              {filteredAccount.map((json, index): React.ReactNode => (
                 <AccountsTree
                   {...json}
                   key={`${index}:${json.address}`}

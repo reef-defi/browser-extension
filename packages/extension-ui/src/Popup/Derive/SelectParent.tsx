@@ -1,9 +1,8 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { canDerive } from '@reef-defi/extension-base/utils';
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-
-import { canDerive } from '@polkadot/extension-base/utils';
 
 import { AccountContext, ActionContext, Address, ButtonArea, InputWithLabel, Label, NextStepButton, VerticalSpace, Warning } from '../../components';
 import useTranslation from '../../hooks/useTranslation';

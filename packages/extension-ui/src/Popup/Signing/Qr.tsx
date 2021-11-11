@@ -2,11 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { ExtrinsicPayload } from '@polkadot/types/interfaces';
+import type { HexString } from '@polkadot/util/types';
 
+import { wrapBytes } from '@reef-defi/extension-dapp/wrapBytes';
 import React, { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
-import { wrapBytes } from '@polkadot/extension-dapp/wrapBytes';
 import { QrDisplayPayload, QrScanSignature } from '@polkadot/react-qr';
 
 import { Button } from '../../components';
@@ -19,7 +20,7 @@ interface Props {
   className?: string;
   cmd: number;
   genesisHash: string;
-  onSignature: ({ signature }: { signature: string }) => void;
+  onSignature: ({ signature }: { signature: HexString }) => void;
   payload: ExtrinsicPayload | string;
 
 }
