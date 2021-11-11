@@ -15,12 +15,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        token: ${{ secrets.GH_PAT }}
+        token: ${{ secrets.GITHUB_TOKEN }}
     - name: ${{ matrix.step }}
       env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        GH_PAT: ${{ secrets.GH_PAT }}
-        GH_RELEASE_GITHUB_API_TOKEN: ${{ secrets.GH_PAT }}
+        GH_RELEASE_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_RELEASE_FILES: master-build.zip,master-src.zip
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: |
