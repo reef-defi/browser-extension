@@ -1,16 +1,16 @@
 {
-  "author": "Jaco Greeff <jacogr@gmail.com>",
-  "bugs": "https://github.com/polkadot-js/extension/issues",
+  "author": "Reef Finance",
+  "bugs": "https://github.com/reef-defi/browser-extension/issues",
   "contributors": [],
-  "description": "Functions, classes and other utilities used in @polkadot/extension",
-  "homepage": "https://github.com/polkadot-js/extension/tree/master/packages/extension-base#readme",
+  "description": "Functions, classes and other utilities used in @reef-defi/extension",
+  "homepage": "https://github.com/reef-defi/browser-extension/tree/master/packages/extension-base#readme",
   "license": "Apache-2",
   "maintainers": [],
-  "name": "@polkadot/extension-base",
+  "name": "@reef-defi/extension-base",
   "repository": {
     "directory": "packages/extension-base",
     "type": "git",
-    "url": "https://github.com/polkadot-js/extension.git"
+    "url": "https://github.com/reef-defi/browser-extension.git"
   },
   "sideEffects": false,
   "type": "module",
@@ -19,10 +19,10 @@
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "@polkadot/api": "^6.7.1",
-    "@polkadot/extension-dapp": "^0.41.1",
-    "@polkadot/extension-inject": "^0.41.1",
     "@polkadot/keyring": "^7.8.2",
     "@polkadot/phishing": "^0.6.407",
-    "@polkadot/ui-keyring": "^0.86.5"
+    "@polkadot/ui-keyring": "^0.86.5",
+    "@reef-defi/extension-dapp": "^0.41.1",
+    "@reef-defi/extension-inject": "^0.41.1"
   }
 }

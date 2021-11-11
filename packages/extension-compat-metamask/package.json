@@ -1,16 +1,16 @@
 {
-  "author": "Jaco Greeff <jacogr@gmail.com>",
-  "bugs": "https://github.com/polkadot-js/extension/issues",
+  "author": "Reef Finance",
+  "bugs": "https://github.com/reef-defi/browser-extension/issues",
   "contributors": [],
   "description": "Metamask compatibility layer",
-  "homepage": "https://github.com/polkadot-js/extension/tree/master/packages/extension-compat-metamask#readme",
+  "homepage": "https://github.com/reef-defi/browser-extension/tree/master/packages/extension-compat-metamask#readme",
   "license": "Apache-2",
   "maintainers": [],
-  "name": "@polkadot/extension-compat-metamask",
+  "name": "@reef-defi/extension-compat-metamask",
   "repository": {
     "directory": "packages/extension-compat-metamask",
     "type": "git",
-    "url": "https://github.com/polkadot-js/extension.git"
+    "url": "https://github.com/reef-defi/browser-extension.git"
   },
   "sideEffects": false,
   "type": "module",
@@ -19,8 +19,8 @@
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "@metamask/detect-provider": "^1.2.0",
-    "@polkadot/extension-inject": "^0.41.1",
     "@polkadot/util": "^7.8.2",
+    "@reef-defi/extension-inject": "^0.41.1",
     "web3": "^1.6.0"
   },
   "peerDependencies": {

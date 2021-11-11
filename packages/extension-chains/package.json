@@ -1,16 +1,16 @@
 {
-  "author": "Jaco Greeff <jacogr@gmail.com>",
-  "bugs": "https://github.com/polkadot-js/extension/issues",
+  "author": "Reef Finance",
+  "bugs": "https://github.com/reef-defi/browser-extension/issues",
   "contributors": [],
   "description": "Definitions for all known chains as exposed by the extension.",
-  "homepage": "https://github.com/polkadot-js/extension/tree/master/packages/extension-chains#readme",
+  "homepage": "https://github.com/reef-defi/browser-extension/tree/master/packages/extension-chains#readme",
   "license": "Apache-2",
   "maintainers": [],
-  "name": "@polkadot/extension-chains",
+  "name": "@reef-defi/extension-chains",
   "repository": {
     "directory": "packages/extension-chains",
     "type": "git",
-    "url": "https://github.com/polkadot-js/extension.git"
+    "url": "https://github.com/reef-defi/browser-extension.git"
   },
   "sideEffects": false,
   "type": "module",
