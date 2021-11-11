@@ -31,7 +31,7 @@ module.exports = (entry, alias = {}) => ({
         use: [
           {
             loader: require.resolve('babel-loader'),
-            options: require('@polkadot/dev/config/babel-config-webpack.cjs')
+            options: require('@reef-defi/dev/config/babel-config-webpack.cjs')
           }
         ]
       },
@@ -88,7 +88,7 @@ module.exports = (entry, alias = {}) => ({
   resolve: {
     alias: packages.reduce((alias, p) => ({
       ...alias,
-      [`@polkadot/${p}`]: path.resolve(__dirname, `../${p}/src`)
+      [`@reef-defi/${p}`]: path.resolve(__dirname, `../${p}/src`)
     }), {
       ...alias,
       'react/jsx-runtime': require.resolve('react/jsx-runtime')
