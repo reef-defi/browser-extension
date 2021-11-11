@@ -107,8 +107,8 @@ The extension injects `injectedWeb3` into the global `window` object, exposing t
 ```js
 window.injectedWeb3 = {
   // this is the name for this extension, there could be multiples injected,
-  // each with their own keys, here `reef-js` is for this extension
-  'reef-js': {
+  // each with their own keys, here `reef` is for this extension
+  'reef': {
     // semver for the package
     version: '0.1.0',
 

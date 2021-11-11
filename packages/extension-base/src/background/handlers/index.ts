@@ -18,7 +18,7 @@ export default function handler<TMessageType extends MessageTypes> ({ id, messag
   const isExtension = port.name === extensionPortName;
   const sender = port.sender as chrome.runtime.MessageSender;
   const from = isExtension
-    ? 'extension'
+    ? extensionPortName
     : (sender.tab && sender.tab.url) || sender.url || '<unknown>';
   const source = `${from}: ${id}: ${message}`;
 

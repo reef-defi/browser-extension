@@ -4,13 +4,14 @@
 import type { RequestSignatures, TransportRequestMessage } from '@reef-defi/extension-base/background/types';
 import type { Message } from '@reef-defi/extension-base/types';
 
+import { PORT_CONTENT } from '@reef-defi/extension-base/defaults';
 import { enable, handleResponse, redirectIfPhishing } from '@reef-defi/extension-base/page';
 import { injectExtension } from '@reef-defi/extension-inject';
 
 // setup a response listener (events created by the loader for extension responses)
 window.addEventListener('message', ({ data, source }: Message): void => {
   // only allow messages from our window, by the loader
-  if (source !== window || data.origin !== 'content') {
+  if (source !== window || data.origin !== PORT_CONTENT) {
     return;
   }
 
@@ -32,7 +33,7 @@ redirectIfPhishing().then((gotRedirected) => {
 
 function inject () {
   injectExtension(enable, {
-    name: 'reef-js',
+    name: 'reef',
     version: process.env.PKG_VERSION as string
   });
 }

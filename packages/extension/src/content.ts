@@ -3,7 +3,7 @@
 
 import type { Message } from '@reef-defi/extension-base/types';
 
-import { PORT_CONTENT } from '@reef-defi/extension-base/defaults';
+import { PORT_CONTENT, PORT_PAGE } from '@reef-defi/extension-base/defaults';
 import chrome from '@reef-defi/extension-inject/chrome';
 
 // connect to the extension
@@ -11,13 +11,13 @@ const port = chrome.runtime.connect({ name: PORT_CONTENT });
 
 // send any messages from the extension back to the page
 port.onMessage.addListener((data): void => {
-  window.postMessage({ ...data, origin: 'content' }, '*');
+  window.postMessage({ ...data, origin: PORT_CONTENT }, '*');
 });
 
 // all messages from the page, pass them to the extension
 window.addEventListener('message', ({ data, source }: Message): void => {
   // only allow messages from our window, by the inject
-  if (source !== window || data.origin !== 'page') {
+  if (source !== window || data.origin !== PORT_PAGE) {
     return;
   }
 
