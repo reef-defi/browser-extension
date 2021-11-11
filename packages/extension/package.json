@@ -14,12 +14,12 @@
   },
   "sideEffects": false,
   "type": "module",
-  "version": "0.41.1",
+  "version": "0.41.2-0",
   "dependencies": {
     "@babel/runtime": "^7.15.4",
-    "@reef-defi/extension-base": "^0.41.1",
-    "@reef-defi/extension-inject": "^0.41.1",
-    "@reef-defi/extension-ui": "^0.41.1"
+    "@reef-defi/extension-base": "^0.41.2-0",
+    "@reef-defi/extension-inject": "^0.41.2-0",
+    "@reef-defi/extension-ui": "^0.41.2-0"
   },
   "devDependencies": {
     "@reef-defi/dev": "^0.63.19",
