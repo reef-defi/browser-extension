@@ -1,20 +1,95 @@
 [![reef-defi](https://img.shields.io/badge/reef--defi-js-blueviolet)](https://docs.reef.finance/docs/developers/js_libraries/#reefjs)
 ![license](https://img.shields.io/badge/License-Apache%202.0-blue?logo=apache&style=flat-square)
-[![npm](https://img.shields.io/npm/v/@reef-defi/extension?logo=npm&style=flat-square)](https://www.npmjs.com/package/@reef-defi/extension)
+[![npm](https://img.shields.io/npm/v/@reef-defi/extension-dapp?logo=npm&style=flat-square)](https://www.npmjs.com/package/@reef-defi/extension-dapp)
 
 # reef.js extension
 
-A very simple scaffolding browser extension that injects a [@polkadot/api](https://github.com/polkadot-js/api) Signer into a page, along with any associated accounts, allowing for use by any dapp. This is an extensible POC implementation of a Polkadot/Substrate browser signer.
+A very simple scaffolding browser extension that injects a [@polkadot/api](https://github.com/polkadot-js/api) Signer into a page, along with any associated accounts, allowing for use by any dapp. This is an extensible POC implementation of a Polkadot/Substrate browser signer. To support both
 
 As it stands, it does one thing: it _only_ manages accounts and allows the signing of transactions with those accounts. It does not inject providers for use by dapps at this early point, nor does it perform wallet functions where it constructs and submits txs to the network.
 
 ## Installation
 
 - On Chrome, install via [Chrome web store](https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd)
-- On Firefox, install via [Firefox add-ons](https://addons.mozilla.org/en-US/firefox/addon/polkadot-js-extension/)
+- On Firefox, install via [Firefox add-ons](https://addons.mozilla.org/en-US/firefox/addon/reef-js-extension/)
 
 ## Documentation and examples
 Find out more about how to use the extension as a Dapp developer, cookbook, as well as answers to most frequent questions in the [Polkadot-js extension documentation](https://polkadot.js.org/docs/extension/)
+
+
+## Transition from/support both `polkadot.js`/`reef.js` extensions
+It is possible to support both `reef.js` as well as `polkadot.js` extension in your app. As long as you request the source extension of the injected account, the correct extension will be used to sign the transaction.
+
+### Change to `@reef-defi` dependencies
+If you use `@polkadot/extension-dapp` dependencies, change them to `@reef-defi/extension-dapp` dependencies:
+
+1. change `@polkadot/extension-dapp` to `"@reef-defi/extension-dapp":"^"` in your `package.json`.
+2. call 'yarn
+3. change the imports to `@reef-defi/extension*` wherever you use the imports from `@polkadot/extension*`.
+
+### Use `web3FromSource` to find the source extension for signing.
+
+1. check where the extension signer is used. This is most likely where `Signer` is imported from `@reef-defi/evm-provider`.
+2. the signer for the account should be acquired dynamically. Change it to use `web3FromSource`. The following function will do the trick:
+```js
+import { web3FromSource } from "@reef-defi/extension-dapp";
+import { keyring } from "@polkadot/ui-keyring";
+
+  const getAccountSigner = async (accountId: string) => {
+    let signer;
+    const pair = keyring.getPair(accountId);
+    const meta = (pair && pair.meta) || {};
+    await web3FromSource(meta.source as string)
+      .catch((): null => null)
+      .then((injected) => (signer = injected?.signer))
+      .catch(console.error);
+    return signer;
+  };
+```
+or equivalently in React:
+```js
+  import { web3FromSource } from "@reef-defi/extension-dapp";
+  import { keyring } from "@polkadot/ui-keyring";
+  const [accountSigner, setAccountSigner] = useState<any>(null);
+
+  useEffect(() => {
+    if (accountId) {
+      const pair = keyring.getPair(accountId);
+      const meta = (pair && pair.meta) || {};
+      web3FromSource(meta.source as string)
+        .catch((): null => null)
+        .then((injected) => setAccountSigner(injected?.signer))
+        .catch(console.error);
+    } else {
+      setAccountSigner(null);
+    }
+  }, [accountId]);
+  // use accountSigner in on-change-array
+```
+where `accountId` is the account address. If you do not have `keyring` loaded, use the `injectedAccounts` array obtained from `web3Accounts`, e.g.
+```js
+import { web3Accounts } from '@reef-defi/extension-dapp';
+
+await injectedPromise
+  .then(() => web3Accounts())
+  .then((accounts) =>
+	accounts.map(
+	  ({ address, meta }, whenCreated): InjectedAccountExt => ({
+		address,
+		meta: {
+		  ...meta,
+		  name: `${meta.name || 'unknown'} (${meta.source})`,
+		  whenCreated
+		}
+	  })
+	)
+  )
+  .then((accounts) => {
+	setInjectedAccounts(accounts);
+  })
+```
+
+`accountSigner` can then be used in `evm-provider` Signer to sign the messages, and the correct extension is used.
 
 ## Development version
 

@@ -1,6 +1,6 @@
 {
   "author": "Reef Finance",
-  "description": "Manage your Polkadot accounts outside of dapps. Injects the accounts and allows signing transactions for a specific account.",
+  "description": "Manage your Reef chain accounts outside of dapps. Injects the accounts and allows signing transactions for a specific account.",
   "homepage_url": "https://github.com/reef-defi/browser-extension",
   "name": "reef.js extension",
   "short_name": "reef.js",
