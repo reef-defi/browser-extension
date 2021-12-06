@@ -15,6 +15,7 @@ import { TypeRegistry } from '@polkadot/types';
 
 import { ALLOWED_PATH } from '../defaults';
 import { AuthUrls } from './handlers/State';
+import { RequestSignaturesReef} from "../../../reef/extension-base/types-reef";
 
 type KeysWithDefinedValues<T> = {
   [K in keyof T]: T[K] extends undefined ? never : K
@@ -51,6 +52,7 @@ export type AccountsContext = {
   accounts: AccountJson[];
   hierarchy: AccountWithChildren[];
   master?: AccountJson;
+  selectedAccount: AccountJson|null;
 }
 
 export interface AuthorizeRequest {
@@ -73,7 +75,7 @@ export interface SigningRequest {
 }
 
 // [MessageType]: [RequestType, ResponseType, SubscriptionMessageType?]
-export interface RequestSignatures {
+export interface RequestSignatures extends RequestSignaturesReef{
   // private/internal requests, i.e. from a popup
   'pri(accounts.create.external)': [RequestAccountCreateExternal, boolean];
   'pri(accounts.create.hardware)': [RequestAccountCreateHardware, boolean];
