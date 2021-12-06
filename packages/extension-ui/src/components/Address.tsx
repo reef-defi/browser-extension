@@ -16,13 +16,14 @@ import { decodeAddress, encodeAddress } from '@reef-defi/util-crypto';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import styled from 'styled-components';
+import * as reefMessaging from '../../../reef/extension-ui/messaging-reef';
 
 import details from '../assets/details.svg';
 import useMetadata from '../hooks/useMetadata';
 import useOutsideClick from '../hooks/useOutsideClick';
 import useToast from '../hooks/useToast';
 import useTranslation from '../hooks/useTranslation';
-import { showAccount } from '../messaging';
+import {showAccount} from '../messaging';
 import { DEFAULT_TYPE } from '../util/defaultType';
 import getParentNameSuri from '../util/getParentNameSuri';
 import { AccountContext, SettingsContext } from './contexts';
@@ -96,7 +97,7 @@ const defaultRecoded = { account: null, formatted: null, prefix: 42, type: DEFAU
 
 function Address ({ actions, address, children, className, genesisHash, isExternal, isHardware, isHidden, name, parentName, suri, toggleActions, type: givenType }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
-  const { accounts } = useContext(AccountContext);
+  const { accounts, selectedAccount } = useContext(AccountContext);
   const settings = useContext(SettingsContext);
   const [{ account, formatted, genesisHash: recodedGenesis, prefix, type }, setRecoded] = useState<Recoded>(defaultRecoded);
   const chain = useMetadata(genesisHash || recodedGenesis, true);
@@ -117,16 +118,16 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
 
     const accountByAddress = findAccountByAddress(accounts, address);
 
-    console.log(
-      address,
-      (
-        chain?.definition.chainType === 'ethereum' ||
-        accountByAddress?.type === 'ethereum' ||
-        (!accountByAddress && givenType === 'ethereum')
-      )
-        ? { account: accountByAddress, formatted: address, type: 'ethereum' }
-        : recodeAddress(address, accounts, chain, settings)
-    );
+    // addressconsole.log(
+    //   address,
+    //   (
+    //     chain?.definition.chainType === 'ethereum' ||
+    //     accountByAddress?.type === 'ethereum' ||
+    //     (!accountByAddress && givenType === 'ethereum')
+    //   )
+    //     ? { account: accountByAddress, formatted: address, type: 'ethereum' }
+    //     : recodeAddress(address, accounts, chain, settings)
+    // );
 
     setRecoded(
       (
@@ -175,9 +176,14 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
     [address, isHidden]
   );
 
+  const selectAccount = (account: AccountJson | null): void =>{
+    reefMessaging.selectAccount(account);
+  }
+
   const Name = () => {
     const accountName = name || account?.name;
     const displayName = accountName || t('<unknown>');
+    const selected = selectedAccount?.address === account?.address;
 
     return (
       <>
@@ -199,7 +205,8 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
               />
             )
         )}
-        <span title={displayName}>{displayName}</span>
+        <span title={displayName} >{displayName} </span>
+        {selected? <small>selected</small> : <button type="button" onClick={()=>selectAccount(account)}>select</button>}
       </>);
   };
 
@@ -409,8 +416,10 @@ export default styled(Address)(({ theme }: ThemeProps) => `
     margin: 2px 0;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 300px;
+    width: 345px;
     white-space: nowrap;
+    display: flex;
+    justify-content: space-between;
 
     &.displaced {
       padding-top: 10px;

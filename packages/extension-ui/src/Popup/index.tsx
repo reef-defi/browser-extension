@@ -14,7 +14,12 @@ import uiSettings from '@polkadot/ui-settings';
 import { ErrorBoundary, Loading } from '../components';
 import { AccountContext, ActionContext, AuthorizeReqContext, MediaContext, MetadataReqContext, SettingsContext, SigningReqContext } from '../components/contexts';
 import ToastProvider from '../components/Toast/ToastProvider';
-import { subscribeAccounts, subscribeAuthorizeRequests, subscribeMetadataRequests, subscribeSigningRequests } from '../messaging';
+import {
+  subscribeAccounts,
+  subscribeAuthorizeRequests,
+  subscribeMetadataRequests,
+  subscribeSigningRequests
+} from '../messaging';
 import { buildHierarchy } from '../util/buildHierarchy';
 import Accounts from './Accounts';
 import AuthList from './AuthManagement';
@@ -32,6 +37,7 @@ import PhishingDetected from './PhishingDetected';
 import RestoreJson from './RestoreJson';
 import Signing from './Signing';
 import Welcome from './Welcome';
+import {subscribeSelectedAccount} from "../../../reef/extension-ui/messaging-reef";
 
 const startSettings = uiSettings.get();
 
@@ -52,20 +58,22 @@ async function requestMediaAccess (cameraOn: boolean): Promise<boolean> {
   return false;
 }
 
-function initAccountContext (accounts: AccountJson[]): AccountsContext {
+function initAccountContext (accounts: AccountJson[], selectedAccount: AccountJson|null): AccountsContext {
   const hierarchy = buildHierarchy(accounts);
   const master = hierarchy.find(({ isExternal, type }) => !isExternal && canDerive(type));
 
   return {
     accounts,
     hierarchy,
-    master
+    master,
+    selectedAccount
   };
 }
 
 export default function Popup (): React.ReactElement {
   const [accounts, setAccounts] = useState<null | AccountJson[]>(null);
-  const [accountCtx, setAccountCtx] = useState<AccountsContext>({ accounts: [], hierarchy: [] });
+  const [selectedAccount, setSelectedAccount] = useState<AccountJson|null>(null);
+  const [accountCtx, setAccountCtx] = useState<AccountsContext>({ accounts: [], hierarchy: [], selectedAccount: null });
   const [authRequests, setAuthRequests] = useState<null | AuthorizeRequest[]>(null);
   const [cameraOn, setCameraOn] = useState(startSettings.camera === 'on');
   const [mediaAllowed, setMediaAllowed] = useState(false);
@@ -88,6 +96,7 @@ export default function Popup (): React.ReactElement {
   useEffect((): void => {
     Promise.all([
       subscribeAccounts(setAccounts),
+      subscribeSelectedAccount(setSelectedAccount),
       subscribeAuthorizeRequests(setAuthRequests),
       subscribeMetadataRequests(setMetaRequests),
       subscribeSigningRequests(setSignRequests)
@@ -103,8 +112,8 @@ export default function Popup (): React.ReactElement {
   }, []);
 
   useEffect((): void => {
-    setAccountCtx(initAccountContext(accounts || []));
-  }, [accounts]);
+    setAccountCtx(initAccountContext(accounts || [], selectedAccount));
+  }, [accounts, selectedAccount]);
 
   useEffect((): void => {
     requestMediaAccess(cameraOn)
@@ -136,6 +145,7 @@ export default function Popup (): React.ReactElement {
                 <MetadataReqContext.Provider value={metaRequests}>
                   <SigningReqContext.Provider value={signRequests}>
                     <ToastProvider>
+                      <div>NAV {selectedAccount?.address}</div>
                       <Switch>
                         <Route path='/auth-list'>{wrapWithErrorBoundary(<AuthList />, 'auth-list')}</Route>
                         <Route path='/account/create'>{wrapWithErrorBoundary(<CreateAccount />, 'account-creation')}</Route>

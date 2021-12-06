@@ -19,6 +19,7 @@ import { accounts as accountsObservable } from '@polkadot/ui-keyring/observable/
 
 import State from './State';
 import { createSubscription, unsubscribe } from './subscriptions';
+import {ExtensionHandlersReef} from "../../../../reef/extension-base/ExtensionHandlersReef";
 
 type CachedUnlocks = Record<string, number>;
 
@@ -35,7 +36,7 @@ function getSuri (seed: string, type?: KeypairType): string {
     : seed;
 }
 
-function transformAccounts (accounts: SubjectInfo): AccountJson[] {
+export function transformAccounts (accounts: SubjectInfo): AccountJson[] {
   return Object.values(accounts).map(({ json: { address, meta }, type }): AccountJson => ({
     address,
     ...meta,
@@ -47,12 +48,13 @@ function isJsonPayload (value: SignerPayloadJSON | SignerPayloadRaw): value is S
   return (value as SignerPayloadJSON).genesisHash !== undefined;
 }
 
-export default class Extension {
+export default class Extension extends ExtensionHandlersReef {
   readonly #cachedUnlocks: CachedUnlocks;
 
   readonly #state: State;
 
   constructor (state: State) {
+    super();
     this.#cachedUnlocks = {};
     this.#state = state;
   }
@@ -621,6 +623,10 @@ export default class Extension {
         return this.windowOpen(request as AllowedPath);
 
       default:
+        const reefEvent = super.handle(id, type, request, port);
+        if(reefEvent!==undefined){
+          return reefEvent;
+        }
         throw new Error(`Unable to handle message of type ${type}`);
     }
   }
