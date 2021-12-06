@@ -38,6 +38,9 @@ import RestoreJson from './RestoreJson';
 import Signing from './Signing';
 import Welcome from './Welcome';
 import {subscribeSelectedAccount} from "../../../reef/extension-ui/messaging-reef";
+import { NavHeader} from "@reef-defi/extension-ui/Popup/NavHeader";
+import {Transfer} from "@reef-defi/extension-ui/../../../reef/extension-ui/Transfer/Transfer";
+import {useAppProvider} from "../../../reef/extension-ui/hooks/useAppProvider";
 
 const startSettings = uiSettings.get();
 
@@ -71,6 +74,7 @@ function initAccountContext (accounts: AccountJson[], selectedAccount: AccountJs
 }
 
 export default function Popup (): React.ReactElement {
+  useAppProvider();
   const [accounts, setAccounts] = useState<null | AccountJson[]>(null);
   const [selectedAccount, setSelectedAccount] = useState<AccountJson|null>(null);
   const [accountCtx, setAccountCtx] = useState<AccountsContext>({ accounts: [], hierarchy: [], selectedAccount: null });
@@ -145,7 +149,7 @@ export default function Popup (): React.ReactElement {
                 <MetadataReqContext.Provider value={metaRequests}>
                   <SigningReqContext.Provider value={signRequests}>
                     <ToastProvider>
-                      <div>NAV {selectedAccount?.address}</div>
+                      <NavHeader ></NavHeader>
                       <Switch>
                         <Route path='/auth-list'>{wrapWithErrorBoundary(<AuthList />, 'auth-list')}</Route>
                         <Route path='/account/create'>{wrapWithErrorBoundary(<CreateAccount />, 'account-creation')}</Route>
@@ -158,6 +162,7 @@ export default function Popup (): React.ReactElement {
                         <Route path='/account/restore-json'>{wrapWithErrorBoundary(<RestoreJson />, 'restore-json')}</Route>
                         <Route path='/account/derive/:address/locked'>{wrapWithErrorBoundary(<Derive isLocked />, 'derived-address-locked')}</Route>
                         <Route path='/account/derive/:address'>{wrapWithErrorBoundary(<Derive />, 'derive-address')}</Route>
+                        <Route path='/send'>{wrapWithErrorBoundary(<Transfer />, 'transfer')}</Route>
                         <Route path={`${PHISHING_PAGE_REDIRECT}/:website`}>{wrapWithErrorBoundary(<PhishingDetected />, 'phishing-page-redirect')}</Route>
                         <Route
                           exact

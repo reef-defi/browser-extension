@@ -5,16 +5,13 @@ import {createSubscription} from "@reef-defi/extension-base/background/handlers/
 import {MessageTypes, RequestTypes, ResponseType} from "@reef-defi/extension-base/background/types";
 
 export class ExtensionHandlersReef {
-  private cb: any = null;
+  private accountSelectCb: any = null;
 
-  private accountsSelect(id: string, port: chrome.runtime.Port, {address}: RequestAccountSelect): boolean {
-    console.log("SSSS=", address);
+  private accountSelect(port: chrome.runtime.Port, {address}: RequestAccountSelect): boolean {
     const pair = keyring.getPair(address);
     assert(pair, 'Unable to find pair');
     localStorage.setItem('selected_address_' + port.name, address);
-
-    console.log("SAVE =", address, 'selected_address_' + port.name);
-    this.cb({address: pair.address});
+    this.accountSelectCb({address: pair.address});
     return true;
   }
 
@@ -24,19 +21,18 @@ export class ExtensionHandlersReef {
     if (savedAddress) {
       account = keyring.getAccount(savedAddress);
     }
-    console.log("SEL =", account, savedAddress, 'selected_address_' + port.name);
     if (!account) {
       account = keyring.getAccounts()[0];
     }
-    this.cb = createSubscription<'pri(accounts.selected)'>(id, port);
-    this.cb(account ? {address: account.address, ...account.meta} : null);
+    this.accountSelectCb = createSubscription<'pri(accounts.selected)'>(id, port);
+    this.accountSelectCb(account ? {address: account.address, ...account.meta} : null);
     return true;
   }
 
   public async handle<TMessageType extends MessageTypes>(id: string, type: TMessageType, request: RequestTypes[TMessageType], port: chrome.runtime.Port): Promise<ResponseType<TMessageType>> {
     switch (type) {
       case 'pri(accounts.select)':
-        return this.accountsSelect(id, port, request as RequestAccountSelect);
+        return this.accountSelect(port, request as RequestAccountSelect);
       case 'pri(accounts.selected)':
         return this.accountSelected(id, port);
 

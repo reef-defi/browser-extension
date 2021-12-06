@@ -12,7 +12,7 @@ import settings from '@polkadot/ui-settings';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const noop = (): void => undefined;
 
-const AccountContext = React.createContext<AccountsContext>({ accounts: [], hierarchy: [], master: undefined });
+const AccountContext = React.createContext<AccountsContext>({ accounts: [], hierarchy: [], master: undefined, selectedAccount: null });
 const ActionContext = React.createContext<(to?: string) => void>(noop);
 const AuthorizeReqContext = React.createContext<AuthorizeRequest[]>([]);
 const MediaContext = React.createContext<boolean>(false);
