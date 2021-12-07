@@ -76,8 +76,8 @@ export function web3Enable (originName: string, compatInits: (() => Promise<bool
     (): Promise<InjectedExtension[]> =>
       initCompat.then(() =>
         getWindowExtensions(originName)
-          .then((values): InjectedExtension[] =>
-            values
+          .then((values): InjectedExtension[] => {
+            return values
               .filter((value): value is [InjectedExtensionInfo, Injected] => !!value[1])
               .map(([info, ext]): InjectedExtension => {
                 // if we don't have an accounts subscriber, add a single-shot version
@@ -91,9 +91,9 @@ export function web3Enable (originName: string, compatInits: (() => Promise<bool
                   };
                 }
 
-                return { ...info, ...ext };
+                return {...info, ...ext};
               })
-          )
+          })
           .catch((): InjectedExtension[] => [])
           .then((values): InjectedExtension[] => {
             const names = values.map(({ name, version }): string => `${name}/${version}`);
