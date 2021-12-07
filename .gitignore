@@ -23,3 +23,5 @@ package-lock.json
 _book
 docs/html
 .idea
+/.yalc/
+/.yarn/
