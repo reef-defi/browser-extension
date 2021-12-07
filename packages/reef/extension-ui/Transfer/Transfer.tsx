@@ -1,6 +1,7 @@
 import React from 'react';
 import {useSubjectStateObserver} from "../hooks/useSubjectState";
-import {reefPrice$} from "../model/appState";
+import {appSelectedSigner$, reefPrice$} from "../model/appState";
+import {utils} from "@reef-defi/react-lib";
 
 // const {
 //   DataProgress,
@@ -15,6 +16,8 @@ export const Transfer = (): JSX.Element => {
   // const selectedSigner = useGetReefSigner(selectedAccount);
   // const signerTokens = useSubjectState(appSignerTokens$);
   const reefPrice = useSubjectStateObserver(reefPrice$);
+  const selectedSigner = useSubjectStateObserver(appSelectedSigner$);
+
   // const signerTokenBalances = useSignerTokenBalances(signerTokens, pools, reefPrice);
   // const [token, setToken] = useState<reefUtils.DataWithProgress<TokenWithAmount>>(DataProgress.LOADING);
 
@@ -52,7 +55,13 @@ export const Transfer = (): JSX.Element => {
       setTimeout(() => dispatch(reloadTokens()), delay);
     }
   };*/
-  return (<>price={reefPrice}</>)
+  const test = (  ): void => {
+    const sgnr = utils.getData(selectedSigner);
+    if(sgnr) {
+      console.log("ssss=",sgnr.balance.toString());
+    }
+  }
+  return (<div>price={reefPrice} <button onClick={test}>ttt</button></div>)
   /*return (
     <>
       {!isDataSet(token) && token === DataProgress.LOADING && <Loading.Loading />}

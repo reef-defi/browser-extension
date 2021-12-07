@@ -54,6 +54,7 @@ import Welcome from './Welcome';
 import {subscribeSelectedAccount} from "../../../reef/extension-ui/messaging-reef";
 import {NavHeader} from "@reef-defi/extension-ui/Popup/NavHeader";
 import {Transfer} from "../../../reef/extension-ui/Transfer/Transfer";
+import {appSelectedAccount$} from "../../../reef/extension-ui/model/appState";
 import {useLoadAppProvider} from "../../../reef/extension-ui/hooks/useLoadAppProvider";
 
 const startSettings = uiSettings.get();
@@ -132,6 +133,11 @@ export default function Popup (): React.ReactElement {
   useEffect((): void => {
     setAccountCtx(initAccountContext(accounts || [], selectedAccount));
   }, [accounts, selectedAccount]);
+
+  useEffect(() => {
+    appSelectedAccount$.next(selectedAccount as AccountJson);
+  }, [selectedAccount]);
+
 
   useEffect((): void => {
     requestMediaAccess(cameraOn)
