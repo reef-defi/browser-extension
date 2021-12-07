@@ -1,34 +1,24 @@
-import {Components, hooks as reefHooks, Pool, TokenWithAmount, utils as reefUtils,} from '@reef-defi/react-lib';
-import React, {useContext, useEffect, useState} from 'react';
-import {currentNetwork} from '../environment';
-import {useSharedState} from "../hooks/useSharedState";
-import {appPools$, appProvider$} from "../service/appState";
-import {AccountContext} from "@reef-defi/extension-ui/components";
-import {useGetReefSigner, useGetSigner} from "../hooks/useGetSigner";
+import React from 'react';
+import {useSubjectStateObserver} from "../hooks/useSubjectState";
+import {reefPrice$} from "../model/appState";
 
-const {
-  isDataSet,
-  getData,
-  DataProgress,
-} = reefUtils;
+// const {
+//   DataProgress,
+// } = reefUtils;
 
-const { useLoadSignerTokens, useReefPriceInterval, useSignerTokenBalances } = reefHooks;
-const {
-  Loading, TransferComponent, TX_TYPE_EVM,
-} = Components;
+// const { useSignerTokenBalances } = reefHooks;
 
 export const Transfer = (): JSX.Element => {
-  const [ provider] = useSharedState(appProvider$);
-  const [pools] = useSharedState<Pool[]>(appPools$);
-  const {accounts, selectedAccount} = useContext(AccountContext);
-  ...
-  const selectedSigner = useGetReefSigner(selectedAccount);
-  const signerTokens = useLoadSignerTokens(false, currentNetwork, selectedSigner);
-  const reefPrice = useReefPriceInterval(60000);
-  const signerTokenBalances = useSignerTokenBalances(signerTokens, pools, reefPrice);
-  const [token, setToken] = useState<reefUtils.DataWithProgress<TokenWithAmount>>(DataProgress.LOADING);
+  // const [ provider] = useSubjectState(appProvider$);
+  // const [pools] = useSubjectState<Pool[]>(appPools$);
+  // const {accounts, selectedAccount} = useContext(AccountContext);
+  // const selectedSigner = useGetReefSigner(selectedAccount);
+  // const signerTokens = useSubjectState(appSignerTokens$);
+  const reefPrice = useSubjectStateObserver(reefPrice$);
+  // const signerTokenBalances = useSignerTokenBalances(signerTokens, pools, reefPrice);
+  // const [token, setToken] = useState<reefUtils.DataWithProgress<TokenWithAmount>>(DataProgress.LOADING);
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (isDataSet(signerTokenBalances)) {
       const sigTokens = getData(signerTokenBalances);
       if (!sigTokens?.length) {
@@ -61,14 +51,14 @@ export const Transfer = (): JSX.Element => {
       const delay = txUpdateData.type === TX_TYPE_EVM ? 2000 : 0;
       setTimeout(() => dispatch(reloadTokens()), delay);
     }
-  };
-
-  return (
+  };*/
+  return (<>price={reefPrice}</>)
+  /*return (
     <>
       {!isDataSet(token) && token === DataProgress.LOADING && <Loading.Loading />}
       {!isDataSet(token) && token === DataProgress.NO_DATA && <div>No tokens for transaction.</div>}
       { provider && isDataSet(token) && isDataSet(signerTokenBalances) && selectedSigner
           && <TransferComponent tokens={signerTokenBalances as reefHooks.TokenWithPrice[]} from={selectedSigner} token={token as TokenWithAmount} provider={provider} accounts={accounts} currentAccount={selectedSigner} onTxUpdate={onTxUpdate} />}
     </>
-  );
+  );*/
 };

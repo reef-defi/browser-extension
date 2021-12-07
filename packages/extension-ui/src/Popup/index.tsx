@@ -1,18 +1,32 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { AccountJson, AccountsContext, AuthorizeRequest, MetadataRequest, SigningRequest } from '@reef-defi/extension-base/background/types';
-import type { SettingsStruct } from '@polkadot/ui-settings/types';
+import type {
+  AccountJson,
+  AccountsContext,
+  AuthorizeRequest,
+  MetadataRequest,
+  SigningRequest
+} from '@reef-defi/extension-base/background/types';
+import type {SettingsStruct} from '@polkadot/ui-settings/types';
 
-import { PHISHING_PAGE_REDIRECT } from '@reef-defi/extension-base/defaults';
-import { canDerive } from '@reef-defi/extension-base/utils';
-import React, { useCallback, useEffect, useState } from 'react';
-import { Route, Switch } from 'react-router';
+import {PHISHING_PAGE_REDIRECT} from '@reef-defi/extension-base/defaults';
+import {canDerive} from '@reef-defi/extension-base/utils';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Route, Switch} from 'react-router';
 
 import uiSettings from '@polkadot/ui-settings';
 
-import { ErrorBoundary, Loading } from '../components';
-import { AccountContext, ActionContext, AuthorizeReqContext, MediaContext, MetadataReqContext, SettingsContext, SigningReqContext } from '../components/contexts';
+import {ErrorBoundary, Loading} from '../components';
+import {
+  AccountContext,
+  ActionContext,
+  AuthorizeReqContext,
+  MediaContext,
+  MetadataReqContext,
+  SettingsContext,
+  SigningReqContext
+} from '../components/contexts';
 import ToastProvider from '../components/Toast/ToastProvider';
 import {
   subscribeAccounts,
@@ -20,7 +34,7 @@ import {
   subscribeMetadataRequests,
   subscribeSigningRequests
 } from '../messaging';
-import { buildHierarchy } from '../util/buildHierarchy';
+import {buildHierarchy} from '../util/buildHierarchy';
 import Accounts from './Accounts';
 import AuthList from './AuthManagement';
 import Authorize from './Authorize';
@@ -38,9 +52,9 @@ import RestoreJson from './RestoreJson';
 import Signing from './Signing';
 import Welcome from './Welcome';
 import {subscribeSelectedAccount} from "../../../reef/extension-ui/messaging-reef";
-import { NavHeader} from "@reef-defi/extension-ui/Popup/NavHeader";
-import {Transfer} from "@reef-defi/extension-ui/../../../reef/extension-ui/Transfer/Transfer";
-import {useAppProvider} from "../../../reef/extension-ui/hooks/useAppProvider";
+import {NavHeader} from "@reef-defi/extension-ui/Popup/NavHeader";
+import {Transfer} from "../../../reef/extension-ui/Transfer/Transfer";
+import {useLoadAppProvider} from "../../../reef/extension-ui/hooks/useLoadAppProvider";
 
 const startSettings = uiSettings.get();
 
@@ -74,7 +88,7 @@ function initAccountContext (accounts: AccountJson[], selectedAccount: AccountJs
 }
 
 export default function Popup (): React.ReactElement {
-  useAppProvider();
+  useLoadAppProvider();
   const [accounts, setAccounts] = useState<null | AccountJson[]>(null);
   const [selectedAccount, setSelectedAccount] = useState<AccountJson|null>(null);
   const [accountCtx, setAccountCtx] = useState<AccountsContext>({ accounts: [], hierarchy: [], selectedAccount: null });
