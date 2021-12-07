@@ -1,9 +1,9 @@
 import { hooks } from '@reef-defi/react-lib';
 import { useEffect } from 'react';
 import { currentNetwork } from '../environment';
-import {appProvider$} from "../service/appState";
+import {appProvider$} from "../model/appState";
 
-export const useAppProvider = (): void => {
+export const useLoadAppProvider = (): void => {
   const [provider, isProviderLoading] = hooks.useProvider(currentNetwork.rpcUrl);
   // const dispatch = useAppDispatch();
 
@@ -13,7 +13,7 @@ export const useAppProvider = (): void => {
       appProvider$.next(provider);
     }
     return () => {
-      appProvider$.next(null);
+      // appProvider$.next(null);
       provider?.api.disconnect();
     };
   }, [provider]);

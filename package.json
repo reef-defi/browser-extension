@@ -52,6 +52,6 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
-    "@reef-defi/react-lib": "^1.0.14"
+    "@reef-defi/react-lib": "file:.yalc/@reef-defi/react-lib"
   }
 }
