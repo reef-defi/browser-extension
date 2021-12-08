@@ -51,11 +51,9 @@ import PhishingDetected from './PhishingDetected';
 import RestoreJson from './RestoreJson';
 import Signing from './Signing';
 import Welcome from './Welcome';
-import {subscribeSelectedAccount} from "../../../reef/extension-ui/messaging-reef";
 import {NavHeader} from "@reef-defi/extension-ui/Popup/NavHeader";
 import {Transfer} from "../../../reef/extension-ui/Transfer/Transfer";
-import {appSelectedAccount$} from "../../../reef/extension-ui/model/appState";
-import {useLoadAppProvider} from "../../../reef/extension-ui/hooks/useLoadAppProvider";
+import {useInitReefState} from "../../../reef/extension-ui/hooks/useInitReefState";
 
 const startSettings = uiSettings.get();
 
@@ -89,9 +87,8 @@ function initAccountContext (accounts: AccountJson[], selectedAccount: AccountJs
 }
 
 export default function Popup (): React.ReactElement {
-  useLoadAppProvider();
   const [accounts, setAccounts] = useState<null | AccountJson[]>(null);
-  const [selectedAccount, setSelectedAccount] = useState<AccountJson|null>(null);
+  useInitReefState(accounts);
   const [accountCtx, setAccountCtx] = useState<AccountsContext>({ accounts: [], hierarchy: [], selectedAccount: null });
   const [authRequests, setAuthRequests] = useState<null | AuthorizeRequest[]>(null);
   const [cameraOn, setCameraOn] = useState(startSettings.camera === 'on');
@@ -115,7 +112,6 @@ export default function Popup (): React.ReactElement {
   useEffect((): void => {
     Promise.all([
       subscribeAccounts(setAccounts),
-      subscribeSelectedAccount(setSelectedAccount),
       subscribeAuthorizeRequests(setAuthRequests),
       subscribeMetadataRequests(setMetaRequests),
       subscribeSigningRequests(setSignRequests)
@@ -131,13 +127,8 @@ export default function Popup (): React.ReactElement {
   }, []);
 
   useEffect((): void => {
-    setAccountCtx(initAccountContext(accounts || [], selectedAccount));
-  }, [accounts, selectedAccount]);
-
-  useEffect(() => {
-    appSelectedAccount$.next(selectedAccount as AccountJson);
-  }, [selectedAccount]);
-
+    setAccountCtx(initAccountContext(accounts || [], null));
+  }, [accounts]);
 
   useEffect((): void => {
     requestMediaAccess(cameraOn)
