@@ -25,3 +25,5 @@ docs/html
 .idea
 /.yalc/
 /.yarn/
+/packages/extension-ui/yalc.lock
+/yalc.lock
