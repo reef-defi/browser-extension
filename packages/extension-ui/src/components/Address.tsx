@@ -3,20 +3,21 @@
 
 import type { AccountJson, AccountWithChildren } from '@reef-defi/extension-base/background/types';
 import type { Chain } from '@reef-defi/extension-chains/types';
-import type { KeypairType } from '@reef-defi/util-crypto/types';
 import type { IconTheme } from '@polkadot/react-identicon/types';
 import type { SettingsStruct } from '@polkadot/ui-settings/types';
+import type { KeypairType } from '@polkadot/util-crypto/types';
 import type { ThemeProps } from '../types';
 
 import { faUsb } from '@fortawesome/free-brands-svg-icons';
 import { faCopy, faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { faCodeBranch, faQrcode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { decodeAddress, encodeAddress } from '@reef-defi/util-crypto';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import styled from 'styled-components';
-import * as reefMessaging from '../../../reef/extension-ui/messaging-reef';
+import {appState} from '../../../reef/extension-ui/state';
+
+import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
 
 import details from '../assets/details.svg';
 import useMetadata from '../hooks/useMetadata';
@@ -24,12 +25,13 @@ import useOutsideClick from '../hooks/useOutsideClick';
 import useToast from '../hooks/useToast';
 import useTranslation from '../hooks/useTranslation';
 import {showAccount} from '../messaging';
-import { DEFAULT_TYPE } from '../util/defaultType';
+import {DEFAULT_TYPE} from '../util/defaultType';
 import getParentNameSuri from '../util/getParentNameSuri';
-import { AccountContext, SettingsContext } from './contexts';
+import {AccountContext, SettingsContext} from './contexts';
 import Identicon from './Identicon';
 import Menu from './Menu';
 import Svg from './Svg';
+import {useObservableState} from "../../../reef/extension-ui/hooks/useObservableState";
 
 export interface Props {
   actions?: React.ReactNode;
@@ -97,7 +99,8 @@ const defaultRecoded = { account: null, formatted: null, prefix: 42, type: DEFAU
 
 function Address ({ actions, address, children, className, genesisHash, isExternal, isHardware, isHidden, name, parentName, suri, toggleActions, type: givenType }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
-  const { accounts, selectedAccount } = useContext(AccountContext);
+  const { accounts } = useContext(AccountContext);
+  const selectedAccount = useObservableState(appState.selectedSigner$);
   const settings = useContext(SettingsContext);
   const [{ account, formatted, genesisHash: recodedGenesis, prefix, type }, setRecoded] = useState<Recoded>(defaultRecoded);
   const chain = useMetadata(genesisHash || recodedGenesis, true);
@@ -177,7 +180,7 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
   );
 
   const selectAccount = (account: AccountJson | null): void =>{
-    reefMessaging.selectAccount(account);
+    appState.selectAddressSubj.next(account?.address);
   }
 
   const Name = () => {
@@ -206,7 +209,7 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
             )
         )}
         <span title={displayName} >{displayName} </span>
-        {selected? <small>selected</small> : <button type="button" onClick={()=>selectAccount(account)}>select</button>}
+        {selectedAccount && (selected? <small>selected</small> : <button type="button" onClick={()=>selectAccount(account)}>select</button>)}
       </>);
   };
 

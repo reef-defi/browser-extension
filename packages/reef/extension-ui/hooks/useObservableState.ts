@@ -7,7 +7,6 @@ export const useObservableState = <T>(observable: Observable<T>): T | undefined 
   useEffect(() => {
     subs?.unsubscribe();
     subs = observable.subscribe(s => {
-      console.log("new VVV=",s);
       setValue(s);
     });
     return () => subs?.unsubscribe();

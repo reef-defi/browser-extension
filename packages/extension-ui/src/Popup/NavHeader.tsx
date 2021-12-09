@@ -2,7 +2,7 @@ import React, {useCallback, useContext, useEffect} from "react";
 import {ActionContext} from "@reef-defi/extension-ui/components";
 import styled from "styled-components";
 import {useObservableState} from "../../../reef/extension-ui/hooks/useObservableState";
-import {selectedSigner$} from "../../../reef/extension-ui/appState/accountState";
+import {selectedSigner$} from "../../../reef/extension-ui/state/accountState";
 
 interface NavHeaderComp  {
 }
@@ -17,11 +17,6 @@ function NavHeaderComp(): React.ReactElement<NavHeaderComp> {
     // () => onAction('/send'),
     [onAction, selectedAccount]
   );
-
-  useEffect(() => {
-    console.log("SEALLLL=",selectedAccount);
-  }, [selectedAccount]);
-
 
   return (<div className='nav-header'>Reef  <button onClick={_onClick}>send</button> {selectedAccount?.name}</div>)
 }

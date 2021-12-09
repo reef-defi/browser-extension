@@ -1,5 +1,5 @@
 import React from 'react';
-import {appState} from "../appState";
+import {appState} from "../state";
 import {utils} from "@reef-defi/react-lib";
 import {useObservableState} from "../hooks/useObservableState";
 

@@ -11,8 +11,7 @@ import styled from 'styled-components';
 import { Address, Dropdown, Link, MenuDivider } from '../../components';
 import useGenesisHashOptions from '../../hooks/useGenesisHashOptions';
 import useTranslation from '../../hooks/useTranslation';
-import { tieAccount } from '../../messaging';
-import * as reefMessaging from '../../../../reef/extension-ui/messaging-reef';
+import {editAccount, tieAccount} from '../../messaging';
 import { Name } from '../../partials';
 
 interface Props extends AccountJson {
@@ -46,9 +45,8 @@ function Account ({ address, className, genesisHash, isExternal, isHardware, isH
 
   const _saveChanges = useCallback(
     (): void => {
-      console.log("SAVVV=", editedName);
       editedName &&
-        reefMessaging.editAccount(address, editedName)
+        editAccount(address, editedName)
           .catch(console.error);
 
       _toggleEdit();
@@ -121,14 +119,14 @@ function Account ({ address, className, genesisHash, isExternal, isHardware, isH
         toggleActions={toggleActions}
       >
         {isEditing && (
-          <div><Name
+          <Name
             address={address}
             className={`editName ${parentName ? 'withParent' : ''}`}
             isFocused
             label={' '}
             onBlur={_saveChanges}
             onChange={setName}
-          />EEE</div>
+          />
         )}
       </Address>
     </div>
