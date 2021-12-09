@@ -2,7 +2,7 @@ import {hooks} from '@reef-defi/react-lib';
 import {useEffect} from 'react';
 import {useObservableState} from "./useObservableState";
 import {AccountJson} from "@reef-defi/extension-base/background/types";
-import {appState} from "../appState";
+import {appState} from "../state";
 
 export const useInitReefState = (accounts: AccountJson[]|null): void => {
   const network = useObservableState(appState.selectedNetwork$);

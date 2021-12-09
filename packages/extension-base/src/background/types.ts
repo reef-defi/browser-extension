@@ -3,19 +3,24 @@
 
 /* eslint-disable no-use-before-define */
 
-import type { InjectedAccount, InjectedMetadataKnown, MetadataDef, ProviderList, ProviderMeta } from '@reef-defi/extension-inject/types';
-import type { KeyringPair, KeyringPair$Json, KeyringPair$Meta } from '@polkadot/keyring/types';
-import type { JsonRpcResponse } from '@polkadot/rpc-provider/types';
-import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
-import type { KeyringPairs$Json } from '@polkadot/ui-keyring/types';
-import type { HexString } from '@polkadot/util/types';
-import type { KeypairType } from '@polkadot/util-crypto/types';
+import type {
+  InjectedAccount,
+  InjectedMetadataKnown,
+  MetadataDef,
+  ProviderList,
+  ProviderMeta
+} from '@reef-defi/extension-inject/types';
+import type {KeyringPair, KeyringPair$Json, KeyringPair$Meta} from '@polkadot/keyring/types';
+import type {JsonRpcResponse} from '@polkadot/rpc-provider/types';
+import type {SignerPayloadJSON, SignerPayloadRaw} from '@polkadot/types/types';
+import type {KeyringPairs$Json} from '@polkadot/ui-keyring/types';
+import type {HexString} from '@polkadot/util/types';
+import type {KeypairType} from '@polkadot/util-crypto/types';
 
-import { TypeRegistry } from '@polkadot/types';
+import {TypeRegistry} from '@polkadot/types';
 
-import { ALLOWED_PATH } from '../defaults';
-import { AuthUrls } from './handlers/State';
-import { RequestSignaturesReef} from "../../../reef/extension-base/types-reef";
+import {ALLOWED_PATH} from '../defaults';
+import {AuthUrls} from './handlers/State';
 
 type KeysWithDefinedValues<T> = {
   [K in keyof T]: T[K] extends undefined ? never : K
@@ -52,7 +57,6 @@ export type AccountsContext = {
   accounts: AccountJson[];
   hierarchy: AccountWithChildren[];
   master?: AccountJson;
-  selectedAccount: AccountJson|null;
 }
 
 export interface AuthorizeRequest {
@@ -75,7 +79,7 @@ export interface SigningRequest {
 }
 
 // [MessageType]: [RequestType, ResponseType, SubscriptionMessageType?]
-export interface RequestSignatures extends RequestSignaturesReef{
+export interface RequestSignatures {
   // private/internal requests, i.e. from a popup
   'pri(accounts.create.external)': [RequestAccountCreateExternal, boolean];
   'pri(accounts.create.hardware)': [RequestAccountCreateHardware, boolean];
