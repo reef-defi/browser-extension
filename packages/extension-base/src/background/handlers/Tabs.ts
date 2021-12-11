@@ -1,25 +1,42 @@
 // Copyright 2019-2021 @polkadot/extension authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { InjectedAccount, InjectedMetadataKnown, MetadataDef, ProviderMeta } from '@reef-defi/extension-inject/types';
-import type { KeyringPair } from '@polkadot/keyring/types';
-import type { JsonRpcResponse } from '@polkadot/rpc-provider/types';
-import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
-import type { SubjectInfo } from '@polkadot/ui-keyring/observable/types';
-import type { MessageTypes, RequestAccountList, RequestAuthorizeTab, RequestRpcSend, RequestRpcSubscribe, RequestRpcUnsubscribe, RequestTypes, ResponseRpcListProviders, ResponseSigning, ResponseTypes, SubscriptionMessageTypes } from '../types';
+import type {
+  InjectedAccount,
+  InjectedMetadataKnown,
+  MetadataDef,
+  ProviderMeta
+} from '@reef-defi/extension-inject/types';
+import type {KeyringPair} from '@polkadot/keyring/types';
+import type {JsonRpcResponse} from '@polkadot/rpc-provider/types';
+import type {SignerPayloadJSON, SignerPayloadRaw} from '@polkadot/types/types';
+import type {SubjectInfo} from '@polkadot/ui-keyring/observable/types';
+import type {
+  MessageTypes,
+  RequestAccountList,
+  RequestAuthorizeTab,
+  RequestRpcSend,
+  RequestRpcSubscribe,
+  RequestRpcUnsubscribe,
+  RequestTypes,
+  ResponseRpcListProviders,
+  ResponseSigning,
+  ResponseTypes,
+  SubscriptionMessageTypes
+} from '../types';
 
-import { PHISHING_PAGE_REDIRECT } from '@reef-defi/extension-base/defaults';
-import { canDerive } from '@reef-defi/extension-base/utils';
+import {PHISHING_PAGE_REDIRECT, PORT_EXTENSION} from '@reef-defi/extension-base/defaults';
+import {canDerive} from '@reef-defi/extension-base/utils';
 
-import { checkIfDenied } from '@polkadot/phishing';
+import {checkIfDenied} from '@polkadot/phishing';
 import keyring from '@polkadot/ui-keyring';
-import { accounts as accountsObservable } from '@polkadot/ui-keyring/observable/accounts';
-import { assert, isNumber } from '@polkadot/util';
+import {accounts as accountsObservable} from '@polkadot/ui-keyring/observable/accounts';
+import {assert, isNumber} from '@polkadot/util';
 
 import RequestBytesSign from '../RequestBytesSign';
 import RequestExtrinsicSign from '../RequestExtrinsicSign';
 import State from './State';
-import { createSubscription, unsubscribe } from './subscriptions';
+import {createSubscription, unsubscribe} from './subscriptions';
 
 function transformAccounts (accounts: SubjectInfo, anyType = false): InjectedAccount[] {
   return Object
@@ -67,6 +84,7 @@ export default class Tabs {
   }
 
   private getSigningPair (address: string): KeyringPair {
+    console.log("keyring acc len =",keyring.getAccounts().length);
     const pair = keyring.getPair(address);
 
     assert(pair, 'Unable to find keypair');
@@ -82,9 +100,9 @@ export default class Tabs {
   }
 
   private extrinsicSign (url: string, request: SignerPayloadJSON): Promise<ResponseSigning> {
+    console.log("extrrr sign=",url);
     const address = request.address;
     const pair = this.getSigningPair(address);
-
     return this.#state.sign(url, new RequestExtrinsicSign(request), { address, ...pair.meta });
   }
 
@@ -171,11 +189,13 @@ export default class Tabs {
   }
 
   public async handle<TMessageType extends MessageTypes> (id: string, type: TMessageType, request: RequestTypes[TMessageType], url: string, port: chrome.runtime.Port): Promise<ResponseTypes[keyof ResponseTypes]> {
+
+    console.log("HANDLLLL TABS=",type);
     if (type === 'pub(phishing.redirectIfDenied)') {
       return this.redirectIfPhishing(url);
     }
 
-    if (type !== 'pub(authorize.tab)') {
+    if (type !== 'pub(authorize.tab)' && url !== PORT_EXTENSION) {
       this.#state.ensureUrlAuthorized(url);
     }
 
@@ -193,6 +213,9 @@ export default class Tabs {
         return this.bytesSign(url, request as SignerPayloadRaw);
 
       case 'pub(extrinsic.sign)':
+        return this.extrinsicSign(url, request as SignerPayloadJSON);
+
+      case 'pri(extrinsic.sign)':
         return this.extrinsicSign(url, request as SignerPayloadJSON);
 
       case 'pub(metadata.list)':

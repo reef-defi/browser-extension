@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
+
+html, body, #root, .App {
+    width: 100%;
+    min-height: 100vh;
+    color: #313a52;
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+}
+
+.content {
+    display: flex;
+    padding: 2.5rem 3.5rem;
+}
+
+.nav-content {
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
+}
+
+/* Footer WIP */
+.footer {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    background: #252a47;
+    display: grid;
+    place-items: center;
+    padding: 50px;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.title-font {
+    font-family: 'Lato', sans-serif;
+}
+
+.text-bold {
+    font-weight: 900;
+}
+
+.text-semi-bold {
+    font-weight: 700;
+}
+
+.text-color-dark-accent {
+    color: #76319b !important;
+}
+
+.text-color-dark {
+    color: #313a52;
+}
+
+.text-color-disabled {
+    color: grey;
+}
+
+.text-xs {
+    font-size: 0.7em;
+    font-weight: 400;
+}
+
+.main-content {
+    background-color: #eeebf6;
+}
+
+svg.fill-white {
+    fill: white;
+}
+
+.svg-w.fill-white svg {
+    fill: white;
+}
+
+.svg-w {
+    position: relative;
+
+}
+
+.svg-w svg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%
+}
+
+.svg-w svg {
+    fill: #76319b;
+}
+
+.mr-1 {
+    margin-right: 1em;
+}
+
+.pl-1rem{
+    padding-left: 1rem;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.d-flex-space-between {
+    justify-content: space-between;
+}
+
+.d-flex-end {
+    justify-content: end;
+}
+
+.d-flex-vert-center {
+    align-items: center;
+}
+
+.d-flex-vert-base {
+    align-items: baseline;
+}
+
+.radius-border {
+    border-radius: 0.7em;
+}
+
+.button-light {
+    border: none;
+    background-color: #e6ddf0;
+}
+
+.text-center{
+    text-align: center;
+}

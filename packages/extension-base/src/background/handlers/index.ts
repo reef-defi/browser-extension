@@ -15,6 +15,7 @@ const extension = new Extension(state);
 const tabs = new Tabs(state);
 
 export default function handler<TMessageType extends MessageTypes> ({ id, message, request }: TransportRequestMessage<TMessageType>, port: chrome.runtime.Port, extensionPortName = PORT_EXTENSION): void {
+  console.log("HANDLE MESSAGE=",request, port);
   const isExtension = port.name === extensionPortName;
   const sender = port.sender as chrome.runtime.MessageSender;
   const from = isExtension
@@ -23,8 +24,8 @@ export default function handler<TMessageType extends MessageTypes> ({ id, messag
   const source = `${from}: ${id}: ${message}`;
 
   console.log(` [in] ${source}`); // :: ${JSON.stringify(request)}`);
-
-  const promise = isExtension
+  console.log("HANDLER is ext=",isExtension);
+  const promise = isExtension && message!=='pri(extrinsic.sign)'
     ? extension.handle(id, message, request, port)
     : tabs.handle(id, message, request, from, port);
 
