@@ -38,6 +38,7 @@
     "@reef-defi/networks": "^7.8.2",
     "@reef-defi/util": "^7.8.2",
     "@reef-defi/util-crypto": "^7.8.2",
+    "boostrap": "^2.0.0",
     "file-saver": "^2.0.5",
     "i18next": "^21.3.3",
     "react": "^17.0.2",

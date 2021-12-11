@@ -27,3 +27,4 @@ docs/html
 /.yarn/
 /packages/extension-ui/yalc.lock
 /yalc.lock
+/.yarn/

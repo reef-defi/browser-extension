@@ -16,6 +16,7 @@ export default class Signer implements SignerInterface {
 
   public async signPayload (payload: SignerPayloadJSON): Promise<SignerResult> {
     const id = ++nextId;
+    console.log("signer signPayload=",payload);
     const result = await sendRequest('pub(extrinsic.sign)', payload);
 
     // we add an internal id (number) - should have a mapping from the

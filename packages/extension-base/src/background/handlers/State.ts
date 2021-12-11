@@ -178,6 +178,7 @@ export default class State {
   }
 
   private popupOpen (): void {
+    console.log("OPEN PP=",this.#notification);
     this.#notification !== 'extension' &&
       chrome.windows.create(
         this.#notification === 'window'

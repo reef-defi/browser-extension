@@ -23,7 +23,6 @@ export const signers$ = combineLatest([provider$, of(injectionSigner), accounts$
 
 export const selectAddressSubj = new ReplaySubject<string | undefined>(1);
 selectAddressSubj.next(localStorage.getItem('selected_address_reef') || undefined);
-
 export const selectedSigner$ = combineLatest([selectAddressSubj.pipe(distinctUntilChanged()), signers$]).pipe(
   map(([selectedAddress, signers]) => {
     let foundSigner = signers.find((rs: ReefSigner) => rs.address === selectedAddress);

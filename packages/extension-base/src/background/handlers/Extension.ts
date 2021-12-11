@@ -480,6 +480,7 @@ export default class Extension {
 
   // FIXME This looks very much like what we have in authorization
   private signingSubscribe (id: string, port: chrome.runtime.Port): boolean {
+
     const cb = createSubscription<'pri(signing.requests)'>(id, port);
     const subscription = this.#state.signSubject.subscribe((requests: SigningRequest[]): void =>
       cb(requests)
@@ -555,6 +556,8 @@ export default class Extension {
   // Weird thought, the eslint override is not needed in Tabs
   // eslint-disable-next-line @typescript-eslint/require-await
   public async handle<TMessageType extends MessageTypes> (id: string, type: TMessageType, request: RequestTypes[TMessageType], port: chrome.runtime.Port): Promise<ResponseType<TMessageType>> {
+
+    console.log("EXTensionHANDLLLL =",type);
     switch (type) {
       case 'pri(authorize.approve)':
         return this.authorizeApprove(request as RequestAuthorizeApprove);

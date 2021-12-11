@@ -1,7 +1,26 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { AccountJson, AllowedPath, AuthorizeRequest, MessageTypes, MessageTypesWithNoSubscriptions, MessageTypesWithNullRequest, MessageTypesWithSubscriptions, MetadataRequest, RequestTypes, ResponseAuthorizeList, ResponseDeriveValidate, ResponseJsonGetAccountInfo, ResponseSigningIsLocked, ResponseTypes, SeedLengths, SigningRequest, SubscriptionMessageTypes } from '@reef-defi/extension-base/background/types';
+import type {
+  AccountJson,
+  AllowedPath,
+  AuthorizeRequest,
+  MessageTypes,
+  MessageTypesWithNoSubscriptions,
+  MessageTypesWithNullRequest,
+  MessageTypesWithSubscriptions,
+  MetadataRequest,
+  RequestTypes,
+  ResponseAuthorizeList,
+  ResponseDeriveValidate,
+  ResponseJsonGetAccountInfo,
+  ResponseSigning,
+  ResponseSigningIsLocked,
+  ResponseTypes,
+  SeedLengths,
+  SigningRequest,
+  SubscriptionMessageTypes
+} from '@reef-defi/extension-base/background/types';
 import type { Message } from '@reef-defi/extension-base/types';
 import type { Chain } from '@reef-defi/extension-chains/types';
 import type { KeyringPair$Json } from '@reef-defi/keyring/types';
@@ -16,6 +35,8 @@ import { MetadataDef } from '@reef-defi/extension-inject/types';
 
 import allChains from './util/chains';
 import { getSavedMeta, setSavedMeta } from './MetadataCache';
+import {SignerPayloadJSON} from "@polkadot/types/types";
+import {SignerResult} from "@polkadot/api/types";
 
 interface Handler {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -69,7 +90,6 @@ export function sendMessage<TMessageType extends MessageTypes> (message: TMessag
 }
 
 export async function editAccount (address: string, name: string): Promise<boolean> {
-  console.log("this should not be called=");
   return sendMessage('pri(accounts.edit)', { address, name });
 }
 
@@ -203,7 +223,10 @@ export async function subscribeMetadataRequests (cb: (accounts: MetadataRequest[
 }
 
 export async function subscribeSigningRequests (cb: (accounts: SigningRequest[]) => void): Promise<boolean> {
-  return sendMessage('pri(signing.requests)', null, cb);
+  return sendMessage('pri(signing.requests)', null, (val)=> {
+    console.log("SIGN REQUEST=",val);
+    cb(val);
+  });
 }
 
 export async function validateSeed (suri: string, type?: KeypairType): Promise<{ address: string; suri: string }> {
@@ -236,4 +259,8 @@ export async function batchRestore (file: KeyringPairs$Json, password: string): 
 
 export async function setNotification (notification: string): Promise<boolean> {
   return sendMessage('pri(settings.notification)', notification);
+}
+
+export async function signPayload (payload: SignerPayloadJSON): Promise<ResponseSigning> {
+  return sendMessage('pri(extrinsic.sign)', payload);
 }

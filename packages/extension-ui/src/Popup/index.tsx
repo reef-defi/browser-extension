@@ -51,8 +51,8 @@ import PhishingDetected from './PhishingDetected';
 import RestoreJson from './RestoreJson';
 import Signing from './Signing';
 import Welcome from './Welcome';
-import {NavHeader} from "@reef-defi/extension-ui/Popup/NavHeader";
-import {Transfer} from "../../../reef/extension-ui/Transfer/Transfer";
+import {NavHeader} from "../../../reef/extension-ui/components/NavHeader";
+import {Transfer} from "../../../reef/extension-ui/components/Transfer";
 import {useInitReefState} from "../../../reef/extension-ui/hooks/useInitReefState";
 
 const startSettings = uiSettings.get();
@@ -173,7 +173,7 @@ export default function Popup (): React.ReactElement {
                         <Route path='/account/restore-json'>{wrapWithErrorBoundary(<RestoreJson />, 'restore-json')}</Route>
                         <Route path='/account/derive/:address/locked'>{wrapWithErrorBoundary(<Derive isLocked />, 'derived-address-locked')}</Route>
                         <Route path='/account/derive/:address'>{wrapWithErrorBoundary(<Derive />, 'derive-address')}</Route>
-                        <Route path='/send'>{wrapWithErrorBoundary(<Transfer />, 'transfer')}</Route>
+                        <Route path='/transfer'>{wrapWithErrorBoundary(<Transfer />, 'transfer')}</Route>
                         <Route path={`${PHISHING_PAGE_REDIRECT}/:website`}>{wrapWithErrorBoundary(<PhishingDetected />, 'phishing-page-redirect')}</Route>
                         <Route
                           exact

@@ -77,6 +77,7 @@ export function web3Enable (originName: string, compatInits: (() => Promise<bool
       initCompat.then(() =>
         getWindowExtensions(originName)
           .then((values): InjectedExtension[] => {
+            console.log("web3Enable EXTENSIONS=",values);
             return values
               .filter((value): value is [InjectedExtensionInfo, Injected] => !!value[1])
               .map(([info, ext]): InjectedExtension => {
