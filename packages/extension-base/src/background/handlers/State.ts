@@ -13,6 +13,7 @@ import { BehaviorSubject } from 'rxjs';
 import settings from '@polkadot/ui-settings';
 
 import { MetadataStore } from '../../stores';
+import {PORT_EXTENSION} from "@reef-defi/extension-base/defaults";
 
 interface Resolver <T> {
   reject: (error: Error) => void;
@@ -178,7 +179,6 @@ export default class State {
   }
 
   private popupOpen (): void {
-    console.log("OPEN PP=",this.#notification);
     this.#notification !== 'extension' &&
       chrome.windows.create(
         this.#notification === 'window'
@@ -348,6 +348,9 @@ export default class State {
   }
 
   public ensureUrlAuthorized (url: string): boolean {
+    if (url === PORT_EXTENSION) {
+      return true;
+    }
     const entry = this.#authUrls[this.stripUrl(url)];
 
     assert(entry, `The source ${url} has not been enabled yet`);
@@ -477,7 +480,9 @@ export default class State {
       };
 
       this.updateIconSign();
-      this.popupOpen();
+      if(url!==PORT_EXTENSION){
+        this.popupOpen();
+      }
     });
   }
 }
