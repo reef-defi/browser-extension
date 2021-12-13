@@ -105,6 +105,10 @@ svg.fill-white {
     display: flex;
 }
 
+.d-none {
+    display: none;
+}
+
 .d-flex-space-between {
     justify-content: space-between;
 }

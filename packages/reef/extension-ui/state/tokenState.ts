@@ -1,8 +1,8 @@
-import {combineLatest, map, Observable, of, ReplaySubject, shareReplay, switchMap, timer, startWith} from "rxjs";
+import {combineLatest, map, Observable, of, shareReplay, startWith, Subject, switchMap, tap, timer} from "rxjs";
 import {api, Network, Pool, ReefSigner, rpc, Token} from "@reef-defi/react-lib";
 import {combineTokensDistinct, toTokensWithPrice} from "./util";
 import {selectedNetwork$} from "./appState";
-import { selectedSigner$} from "./accountState";
+import {selectedSigner$} from "./accountState";
 
 const validatedTokens = require('../validated-tokens-mainnet.json');
 
@@ -13,12 +13,13 @@ export const reefPrice$ = timer(0, 60000).pipe(
 
 // @ts-ignore
 export const validatedTokens$ = of(validatedTokens.tokens as Token[]);
-export const reloadSignerTokens$ = new ReplaySubject<void>(1);
+export const reloadSignerTokens$ = new Subject<void>();
 
 export const selectedSignerTokenBalances$ = combineLatest([selectedSigner$, selectedNetwork$, reloadSignerTokens$.pipe(startWith(null))]).pipe(
   switchMap(([signer, network, _]: [ReefSigner | null, Network, any]) => {
     return signer ? api.loadSignerTokens(signer, network) : []
   }),
+  tap(tkns=>console.log('signerTokens=', tkns[0].balance.toString())),
   shareReplay(1)
 );
 export const allAvailableSignerTokens$ = combineLatest([selectedSignerTokenBalances$, validatedTokens$]).pipe(

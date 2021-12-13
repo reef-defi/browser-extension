@@ -32,6 +32,7 @@ import Identicon from './Identicon';
 import Menu from './Menu';
 import Svg from './Svg';
 import {useObservableState} from "../../../reef/extension-ui/hooks/useObservableState";
+import {Components, ReefSigner, utils} from "@reef-defi/react-lib";
 
 export interface Props {
   actions?: React.ReactNode;
@@ -101,6 +102,7 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
   const { t } = useTranslation();
   const { accounts } = useContext(AccountContext);
   const selectedAccount = useObservableState(appState.selectedSigner$);
+  const signers = useObservableState(appState.signers$);
   const settings = useContext(SettingsContext);
   const [{ account, formatted, genesisHash: recodedGenesis, prefix, type }, setRecoded] = useState<Recoded>(defaultRecoded);
   const chain = useMetadata(genesisHash || recodedGenesis, true);
@@ -179,14 +181,18 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
     [address, isHidden]
   );
 
-  const selectAccount = (account: AccountJson | null): void =>{
-    appState.selectAddressSubj.next(account?.address);
-  }
-
   const Name = () => {
     const accountName = name || account?.name;
     const displayName = accountName || t('<unknown>');
     const selected = selectedAccount?.address === account?.address;
+    const [signer, setSigner] = useState<ReefSigner>();
+    useEffect(() => {
+      setSigner(signers?.find(s => s.address === account?.address));
+    }, [signers]);
+
+    const selectAccount = (account: AccountJson | null): void =>{
+      appState.selectAddressSubj.next(account?.address);
+    }
 
     return (
       <>
@@ -208,7 +214,7 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
               />
             )
         )}
-        <span title={displayName} >{displayName} </span>
+        <span title={displayName} >{displayName}  <Components.Text.MiniText>{utils.toReefBalanceDisplay(signer?.balance)} </Components.Text.MiniText></span>
         {selectedAccount && (selected? <small>selected</small> : <button type="button" onClick={()=>selectAccount(account)}>select</button>)}
       </>);
   };
