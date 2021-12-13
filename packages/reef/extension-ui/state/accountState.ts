@@ -1,18 +1,23 @@
-import {combineLatest, distinctUntilChanged, map, of, ReplaySubject, shareReplay, switchMap} from "rxjs";
+import {
+  combineLatest, distinctUntilChanged, map, of, ReplaySubject,
+  shareReplay, switchMap, Subject, withLatestFrom, merge, Observable
+} from "rxjs";
 import {AccountJson} from "@reef-defi/extension-base/background/types";
 import {toReefSigner} from "./util";
 import Signer from "@reef-defi/extension-base/page/Signer";
 import {provider$} from "./appState";
-// import {sendMessage} from "@reef-defi/extension-base/page";
-import {ReefSigner} from "@reef-defi/react-lib";
+import {ReefSigner, rpc} from "@reef-defi/react-lib";
 import {sendMessage} from "@reef-defi/extension-ui/messaging";
+import {BigNumber} from "ethers";
 
 const injectionSigner = new Signer(sendMessage);
 
 // accepting only one callback so setting in Popup - subscribAccounts(accs => accounts$.next(accs));
 export const accounts$ = new ReplaySubject<AccountJson[] | null>(1);
+// also reloads signer tokens since emits signers$
+export const reloadSignersBalanceSubject = new Subject<void>();
 
-export const signers$ = combineLatest([provider$, of(injectionSigner), accounts$]).pipe(
+const signersFromAccounts$ = combineLatest([provider$, of(injectionSigner), accounts$]).pipe(
   switchMap(([provider, signer, accounts]) => {
     if (!accounts || !accounts.length) {
       return of([]);
@@ -21,6 +26,18 @@ export const signers$ = combineLatest([provider$, of(injectionSigner), accounts$
   }),
   shareReplay(1)
 );
+const signersWithReloadedBalances$ = reloadSignersBalanceSubject.pipe(
+  withLatestFrom(combineLatest([signersFromAccounts$, provider$])),
+  switchMap(([_, [signers, provider]]) => {
+    return Promise.all(signers.map((sig: ReefSigner) => rpc.getReefCoinBalance(sig.address, provider)))
+      .then((balances: BigNumber[]) => balances.map((balance: BigNumber, i: number) => {
+        const sig = signers[i];
+        sig.balance = balance;
+        return sig;
+      }));
+  })
+);
+export const signers$: Observable<ReefSigner[]> = merge(signersFromAccounts$, signersWithReloadedBalances$);
 
 export const selectAddressSubj = new ReplaySubject<string | undefined>(1);
 selectAddressSubj.next(localStorage.getItem('selected_address_reef') || undefined);

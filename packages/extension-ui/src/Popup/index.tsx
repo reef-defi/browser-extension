@@ -81,15 +81,14 @@ function initAccountContext (accounts: AccountJson[], selectedAccount: AccountJs
   return {
     accounts,
     hierarchy,
-    master,
-    selectedAccount
+    master
   };
 }
 
 export default function Popup (): React.ReactElement {
   const [accounts, setAccounts] = useState<null | AccountJson[]>(null);
   useInitReefState(accounts);
-  const [accountCtx, setAccountCtx] = useState<AccountsContext>({ accounts: [], hierarchy: [], selectedAccount: null });
+  const [accountCtx, setAccountCtx] = useState<AccountsContext>({ accounts: [], hierarchy: []});
   const [authRequests, setAuthRequests] = useState<null | AuthorizeRequest[]>(null);
   const [cameraOn, setCameraOn] = useState(startSettings.camera === 'on');
   const [mediaAllowed, setMediaAllowed] = useState(false);

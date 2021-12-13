@@ -44,7 +44,7 @@ function NavHeaderComp(): React.ReactElement<NavHeaderComp> {
       (res) => handleTxResponse(res, provider.api).then(
         (txRes: any): void => {
           const txHash = transfer.hash.toHex();
-          console.log("tx==",txHash);
+          console.log("SIGNED tx==",txHash);
           // txHandler({
           //   txIdent, txHash, isInBlock: txRes.result.status.isInBlock, isComplete: txRes.result.status.isFinalized,
           // });
@@ -63,9 +63,9 @@ function NavHeaderComp(): React.ReactElement<NavHeaderComp> {
 
   return (<div className='nav-header'>Reef
     <button onClick={_onClick}>send</button>
-    <button onClick={_onSign}>sign</button>
+    {/*<button onClick={_onSign}>sign</button>*/}
     <button onClick={_onRoot}>root</button>
-    {selectedAccount?.address}
+    {selectedAccount?.address.substr(selectedAccount.address.length-6)}
   </div>)
 }
 
