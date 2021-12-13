@@ -14,29 +14,26 @@ import type {
   ResponseAuthorizeList,
   ResponseDeriveValidate,
   ResponseJsonGetAccountInfo,
-  ResponseSigning,
   ResponseSigningIsLocked,
   ResponseTypes,
   SeedLengths,
   SigningRequest,
   SubscriptionMessageTypes
 } from '@reef-defi/extension-base/background/types';
-import type { Message } from '@reef-defi/extension-base/types';
-import type { Chain } from '@reef-defi/extension-chains/types';
-import type { KeyringPair$Json } from '@polkadot/keyring/types';
-import type { KeyringPairs$Json } from '@polkadot/ui-keyring/types';
-import type { HexString } from '@polkadot/util/types';
-import type { KeypairType } from '@polkadot/util-crypto/types';
+import type {Message} from '@reef-defi/extension-base/types';
+import type {Chain} from '@reef-defi/extension-chains/types';
+import type {KeyringPair$Json} from '@polkadot/keyring/types';
+import type {KeyringPairs$Json} from '@polkadot/ui-keyring/types';
+import type {HexString} from '@polkadot/util/types';
+import type {KeypairType} from '@polkadot/util-crypto/types';
 
-import { PORT_EXTENSION } from '@reef-defi/extension-base/defaults';
-import { metadataExpand } from '@reef-defi/extension-chains';
+import {PORT_EXTENSION} from '@reef-defi/extension-base/defaults';
+import {metadataExpand} from '@reef-defi/extension-chains';
 import chrome from '@reef-defi/extension-inject/chrome';
-import { MetadataDef } from '@reef-defi/extension-inject/types';
+import {MetadataDef} from '@reef-defi/extension-inject/types';
 
 import allChains from './util/chains';
-import { getSavedMeta, setSavedMeta } from './MetadataCache';
-import {SignerPayloadJSON} from "@polkadot/types/types";
-import {SignerResult} from "@polkadot/api/types";
+import {getSavedMeta, setSavedMeta} from './MetadataCache';
 
 interface Handler {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -224,7 +221,6 @@ export async function subscribeMetadataRequests (cb: (accounts: MetadataRequest[
 
 export async function subscribeSigningRequests (cb: (accounts: SigningRequest[]) => void): Promise<boolean> {
   return sendMessage('pri(signing.requests)', null, (val)=> {
-    console.log("SIGN REQUEST=",val);
     cb(val);
   });
 }
@@ -259,8 +255,4 @@ export async function batchRestore (file: KeyringPairs$Json, password: string): 
 
 export async function setNotification (notification: string): Promise<boolean> {
   return sendMessage('pri(settings.notification)', notification);
-}
-
-export async function signPayload (payload: SignerPayloadJSON): Promise<ResponseSigning> {
-  return sendMessage('pri(extrinsic.sign)', payload);
 }

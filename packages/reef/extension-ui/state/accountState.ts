@@ -3,8 +3,9 @@ import {AccountJson} from "@reef-defi/extension-base/background/types";
 import {toReefSigner} from "./util";
 import Signer from "@reef-defi/extension-base/page/Signer";
 import {provider$} from "./appState";
-import {sendMessage} from "@reef-defi/extension-base/page";
+// import {sendMessage} from "@reef-defi/extension-base/page";
 import {ReefSigner} from "@reef-defi/react-lib";
+import {sendMessage} from "@reef-defi/extension-ui/messaging";
 
 const injectionSigner = new Signer(sendMessage);
 

@@ -25,7 +25,7 @@ import type {
   SubscriptionMessageTypes
 } from '../types';
 
-import {PHISHING_PAGE_REDIRECT, PORT_EXTENSION} from '@reef-defi/extension-base/defaults';
+import {PHISHING_PAGE_REDIRECT} from '@reef-defi/extension-base/defaults';
 import {canDerive} from '@reef-defi/extension-base/utils';
 
 import {checkIfDenied} from '@polkadot/phishing';
@@ -84,7 +84,6 @@ export default class Tabs {
   }
 
   private getSigningPair (address: string): KeyringPair {
-    console.log("keyring acc len =",keyring.getAccounts().length);
     const pair = keyring.getPair(address);
 
     assert(pair, 'Unable to find keypair');
@@ -100,7 +99,6 @@ export default class Tabs {
   }
 
   private extrinsicSign (url: string, request: SignerPayloadJSON): Promise<ResponseSigning> {
-    console.log("extrrr sign=",url);
     const address = request.address;
     const pair = this.getSigningPair(address);
     return this.#state.sign(url, new RequestExtrinsicSign(request), { address, ...pair.meta });
@@ -190,12 +188,11 @@ export default class Tabs {
 
   public async handle<TMessageType extends MessageTypes> (id: string, type: TMessageType, request: RequestTypes[TMessageType], url: string, port: chrome.runtime.Port): Promise<ResponseTypes[keyof ResponseTypes]> {
 
-    console.log("HANDLLLL TABS=",type);
     if (type === 'pub(phishing.redirectIfDenied)') {
       return this.redirectIfPhishing(url);
     }
 
-    if (type !== 'pub(authorize.tab)' && url !== PORT_EXTENSION) {
+    if (type !== 'pub(authorize.tab)') {
       this.#state.ensureUrlAuthorized(url);
     }
 
@@ -213,9 +210,6 @@ export default class Tabs {
         return this.bytesSign(url, request as SignerPayloadRaw);
 
       case 'pub(extrinsic.sign)':
-        return this.extrinsicSign(url, request as SignerPayloadJSON);
-
-      case 'pri(extrinsic.sign)':
         return this.extrinsicSign(url, request as SignerPayloadJSON);
 
       case 'pub(metadata.list)':
