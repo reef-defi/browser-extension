@@ -2763,7 +2763,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reef-defi/extension-base@^0.41.2, @reef-defi/extension-base@workspace:packages/extension-base":
+"@reef-defi/extension-base@^0.41.3, @reef-defi/extension-base@workspace:packages/extension-base":
   version: 0.0.0-use.local
   resolution: "@reef-defi/extension-base@workspace:packages/extension-base"
   dependencies:
@@ -2771,8 +2771,8 @@ __metadata:
     "@polkadot/api": ^6.7.1
     "@polkadot/phishing": ^0.6.407
     "@polkadot/ui-keyring": ^0.86.5
-    "@reef-defi/extension-dapp": ^0.41.2
-    "@reef-defi/extension-inject": ^0.41.2
+    "@reef-defi/extension-dapp": ^0.41.3
+    "@reef-defi/extension-inject": ^0.41.3
     "@reef-defi/keyring": ^7.8.2
   languageName: unknown
   linkType: soft
@@ -2794,7 +2794,7 @@ __metadata:
   dependencies:
     "@babel/runtime": ^7.16.0
     "@metamask/detect-provider": ^1.2.0
-    "@reef-defi/extension-inject": ^0.41.2
+    "@reef-defi/extension-inject": ^0.41.3
     "@reef-defi/util": ^7.8.2
     web3: ^1.6.0
   peerDependencies:
@@ -2802,12 +2802,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reef-defi/extension-dapp@^0.41.2, @reef-defi/extension-dapp@workspace:packages/extension-dapp":
+"@reef-defi/extension-dapp@^0.41.3, @reef-defi/extension-dapp@workspace:packages/extension-dapp":
   version: 0.0.0-use.local
   resolution: "@reef-defi/extension-dapp@workspace:packages/extension-dapp"
   dependencies:
     "@babel/runtime": ^7.16.0
-    "@reef-defi/extension-inject": ^0.41.2
+    "@reef-defi/extension-inject": ^0.41.3
     "@reef-defi/util": ^7.8.2
     "@reef-defi/util-crypto": ^7.8.2
   peerDependencies:
@@ -2817,7 +2817,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reef-defi/extension-inject@^0.41.2, @reef-defi/extension-inject@workspace:packages/extension-inject":
+"@reef-defi/extension-inject@^0.41.3, @reef-defi/extension-inject@workspace:packages/extension-inject":
   version: 0.0.0-use.local
   resolution: "@reef-defi/extension-inject@workspace:packages/extension-inject"
   dependencies:
@@ -2829,7 +2829,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reef-defi/extension-ui@^0.41.2, @reef-defi/extension-ui@workspace:packages/extension-ui":
+"@reef-defi/extension-ui@^0.41.3, @reef-defi/extension-ui@workspace:packages/extension-ui":
   version: 0.0.0-use.local
   resolution: "@reef-defi/extension-ui@workspace:packages/extension-ui"
   dependencies:
@@ -2841,9 +2841,9 @@ __metadata:
     "@fortawesome/react-fontawesome": ^0.1.16
     "@polkadot/react-identicon": ^0.86.5
     "@polkadot/react-qr": ^0.86.5
-    "@reef-defi/extension-base": ^0.41.2
-    "@reef-defi/extension-dapp": ^0.41.2
-    "@reef-defi/extension-inject": ^0.41.2
+    "@reef-defi/extension-base": ^0.41.3
+    "@reef-defi/extension-dapp": ^0.41.3
+    "@reef-defi/extension-inject": ^0.41.3
     "@reef-defi/hw-ledger": ^7.8.2
     "@reef-defi/keyring": ^7.8.2
     "@reef-defi/networks": ^7.8.2
@@ -2882,9 +2882,9 @@ __metadata:
   dependencies:
     "@babel/runtime": ^7.16.0
     "@reef-defi/dev": ^0.63.19
-    "@reef-defi/extension-base": ^0.41.2
-    "@reef-defi/extension-inject": ^0.41.2
-    "@reef-defi/extension-ui": ^0.41.2
+    "@reef-defi/extension-base": ^0.41.3
+    "@reef-defi/extension-inject": ^0.41.3
+    "@reef-defi/extension-ui": ^0.41.3
     babel-loader: ^8.2.3
     browser-resolve: ^2.0.0
     buffer: ^6.0.3
