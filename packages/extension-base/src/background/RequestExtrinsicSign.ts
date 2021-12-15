@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { KeyringPair } from '@reef-defi/keyring/types';
-import type { SignerPayloadJSON } from '@polkadot/types/types';
 import type { HexString } from '@reef-defi/util/types';
+import type { SignerPayloadJSON } from '@polkadot/types/types';
 import type { RequestSign } from './types';
 
 import { TypeRegistry } from '@polkadot/types';

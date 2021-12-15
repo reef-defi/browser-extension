@@ -5,9 +5,9 @@ import type { AccountJson, AllowedPath, AuthorizeRequest, MessageTypes, MessageT
 import type { Message } from '@reef-defi/extension-base/types';
 import type { Chain } from '@reef-defi/extension-chains/types';
 import type { KeyringPair$Json } from '@reef-defi/keyring/types';
-import type { KeyringPairs$Json } from '@polkadot/ui-keyring/types';
 import type { HexString } from '@reef-defi/util/types';
 import type { KeypairType } from '@reef-defi/util-crypto/types';
+import type { KeyringPairs$Json } from '@polkadot/ui-keyring/types';
 
 import { PORT_EXTENSION } from '@reef-defi/extension-base/defaults';
 import { metadataExpand } from '@reef-defi/extension-chains';

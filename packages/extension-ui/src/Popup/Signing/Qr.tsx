@@ -1,8 +1,8 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ExtrinsicPayload } from '@polkadot/types/interfaces';
 import type { HexString } from '@reef-defi/util/types';
+import type { ExtrinsicPayload } from '@polkadot/types/interfaces';
 
 import { wrapBytes } from '@reef-defi/extension-dapp/wrapBytes';
 import React, { useCallback, useMemo, useState } from 'react';

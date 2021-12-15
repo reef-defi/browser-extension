@@ -9,9 +9,10 @@ import type { KeyringPair } from '@reef-defi/keyring/types';
 import type { ExtDef } from '@polkadot/types/extrinsic/signedExtensions/types';
 import type { SignerPayloadJSON } from '@polkadot/types/types';
 
+import { cryptoWaitReady } from '@reef-defi/util-crypto';
+
 import { TypeRegistry } from '@polkadot/types';
 import keyring from '@polkadot/ui-keyring';
-import { cryptoWaitReady } from '@reef-defi/util-crypto';
 
 import { AccountsStore } from '../../stores';
 import Extension from './Extension';

@@ -9,10 +9,10 @@ import handlers from '@reef-defi/extension-base/background/handlers';
 import { PORT_CONTENT, PORT_EXTENSION } from '@reef-defi/extension-base/defaults';
 import { AccountsStore } from '@reef-defi/extension-base/stores';
 import chrome from '@reef-defi/extension-inject/chrome';
-
-import keyring from '@polkadot/ui-keyring';
 import { assert } from '@reef-defi/util';
 import { cryptoWaitReady } from '@reef-defi/util-crypto';
+
+import keyring from '@polkadot/ui-keyring';
 
 // setup the notification (same a FF default background, white text)
 // eslint-disable-next-line no-void

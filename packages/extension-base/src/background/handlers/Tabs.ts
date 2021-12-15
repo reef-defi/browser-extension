@@ -10,11 +10,11 @@ import type { MessageTypes, RequestAccountList, RequestAuthorizeTab, RequestRpcS
 
 import { PHISHING_PAGE_REDIRECT } from '@reef-defi/extension-base/defaults';
 import { canDerive } from '@reef-defi/extension-base/utils';
+import { assert, isNumber } from '@reef-defi/util';
 
 import { checkIfDenied } from '@polkadot/phishing';
 import keyring from '@polkadot/ui-keyring';
 import { accounts as accountsObservable } from '@polkadot/ui-keyring/observable/accounts';
-import { assert, isNumber } from '@reef-defi/util';
 
 import RequestBytesSign from '../RequestBytesSign';
 import RequestExtrinsicSign from '../RequestExtrinsicSign';

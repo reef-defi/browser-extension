@@ -5,11 +5,11 @@
 
 import type { InjectedAccount, InjectedMetadataKnown, MetadataDef, ProviderList, ProviderMeta } from '@reef-defi/extension-inject/types';
 import type { KeyringPair, KeyringPair$Json, KeyringPair$Meta } from '@reef-defi/keyring/types';
+import type { HexString } from '@reef-defi/util/types';
+import type { KeypairType } from '@reef-defi/util-crypto/types';
 import type { JsonRpcResponse } from '@polkadot/rpc-provider/types';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 import type { KeyringPairs$Json } from '@polkadot/ui-keyring/types';
-import type { HexString } from '@reef-defi/util/types';
-import type { KeypairType } from '@reef-defi/util-crypto/types';
 
 import { TypeRegistry } from '@polkadot/types';
 
