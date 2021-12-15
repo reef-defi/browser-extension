@@ -1,0 +1,61 @@
+.dashboard-test{
+  background: black;
+  padding: 4em;
+}
+.dashboard_refresh-btn {
+    padding: 0.2em 0.7em !important;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+}
+
+.dashboard_balance-txt {
+    font-size: 3em;
+}
+
+.dashboard_actions_button {
+    width: 5em;
+    height: 5em;
+    color: white;
+}
+
+.dashboard_actions_button_text {
+    font-size: 0.8em;
+}
+
+.dashboard_actions_button-swap {
+    background-color: #38a777;
+    background: linear-gradient(90deg, rgba(60, 199, 139, 1) 0%, rgb(73, 179, 128) 100%);
+}
+
+.dashboard_actions_button-swap .svg-w {
+    width: 1.5em;
+    height: 1.5em;
+    margin: auto;
+}
+
+.dashboard_actions_button-send {
+    background-color: #00a6f5;
+    background: linear-gradient(90deg, rgb(0, 166, 245) 0%, rgb(2, 153, 224) 100%);
+}
+
+.dashboard_actions_button-send .svg-w {
+    width: 2em;
+    height: 2em;
+    margin: auto;
+}
+
+.dashboard_actions_button-buy {
+    background-color: #bf37a7;
+    background: linear-gradient(90deg, rgb(191, 55, 167) 0%, rgb(173, 51, 153) 100%);
+}
+
+.dashboard_actions_button-buy .svg-w {
+    width: 1.7em;
+    height: 1.7em;
+    margin: auto;
+}
+
+.dashboard_actions_button-buy .svg-w svg path {
+    fill: white;
+}

@@ -1,139 +1,234 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
 
 html, body, #root, .App {
-    width: 100%;
-    min-height: 100vh;
-    color: #313a52;
-    font-family: 'Lato', sans-serif;
-    font-weight: 400;
+  width: 100%;
+  min-height: 100vh;
+  color: #313a52;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
 }
 
 .content {
-    display: flex;
-    padding: 2.5rem 3.5rem;
+  display: flex;
+  padding: 2.5rem 3.5rem;
 }
 
 .nav-content {
-    padding-left: 3.5rem;
-    padding-right: 3.5rem;
+  padding-left: 3.5rem;
+  padding-right: 3.5rem;
 }
 
 /* Footer WIP */
 .footer {
-    position: sticky;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 
-    background: #252a47;
-    display: grid;
-    place-items: center;
-    padding: 50px;
+  background: #252a47;
+  display: grid;
+  place-items: center;
+  padding: 50px;
 }
 
 .w-100 {
-    width: 100%;
+  width: 100%;
 }
 
 .title-font {
-    font-family: 'Lato', sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 
 .text-bold {
-    font-weight: 900;
+  font-weight: 900;
 }
 
 .text-semi-bold {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .text-color-dark-accent {
-    color: #76319b !important;
+  color: #76319b !important;
 }
 
 .text-color-dark {
-    color: #313a52;
+  color: #313a52;
 }
 
 .text-color-disabled {
-    color: grey;
+  color: grey;
 }
 
 .text-xs {
-    font-size: 0.7em;
-    font-weight: 400;
+  font-size: 0.7em;
+  font-weight: 400;
 }
 
 .main-content {
-    background-color: #eeebf6;
+  background-color: #eeebf6;
 }
 
 svg.fill-white {
-    fill: white;
+  fill: white;
 }
 
 .svg-w.fill-white svg {
-    fill: white;
+  fill: white;
 }
 
 .svg-w {
-    position: relative;
+  position: relative;
 
 }
 
 .svg-w svg {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%
 }
 
 .svg-w svg {
-    fill: #76319b;
+  fill: #76319b;
 }
 
 .mr-1 {
-    margin-right: 1em;
+  margin-right: 1em;
 }
 
-.pl-1rem{
-    padding-left: 1rem;
+.pl-1rem {
+  padding-left: 1rem;
 }
 
 .d-flex {
-    display: flex;
+  display: flex;
 }
 
 .d-none {
-    display: none;
+  display: none;
 }
 
 .d-flex-space-between {
-    justify-content: space-between;
+  justify-content: space-between;
 }
 
 .d-flex-end {
-    justify-content: end;
+  justify-content: end;
 }
 
 .d-flex-vert-center {
-    align-items: center;
+  align-items: center;
 }
 
 .d-flex-vert-base {
-    align-items: baseline;
+  align-items: baseline;
 }
 
 .radius-border {
-    border-radius: 0.7em;
+  border-radius: 0.7em;
 }
 
 .button-light {
-    border: none;
-    background-color: #e6ddf0;
+  border: none;
+  background-color: #e6ddf0;
 }
 
-.text-center{
-    text-align: center;
+.text-center {
+  text-align: center;
+}
+
+/*DASHBOARD*/
+
+.dashboard_refresh-btn {
+  padding: 0.2em 0.7em !important;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+}
+
+.dashboard_balance-txt {
+  font-size: 3em;
+}
+
+.dashboard_actions_button {
+  width: 5em;
+  height: 5em;
+  color: white;
+}
+
+.dashboard_actions_button_text {
+  font-size: 0.8em;
+}
+
+.dashboard_actions_button-swap {
+  background-color: #38a777;
+  background: linear-gradient(90deg, rgba(60, 199, 139, 1) 0%, rgb(73, 179, 128) 100%);
+}
+
+.dashboard_actions_button-swap .svg-w {
+  width: 1.5em;
+  height: 1.5em;
+  margin: auto;
+}
+
+.dashboard_actions_button-send {
+  background-color: #00a6f5;
+  background: linear-gradient(90deg, rgb(0, 166, 245) 0%, rgb(2, 153, 224) 100%);
+}
+
+.dashboard_actions_button-send .svg-w {
+  width: 2em;
+  height: 2em;
+  margin: auto;
+}
+
+.dashboard_actions_button-buy {
+  background-color: #bf37a7;
+  background: linear-gradient(90deg, rgb(191, 55, 167) 0%, rgb(173, 51, 153) 100%);
+}
+
+.dashboard_actions_button-buy .svg-w {
+  width: 1.7em;
+  height: 1.7em;
+  margin: auto;
+}
+
+.dashboard_actions_button-buy .svg-w svg path {
+  fill: white;
+}
+
+/*TOKEN PILL*/
+
+.token-balance-item_icon-text_w {
+  height: 3em;
+}
+
+.token-balance-item {
+  max-width: 26em;
+  background-color: #f8f7fc;
+  box-shadow: 0em 0em 0.3em #e6e3f3;
+  padding: 1em;
+  padding-right: 1.4em;
+  margin-bottom: 2em;
+}
+
+.token-balance-item_icon-text {
+  margin-right: 1em;
+  display: flex;
+  align-items: center;
+
+}
+
+.token-balance-item_icon-text img {
+  /*max-height: 3.4em;
+  max-width: 3.4em;*/
+  height: 100%;
+  max-height: 100%;
+  width: auto;
+}
+
+.token-balance-item_balance-value-icon-w {
+  width: 1.4em;
+  height: 1.4em;
 }
