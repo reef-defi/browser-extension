@@ -8,7 +8,7 @@ import type { SendRequest } from './types';
 
 import EventEmitter from 'eventemitter3';
 
-import { isUndefined, logger } from '@polkadot/util';
+import { isUndefined, logger } from '@reef-defi/util';
 
 const l = logger('PostMessageProvider');
 

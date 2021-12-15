@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { InjectedAccount, InjectedMetadataKnown, MetadataDef, ProviderMeta } from '@reef-defi/extension-inject/types';
-import type { KeyringPair } from '@polkadot/keyring/types';
+import type { KeyringPair } from '@reef-defi/keyring/types';
 import type { JsonRpcResponse } from '@polkadot/rpc-provider/types';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 import type { SubjectInfo } from '@polkadot/ui-keyring/observable/types';
@@ -14,7 +14,7 @@ import { canDerive } from '@reef-defi/extension-base/utils';
 import { checkIfDenied } from '@polkadot/phishing';
 import keyring from '@polkadot/ui-keyring';
 import { accounts as accountsObservable } from '@polkadot/ui-keyring/observable/accounts';
-import { assert, isNumber } from '@polkadot/util';
+import { assert, isNumber } from '@reef-defi/util';
 
 import RequestBytesSign from '../RequestBytesSign';
 import RequestExtrinsicSign from '../RequestExtrinsicSign';

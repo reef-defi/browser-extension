@@ -10,7 +10,7 @@ import chrome from '@reef-defi/extension-inject/chrome';
 import { BehaviorSubject } from 'rxjs';
 
 import settings from '@polkadot/ui-settings';
-import { assert } from '@polkadot/util';
+import { assert } from '@reef-defi/util';
 
 import { MetadataStore } from '../../stores';
 

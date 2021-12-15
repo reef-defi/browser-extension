@@ -5,7 +5,7 @@ import type { AccountJson, AccountWithChildren } from '@reef-defi/extension-base
 import type { Chain } from '@reef-defi/extension-chains/types';
 import type { IconTheme } from '@polkadot/react-identicon/types';
 import type { SettingsStruct } from '@polkadot/ui-settings/types';
-import type { KeypairType } from '@polkadot/util-crypto/types';
+import type { KeypairType } from '@reef-defi/util-crypto/types';
 import type { ThemeProps } from '../types';
 
 import { faUsb } from '@fortawesome/free-brands-svg-icons';
@@ -16,7 +16,7 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from 'rea
 import CopyToClipboard from 'react-copy-to-clipboard';
 import styled from 'styled-components';
 
-import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
+import { decodeAddress, encodeAddress } from '@reef-defi/util-crypto';
 
 import details from '../assets/details.svg';
 import useMetadata from '../hooks/useMetadata';

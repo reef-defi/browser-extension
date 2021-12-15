@@ -1,7 +1,7 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { KeypairType } from '@polkadot/util-crypto/types';
+import type { KeypairType } from '@reef-defi/util-crypto/types';
 import type { ThemeProps } from '../../types';
 import type { AccountInfo } from '.';
 
@@ -11,7 +11,7 @@ import { validateSeed } from '@reef-defi/extension-ui/messaging';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { objectSpread } from '@polkadot/util';
+import { objectSpread } from '@reef-defi/util';
 
 import { ButtonArea, Dropdown, InputWithLabel, NextStepButton, TextAreaWithLabel, VerticalSpace, Warning } from '../../components';
 import useGenesisHashOptions from '../../hooks/useGenesisHashOptions';

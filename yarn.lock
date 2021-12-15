@@ -2362,7 +2362,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot/networks@npm:^7.8.2":
+"@polkadot/networks@npm:7.8.2, @polkadot/networks@npm:^7.8.2":
   version: 7.8.2
   resolution: "@polkadot/networks@npm:7.8.2"
   dependencies:
@@ -2532,7 +2532,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot/util-crypto@npm:^7.8.2":
+"@polkadot/util-crypto@npm:7.8.2, @polkadot/util-crypto@npm:^7.8.2":
   version: 7.8.2
   resolution: "@polkadot/util-crypto@npm:7.8.2"
   dependencies:
@@ -2559,7 +2559,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@polkadot/util@npm:^7.8.2":
+"@polkadot/util@npm:7.8.2, @polkadot/util@npm:^7.8.2":
   version: 7.8.2
   resolution: "@polkadot/util@npm:7.8.2"
   dependencies:
@@ -2767,13 +2767,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reef-defi/extension-base@workspace:packages/extension-base"
   dependencies:
-    "@babel/runtime": ^7.15.4
+    "@babel/runtime": ^7.16.0
     "@polkadot/api": ^6.7.1
-    "@polkadot/keyring": ^7.8.2
     "@polkadot/phishing": ^0.6.407
     "@polkadot/ui-keyring": ^0.86.5
     "@reef-defi/extension-dapp": ^0.41.2
     "@reef-defi/extension-inject": ^0.41.2
+    "@reef-defi/keyring": ^7.8.2
   languageName: unknown
   linkType: soft
 
@@ -2781,8 +2781,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reef-defi/extension-chains@workspace:packages/extension-chains"
   dependencies:
-    "@babel/runtime": ^7.15.4
-    "@polkadot/networks": ^7.8.2
+    "@babel/runtime": ^7.16.0
+    "@reef-defi/networks": ^7.8.2
   peerDependencies:
     "@polkadot/api": "*"
   languageName: unknown
@@ -2792,13 +2792,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reef-defi/extension-compat-metamask@workspace:packages/extension-compat-metamask"
   dependencies:
-    "@babel/runtime": ^7.15.4
+    "@babel/runtime": ^7.16.0
     "@metamask/detect-provider": ^1.2.0
-    "@polkadot/util": ^7.8.2
     "@reef-defi/extension-inject": ^0.41.2
+    "@reef-defi/util": ^7.8.2
     web3: ^1.6.0
   peerDependencies:
-    "@polkadot/util": "*"
+    "@reef-defi/util": "*"
   languageName: unknown
   linkType: soft
 
@@ -2806,14 +2806,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reef-defi/extension-dapp@workspace:packages/extension-dapp"
   dependencies:
-    "@babel/runtime": ^7.15.4
-    "@polkadot/util": ^7.8.2
-    "@polkadot/util-crypto": ^7.8.2
+    "@babel/runtime": ^7.16.0
     "@reef-defi/extension-inject": ^0.41.2
+    "@reef-defi/util": ^7.8.2
+    "@reef-defi/util-crypto": ^7.8.2
   peerDependencies:
     "@polkadot/api": "*"
-    "@polkadot/util": "*"
-    "@polkadot/util-crypto": "*"
+    "@reef-defi/util": "*"
+    "@reef-defi/util-crypto": "*"
   languageName: unknown
   linkType: soft
 
@@ -2821,7 +2821,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reef-defi/extension-inject@workspace:packages/extension-inject"
   dependencies:
-    "@babel/runtime": ^7.15.4
+    "@babel/runtime": ^7.16.0
     "@types/chrome": ^0.0.161
     "@types/firefox-webext-browser": ^94.0.0
   peerDependencies:
@@ -2833,22 +2833,22 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reef-defi/extension-ui@workspace:packages/extension-ui"
   dependencies:
-    "@babel/runtime": ^7.15.4
+    "@babel/runtime": ^7.16.0
     "@fortawesome/fontawesome-svg-core": ^1.2.36
     "@fortawesome/free-brands-svg-icons": ^5.15.4
     "@fortawesome/free-regular-svg-icons": ^5.15.4
     "@fortawesome/free-solid-svg-icons": ^5.15.4
     "@fortawesome/react-fontawesome": ^0.1.16
-    "@polkadot/hw-ledger": ^7.8.2
-    "@polkadot/keyring": ^7.8.2
-    "@polkadot/networks": ^7.8.2
     "@polkadot/react-identicon": ^0.86.5
     "@polkadot/react-qr": ^0.86.5
-    "@polkadot/util": ^7.8.2
-    "@polkadot/util-crypto": ^7.8.2
     "@reef-defi/extension-base": ^0.41.2
     "@reef-defi/extension-dapp": ^0.41.2
     "@reef-defi/extension-inject": ^0.41.2
+    "@reef-defi/hw-ledger": ^7.8.2
+    "@reef-defi/keyring": ^7.8.2
+    "@reef-defi/networks": ^7.8.2
+    "@reef-defi/util": ^7.8.2
+    "@reef-defi/util-crypto": ^7.8.2
     "@types/bn.js": ^4.11.6
     "@types/enzyme": ^3.10.10
     "@types/enzyme-adapter-react-16": ^1.0.6
@@ -2880,7 +2880,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@reef-defi/extension@workspace:packages/extension"
   dependencies:
-    "@babel/runtime": ^7.15.4
+    "@babel/runtime": ^7.16.0
     "@reef-defi/dev": ^0.63.19
     "@reef-defi/extension-base": ^0.41.2
     "@reef-defi/extension-inject": ^0.41.2
@@ -2903,6 +2903,138 @@ __metadata:
     webpack-extension-manifest-plugin: ^0.8.0
   languageName: unknown
   linkType: soft
+
+"@reef-defi/hw-ledger-transports@npm:7.8.2":
+  version: 7.8.2
+  resolution: "@reef-defi/hw-ledger-transports@npm:7.8.2"
+  dependencies:
+    "@babel/runtime": ^7.16.0
+    "@ledgerhq/hw-transport": ^6.11.2
+    "@ledgerhq/hw-transport-node-hid-singleton": ^6.11.2
+    "@ledgerhq/hw-transport-webhid": ^6.11.2
+    "@ledgerhq/hw-transport-webusb": ^6.11.2
+  dependenciesMeta:
+    "@ledgerhq/hw-transport-node-hid-singleton":
+      optional: true
+  checksum: 206d777cc450b965038eb9e8133841e5ab037a1cae09e4760f5c1f688e04953f6fa0982636c88e2f3a8ca597b7b01e442a1a2c11a4b34d360b6aa16741814842
+  languageName: node
+  linkType: hard
+
+"@reef-defi/hw-ledger@npm:^7.8.2":
+  version: 7.8.2
+  resolution: "@reef-defi/hw-ledger@npm:7.8.2"
+  dependencies:
+    "@babel/runtime": ^7.16.0
+    "@reef-defi/hw-ledger-transports": 7.8.2
+    "@reef-defi/util": 7.8.2
+    "@zondax/ledger-substrate": ^0.22.0
+  checksum: a5ee230d5b3283d60eec94b1f062f2bc02674232db11c2a908503b20ecfdbb34581d8ec04d6a998b9d1594c613670a44ad24a5111a287787a2acfe3ccb404398
+  languageName: node
+  linkType: hard
+
+"@reef-defi/keyring@npm:^7.8.2":
+  version: 7.8.2
+  resolution: "@reef-defi/keyring@npm:7.8.2"
+  dependencies:
+    "@babel/runtime": ^7.16.0
+    "@reef-defi/util": 7.8.2
+    "@reef-defi/util-crypto": 7.8.2
+  peerDependencies:
+    "@reef-defi/util": 7.8.2
+    "@reef-defi/util-crypto": 7.8.2
+  checksum: 82831225c472598f98b1c1ec568a48598376894fbada791bc38a58df37b331b001f3ac91ac22ce2a9be3ed64afb2a71ae3110eda4480390b8bc2095f98d6dd1a
+  languageName: node
+  linkType: hard
+
+"@reef-defi/networks@npm:^7.8.2":
+  version: 7.8.2
+  resolution: "@reef-defi/networks@npm:7.8.2"
+  dependencies:
+    "@babel/runtime": ^7.16.0
+  checksum: 3d5252b5ce173226dbd7ff52d0a140bc3fb8bd5b3dae610754341f08a10c6090be5fb83895d49f9fcdddecf8bc22db66bbede877b53d927021431e5c4c6c87e1
+  languageName: node
+  linkType: hard
+
+"@reef-defi/util-crypto@npm:^7.8.2":
+  version: 7.8.2
+  resolution: "@reef-defi/util-crypto@npm:7.8.2"
+  dependencies:
+    "@babel/runtime": ^7.16.0
+    "@polkadot/wasm-crypto": ^4.2.1
+    "@reef-defi/networks": 7.8.2
+    "@reef-defi/util": 7.8.2
+    "@reef-defi/x-randomvalues": 7.8.2
+    base-x: ^3.0.9
+    base64-js: ^1.5.1
+    blakejs: ^1.1.1
+    bn.js: ^4.12.0
+    create-hash: ^1.2.0
+    ed2curve: ^0.3.0
+    elliptic: ^6.5.4
+    hash.js: ^1.1.7
+    js-sha3: ^0.8.0
+    scryptsy: ^2.1.0
+    tweetnacl: ^1.0.3
+    xxhashjs: ^0.2.2
+  peerDependencies:
+    "@reef-defi/util": 7.8.2
+  checksum: 799159bb2a5cf8c308cf874c6e6d010bf554cd3c98a86abf1034c9f252730abb20418a206f06003f15167a61a5eb7e1378d431060eb88a853f389a111c13cb23
+  languageName: node
+  linkType: hard
+
+"@reef-defi/util@npm:^7.8.2":
+  version: 7.8.2
+  resolution: "@reef-defi/util@npm:7.8.2"
+  dependencies:
+    "@babel/runtime": ^7.16.0
+    "@reef-defi/x-textdecoder": 7.8.2
+    "@reef-defi/x-textencoder": 7.8.2
+    "@types/bn.js": ^4.11.6
+    bn.js: ^4.12.0
+    camelcase: ^6.2.0
+    ip-regex: ^4.3.0
+  checksum: 2d88d77041974be4d916cea488daca01039fae4db0cdd2d1f05a9e281ae04adaae4555e003079f9040c0fa09a35f9001ceb6cece4ffaeaecdfc16a2bc10fb247
+  languageName: node
+  linkType: hard
+
+"@reef-defi/x-global@npm:7.8.2":
+  version: 7.8.2
+  resolution: "@reef-defi/x-global@npm:7.8.2"
+  dependencies:
+    "@babel/runtime": ^7.16.0
+  checksum: 5a078dd8147cddf04aa3afbfc0972c3058c74590d6ff3e2af8f11635f745cbf89111022cd26b6b3f88fe0a5570e4fa13f3c539ebd8774f593a950fc030e18ed3
+  languageName: node
+  linkType: hard
+
+"@reef-defi/x-randomvalues@npm:7.8.2":
+  version: 7.8.2
+  resolution: "@reef-defi/x-randomvalues@npm:7.8.2"
+  dependencies:
+    "@babel/runtime": ^7.16.0
+    "@reef-defi/x-global": 7.8.2
+  checksum: be69190e83535b1c145f740f8895a4f95236e391e2f1400c84a131f235a165655e7f484342253743a6a48dfdc21af60becfa650bbd2f6984d8ab0d59375bfa38
+  languageName: node
+  linkType: hard
+
+"@reef-defi/x-textdecoder@npm:7.8.2":
+  version: 7.8.2
+  resolution: "@reef-defi/x-textdecoder@npm:7.8.2"
+  dependencies:
+    "@babel/runtime": ^7.16.0
+    "@reef-defi/x-global": 7.8.2
+  checksum: 1f70a49fdd360f4551c48fb1b2ef865f65897c3deda4f23bc0ad3d95031991b721d7cb5aa5bacefdef028747502e3c4ee9f0290d9ddcd4a88f76508120a882bc
+  languageName: node
+  linkType: hard
+
+"@reef-defi/x-textencoder@npm:7.8.2":
+  version: 7.8.2
+  resolution: "@reef-defi/x-textencoder@npm:7.8.2"
+  dependencies:
+    "@babel/runtime": ^7.16.0
+    "@reef-defi/x-global": 7.8.2
+  checksum: 55437ef859d013beac3aab3614777b09a4f4fd39fc227cd8db20ed9320486d51c5de6fa019d93128fe82f1f6857c6c61f7127795c55a5d5b4f0be8b5e61ca99e
+  languageName: node
+  linkType: hard
 
 "@rollup/plugin-alias@npm:^3.1.8":
   version: 3.1.8
@@ -3940,6 +4072,22 @@ __metadata:
     bs58: ^4.0.1
     hash.js: ^1.1.7
   checksum: cd3678d66f8756d87b422abc582a8fe23ec3ead1ee991058353171cf54b85df5e9ebe33bf0786394bd38320b460a091133b4c6f2078e14aa9341464f5b346a15
+  languageName: node
+  linkType: hard
+
+"@zondax/ledger-substrate@npm:^0.22.0":
+  version: 0.22.0
+  resolution: "@zondax/ledger-substrate@npm:0.22.0"
+  dependencies:
+    "@babel/runtime": ^7.14.8
+    "@ledgerhq/hw-transport": ^6.2.0
+    bip32: 2.0.6
+    bip32-ed25519: "git+https://github.com/Zondax/bip32-ed25519.git"
+    bip39: 3.0.4
+    blakejs: ^1.1.1
+    bs58: ^4.0.1
+    hash.js: ^1.1.7
+  checksum: 76c8b18d825ca2c04afb682efaf90c6423a8edb9a0e2c0051b117ccfe0d36c3be1f59c65b85685cbeabb057e0c6c453ddc3d55ea61b0a4581f34905a71653538
   languageName: node
   linkType: hard
 

@@ -4,7 +4,7 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 
-import { isAscii, u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import { isAscii, u8aToString, u8aUnwrapBytes } from '@reef-defi/util';
 
 import useTranslation from '../../hooks/useTranslation';
 

@@ -5,13 +5,13 @@ import '../../../../../__mocks__/chrome';
 
 import type { ResponseSigning } from '@reef-defi/extension-base/background/types';
 import type { MetadataDef } from '@reef-defi/extension-inject/types';
-import type { KeyringPair } from '@polkadot/keyring/types';
+import type { KeyringPair } from '@reef-defi/keyring/types';
 import type { ExtDef } from '@polkadot/types/extrinsic/signedExtensions/types';
 import type { SignerPayloadJSON } from '@polkadot/types/types';
 
 import { TypeRegistry } from '@polkadot/types';
 import keyring from '@polkadot/ui-keyring';
-import { cryptoWaitReady } from '@polkadot/util-crypto';
+import { cryptoWaitReady } from '@reef-defi/util-crypto';
 
 import { AccountsStore } from '../../stores';
 import Extension from './Extension';

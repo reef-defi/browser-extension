@@ -11,8 +11,8 @@ import { AccountsStore } from '@reef-defi/extension-base/stores';
 import chrome from '@reef-defi/extension-inject/chrome';
 
 import keyring from '@polkadot/ui-keyring';
-import { assert } from '@polkadot/util';
-import { cryptoWaitReady } from '@polkadot/util-crypto';
+import { assert } from '@reef-defi/util';
+import { cryptoWaitReady } from '@reef-defi/util-crypto';
 
 // setup the notification (same a FF default background, white text)
 // eslint-disable-next-line no-void

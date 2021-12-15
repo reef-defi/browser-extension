@@ -4,12 +4,12 @@
 import type { AccountJson, RequestSign } from '@reef-defi/extension-base/background/types';
 import type { ExtrinsicPayload } from '@polkadot/types/interfaces';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
-import type { HexString } from '@polkadot/util/types';
+import type { HexString } from '@reef-defi/util/types';
 
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import { TypeRegistry } from '@polkadot/types';
-import { decodeAddress } from '@polkadot/util-crypto';
+import { decodeAddress } from '@reef-defi/util-crypto';
 
 import { AccountContext, ActionContext, Address, VerticalSpace } from '../../../components';
 import { approveSignSignature } from '../../../messaging';

@@ -16,7 +16,7 @@
   "type": "module",
   "version": "0.41.2",
   "dependencies": {
-    "@babel/runtime": "^7.15.4",
+    "@babel/runtime": "^7.16.0",
     "@reef-defi/extension-base": "^0.41.2",
     "@reef-defi/extension-inject": "^0.41.2",
     "@reef-defi/extension-ui": "^0.41.2"

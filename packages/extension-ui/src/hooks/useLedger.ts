@@ -3,10 +3,10 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { Ledger } from '@polkadot/hw-ledger';
-import { Network } from '@polkadot/networks/types';
+import { Ledger } from '@reef-defi/hw-ledger';
+import { Network } from '@reef-defi/networks/types';
 import uiSettings from '@polkadot/ui-settings';
-import { assert } from '@polkadot/util';
+import { assert } from '@reef-defi/util';
 
 import ledgerChains from '../util/legerChains';
 import useTranslation from './useTranslation';

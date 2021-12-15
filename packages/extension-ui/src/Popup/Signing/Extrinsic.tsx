@@ -9,7 +9,7 @@ import BN from 'bn.js';
 import { TFunction } from 'i18next';
 import React, { useMemo, useRef } from 'react';
 
-import { bnToBn, formatNumber } from '@polkadot/util';
+import { bnToBn, formatNumber } from '@reef-defi/util';
 
 import { Table } from '../../components';
 import useMetadata from '../../hooks/useMetadata';

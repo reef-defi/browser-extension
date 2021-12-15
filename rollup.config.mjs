@@ -1,17 +1,26 @@
 // Copyright 2017-2021 @polkadot/extension authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { createBundle } from '@reef-defi/dev/config/rollup';
-import path from 'path';
+import { createBundle } from "@reef-defi/dev/config/rollup";
+import path from "path";
 
-const pkgs = ['@reef-defi/extension-dapp'];
+const pkgs = ["@reef-defi/extension-dapp"];
 
-const external = [...pkgs, '@polkadot/networks', '@polkadot/util', '@polkadot/util-crypto'];
+const external = [
+  ...pkgs,
+  "@reef-defi/networks",
+  "@reef-defi/util",
+  "@reef-defi/util-crypto",
+];
 
-const entries = ['extension-base', 'extension-chains', 'extension-inject'].reduce(
+const entries = [
+  "extension-base",
+  "extension-chains",
+  "extension-inject",
+].reduce(
   (all, p) => ({
     ...all,
-    [`@reef-defi/${p}`]: path.resolve(process.cwd(), `packages/${p}/build`)
+    [`@reef-defi/${p}`]: path.resolve(process.cwd(), `packages/${p}/build`),
   }),
   {}
 );
@@ -27,7 +36,7 @@ export default pkgs.map((pkg) => {
     ...override,
     entries: {
       ...entries,
-      ...(override.entries || {})
-    }
+      ...(override.entries || {}),
+    },
   });
 });
