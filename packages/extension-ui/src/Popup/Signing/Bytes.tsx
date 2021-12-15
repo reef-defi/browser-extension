@@ -1,10 +1,9 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { isAscii, u8aToString, u8aUnwrapBytes } from '@reef-defi/util';
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
-
-import { isAscii, u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 
 import useTranslation from '../../hooks/useTranslation';
 

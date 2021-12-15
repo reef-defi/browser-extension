@@ -7,10 +7,10 @@ import type { AccountJson, AuthorizeRequest, MetadataRequest, RequestAuthorizeTa
 
 import { addMetadata, knownMetadata } from '@reef-defi/extension-chains';
 import chrome from '@reef-defi/extension-inject/chrome';
+import { assert } from '@reef-defi/util';
 import { BehaviorSubject } from 'rxjs';
 
 import settings from '@polkadot/ui-settings';
-import { assert } from '@polkadot/util';
 
 import { MetadataStore } from '../../stores';
 

@@ -1,10 +1,10 @@
 // Copyright 2019-2021 @polkadot/extension-inject authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import type { KeypairType } from '@reef-defi/util-crypto/types';
 import type { Signer as InjectedSigner } from '@polkadot/api/types';
 import type { ProviderInterface } from '@polkadot/rpc-provider/types';
 import type { ExtDef } from '@polkadot/types/extrinsic/signedExtensions/types';
-import type { KeypairType } from '@polkadot/util-crypto/types';
 
 // eslint-disable-next-line no-undef
 type This = typeof globalThis;

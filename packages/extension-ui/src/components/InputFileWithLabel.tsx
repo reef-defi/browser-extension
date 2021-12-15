@@ -3,11 +3,10 @@
 
 import type { ThemeProps } from '../types';
 
+import { formatNumber, hexToU8a, isHex, u8aToString } from '@reef-defi/util';
 import React, { createRef, useCallback, useState } from 'react';
 import Dropzone, { DropzoneRef } from 'react-dropzone';
 import styled from 'styled-components';
-
-import { formatNumber, hexToU8a, isHex, u8aToString } from '@polkadot/util';
 
 import useTranslation from '../hooks/useTranslation';
 import Label from './Label';

@@ -2,13 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { Injected, InjectedAccount, InjectedWindow } from '@reef-defi/extension-inject/types';
+import type { HexString } from '@reef-defi/util/types';
 import type { SignerPayloadRaw, SignerResult } from '@polkadot/types/types';
-import type { HexString } from '@polkadot/util/types';
 
 import detectEthereumProvider from '@metamask/detect-provider';
+import { assert } from '@reef-defi/util';
 import Web3 from 'web3';
-
-import { assert } from '@polkadot/util';
 
 interface RequestArguments {
   method: string;

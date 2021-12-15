@@ -3,8 +3,8 @@
 
 import type { Injected, InjectedAccount, InjectedAccountWithMeta, InjectedExtension, InjectedExtensionInfo, InjectedProviderWithMeta, InjectedWindow, ProviderList, Unsubcall, Web3AccountsOptions } from '@reef-defi/extension-inject/types';
 
-import { u8aEq } from '@polkadot/util';
-import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
+import { u8aEq } from '@reef-defi/util';
+import { decodeAddress, encodeAddress } from '@reef-defi/util-crypto';
 
 import { documentReadyPromise } from './util';
 

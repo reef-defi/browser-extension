@@ -4,8 +4,9 @@
 import type { MetadataDef } from '@reef-defi/extension-inject/types';
 import type { Chain } from './types';
 
+import { base64Decode } from '@reef-defi/util-crypto';
+
 import { Metadata, TypeRegistry } from '@polkadot/types';
-import { base64Decode } from '@polkadot/util-crypto';
 
 // imports chain details, generally metadata. For the generation of these,
 // inside the api, run `yarn chain:info --ws <url>`

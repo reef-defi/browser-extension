@@ -1,7 +1,7 @@
 // Copyright 2019-2021 @polkadot/extension authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { u8aConcat, u8aEq, u8aToString } from '@polkadot/util';
+import { u8aConcat, u8aEq, u8aToString } from '@reef-defi/util';
 
 import { ETHEREUM, POSTFIX, PREFIX, unwrapBytes, wrapBytes } from './wrapBytes';
 

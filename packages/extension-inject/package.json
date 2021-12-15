@@ -14,10 +14,10 @@
   },
   "sideEffects": false,
   "type": "module",
-  "version": "0.41.2",
+  "version": "0.41.3",
   "main": "index.js",
   "dependencies": {
-    "@babel/runtime": "^7.15.4"
+    "@babel/runtime": "^7.16.0"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.161",

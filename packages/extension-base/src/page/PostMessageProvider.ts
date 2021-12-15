@@ -6,9 +6,8 @@ import type { ProviderInterfaceEmitCb, ProviderInterfaceEmitted } from '@polkado
 import type { AnyFunction } from '@polkadot/types/types';
 import type { SendRequest } from './types';
 
+import { isUndefined, logger } from '@reef-defi/util';
 import EventEmitter from 'eventemitter3';
-
-import { isUndefined, logger } from '@polkadot/util';
 
 const l = logger('PostMessageProvider');
 

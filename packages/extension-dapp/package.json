@@ -14,17 +14,17 @@
   },
   "sideEffects": false,
   "type": "module",
-  "version": "0.41.2",
+  "version": "0.41.3",
   "main": "index.js",
   "dependencies": {
-    "@babel/runtime": "^7.15.4",
-    "@polkadot/util": "^7.8.2",
-    "@polkadot/util-crypto": "^7.8.2",
-    "@reef-defi/extension-inject": "^0.41.2"
+    "@babel/runtime": "^7.16.0",
+    "@reef-defi/extension-inject": "^0.41.3",
+    "@reef-defi/util": "^7.8.2",
+    "@reef-defi/util-crypto": "^7.8.2"
   },
   "peerDependencies": {
     "@polkadot/api": "*",
-    "@polkadot/util": "*",
-    "@polkadot/util-crypto": "*"
+    "@reef-defi/util": "*",
+    "@reef-defi/util-crypto": "*"
   }
 }

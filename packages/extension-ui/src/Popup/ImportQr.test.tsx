@@ -15,7 +15,7 @@ import { flushAllPromises } from '../testHelpers';
 import ImportQr from './ImportQr';
 
 const mockedAccount = {
-  content: '12bxf6QJS5hMJgwbJMDjFot1sq93EvgQwyuPWENr9SzJfxtN',
+  content: '5DffWm9EaJRss9w5LiAj7f3s2D9PYd8GsVAuLwPVbMxnVjbA',
   expectedBannerChain: 'Polkadot',
   genesisHash: '0x91b171bb158e2d3848fa23a9f1c25182fb8e20313b2c1eb49219da7a70ce90c3',
   isAddress: true,
@@ -85,10 +85,6 @@ describe('ImportQr component', () => {
 
     it('shows the correct address', () => {
       expect(wrapper.find('[data-field="address"]').text()).toEqual(mockedAccount.content);
-    });
-
-    it('shows the correct banner', () => {
-      expect(wrapper.find('[data-field="chain"]').text()).toEqual(mockedAccount.expectedBannerChain);
     });
   });
 
