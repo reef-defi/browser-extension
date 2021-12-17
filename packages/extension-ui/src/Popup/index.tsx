@@ -55,6 +55,7 @@ import {NavHeader} from "../../../reef/extension-ui/components/NavHeader";
 import {Transfer} from "../../../reef/extension-ui/components/Transfer";
 import {useInitReefState} from "../../../reef/extension-ui/hooks/useInitReefState";
 import {Dashboard} from "../../../reef/extension-ui/components/dashboard/Dashboard";
+import {Swap} from "../../../reef/extension-ui/components/Swap";
 
 const startSettings = uiSettings.get();
 
@@ -175,6 +176,7 @@ export default function Popup (): React.ReactElement {
                         <Route path='/account/derive/:address'>{wrapWithErrorBoundary(<Derive />, 'derive-address')}</Route>
                         <Route path='/transfer'>{wrapWithErrorBoundary(<Transfer />, 'transfer')}</Route>
                         <Route path='/tokens'>{wrapWithErrorBoundary(<Dashboard />, 'tokens')}</Route>
+                        <Route path='/swap'>{wrapWithErrorBoundary(<Swap />, 'swap')}</Route>
                         <Route path={`${PHISHING_PAGE_REDIRECT}/:website`}>{wrapWithErrorBoundary(<PhishingDetected />, 'phishing-page-redirect')}</Route>
                         <Route
                           exact
