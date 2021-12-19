@@ -19,7 +19,6 @@ export const selectedSignerTokenBalances$ = combineLatest([selectedSigner$, sele
   switchMap(([signer, network, _]: [ReefSigner | null, Network, any]) => {
     return signer ? api.loadSignerTokens(signer, network) : []
   }),
-  tap(tkns=>console.log('signerTokens=', tkns[0].balance.toString())),
   shareReplay(1)
 );
 export const allAvailableSignerTokens$ = combineLatest([selectedSignerTokenBalances$, validatedTokens$]).pipe(

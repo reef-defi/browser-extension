@@ -32,7 +32,7 @@
     "@reef-defi/extension-base": "^0.41.2",
     "@reef-defi/extension-dapp": "^0.41.2",
     "@reef-defi/extension-inject": "^0.41.2",
-    "@reef-defi/react-lib": "^1.0.16",
+    "@reef-defi/react-lib": "file:.yalc/@reef-defi/react-lib",
     "boostrap": "^2.0.0",
     "file-saver": "^2.0.5",
     "i18next": "^21.3.3",

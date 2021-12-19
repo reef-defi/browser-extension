@@ -27,12 +27,13 @@ import useTranslation from '../hooks/useTranslation';
 import {showAccount} from '../messaging';
 import {DEFAULT_TYPE} from '../util/defaultType';
 import getParentNameSuri from '../util/getParentNameSuri';
-import {AccountContext, SettingsContext} from './contexts';
+import {AccountContext, SettingsContext, SigningReqContext} from './contexts';
 import Identicon from './Identicon';
 import Menu from './Menu';
 import Svg from './Svg';
 import {useObservableState} from "../../../reef/extension-ui/hooks/useObservableState";
 import {Components, ReefSigner, utils} from "@reef-defi/react-lib";
+import {provider$} from "../../../reef/extension-ui/state/providerState";
 
 export interface Props {
   actions?: React.ReactNode;
@@ -106,7 +107,8 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
   const settings = useContext(SettingsContext);
   const [{ account, formatted, genesisHash: recodedGenesis, prefix, type }, setRecoded] = useState<Recoded>(defaultRecoded);
   const chain = useMetadata(genesisHash || recodedGenesis, true);
-
+  const provider = useObservableState(provider$);
+  const signRequests = useContext(SigningReqContext);
   const [showActionsMenu, setShowActionsMenu] = useState(false);
   const [moveMenuUp, setIsMovedMenu] = useState(false);
   const actionsRef = useRef<HTMLDivElement>(null);
@@ -215,7 +217,8 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
             )
         )}
         <span title={displayName} >{displayName}  <Components.Text.MiniText>{utils.toReefBalanceDisplay(signer?.balance)} </Components.Text.MiniText></span>
-        {selectedAccount && (selected? <small>selected</small> : <button type="button" onClick={()=>selectAccount(account)}>select</button>)}
+        {!(!!signRequests && !!signRequests.length) && selectedAccount && (selected? <small>selected</small> : <button type="button" onClick={()=>selectAccount(account)}>select</button>)}
+        {!(!!signRequests && !!signRequests.length) && signer && !signer?.isEvmClaimed && provider && <button onClick={()=>utils.alertEvmAddressBind(signer, provider)}>bind EVM</button>}
       </>);
   };
 
