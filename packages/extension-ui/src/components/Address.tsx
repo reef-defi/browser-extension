@@ -27,7 +27,7 @@ import useTranslation from '../hooks/useTranslation';
 import {showAccount} from '../messaging';
 import {DEFAULT_TYPE} from '../util/defaultType';
 import getParentNameSuri from '../util/getParentNameSuri';
-import {AccountContext, SettingsContext, SigningReqContext} from './contexts';
+import {AccountContext, ActionContext, SettingsContext, SigningReqContext} from './contexts';
 import Identicon from './Identicon';
 import Menu from './Menu';
 import Svg from './Svg';
@@ -101,6 +101,7 @@ const defaultRecoded = { account: null, formatted: null, prefix: 42, type: DEFAU
 
 function Address ({ actions, address, children, className, genesisHash, isExternal, isHardware, isHidden, name, parentName, suri, toggleActions, type: givenType }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
+  const onAction = useContext(ActionContext);
   const { accounts } = useContext(AccountContext);
   const selectedAccount = useObservableState(appState.selectedSigner$);
   const signers = useObservableState(appState.signers$);
@@ -183,6 +184,11 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
     [address, isHidden]
   );
 
+  const openEvmBindView= useCallback(
+    () => onAction('/bind'),
+    [onAction]
+  );
+
   const Name = () => {
     const accountName = name || account?.name;
     const displayName = accountName || t('<unknown>');
@@ -218,7 +224,7 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
         )}
         <span title={displayName} >{displayName}  <Components.Text.MiniText>{utils.toReefBalanceDisplay(signer?.balance)} </Components.Text.MiniText></span>
         {!(!!signRequests && !!signRequests.length) && selectedAccount && (selected? <small>selected</small> : <button type="button" onClick={()=>selectAccount(account)}>select</button>)}
-        {!(!!signRequests && !!signRequests.length) && signer && !signer?.isEvmClaimed && provider && <button onClick={()=>utils.alertEvmAddressBind(signer, provider)}>bind EVM</button>}
+        {!(!!signRequests && !!signRequests.length) && signer && !signer?.isEvmClaimed && provider && <button onClick={()=>openEvmBindView(signer?.address)}>bind EVM</button>}
       </>);
   };
 
