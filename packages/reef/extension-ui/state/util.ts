@@ -3,6 +3,7 @@ import {AccountJson} from "@reef-defi/extension-base/background/types";
 import {Provider} from "@reef-defi/evm-provider";
 import Signer from "@reef-defi/extension-base/page/Signer";
 import {InjectedAccountWithMeta} from "@reef-defi/extension-inject/types";
+import {reloadSignersBalanceSubject} from "./accountState";
 
 export const combineTokensDistinct = ([tokens1, tokens2 ]:[Token[], Token[]])=>{
   const combinedT = [...tokens1];
@@ -26,3 +27,10 @@ export function toReefSigner(acc: AccountJson, provider: Provider, injectionSign
   };
   return rpc.accountToSigner(accWithMeta, provider, injectionSigner);
 }
+
+export const onTxUpdateReloadSignerBalances = (txUpdateData: utils.TxStatusUpdate): void => {
+  if (txUpdateData?.isInBlock || txUpdateData?.error) {
+    const delay = txUpdateData.type === utils.TX_TYPE_EVM ? 2000 : 0;
+    setTimeout(() => reloadSignersBalanceSubject.next(), delay);
+  }
+};

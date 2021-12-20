@@ -32,6 +32,10 @@ function NavHeaderComp(): React.ReactElement<NavHeaderComp> {
     () => onAction('/swap'),
     [onAction]
   );
+  const _onBind = useCallback(
+    () => onAction('/bind'),
+    [onAction]
+  );
   /*const _onSign = useCallback(
     () => {
       // onAction('/auth-list')
@@ -74,6 +78,7 @@ function NavHeaderComp(): React.ReactElement<NavHeaderComp> {
     <button onClick={_onTokens}>tokens</button>
     <button onClick={_onRoot}>root</button>
     <button onClick={_onSwap}>swap</button>
+    <button onClick={_onBind}>bind</button>
     {selectedAccount?.address.substr(selectedAccount.address.length-6)}
   </div>)
 }
