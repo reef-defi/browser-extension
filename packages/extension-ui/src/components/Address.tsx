@@ -185,7 +185,7 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
   );
 
   const openEvmBindView= useCallback(
-    () => onAction('/bind'),
+    (bindAddress) => onAction('/bind?bindAddress='+bindAddress),
     [onAction]
   );
 

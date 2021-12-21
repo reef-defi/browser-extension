@@ -30,7 +30,7 @@ export function toReefSigner(acc: AccountJson, provider: Provider, injectionSign
 
 export const onTxUpdateReloadSignerBalances = (txUpdateData: utils.TxStatusUpdate): void => {
   if (txUpdateData?.isInBlock || txUpdateData?.error) {
-    const delay = txUpdateData.type === utils.TX_TYPE_EVM ? 2000 : 0;
+    const delay = txUpdateData.txTypeEvm ? 2000 : 0;
     setTimeout(() => reloadSignersBalanceSubject.next(), delay);
   }
 };

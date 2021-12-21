@@ -1,6 +1,6 @@
 import {
   combineLatest, distinctUntilChanged, map, of, ReplaySubject,
-  shareReplay, switchMap, Subject, withLatestFrom, merge, Observable
+  shareReplay, switchMap, Subject, withLatestFrom, merge, Observable, filter
 } from "rxjs";
 import {AccountJson} from "@reef-defi/extension-base/background/types";
 import {toReefSigner} from "./util";
@@ -26,6 +26,7 @@ const signersFromAccounts$ = combineLatest([provider$, of(injectionSigner), acco
   }),
   shareReplay(1)
 );
+
 const signersWithReloadedBalances$ = reloadSignersBalanceSubject.pipe(
   withLatestFrom(combineLatest([signersFromAccounts$, provider$])),
   switchMap(([_, [signers, provider]]) => {
@@ -37,7 +38,22 @@ const signersWithReloadedBalances$ = reloadSignersBalanceSubject.pipe(
       }));
   })
 );
-export const signers$: Observable<ReefSigner[]> = merge(signersFromAccounts$, signersWithReloadedBalances$);
+export const reloadSignerEvmBindingSubject = new Subject<string>();
+const signersWithReloadedEvmBindings$ = reloadSignerEvmBindingSubject.pipe(
+  withLatestFrom(combineLatest([signersFromAccounts$, provider$])),
+  switchMap(([reloadSignerAddress, [signers, provider]]) => {
+    const reloadSigner = signers.find(sig => sig.address === reloadSignerAddress||sig.evmAddress===reloadSignerAddress);
+    if (reloadSigner) {
+      return reloadSigner.signer.isClaimed().then((isClaimed) => {
+        reloadSigner.isEvmClaimed = isClaimed;
+        return [...signers];
+      });
+    }
+    return Promise.resolve(null);
+  }),
+  filter(v=>!!v)
+) as Observable<ReefSigner[]>;
+export const signers$: Observable<ReefSigner[]> = merge(signersFromAccounts$, signersWithReloadedBalances$, signersWithReloadedEvmBindings$);
 
 export const selectAddressSubj = new ReplaySubject<string | undefined>(1);
 selectAddressSubj.next(localStorage.getItem('selected_address_reef') || undefined);
@@ -48,7 +64,7 @@ export const selectedSigner$ = combineLatest([selectAddressSubj.pipe(distinctUnt
       foundSigner = signers[0];
     }
     localStorage.setItem('selected_address_reef', foundSigner?.address || '');
-    return foundSigner;
+    return {...foundSigner};
   }),
   shareReplay(1)
 );
