@@ -51,12 +51,13 @@ import PhishingDetected from './PhishingDetected';
 import RestoreJson from './RestoreJson';
 import Signing from './Signing';
 import Welcome from './Welcome';
-import {NavHeader} from "../../../reef/extension-ui/components/NavHeader";
+import {HeaderComponent} from "../../../reef/extension-ui/components/HeaderComponent";
 import {Transfer} from "../../../reef/extension-ui/components/Transfer";
 import {useInitReefState} from "../../../reef/extension-ui/hooks/useInitReefState";
 import {Dashboard} from "../../../reef/extension-ui/components/dashboard/Dashboard";
 import {Swap} from "../../../reef/extension-ui/components/Swap";
 import {Bind} from "../../../reef/extension-ui/components/Bind";
+import {FooterComponent} from "../../../reef/extension-ui/components/FooterComponent";
 
 const startSettings = uiSettings.get();
 
@@ -149,7 +150,8 @@ export default function Popup (): React.ReactElement {
         ? wrapWithErrorBoundary(<Metadata />, 'metadata')
         : signRequests && signRequests.length
           ? wrapWithErrorBoundary(<Signing />, 'signing')
-          : wrapWithErrorBoundary(<Accounts />, 'accounts')
+          : accounts?.length ? wrapWithErrorBoundary(<Dashboard />, 'dashboard')
+            : wrapWithErrorBoundary(<Accounts />, 'accounts')
     : wrapWithErrorBoundary(<Welcome />, 'welcome');
 
   return (
@@ -162,7 +164,7 @@ export default function Popup (): React.ReactElement {
                 <MetadataReqContext.Provider value={metaRequests}>
                   <SigningReqContext.Provider value={signRequests}>
                     <ToastProvider>
-                      <NavHeader ></NavHeader>
+                      <HeaderComponent ></HeaderComponent>
                       <Switch>
                         <Route path='/auth-list'>{wrapWithErrorBoundary(<AuthList />, 'auth-list')}</Route>
                         <Route path='/account/create'>{wrapWithErrorBoundary(<CreateAccount />, 'account-creation')}</Route>
@@ -176,6 +178,7 @@ export default function Popup (): React.ReactElement {
                         <Route path='/account/derive/:address/locked'>{wrapWithErrorBoundary(<Derive isLocked />, 'derived-address-locked')}</Route>
                         <Route path='/account/derive/:address'>{wrapWithErrorBoundary(<Derive />, 'derive-address')}</Route>
                         <Route path='/transfer'>{wrapWithErrorBoundary(<Transfer />, 'transfer')}</Route>
+                        <Route path='/accounts'>{wrapWithErrorBoundary(<Accounts className="content-comp"/>, 'accounts')}</Route>
                         <Route path='/tokens'>{wrapWithErrorBoundary(<Dashboard />, 'tokens')}</Route>
                         <Route path='/swap'>{wrapWithErrorBoundary(<Swap />, 'swap')}</Route>
                         <Route path='/bind'>{wrapWithErrorBoundary(<Bind />, 'bind')}</Route>
@@ -187,6 +190,7 @@ export default function Popup (): React.ReactElement {
                           {Root}
                         </Route>
                       </Switch>
+                      <FooterComponent ></FooterComponent>
                     </ToastProvider>
                   </SigningReqContext.Provider>
                 </MetadataReqContext.Provider>

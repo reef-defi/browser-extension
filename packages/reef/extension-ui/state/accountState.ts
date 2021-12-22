@@ -54,7 +54,7 @@ const signersWithReloadedEvmBindings$ = reloadSignerEvmBindingSubject.pipe(
   filter(v=>!!v)
 ) as Observable<ReefSigner[]>;
 export const signers$: Observable<ReefSigner[]> = merge(signersFromAccounts$, signersWithReloadedBalances$, signersWithReloadedEvmBindings$);
-
+// TODO add context to data so you know what changed {data:any, context: ChangeStatus:{}}
 export const selectAddressSubj = new ReplaySubject<string | undefined>(1);
 selectAddressSubj.next(localStorage.getItem('selected_address_reef') || undefined);
 export const selectedSigner$ = combineLatest([selectAddressSubj.pipe(distinctUntilChanged()), signers$]).pipe(

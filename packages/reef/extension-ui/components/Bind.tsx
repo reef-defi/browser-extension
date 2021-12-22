@@ -9,17 +9,15 @@ import {reloadSignerEvmBindingSubject} from "../state/accountState";
 
 const onTxUpdate = (state: utils.TxStatusUpdate) => {
   if (state.isInBlock && !!state.address && state.componentTxType === EvmBindComponentTxType.BIND) {
+    // TODO binding should also reload balance - one subject - {address:'da', updates: [UpdateEnum.BALANCE, UpdateEnum.EVM_ADDRESS]}[]
     reloadSignerEvmBindingSubject.next(state.address);
+    onTxUpdateReloadSignerBalances(state);
   } else {
     onTxUpdateReloadSignerBalances(state);
   }
 }
 
-interface Bind {
-  location: any;
-}
-
-export const Bind = ({location}: Bind): JSX.Element => {
+export const Bind = (): JSX.Element => {
   // const provider = useObservableState(appState.provider$);
   const accounts = useObservableState(appState.signers$);
   const selectedSigner = useObservableState(appState.selectedSigner$);
