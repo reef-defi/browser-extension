@@ -5,16 +5,35 @@ import {useObservableState} from "../hooks/useObservableState";
 import {appState} from "../state"
 import {onTxUpdateReloadSignerBalances} from "../state/util";
 import {ReefSigner, utils} from "@reef-defi/react-lib";
-import {reloadSignerEvmBindingSubject} from "../state/accountState";
+import {UpdateAction, UpdateDataType} from "../state/updateCtxUtil";
 
 const onTxUpdate = (state: utils.TxStatusUpdate) => {
-  if (state.isInBlock && !!state.address && state.componentTxType === EvmBindComponentTxType.BIND) {
-    // TODO binding should also reload balance - one subject - {address:'da', updates: [UpdateEnum.BALANCE, UpdateEnum.EVM_ADDRESS]}[]
-    reloadSignerEvmBindingSubject.next(state.address);
-    onTxUpdateReloadSignerBalances(state);
+  let updateActions: UpdateAction[] = [];
+  if (state.isInBlock && state.componentTxType === EvmBindComponentTxType.BIND) {
+    // bind
+    if (state.addressees && state.addressees.length) {
+      state.addressees.forEach(address => {
+        updateActions.push({
+          type: UpdateDataType.ACCOUNT_EVM_BINDING,
+          address
+        } as UpdateAction);
+        updateActions.push({
+          type: UpdateDataType.ACCOUNT_NATIVE_BALANCE,
+          address
+        } as UpdateAction);
+      })
+    } else {
+      updateActions = [{type: UpdateDataType.ACCOUNT_EVM_BINDING}, {type: UpdateDataType.ACCOUNT_NATIVE_BALANCE}]
+    }
   } else {
-    onTxUpdateReloadSignerBalances(state);
+    // transaction
+    updateActions = state.addressees && state.addressees.length ? state.addressees.map(address => ({
+      type: UpdateDataType.ACCOUNT_NATIVE_BALANCE,
+      address
+    } as UpdateAction)) : [{type: UpdateDataType.ACCOUNT_NATIVE_BALANCE}];
+    console.log("BIND TX actions=", updateActions)
   }
+  onTxUpdateReloadSignerBalances(state, updateActions);
 }
 
 export const Bind = (): JSX.Element => {
@@ -25,7 +44,7 @@ export const Bind = (): JSX.Element => {
   useEffect(() => {
     let [, params] = window.location.href.split('?');
     const urlParams = params?.split('&').map(e => e.split('=').map(decodeURIComponent)).reduce((r: any, [k, v]) => (r[k] = v, r), {});
-    const {bindAddress} = urlParams||{};
+    const {bindAddress} = urlParams || {};
     let paramAccount;
     if (bindAddress) {
       paramAccount = accounts?.find(acc => acc.address === bindAddress);
@@ -33,14 +52,10 @@ export const Bind = (): JSX.Element => {
     setBindSigner(paramAccount || selectedSigner);
   }, [selectedSigner]);
 
-
-  //
-  // const signRequests = useContext(SigningReqContext);
-
   return (
     <SigningOrChildren>
-      {bindSigner && (<EvmBindComponent bindSigner={bindSigner} signers={accounts || []}
-                                           onTxUpdate={onTxUpdate}></EvmBindComponent>)}
+      {bindSigner && accounts && (<EvmBindComponent bindSigner={bindSigner} signers={accounts}
+                                        onTxUpdate={onTxUpdate}></EvmBindComponent>)}
     </SigningOrChildren>
   );
 };
