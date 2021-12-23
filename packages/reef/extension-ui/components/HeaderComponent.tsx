@@ -1,3 +1,5 @@
+import { faExchangeAlt, faHome, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ActionContext } from '@reef-defi/extension-ui/components';
 import { utils } from '@reef-defi/react-lib';
 import React, { useCallback, useContext } from 'react';
@@ -101,32 +103,52 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
         />
       </svg>
     </div>
-
     <div className='navigation__links'>
       <a
+        className='navigation__link'
         href='#'
         onClick={(ev) => {
           ev.stopPropagation();
           ev.preventDefault();
           openRoute('/');
         }}
-      >Dashboard</a>
+        title='Dashboard'
+      >
+        <FontAwesomeIcon
+          className='navigation__link-icon'
+          icon={faHome}
+        />
+      </a>
       <a
+        className='navigation__link'
         href='#'
         onClick={(ev) => {
           ev.stopPropagation();
           ev.preventDefault();
           openRoute('/transfer');
         }}
-      >Send</a>
+        title='Send'
+      >
+        <FontAwesomeIcon
+          className='navigation__link-icon navigation__link-icon--plane'
+          icon={faPaperPlane}
+        />
+      </a>
       <a
+        className='navigation__link'
         href='#'
         onClick={(ev) => {
           ev.stopPropagation();
           ev.preventDefault();
           openRoute('/swap');
         }}
-      >Swap</a>
+        title='Swap'
+      >
+        <FontAwesomeIcon
+          className='navigation__link-icon'
+          icon={faExchangeAlt}
+        />
+      </a>
     </div>
 
     <button
@@ -134,8 +156,10 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
       onClick={() => openRoute('/accounts')}
       type='button'
     >
-      <div className='navigation__account-name'>{selectedAccount?.name}</div>
-      <div className='navigation__account-address'>{utils.toAddressShortDisplay(selectedAccount?.address || '')}</div>
+      <div className='navigation__account-info'>
+        <div className='navigation__account-name'>{selectedAccount?.name}</div>
+        <div className='navigation__account-address'>{utils.toAddressShortDisplay(selectedAccount?.address || '')}</div>
+      </div>
       <div className='navigation__account-tokens'>
         <img src='https://s2.coinmarketcap.com/static/img/coins/64x64/6951.png' />
         <div className='navigation__account-tokens-amount'>{selectedAccount ? utils.toReefBalanceDisplay(selectedAccount.balance).replace('-', '0.00').replace(' REEF', '') : ''}</div>
