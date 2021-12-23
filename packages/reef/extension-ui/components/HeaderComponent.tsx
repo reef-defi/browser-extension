@@ -21,7 +21,9 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
     [onAction]
   );
 
-  return (<div className='nav-content navigation d-flex d-flex-space-between'>
+  const theme = localStorage.getItem('theme');
+
+  return (<div className={theme === 'dark' ? 'navigation navigation--dark' : 'navigation'}>
     <div className='reef-logo'>
       <svg
         enableBackground='new -466.4 720.2 144.6 73.3'

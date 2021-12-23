@@ -598,3 +598,57 @@ svg.fill-white {
   background: linear-gradient(to right, #d12fa1, #8b42b4);
   box-shadow: 0 5px 20px -10px #5531a9;
 }
+
+.navigation--dark {
+  box-shadow: 0 5px 10px -5px #1a1b20;
+  background-color: #2c2d33;
+}
+
+.navigation--dark .reef-logo {
+  filter: brightness(1.5);
+}
+
+.navigation--dark .navigation__link {
+  color: rgba(255,255,255,.5);
+  box-shadow: none;
+  background-color: #373840;
+}
+
+.navigation--dark .navigation__link:hover,
+.navigation--dark .navigation__link:active {
+  color: rgba(255,255,255,.75);
+  box-shadow: none;
+  background-color: #42444d;
+}
+
+.navigation--dark .navigation__link:hover .navigation__link-icon,
+.navigation--dark .navigation__link:active .navigation__link-icon {
+  color: white;
+}
+
+.navigation--dark .navigation__account {
+  box-shadow: none;
+  background-color: #373840;
+}
+
+.navigation--dark .navigation__account-name {
+  color: white;
+  font-weight: 500;
+}
+
+.navigation--dark .navigation__account-address {
+  color: rgba(255,255,255,.5);
+}
+
+.navigation--dark .navigation__account-tokens {
+  box-shadow: none;
+  background-color: #42444d;
+}
+
+.navigation--dark .navigation__account-tokens-amount {
+  color: #ff62ff;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  background: transparent;
+  font-weight: 500;
+}
