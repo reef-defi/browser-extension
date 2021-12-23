@@ -1,20 +1,20 @@
-.nav-header{
+.nav-header {
   display: flex;
 }
 
-.logo-btn{
+.logo-btn {
   width: 5rem;
   height: 3rem;
   border: none;
 }
 
-.accounts-chevron-down{
+.accounts-chevron-down {
   width: 16px;
   height: 16px;
   margin-left: 0.3em;
 }
 
-.nav-content.nav-footer{
+.nav-content.nav-footer {
   position: absolute;
   justify-content: center;
   bottom: 0;

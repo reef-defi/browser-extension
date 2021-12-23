@@ -374,9 +374,14 @@ svg.fill-white {
 
 /*//////*/ /*NAV*/
 .navigation {
-  min-height: 60px;
-  background-color: #f3f0f8;
-  box-shadow: 0.2em 0.2em 1.5em #e2def1;
+  height: 50px;
+  padding: 0 20px !important;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f3f0f9;
+  box-shadow: 0 5px 10px -5px rgba(0,0,0,.1);
 }
 .navigation_menu-items {
   display: flex;
@@ -400,27 +405,164 @@ svg.fill-white {
   background: linear-gradient( 0deg, rgb(250 248 255) 0%, rgb(217 211 235) 100%);
   height: 2.5em;
   background-color: #f3f0f8;
-  box-shadow: 0.2em 0.2em 1.5em #e2def1;
+  box-shadow: 0.2em 0.2em 1.5em #a497d3;
   padding:0;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
 
-.logo-btn {
-  height: 100%;
-  width: 100%;
-  border: none;
-  background: none;
+.navigation + * {
+  margin-top: 20px;
 }
 
-.logo-w {
-  width: 6em;
-  min-width: 6em;
+.navigation__links {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  margin-right: 5px;
+}
+
+.navigation__links a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 0.813rem;
+  font-weight: 700;
+  color: #898e9c;
+  text-decoration: none;
+  padding: 5px;
+}
+
+.navigation__links a:hover {
+  color: #a93185;
+  background: linear-gradient(to right, #a93185, #5531a9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.navigation__links a + a {
+  margin-left: 5px;
+}
+
+.reef-logo {
+  width: 62px;
 }
 
 .no-break-text {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.navigation__account {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 99px;
+  height: 34px;
+  box-shadow: inset 0 5px 10px -3px rgba(0,0,0,.1),
+    0 5px 10px -3px rgba(0,0,0,.1),
+    inset 0 -5px 15px -5px white,
+    0 -5px 15px 5px rgba(255,255,255,.75);
+  border: none;
+  outline: none;
+  background-color: transparent;
+  padding: 0 0 0 15px;
+  margin-right: -5px;
+  max-width: 270px;
+}
+
+.navigation__account-name {
+  font-size: 0.875rem;
+  line-height: 1.2;
+  font-weight: 600;
+  color: #19233c;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.navigation__account-address {
+  font-size: 0.75rem;
+  line-height: 1.2;
+  font-weight: 500;
+  color: #898e9c;
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.navigation__account-address::before {
+  content: "-";
+  margin: 0 0.25rem;
+}
+
+.navigation__account-tokens {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  margin-left: 10px;
+  padding: 0 12px 0 15px;
+  border-radius: 99px;
+  background-color: rgba(255,255,255,0.5);
+  box-shadow: 0 1px 6px -3px rgba(0,0,0,0.2),
+    0 -1px 2px rgba(0,0,0,0.025),
+    inset 0 2px 5px white;
+}
+
+.navigation__account-tokens-amount {
+  font-size: 0.875rem;
+  line-height: 1.2;
+  font-weight: 900;
+  color: #a93185;
+  background: linear-gradient(to right, #a93185, #5531a9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transform: translateY(1px);
+}
+
+.navigation__account-tokens img {
+  width: 18px;
+  margin: 0 6px 0 -6px;
+}
+
+.navigation__account:hover {
+  color: white;
+  background: linear-gradient(to right, #a93185, #5531a9);
+  box-shadow: 0 5px 20px -10px #5531a9;
+}
+
+.navigation__account:hover .navigation__account-tokens,
+.navigation__account:active .navigation__account-tokens {
+  box-shadow: none;
+  background-color: transparent;
+}
+
+.navigation__account:hover .navigation__account-tokens-amount,
+.navigation__account:active .navigation__account-tokens-amount {
+  background: transparent;
+  color: white;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  font-weight: 500;
+}
+
+.navigation__account:hover .navigation__account-name,
+.navigation__account:hover .navigation__account-address,
+.navigation__account:active .navigation__account-name,
+.navigation__account:active .navigation__account-address  {
+  color: white;
+  font-weight: 500;
+}
+
+.navigation__account:active {
+  background: linear-gradient(to right, #d12fa1, #8b42b4);
+  box-shadow: 0 5px 20px -10px #5531a9;
 }
