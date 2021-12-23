@@ -1,8 +1,13 @@
-import {combineLatest, map, Observable, of, shareReplay, startWith, Subject, switchMap, tap, timer} from "rxjs";
+import {combineLatest, map, Observable, of, shareReplay, startWith, Subject, switchMap, timer} from "rxjs";
+import {filter} from 'rxjs/operators';
 import {api, Network, Pool, ReefSigner, rpc, Token} from "@reef-defi/react-lib";
 import {combineTokensDistinct, toTokensWithPrice} from "./util";
-import {selectedNetwork$} from "./appState";
+import {
+  selectedNetwork$,
+  selectedSignerUpdateCtx$,
+} from "./appState";
 import {selectedSigner$} from "./accountState";
+import {getAddressUpdateActionTypes, UpdateDataCtx, UpdateDataType} from "./updateCtxUtil";
 
 const validatedTokens = require('../validated-tokens-mainnet.json');
 
@@ -15,12 +20,24 @@ export const reefPrice$ = timer(0, 60000).pipe(
 export const validatedTokens$ = of(validatedTokens.tokens as Token[]);
 export const reloadSignerTokens$ = new Subject<void>();
 
-export const selectedSignerTokenBalances$ = combineLatest([selectedSigner$, selectedNetwork$, reloadSignerTokens$.pipe(startWith(null))]).pipe(
-  switchMap(([signer, network, _]: [ReefSigner | null, Network, any]) => {
-    return signer ? api.loadSignerTokens(signer, network) : []
+export const selectedSignerTokenBalances$ = combineLatest([selectedSignerUpdateCtx$, selectedNetwork$, reloadSignerTokens$.pipe(startWith(null))]).pipe(
+  switchMap(([signerCtx, network, _]: [UpdateDataCtx<ReefSigner>, Network, any]) => {
+    if (!signerCtx.data) {
+      return Promise.resolve([]);
+    }
+    let isTokenUpdate = getAddressUpdateActionTypes(signerCtx.data.address, signerCtx.updateActions).indexOf(UpdateDataType.ACCOUNT_TOKENS) >= 0;
+    if (!isTokenUpdate) {
+      return Promise.resolve(undefined);
+    }
+    return api.loadSignerTokens(signerCtx.data, network);
   }),
+// @ts-ignore
+  filter((v: Token[] | undefined) => v !== undefined),
   shareReplay(1)
-);
+) as Observable<Token[]>;
+selectedSignerTokenBalances$.subscribe((v)=>
+  console.log("TOKENS RELOADED=",v))
+
 export const allAvailableSignerTokens$ = combineLatest([selectedSignerTokenBalances$, validatedTokens$]).pipe(
   map(combineTokensDistinct),
   shareReplay(1)

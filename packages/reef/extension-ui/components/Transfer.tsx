@@ -5,6 +5,8 @@ import {useObservableState} from "../hooks/useObservableState";
 import {Components} from "@reef-defi/react-lib/";
 import {onTxUpdateReloadSignerBalances} from "../state/util";
 import {SigningOrChildren} from "./SigningOrChildren";
+import {TxStatusUpdate} from "@reef-defi/react-lib/dist/utils";
+import {createUpdateActions, UpdateAction, UpdateDataType} from "../state/updateCtxUtil";
 
 export const Transfer = (): JSX.Element => {
   const provider = useObservableState(appState.provider$);
@@ -45,6 +47,15 @@ export const Transfer = (): JSX.Element => {
     // }, [signerTokenBalances, signerTokens]);
   }, [signerTokenBalances]);
 
+  const onTransferTxUpdate = (txState: TxStatusUpdate) => {
+    const updateTypes = [UpdateDataType.ACCOUNT_NATIVE_BALANCE];
+    if(txState.txTypeEvm){
+      updateTypes.push(UpdateDataType.ACCOUNT_TOKENS);
+    }
+    const updateActions: UpdateAction[] = createUpdateActions( updateTypes, txState.addressees);
+    onTxUpdateReloadSignerBalances(txState, updateActions);
+  };
+
   return (
     <SigningOrChildren>
       {!reefUtils.isDataSet(token) && token === reefUtils.DataProgress.LOADING && <Components.Loading.Loading/>}
@@ -53,7 +64,7 @@ export const Transfer = (): JSX.Element => {
         {provider && reefUtils.isDataSet(token) && signerTokenBalances && reefUtils.isDataSet(signerTokenBalances) && selectedSigner && accounts
         && <Components.TransferComponent tokens={signerTokenBalances} from={selectedSigner}
                                          token={token as TokenWithAmount} provider={provider} accounts={accounts}
-                                         currentAccount={selectedSigner} onTxUpdate={onTxUpdateReloadSignerBalances}/>
+                                         currentAccount={selectedSigner} onTxUpdate={(state)=>onTransferTxUpdate(state)}/>
         }
     </SigningOrChildren>
   );
