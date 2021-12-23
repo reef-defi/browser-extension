@@ -370,7 +370,12 @@ svg.fill-white {
   text-align: center;
 }
 
-
+.jarRFH,
+.hUmkYm {
+  position: fixed !important;
+  bottom: 0 !important;
+  right: 0 !important;
+}
 
 /*//////*/ /*NAV*/
 .navigation {
