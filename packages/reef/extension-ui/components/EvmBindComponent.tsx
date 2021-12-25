@@ -22,7 +22,7 @@ const getUpdateTxCallback = (fns: TxStatusHandler[]): TxStatusHandler => (val) =
   fns.forEach((fn) => fn ? fn(val) : null);
 };
 
-const MIN_BALANCE = ethers.utils.parseEther('3');
+const MIN_BALANCE = ethers.utils.parseEther('6');
 
 export const EvmBindComponent = ({bindSigner, signers, onTxUpdate}: EvmBindComponent): JSX.Element => {
   const provider = useObservableState(provider$)

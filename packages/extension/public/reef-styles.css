@@ -652,3 +652,15 @@ svg.fill-white {
   background: transparent;
   font-weight: 500;
 }
+
+.theme-dark .card h5, .theme-dark .card p {
+  color: #43434a;
+}
+
+.theme-dark .card .mini-text {
+  color: #43434a;
+}
+
+.theme-dark .token-balance-item{
+  background: #ccc;
+}
