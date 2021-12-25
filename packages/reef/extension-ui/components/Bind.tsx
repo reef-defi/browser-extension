@@ -41,6 +41,7 @@ export const Bind = (): JSX.Element => {
   const accounts = useObservableState(appState.signers$);
   const selectedSigner = useObservableState(appState.selectedSigner$);
   const [bindSigner, setBindSigner] = useState<ReefSigner>();
+  const theme = localStorage.getItem('theme');
   useEffect(() => {
     let [, params] = window.location.href.split('?');
     const urlParams = params?.split('&').map(e => e.split('=').map(decodeURIComponent)).reduce((r: any, [k, v]) => (r[k] = v, r), {});
@@ -54,8 +55,8 @@ export const Bind = (): JSX.Element => {
 
   return (
     <SigningOrChildren>
-      {bindSigner && accounts && (<EvmBindComponent bindSigner={bindSigner} signers={accounts}
-                                        onTxUpdate={onTxUpdate}></EvmBindComponent>)}
+      {bindSigner && accounts && (<div className={theme === 'dark' ? 'theme-dark' : ''}><EvmBindComponent bindSigner={bindSigner} signers={accounts}
+                                                                      onTxUpdate={onTxUpdate}></EvmBindComponent></div>)}
     </SigningOrChildren>
   );
 };

@@ -14,6 +14,7 @@ export const Transfer = (): JSX.Element => {
   // const pools = useObservableState(appState.pools$);
   const selectedSigner = useObservableState(appState.selectedSigner$);
   const signerTokenBalances = useObservableState(appState.selectedSignerTokenBalances$);
+  const theme = localStorage.getItem('theme');
   // const reefPrice = useObservableState(appState.reefPrice$);
 
   const [token, setToken] = useState<reefUtils.DataWithProgress<TokenWithAmount>>(reefUtils.DataProgress.LOADING);
@@ -55,6 +56,11 @@ export const Transfer = (): JSX.Element => {
     const updateActions: UpdateAction[] = createUpdateActions( updateTypes, txState.addressees);
     onTxUpdateReloadSignerBalances(txState, updateActions);
   };
+  useEffect(() => {
+    // TODO ... child component does not refresh balance after transfer
+    console.log("TRANSFER BAL=",selectedSigner?.balance.toString(), selectedSigner?.address);
+  }, [selectedSigner]);
+
 
   return (
     <SigningOrChildren>
@@ -62,9 +68,11 @@ export const Transfer = (): JSX.Element => {
         {!reefUtils.isDataSet(token) && token === reefUtils.DataProgress.NO_DATA &&
         <div>No tokens for transaction.</div>}
         {provider && reefUtils.isDataSet(token) && signerTokenBalances && reefUtils.isDataSet(signerTokenBalances) && selectedSigner && accounts
-        && <Components.TransferComponent tokens={signerTokenBalances} from={selectedSigner}
+        && <div className={theme === 'dark' ? 'theme-dark' : ''}>
+          <Components.TransferComponent tokens={signerTokenBalances} from={selectedSigner}
                                          token={token as TokenWithAmount} provider={provider} accounts={accounts}
                                          currentAccount={selectedSigner} onTxUpdate={(state)=>onTransferTxUpdate(state)}/>
+        </div>
         }
     </SigningOrChildren>
   );

@@ -1,90 +1,103 @@
 import {
-  combineLatest, distinctUntilChanged, map, of, ReplaySubject,
-  shareReplay, switchMap, Subject, withLatestFrom, merge, Observable, tap,
+  combineLatest,
+  distinctUntilChanged,
+  map,
+  mergeScan,
+  Observable,
+  of,
+  ReplaySubject,
+  scan,
+  shareReplay,
+  startWith,
+  Subject,
+  switchMap,
+  withLatestFrom,
 } from "rxjs";
 import {AccountJson} from "@reef-defi/extension-base/background/types";
 import {toReefSigner} from "./util";
 import Signer from "@reef-defi/extension-base/page/Signer";
 import {provider$} from "./appState";
-import {ReefSigner, rpc} from "@reef-defi/react-lib";
+import {ReefSigner} from "@reef-defi/react-lib";
 import {sendMessage} from "@reef-defi/extension-ui/messaging";
-import {BigNumber} from "ethers";
 import {
   getAddressUpdateActionTypes,
   getUnwrappedData$,
-  getUpdAddresses,
-  isUpdateAll,
   UpdateAction,
   UpdateDataCtx,
   UpdateDataType
 } from "./updateCtxUtil";
+import {replaceUpdatedSigners, updateSignersBalances, updateSignersEvmBindings} from "./accountStateUtil";
 
 const injectionSigner = new Signer(sendMessage);
 
-// accepting only one callback so setting in Popup - subscribAccounts(accs => accounts$.next(accs));
 export const accounts$ = new ReplaySubject<AccountJson[] | null>(1);
-// also reloads signer tokens since emits signers$
 export const reloadSignersSubject = new Subject<UpdateDataCtx<ReefSigner[]>>();
 
-const signersFromAccounts$ = combineLatest([provider$, of(injectionSigner), accounts$]).pipe(
+const signersInjected$ = combineLatest([provider$, of(injectionSigner), accounts$]).pipe(
   switchMap(([provider, signer, accounts]) => {
     if (!accounts || !accounts.length) {
       return of([]);
     }
     return Promise.all<ReefSigner>(accounts.map(acc => toReefSigner(acc, provider, signer)));
   }),
-  map(data => ({data, updateActions: [{type: UpdateDataType.ACCOUNT_TOKENS}, {type: UpdateDataType.ACCOUNT_NATIVE_BALANCE}, {type:UpdateDataType.ACCOUNT_EVM_BINDING}]} as UpdateDataCtx<ReefSigner[]>)),
+  map(data => ({
+    data,
+    updateActions: [{type: UpdateDataType.ACCOUNT_TOKENS}, {type: UpdateDataType.ACCOUNT_NATIVE_BALANCE}, {type: UpdateDataType.ACCOUNT_EVM_BINDING}]
+  } as UpdateDataCtx<ReefSigner[]>)),
   shareReplay(1)
 );
 
 
-const getSignersToUpdate = (updateType: UpdateDataType, updateActions: UpdateAction[], signers: ReefSigner[]) => {
-  const updAddresses = getUpdAddresses(updateType, updateActions );
-  return isUpdateAll(updAddresses) ? signers : signers.filter(sig => updAddresses?.some(addr => addr === sig.address));
-}
-
-const replaceUpdatedSigners = (updatedSigners: ReefSigner[], existingSigners: ReefSigner[]) => {
-  return existingSigners.map(existingSig => updatedSigners.find(updSig => updSig.address === existingSig.address) || existingSig);
-};
-
-const updateSignersBalances = (updateActions: UpdateAction[], signers: ReefSigner[], provider: any): Promise<ReefSigner[]> => {
-  const updSigners = getSignersToUpdate(UpdateDataType.ACCOUNT_NATIVE_BALANCE, updateActions, signers)
-  return Promise.all(updSigners.map((sig: ReefSigner) => rpc.getReefCoinBalance(sig.address, provider)))
-    .then((balances: BigNumber[]) => balances.map((balance: BigNumber, i: number) => {
-      const sig = updSigners[i];
-      console.log("UPDATING SIGNER BALANCE=",sig.name, sig.address, balance);
-      return {...sig, balance};
-    })).then((updated) => replaceUpdatedSigners(updated, signers));
-}
-
-const updateSignersEvmBindings = (updateActions: UpdateAction[], signers: ReefSigner[], provider: any): Promise<ReefSigner[]> => {
-  const updSigners = getSignersToUpdate(UpdateDataType.ACCOUNT_EVM_BINDING, updateActions, signers);
-  return Promise.all(updSigners.map((sig: ReefSigner) => sig.signer.isClaimed()))
-    .then((claimed: boolean[]) => claimed.map((isEvmClaimed: boolean, i: number) => {
-      const sig = updSigners[i];
-      console.log("UPDATING SIGNER EVM=",sig.name, isEvmClaimed);
-      return {...sig, isEvmClaimed};
-    })).then((updated) => replaceUpdatedSigners(updated, signers));
-}
-
-const signersWithReloadedData$ = reloadSignersSubject.pipe(
-  withLatestFrom(combineLatest([signersFromAccounts$, provider$])),
-  switchMap(([updateCtx, [signersCtx, provider]]) => updateSignersBalances(updateCtx.updateActions, signersCtx.data as ReefSigner[], provider)
-    .then(updatedSigners => ({
-      data: updatedSigners,
-      updateActions: updateCtx.updateActions,
-      ctx: {provider}
-    } as UpdateDataCtx<ReefSigner[]>))
-  ),
-  switchMap((updateCtx: UpdateDataCtx<ReefSigner[]>) => updateSignersEvmBindings(updateCtx.updateActions, updateCtx.data as ReefSigner[], updateCtx.ctx.provider)
-    .then(updatedSigners => ({
-      data: updatedSigners,
-      updateActions: updateCtx.updateActions
-    } as UpdateDataCtx<ReefSigner[]>))
-  )
+const signersWithUpdatedData$ = reloadSignersSubject.pipe(
+  withLatestFrom(combineLatest([signersInjected$, provider$])),
+  mergeScan((state: { allUpdated: ReefSigner[], lastUpdatedSigners: ReefSigner[], lastUpdateActions: UpdateAction[] }, [updateCtx, [signersInjectedCtx, provider]]): any => {
+    const allUpdatedSigners = replaceUpdatedSigners(signersInjectedCtx.data, state.allUpdated);
+    return of(updateCtx.updateActions).pipe(
+      switchMap((updateActions) => updateSignersBalances(updateActions, allUpdatedSigners, provider)
+        .then(updatedSigners => ({
+          allUpdated: replaceUpdatedSigners(state.allUpdated, updatedSigners, true),
+          lastUpdatedSigners: updatedSigners,
+          lastUpdateActions: updateActions
+        }))
+        .then(newState => updateSignersEvmBindings(newState.lastUpdateActions, newState.allUpdated)
+          .then(updatedSigners => ({
+              allUpdated: replaceUpdatedSigners(newState.allUpdated, updatedSigners, true),
+              lastUpdatedSigners: replaceUpdatedSigners(newState.lastUpdatedSigners, updatedSigners, true),
+              lastUpdateActions: newState.lastUpdateActions
+            })
+          )
+        )
+      )
+    );
+  }, {allUpdated: [], lastUpdatedSigners: [], lastUpdateActions: []}),
+  map((val: any): any => ({
+    data: val.lastUpdatedSigners,
+    updateActions: val.lastUpdateActions
+  } as UpdateDataCtx<ReefSigner[]>)),
+  shareReplay(1)
 );
 
-const signersUpdateCtx$: Observable<UpdateDataCtx<ReefSigner[]>> = merge(signersFromAccounts$, signersWithReloadedData$).pipe(
+const signersUpdateCtx$: Observable<UpdateDataCtx<ReefSigner[]>> = combineLatest({
+  injectedSigners: signersInjected$,
+  updatedSigners: signersWithUpdatedData$.pipe(startWith(null))
+}).pipe(
+  scan((stateVal: any, currentVal) => {
+    let updatedSignersCtx: UpdateDataCtx<ReefSigner[]>;
+    if (stateVal.lastInjectedSigners !== currentVal.injectedSigners) {
+      updatedSignersCtx = currentVal.injectedSigners;
+    } else {
+      let updatedSig = replaceUpdatedSigners(stateVal.currentValue.data, currentVal.updatedSigners.data);
+      updatedSignersCtx = {data: updatedSig, updateActions: currentVal.updatedSigners.updateActions}
+    }
+    return {
+      currentValue: updatedSignersCtx,
+      lastInjectedSigners: currentVal.injectedSigners,
+    }
+  }, {
+    currentValue: ({updateActions: [], data: []} as UpdateDataCtx<ReefSigner[]>),
+    lastInjectedSigners: null,
+  }),
+  map(v => v.currentValue),
   shareReplay(1)
 );
 
@@ -97,30 +110,29 @@ export const selectedSignerUpdateCtx$ = combineLatest([selectAddressSubj.pipe(di
   map(([selectedAddress, signersCtx]) => {
     let foundSigner = signersCtx.data?.find((rs: ReefSigner) => rs.address === selectedAddress);
     let selectedAddressUpdateActions: UpdateAction[] = [];
-    if(!!foundSigner){
+    if (!!foundSigner) {
       const updateTypes = getAddressUpdateActionTypes(selectedAddress, signersCtx.updateActions);
       selectedAddressUpdateActions = updateTypes.map(ut => ({
         address: foundSigner?.address,
         type: ut
       })) as UpdateAction[];
-    }else {
+    } else {
       foundSigner = signersCtx.data ? signersCtx.data[0] : undefined;
       selectedAddressUpdateActions = [{
         address: foundSigner?.address,
         type: UpdateDataType.ACCOUNT_EVM_BINDING
-      },{
+      }, {
         address: foundSigner?.address,
         type: UpdateDataType.ACCOUNT_TOKENS
-      },{
+      }, {
         address: foundSigner?.address,
         type: UpdateDataType.ACCOUNT_NATIVE_BALANCE
       }] as UpdateAction[];
     }
 
     localStorage.setItem('selected_address_reef', foundSigner?.address || '');
-    return {data:{...foundSigner}, updateActions: selectedAddressUpdateActions} as UpdateDataCtx<ReefSigner>;
+    return {data: {...foundSigner}, updateActions: selectedAddressUpdateActions} as UpdateDataCtx<ReefSigner>;
   }),
-  tap(v => console.log('SELECTED SIGNR ch=', v)),
   shareReplay(1)
 );
 

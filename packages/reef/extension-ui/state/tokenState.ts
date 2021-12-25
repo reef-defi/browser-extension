@@ -35,8 +35,6 @@ export const selectedSignerTokenBalances$ = combineLatest([selectedSignerUpdateC
   filter((v: Token[] | undefined) => v !== undefined),
   shareReplay(1)
 ) as Observable<Token[]>;
-selectedSignerTokenBalances$.subscribe((v)=>
-  console.log("TOKENS RELOADED=",v))
 
 export const allAvailableSignerTokens$ = combineLatest([selectedSignerTokenBalances$, validatedTokens$]).pipe(
   map(combineTokensDistinct),
