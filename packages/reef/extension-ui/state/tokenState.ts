@@ -49,6 +49,7 @@ export const selectedSignerTokenBalances$ = combineLatest([selectedSignerUpdateC
 // @ts-ignore
   filter((v: { tokens: Token[], stopEmit?: boolean }) => !v.stopEmit),
   map(state => state.tokens),
+  tap(v=>console.log('TKKKK',v)),
   shareReplay(1)
 ) as Observable<Token[]>;
 
