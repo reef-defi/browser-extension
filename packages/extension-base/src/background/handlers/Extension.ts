@@ -503,8 +503,6 @@ export default class Extension {
       return false;
     }
 
-    console.log('open', url);
-
     // eslint-disable-next-line no-void
     void chrome.tabs.create({ url });
 
@@ -557,7 +555,6 @@ export default class Extension {
   // eslint-disable-next-line @typescript-eslint/require-await
   public async handle<TMessageType extends MessageTypes> (id: string, type: TMessageType, request: RequestTypes[TMessageType], port: chrome.runtime.Port): Promise<ResponseType<TMessageType>> {
 
-    console.log("EXTensionHANDLLLL =",type);
     switch (type) {
       case 'pri(authorize.approve)':
         return this.authorizeApprove(request as RequestAuthorizeApprove);

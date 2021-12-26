@@ -58,7 +58,6 @@ export const EvmBindComponent = ({bindSigner, signers, onTxUpdate}: EvmBindCompo
     }
     const txIdent = await utils.sendToNativeAddress(provider, from, MIN_BALANCE, to.address, (val: TxStatusUpdate) => {
       if (val.error || val.isInBlock) {
-        console.log("TRANSFER OK from=",from.address, ' to=',to.address);
         onTxUpd({...val, componentTxType: EvmBindComponentTxType.TRANSFER, addresses: [from.address, to.address]});
       }
       if(val.isInBlock){
@@ -72,7 +71,6 @@ export const EvmBindComponent = ({bindSigner, signers, onTxUpdate}: EvmBindCompo
 
   const bindAccount = (onTxUpdate: TxStatusHandler) => {
     const txIdent = utils.bindEvmAddress(bindFor, provider as Provider, (val: TxStatusUpdate) => {
-      console.log("bind cb=", val);
       if (val.error || val.isInBlock) {
         onTxUpdate({...val, componentTxType: EvmBindComponentTxType.BIND, addresses: [bindFor.address]})
       }
