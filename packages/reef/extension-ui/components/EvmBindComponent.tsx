@@ -24,6 +24,10 @@ const getUpdateTxCallback = (fns: TxStatusHandler[]): TxStatusHandler => (val) =
 
 const MIN_BALANCE = ethers.utils.parseEther('6');
 
+function getSignersWithEnoughBalance(signers: ReefSigner[], bindFor: ReefSigner) {
+  return signers?.length ? signers.filter(sig => sig.address !== bindFor.address && sig.balance.gt(MIN_BALANCE.mul(BigNumber.from('2')))) : [];
+}
+
 export const EvmBindComponent = ({bindSigner, signers, onTxUpdate}: EvmBindComponent): JSX.Element => {
   const provider = useObservableState(provider$)
   const [bindFor, setBindFor] = useState(bindSigner);
@@ -40,7 +44,7 @@ export const EvmBindComponent = ({bindSigner, signers, onTxUpdate}: EvmBindCompo
   }, [availableTxAccounts]);
 
   useEffect(() => {
-    const fromSigners = signers?.length ? signers.filter(sig => sig.address !== bindFor.address && sig.balance.gt(MIN_BALANCE.mul(BigNumber.from('2')))) : [];
+    const fromSigners = getSignersWithEnoughBalance(signers, bindFor);
     setAvailableTxAccounts(fromSigners);
   }, [signers, bindFor]);
 
@@ -54,27 +58,27 @@ export const EvmBindComponent = ({bindSigner, signers, onTxUpdate}: EvmBindCompo
     }
     const txIdent = await utils.sendToNativeAddress(provider, from, MIN_BALANCE, to.address, (val: TxStatusUpdate) => {
       if (val.error || val.isInBlock) {
-        console.log("TRANSFER OK from=",from.address, ' to=',to.address, 'adresses=',val.addressees);
-        onTxUpd({...val, componentTxType: EvmBindComponentTxType.TRANSFER, addressees: [from.address, to.address]});
+        console.log("TRANSFER OK from=",from.address, ' to=',to.address);
+        onTxUpd({...val, componentTxType: EvmBindComponentTxType.TRANSFER, addresses: [from.address, to.address]});
       }
       if(val.isInBlock){
         bindAccount(getUpdateTxCallback([onTxUpdate as TxStatusHandler, setTxStatus]));
       }
     });
-    onTxUpd({txIdent, componentTxType: EvmBindComponentTxType.TRANSFER, addressees: [from.address, to.address]})
+    onTxUpd({txIdent, componentTxType: EvmBindComponentTxType.TRANSFER, addresses: [from.address, to.address]})
   }
 
   const onAccountSelect = (_: any, selected: ReefSigner): void => setTransferBalanceFrom(selected);
 
   const bindAccount = (onTxUpdate: TxStatusHandler) => {
     const txIdent = utils.bindEvmAddress(bindFor, provider as Provider, (val: TxStatusUpdate) => {
-      console.log("bind cb=", val.addressees);
+      console.log("bind cb=", val);
       if (val.error || val.isInBlock) {
-        onTxUpdate({...val, componentTxType: EvmBindComponentTxType.BIND, addressees: [bindFor.address]})
+        onTxUpdate({...val, componentTxType: EvmBindComponentTxType.BIND, addresses: [bindFor.address]})
       }
     }, true);
     if (txIdent) {
-      onTxUpdate({txIdent, componentTxType: EvmBindComponentTxType.BIND, addressees: [bindFor.address]});
+      onTxUpdate({txIdent, componentTxType: EvmBindComponentTxType.BIND, addresses: [bindFor.address]});
     }
   };
 

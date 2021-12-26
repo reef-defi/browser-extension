@@ -16,7 +16,7 @@ export const Swap = (): JSX.Element => {
   const theme = localStorage.getItem('theme');
   const onSwapTxUpdate = (txState: TxStatusUpdate) => {
     const updateTypes = [UpdateDataType.ACCOUNT_NATIVE_BALANCE, UpdateDataType.ACCOUNT_TOKENS];
-    const updateActions: UpdateAction[] = createUpdateActions(updateTypes, txState.addressees);
+    const updateActions: UpdateAction[] = createUpdateActions(updateTypes, txState.addresses);
     onTxUpdateReloadSignerBalances(txState, updateActions);
   };
 

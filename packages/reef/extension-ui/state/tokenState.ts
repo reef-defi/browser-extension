@@ -1,11 +1,8 @@
 import {combineLatest, map, mergeScan, Observable, of, shareReplay, startWith, Subject, switchMap, timer} from "rxjs";
-import {filter, tap} from 'rxjs/operators';
+import {filter} from 'rxjs/operators';
 import {api, Network, Pool, ReefSigner, reefTokenWithAmount, rpc, Token} from "@reef-defi/react-lib";
 import {combineTokensDistinct, toTokensWithPrice} from "./util";
-import {
-  selectedNetwork$,
-  selectedSignerUpdateCtx$,
-} from "./appState";
+import {selectedNetwork$, selectedSignerUpdateCtx$,} from "./appState";
 import {selectedSigner$} from "./accountState";
 import {getAddressUpdateActionTypes, UpdateDataCtx, UpdateDataType} from "./updateCtxUtil";
 import {BigNumber} from "ethers";
@@ -49,7 +46,6 @@ export const selectedSignerTokenBalances$ = combineLatest([selectedSignerUpdateC
 // @ts-ignore
   filter((v: { tokens: Token[], stopEmit?: boolean }) => !v.stopEmit),
   map(state => state.tokens),
-  tap(v=>console.log('TKKKK',v)),
   shareReplay(1)
 ) as Observable<Token[]>;
 
