@@ -9,29 +9,28 @@ import {UpdateAction, UpdateDataType} from "../state/updateCtxUtil";
 
 const onTxUpdate = (state: utils.TxStatusUpdate) => {
   let updateActions: UpdateAction[] = [];
-  if (state.isInBlock && state.componentTxType === EvmBindComponentTxType.BIND) {
+  if (state.componentTxType === EvmBindComponentTxType.BIND) {
     // bind
-    if (state.addresses && state.addresses.length) {
-      state.addresses.forEach(address => {
-        updateActions.push({
-          type: UpdateDataType.ACCOUNT_EVM_BINDING,
-          address
-        } as UpdateAction);
-        updateActions.push({
-          type: UpdateDataType.ACCOUNT_NATIVE_BALANCE,
-          address
-        } as UpdateAction);
-      })
-    } else {
-      updateActions = [{type: UpdateDataType.ACCOUNT_EVM_BINDING}, {type: UpdateDataType.ACCOUNT_NATIVE_BALANCE}]
-    }
+      if (state.addresses && state.addresses.length) {
+        state.addresses.forEach(address => {
+          updateActions.push({
+            type: UpdateDataType.ACCOUNT_EVM_BINDING,
+            address
+          } as UpdateAction);
+          updateActions.push({
+            type: UpdateDataType.ACCOUNT_NATIVE_BALANCE,
+            address
+          } as UpdateAction);
+        })
+      } else {
+        updateActions = [{type: UpdateDataType.ACCOUNT_EVM_BINDING}, {type: UpdateDataType.ACCOUNT_NATIVE_BALANCE}]
+      }
   } else {
     // transaction
     updateActions = state.addresses && state.addresses.length ? state.addresses.map(address => ({
       type: UpdateDataType.ACCOUNT_NATIVE_BALANCE,
       address
     } as UpdateAction)) : [{type: UpdateDataType.ACCOUNT_NATIVE_BALANCE}];
-    console.log("BIND TX actions=", updateActions)
   }
   onTxUpdateReloadSignerBalances(state, updateActions);
 }
