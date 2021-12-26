@@ -107,15 +107,30 @@ export const selectAddressSubj = new ReplaySubject<string | undefined>(1);
 selectAddressSubj.next(localStorage.getItem('selected_address_reef') || undefined);
 
 export const selectedSignerUpdateCtx$ = combineLatest([selectAddressSubj.pipe(distinctUntilChanged()), signersUpdateCtx$]).pipe(
-  map(([selectedAddress, signersCtx]) => {
+  scan((state: {result: UpdateDataCtx<ReefSigner>, lastSelectedAddress: string|undefined}, [selectedAddress, signersCtx]) => {
     let foundSigner = signersCtx.data?.find((rs: ReefSigner) => rs.address === selectedAddress);
     let selectedAddressUpdateActions: UpdateAction[] = [];
     if (!!foundSigner) {
-      const updateTypes = getAddressUpdateActionTypes(selectedAddress, signersCtx.updateActions);
-      selectedAddressUpdateActions = updateTypes.map(ut => ({
-        address: foundSigner?.address,
-        type: ut
-      })) as UpdateAction[];
+      const selectedSignerChanged = state.lastSelectedAddress!==selectedAddress;
+      if(selectedSignerChanged){
+        selectedAddressUpdateActions = [{
+          address: foundSigner?.address,
+          type: UpdateDataType.ACCOUNT_EVM_BINDING
+        }, {
+          address: foundSigner?.address,
+          type: UpdateDataType.ACCOUNT_TOKENS
+        }, {
+          address: foundSigner?.address,
+          type: UpdateDataType.ACCOUNT_NATIVE_BALANCE
+        }] as UpdateAction[];
+      }else{
+        const updateTypes = getAddressUpdateActionTypes(selectedAddress, signersCtx.updateActions);
+        selectedAddressUpdateActions = updateTypes.map(ut => ({
+          address: foundSigner?.address,
+          type: ut
+        })) as UpdateAction[];
+      }
+
     } else {
       foundSigner = signersCtx.data ? signersCtx.data[0] : undefined;
       selectedAddressUpdateActions = [{
@@ -131,8 +146,15 @@ export const selectedSignerUpdateCtx$ = combineLatest([selectAddressSubj.pipe(di
     }
 
     localStorage.setItem('selected_address_reef', foundSigner?.address || '');
-    return {data: {...foundSigner}, updateActions: selectedAddressUpdateActions} as UpdateDataCtx<ReefSigner>;
-  }),
+    return {
+      result: ({
+        data: {...foundSigner},
+        updateActions: selectedAddressUpdateActions
+      } as UpdateDataCtx<ReefSigner>),
+      lastSelectedAddress: selectedAddress
+    };
+  }, {result: {data:undefined, updateActions:[]}, lastSelectedAddress: ''}),
+  map(state=>state.result as UpdateDataCtx<ReefSigner>),
   shareReplay(1)
 );
 
