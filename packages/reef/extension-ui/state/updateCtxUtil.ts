@@ -17,10 +17,10 @@ export interface UpdateDataCtx<T> {
   ctx?: any;
 }
 
-export const createUpdateActions = (updateTypes: UpdateDataType[], addressees?: string[]) => {
+export const createUpdateActions = (updateTypes: UpdateDataType[], addresses?: string[]) => {
   const updateActions: UpdateAction[] = [];
-  if (addressees) {
-    addressees.forEach((address) => {
+  if (addresses) {
+    addresses.forEach((address) => {
       updateTypes.forEach(updT => updateActions.push({type: updT, address} as UpdateAction))
     });
   } else {

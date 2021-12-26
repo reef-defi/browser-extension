@@ -11,8 +11,8 @@ const onTxUpdate = (state: utils.TxStatusUpdate) => {
   let updateActions: UpdateAction[] = [];
   if (state.isInBlock && state.componentTxType === EvmBindComponentTxType.BIND) {
     // bind
-    if (state.addressees && state.addressees.length) {
-      state.addressees.forEach(address => {
+    if (state.addresses && state.addresses.length) {
+      state.addresses.forEach(address => {
         updateActions.push({
           type: UpdateDataType.ACCOUNT_EVM_BINDING,
           address
@@ -27,7 +27,7 @@ const onTxUpdate = (state: utils.TxStatusUpdate) => {
     }
   } else {
     // transaction
-    updateActions = state.addressees && state.addressees.length ? state.addressees.map(address => ({
+    updateActions = state.addresses && state.addresses.length ? state.addresses.map(address => ({
       type: UpdateDataType.ACCOUNT_NATIVE_BALANCE,
       address
     } as UpdateAction)) : [{type: UpdateDataType.ACCOUNT_NATIVE_BALANCE}];
@@ -37,7 +37,6 @@ const onTxUpdate = (state: utils.TxStatusUpdate) => {
 }
 
 export const Bind = (): JSX.Element => {
-  // const provider = useObservableState(appState.provider$);
   const accounts = useObservableState(appState.signers$);
   const selectedSigner = useObservableState(appState.selectedSigner$);
   const [bindSigner, setBindSigner] = useState<ReefSigner>();
@@ -55,8 +54,8 @@ export const Bind = (): JSX.Element => {
 
   return (
     <SigningOrChildren>
-      {bindSigner && accounts && (<div className={theme === 'dark' ? 'theme-dark' : ''}><EvmBindComponent bindSigner={bindSigner} signers={accounts}
-                                                                      onTxUpdate={onTxUpdate}></EvmBindComponent></div>)}
+      {bindSigner && accounts && (<div className={theme === 'dark' ? 'theme-dark' : ''}>
+        <EvmBindComponent bindSigner={bindSigner} signers={accounts} onTxUpdate={onTxUpdate}></EvmBindComponent></div>)}
     </SigningOrChildren>
   );
 };

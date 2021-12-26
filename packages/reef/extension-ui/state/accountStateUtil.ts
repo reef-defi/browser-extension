@@ -37,7 +37,6 @@ export const updateSignersBalances = (updateActions: UpdateAction[], signers: Re
   return Promise.all(updSigners.map((sig: ReefSigner) => rpc.getReefCoinBalance(sig.address, provider)))
     .then((balances: BigNumber[]) => balances.map((balance: BigNumber, i: number) => {
       const sig = updSigners[i];
-      console.log("UPDATING SIGNER BALANCE=", sig.name, sig.address, balance.toString());
       return {...sig, balance};
     }))
 }
@@ -50,7 +49,6 @@ export const updateSignersEvmBindings = (updateActions: UpdateAction[], signers?
   return Promise.all(updSigners.map((sig: ReefSigner) => sig.signer.isClaimed()))
     .then((claimed: boolean[]) => claimed.map((isEvmClaimed: boolean, i: number) => {
       const sig = updSigners[i];
-      console.log("UPDATING SIGNER EVM=", sig.name, isEvmClaimed);
       return {...sig, isEvmClaimed};
     }))
 }

@@ -11,11 +11,9 @@ import {createUpdateActions, UpdateAction, UpdateDataType} from "../state/update
 export const Transfer = (): JSX.Element => {
   const provider = useObservableState(appState.provider$);
   const accounts = useObservableState(appState.signers$);
-  // const pools = useObservableState(appState.pools$);
   const selectedSigner = useObservableState(appState.selectedSigner$);
   const signerTokenBalances = useObservableState(appState.selectedSignerTokenBalances$);
   const theme = localStorage.getItem('theme');
-  // const reefPrice = useObservableState(appState.reefPrice$);
 
   const [token, setToken] = useState<reefUtils.DataWithProgress<TokenWithAmount>>(reefUtils.DataProgress.LOADING);
 
@@ -32,7 +30,7 @@ export const Transfer = (): JSX.Element => {
         setToken(tkn);
         return;
       }
-      /*if (!isDataSet(signerTokenBalance?.balanceValue) && isDataSet(signerTokens)) {
+      /* if (!isDataSet(signerTokenBalance?.balanceValue) && isDataSet(signerTokens)) {
         const sTkns = getData(signerTokens);
         const sToken = sTkns ? sTkns[0] : undefined;
         if (sToken) {
@@ -50,30 +48,26 @@ export const Transfer = (): JSX.Element => {
 
   const onTransferTxUpdate = (txState: TxStatusUpdate) => {
     const updateTypes = [UpdateDataType.ACCOUNT_NATIVE_BALANCE];
-    if(txState.txTypeEvm){
+    if (txState.txTypeEvm) {
       updateTypes.push(UpdateDataType.ACCOUNT_TOKENS);
     }
-    const updateActions: UpdateAction[] = createUpdateActions( updateTypes, txState.addressees);
+    const updateActions: UpdateAction[] = createUpdateActions(updateTypes, txState.addresses);
     onTxUpdateReloadSignerBalances(txState, updateActions);
   };
-  useEffect(() => {
-    // TODO ... child component does not refresh balance after transfer
-    console.log("TRANSFER BAL=",selectedSigner?.balance.toString(), selectedSigner?.address);
-  }, [selectedSigner]);
-
 
   return (
     <SigningOrChildren>
       {!reefUtils.isDataSet(token) && token === reefUtils.DataProgress.LOADING && <Components.Loading.Loading/>}
-        {!reefUtils.isDataSet(token) && token === reefUtils.DataProgress.NO_DATA &&
-        <div>No tokens for transaction.</div>}
-        {provider && reefUtils.isDataSet(token) && signerTokenBalances && reefUtils.isDataSet(signerTokenBalances) && selectedSigner && accounts
-        && <div className={theme === 'dark' ? 'theme-dark' : ''}>
-          <Components.TransferComponent tokens={signerTokenBalances} from={selectedSigner}
-                                         token={token as TokenWithAmount} provider={provider} accounts={accounts}
-                                         currentAccount={selectedSigner} onTxUpdate={(state)=>onTransferTxUpdate(state)}/>
-        </div>
-        }
+      {!reefUtils.isDataSet(token) && token === reefUtils.DataProgress.NO_DATA &&
+      <div>No tokens for transaction.</div>}
+      {provider && reefUtils.isDataSet(token) && signerTokenBalances && reefUtils.isDataSet(signerTokenBalances) && selectedSigner && accounts
+      && <div className={theme === 'dark' ? 'theme-dark' : ''}>
+        <Components.TransferComponent tokens={signerTokenBalances} from={selectedSigner}
+                                      token={token as TokenWithAmount} provider={provider} accounts={accounts}
+                                      currentAccount={selectedSigner}
+                                      onTxUpdate={(state) => onTransferTxUpdate(state)}/>
+      </div>
+      }
     </SigningOrChildren>
   );
 };
