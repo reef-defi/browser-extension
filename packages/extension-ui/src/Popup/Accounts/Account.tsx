@@ -39,7 +39,11 @@ function Account ({ address, className, genesisHash, isExternal, isHardware, isH
   );
 
   const _toggleEdit = useCallback(
-    (): void => setEditing(({ toggleActions }) => ({ isEditing: !isEditing, toggleActions: ++toggleActions })),
+    (ev?: Event): void => {
+      ev?.preventDefault();
+      console.log("edit=",ev);
+      setEditing(({toggleActions}) => ({isEditing: !isEditing, toggleActions: ++toggleActions}))
+    },
     [isEditing]
   );
 
