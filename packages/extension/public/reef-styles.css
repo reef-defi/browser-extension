@@ -429,7 +429,7 @@ svg.fill-white {
   justify-content: flex-start;
   align-items: center;
   height: 100%;
-  margin: 0 auto 0 20px;
+  margin: 0 20px;
 }
 
 .navigation__link {
@@ -510,6 +510,7 @@ svg.fill-white {
   background-color: transparent;
   padding: 0 0 0 15px;
   max-width: 270px;
+  transition: all 0.125s;
 }
 
 .navigation__account-info {
@@ -565,38 +566,11 @@ svg.fill-white {
   margin: 0 7px 0 -5px;
 }
 
-.navigation__account:hover {
-  color: white;
-  background: linear-gradient(to right, #a93185, #5531a9);
-  box-shadow: 0 5px 20px -10px #5531a9;
-}
-
-.navigation__account:hover .navigation__account-tokens,
-.navigation__account:active .navigation__account-tokens {
-  box-shadow: none;
-  background-color: transparent;
-}
-
-.navigation__account:hover .navigation__account-tokens-amount,
-.navigation__account:active .navigation__account-tokens-amount {
-  background: transparent;
-  color: white;
-  -webkit-background-clip: unset;
-  -webkit-text-fill-color: unset;
-  font-weight: 500;
-}
-
-.navigation__account:hover .navigation__account-name,
-.navigation__account:hover .navigation__account-address,
-.navigation__account:active .navigation__account-name,
-.navigation__account:active .navigation__account-address  {
-  color: white;
-  font-weight: 500;
-}
-
+.navigation__account:hover,
 .navigation__account:active {
-  background: linear-gradient(to right, #d12fa1, #8b42b4);
-  box-shadow: 0 5px 20px -10px #5531a9;
+  color: #a93185;
+  background-color: white;
+  box-shadow: 0 5px 10px -5px rgba(0,0,0,.2);
 }
 
 .navigation--dark {
@@ -629,6 +603,13 @@ svg.fill-white {
 .navigation--dark .navigation__account {
   box-shadow: none;
   background-color: #373840;
+}
+
+.navigation--dark .navigation__account:hover,
+.navigation--dark .navigation__account:active {
+  color: rgba(255,255,255,.75);
+  box-shadow: none;
+  background-color: #42444d;
 }
 
 .navigation--dark .navigation__account-name {

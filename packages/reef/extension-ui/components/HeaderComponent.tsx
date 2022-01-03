@@ -1,4 +1,4 @@
-import { faExchangeAlt, faHome, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faExchangeAlt, faHome, faPaperPlane, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ActionContext } from '@reef-defi/extension-ui/components';
 import { utils } from '@reef-defi/react-lib';
@@ -149,6 +149,21 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
         <FontAwesomeIcon
           className='navigation__link-icon'
           icon={faExchangeAlt}
+        />
+      </a>
+      <a
+        className='navigation__link'
+        href='#'
+        onClick={(ev) => {
+          ev.stopPropagation();
+          ev.preventDefault();
+          openRoute('/accounts');
+        }}
+        title='Accounts'
+      >
+        <FontAwesomeIcon
+          className='navigation__link-icon'
+          icon={faWallet}
         />
       </a>
     </div>
