@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { FishAnimation } from './FishAnimation';
-import { UikLoading } from './Loading';
+import { FishAnimation, Loading } from './index';
 
-export const UikButton = ({ children,
+export const Button = ({ children,
   danger,
   fill,
   iconOnly,
@@ -12,7 +11,7 @@ export const UikButton = ({ children,
   onClick,
   size,
   success,
-  text }: UikButton): JSX.Element => (
+  text }: Button): JSX.Element => (
   <button
     className={`
       uik-button
@@ -27,7 +26,7 @@ export const UikButton = ({ children,
     onClick={onClick}
     type='button'
   >
-    {loading ? (loader === 'fish' ? <FishAnimation /> : <UikLoading />) : ''}
+    {loading ? (loader === 'fish' ? <FishAnimation /> : <Loading />) : ''}
     <span className='uik-button__text'>{children}{text}</span>
   </button>
 );
