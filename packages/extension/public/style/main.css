@@ -1,0 +1,13 @@
+@import url(variables.css);
+@import url(reef-styles-extension.css);
+@import url(reef-styles.css);
+@import url(navigation.css);
+
+* {
+  box-sizing: border-box;
+  font-family: var(--font-family);
+}
+
+body {
+  background-color: var(--bg);
+}
