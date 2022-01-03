@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const UikLoading = ({ color, size, text }: UikLoading): JSX.Element => (
+export const Loading = ({ color, size, text }: Loading): JSX.Element => (
   <div className={`
       uik-loading
       ${color === 'white' ? 'uik-loading--white' : ''}
