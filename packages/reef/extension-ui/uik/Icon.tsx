@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 
-export const Icon = ({ icon }: Icon): JSX.Element => (
+export const Icon = ({ className, icon }: Icon): JSX.Element => (
   <FontAwesomeIcon
-    className='uik-icon'
+    className={`uik-icon ${className}`}
     icon={icon}
   />
 );
