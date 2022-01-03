@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { FishAnimation, Loading } from './index';
+import { FishAnimation, Icon, Loading } from './index';
 
 export const Button = ({ children,
+  className,
   danger,
   fill,
+  icon,
   iconOnly,
   loader,
   loading,
@@ -22,11 +24,18 @@ export const Button = ({ children,
       ${size === 'large' ? 'uik-button--large' : ''}
       ${loading ? 'uik-button--loading' : ''}
       ${iconOnly ? 'uik-button--icon' : ''}
+      ${className}
     `}
     onClick={onClick}
     type='button'
   >
     {loading ? (loader === 'fish' ? <FishAnimation /> : <Loading />) : ''}
+    {icon
+      ? <Icon
+        className='uik-button__icon'
+        icon={icon}
+        />
+      : ''}
     <span className='uik-button__text'>{children}{text}</span>
   </button>
 );
