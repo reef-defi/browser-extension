@@ -1,12 +1,13 @@
 import React from 'react';
 
-export const Loading = ({ color, size, text }: Loading): JSX.Element => (
+export const Loading = ({ className, color, size, text }: Loading): JSX.Element => (
   <div className={`
       uik-loading
       ${color === 'white' ? 'uik-loading--white' : ''}
       ${color === 'black' ? 'uik-loading--black' : ''}
       ${size === 'small' ? 'uik-loading--small' : ''}
-    `}
+      ${className}
+      `}
   >
     <div className='uik-loading__spinner'>
       <div className='uik-loading__spinner-dot'></div>
