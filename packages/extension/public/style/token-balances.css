@@ -1,0 +1,17 @@
+.token-balances__head {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+}
+
+.token-balances__tokens {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}

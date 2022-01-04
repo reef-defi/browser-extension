@@ -1,12 +1,14 @@
 @import url(variables.css);
+@import url(uik/index.css);
+@import url(navigation.css);
 @import url(reef-styles-extension.css);
 @import url(reef-styles.css);
-@import url(navigation.css);
-@import url(uik/index.css);
+@import url(token-balances.css);
+@import url(token-card.css);
 
 * {
   box-sizing: border-box;
-  font-family: var(--font-family);
+  font-family: var(--font-family) !important;
 }
 
 body {

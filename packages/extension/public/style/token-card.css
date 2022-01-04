@@ -1,0 +1,55 @@
+.token-card {
+  width: 100%;
+  animation: token-card 0.25s;
+}
+
+@keyframes token-card {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
+.token-card + .token-card {
+  margin-top: 15px;
+}
+
+.token-card .uik-card {
+  padding-right: 25px;
+}
+
+.token-card .uik-card__content {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.token-card__left {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.token-card__image {
+  width: 2.688rem;
+  min-width: 2.688rem;
+  height: 2.688rem;
+}
+
+.token-card__info {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 15px;
+}
+
+.token-card__balance {
+  line-height: 1.1;
+}
+
+.token-card__value {
+  font-size: 1.125rem;
+}
