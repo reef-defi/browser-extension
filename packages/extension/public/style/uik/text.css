@@ -30,3 +30,21 @@
 .uik-text--mini {
   font-size: 0.875rem;
 }
+
+.dark-theme .uik-text {
+  color: white;
+  font-weight: 400;
+}
+
+.dark-theme .uik-text--light,
+.dark-theme .uik-text--mini {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.dark-theme .uik-text--headline {
+  font-weight: 600;
+  color: var(--primary-light);
+  background: transparent;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+}

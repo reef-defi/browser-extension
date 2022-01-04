@@ -32,3 +32,8 @@
 .uik-card .uik-card__content {
   width: 100%;
 }
+
+.dark-theme .uik-card {
+  box-shadow: 0 5px 10px -5px #1a1b20;
+  background-color: #2c2d33;
+}

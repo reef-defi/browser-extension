@@ -182,4 +182,15 @@
   width: 20px;
 }
 
+.dark-theme .uik-button {
+  background-color: #372838;
+  color: var(--primary-light);
+}
 
+.dark-theme .uik-button:hover {
+  background-color: #3f283d;
+}
+
+.dark-theme .uik-button:active {
+  background-color: #482943;
+}
