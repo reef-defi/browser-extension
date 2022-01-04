@@ -31,8 +31,13 @@
 
 .uik-button--small {
   font-size: 0.813rem;
+  line-height: 1;
   padding: 10px 15px;
   border-radius: 10px;
+}
+
+.uik-button--small .uik-button__text {
+  transform: translateY(0.063rem);
 }
 
 .uik-button--icon {
@@ -128,8 +133,10 @@
   overflow: hidden;
 }
 
-.uik-button--loading .uik-button__text {
+.uik-button--loading .uik-button__text,
+.uik-button--loading .uik-button__icon {
   opacity: 0;
+  pointer-events: none;
 }
 
 .uik-button .uik-loading {
