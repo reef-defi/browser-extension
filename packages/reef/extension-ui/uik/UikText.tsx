@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Text = ({ children, className, text, type }: Text): JSX.Element => (
+export const UikText = ({ children, className, text, type }: UikText): JSX.Element => (
   <div className={`
       uik-text
       ${type === 'headline' ? 'uik-text--headline' : ''}
@@ -8,7 +8,7 @@ export const Text = ({ children, className, text, type }: Text): JSX.Element => 
       ${type === 'light' ? 'uik-text--light' : ''}
       ${type === 'lead' ? 'uik-text--lead' : ''}
       ${type === 'mini' ? 'uik-text--mini' : ''}
-      ${className}
+      ${className || ''}
     `}
   >{children}{text}</div>
 );
