@@ -36,6 +36,7 @@
   width: 2.688rem;
   min-width: 2.688rem;
   height: 2.688rem;
+  border-radius: 50%;
 }
 
 .token-card__info {
