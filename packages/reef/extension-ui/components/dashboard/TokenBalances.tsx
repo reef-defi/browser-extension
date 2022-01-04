@@ -2,12 +2,10 @@ import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 import { Components, TokenWithAmount, utils } from '@reef-defi/react-lib';
 import React from 'react';
 
-import { Button, UikText } from './../../uik';
+import { Button, Loading, UikText } from './../../uik';
 import { TokenPill } from './TokenPill';
 
 const { DataProgress, getData, isDataSet } = utils;
-
-const { Loading } = Components.Loading;
 
 interface TokenBalances {
   tokens: utils.DataWithProgress<TokenWithAmount[]>;
@@ -51,7 +49,7 @@ export const TokenBalances = ({ isRefreshing, onRefresh, tokens }: TokenBalances
           (!isDataSet(tokens) && tokens === DataProgress.NO_DATA)
       ) &&
       (
-        <div>No tokens to display.</div>
+        <UikText>No tokens to display.</UikText>
       )}
     </div>
   </div>
