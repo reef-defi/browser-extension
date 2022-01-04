@@ -3,7 +3,7 @@ import React from 'react';
 export const FishAnimation = ({ className }: FishAnimation): JSX.Element => (
   <div className='fish-animation'>
     <svg
-      className={`fish-animation__fish ${className}`}
+      className={`fish-animation__fish ${className || ''}`}
       viewBox='0 0 66 29'
       xmlns='http://www.w3.org/2000/svg'
     >

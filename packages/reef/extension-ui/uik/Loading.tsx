@@ -6,7 +6,7 @@ export const Loading = ({ className, color, size, text }: Loading): JSX.Element 
       ${color === 'white' ? 'uik-loading--white' : ''}
       ${color === 'black' ? 'uik-loading--black' : ''}
       ${size === 'small' ? 'uik-loading--small' : ''}
-      ${className}
+      ${className || ''}
       `}
   >
     <div className='uik-loading__spinner'>
