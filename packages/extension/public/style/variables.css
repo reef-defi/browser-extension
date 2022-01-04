@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;800&display=swap');
 
 :root {
-  --font-family: 'Lato', sans-serif;
+  --font-family: 'Nunito Sans', sans-serif;
   --bg: #eeebf6;
   --text: #19233c;
   --text-light: #898e9c;
