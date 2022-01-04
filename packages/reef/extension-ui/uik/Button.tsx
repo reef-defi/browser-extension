@@ -24,7 +24,7 @@ export const Button = ({ children,
       ${size === 'large' ? 'uik-button--large' : ''}
       ${loading ? 'uik-button--loading' : ''}
       ${iconOnly ? 'uik-button--icon' : ''}
-      ${className}
+      ${className || ''}
     `}
     onClick={onClick}
     type='button'
@@ -34,7 +34,7 @@ export const Button = ({ children,
       ? <Icon
         className='uik-button__icon'
         icon={icon}
-        />
+      />
       : ''}
     <span className='uik-button__text'>{children}{text}</span>
   </button>
