@@ -19,3 +19,25 @@ main {
 body {
   background-color: var(--bg);
 }
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-button {
+  display: none;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 99px;
+}
+
+*::-webkit-scrollbar-thumb:horizontal {
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+}
+
+*::-webkit-scrollbar-thumb:vertical {
+  background: linear-gradient(to bottom, var(--primary), var(--secondary));
+}
