@@ -5,10 +5,15 @@
 @import url(reef-styles.css);
 @import url(token-balances.css);
 @import url(token-card.css);
+@import url(dropdowns.css);
 
 * {
   box-sizing: border-box;
   font-family: var(--font-family) !important;
+}
+
+main {
+  overflow: auto;
 }
 
 body {

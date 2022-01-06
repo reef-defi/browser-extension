@@ -1,0 +1,24 @@
+.jarRFH,
+.hUmkYm {
+  max-height: calc(100vh - 77px);
+  overflow: auto;
+  margin-top: 20px !important;
+  animation: dropdown-appear 0.2s;
+}
+
+@keyframes dropdown-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+.jarRFH .setting .dropdown,
+.hUmkYm .setting .dropdown {
+  display: flex;
+}
+
+div[class^='MenuItem'] > .dropdown,
+.menuItem > div {
+  display: flex;
+}
