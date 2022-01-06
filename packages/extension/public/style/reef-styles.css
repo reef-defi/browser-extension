@@ -356,3 +356,83 @@ svg.fill-white {
 .text-center{
   text-align: center;
 }
+
+.modal-dialog-centered {
+  margin: 0 auto;
+}
+
+.dark-theme .card {
+  box-shadow: 0 5px 10px -5px #1a1b20;
+  background-color: #2c2d33;
+}
+
+.dark-theme .card .field {
+  background-color: #373840;
+  border: none;
+}
+
+.dark-theme .card .field input {
+  background-color: transparent;
+  border: none;
+  box-shadow: 0 0 0 1px #42444d;
+  color: white;
+  transition: all 0.15s;
+}
+
+.dark-theme .card .field input:hover {
+  background-color: #42444d;
+}
+
+.dark-theme .card .field input:focus {
+  background-color: #2c2d33;
+  box-shadow: 0 0 0 1px var(--primary-light);
+}
+
+.dark-theme .card .field input.field-input {
+  background-color: transparent;
+  box-shadow: none !important;
+}
+
+.dark-theme .card .field input::placeholder {
+  color: white;
+  opacity: 0.5;
+}
+
+.dark-theme .card .btn-empty,
+.dark-theme .card .text-primary {
+  color: var(--primary-light) !important;
+}
+
+.dark-theme .card .btn-select {
+  border: none;
+  background-color: #42444d;
+  color: white;
+}
+
+.dark-theme .card .btn-select:hover {
+  background-color: var(--primary);
+}
+
+.dark-theme .card button#settings {
+  color: white;
+  opacity: 0.8;
+}
+
+.dark-theme .card button#settings:hover {
+  opacity: 1;
+}
+
+.dark-theme .card .btn-content-field {
+  background-color: transparent;
+}
+
+.dark-theme .card .btn-content-field .btn {
+  background-color: #373840;
+  box-shadow: 0 0 0 4px #2c2d33;
+  color: white;
+}
+
+.dark-theme .card .btn-content-field .btn:hover {
+  background-color: var(--primary);
+  border-color: transparent;
+}
