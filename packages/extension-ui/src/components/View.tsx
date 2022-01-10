@@ -31,7 +31,7 @@ function View ({ children, className }: Props): React.ReactElement<Props> {
     <ThemeSwitchContext.Provider value={switchTheme}>
       <ThemeProvider theme={_theme}>
         <BodyTheme theme={_theme} />
-        <Main className={className}>
+        <Main className={`${className || ''} ${theme}-theme`}>
           {children}
         </Main>
       </ThemeProvider>

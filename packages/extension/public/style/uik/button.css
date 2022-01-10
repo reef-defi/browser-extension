@@ -1,0 +1,196 @@
+.uik-button {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #e7def0;
+  border: none;
+  white-space: nowrap;
+  border-radius: 11px;
+  font-size: 0.875rem;
+  line-height: 1;
+  font-weight: 600;
+  padding: 11px 17px;
+  color: var(--primary-text);
+  transition: all 0.125s;
+}
+
+.uik-button--icon {
+  padding: 11px;
+}
+
+.uik-button .uik-button__icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.uik-button .uik-button__icon + .uik-button__text,
+.uik-button .uik-button__text + .uik-button__icon {
+  margin-left: 0.5rem;
+}
+
+.uik-button--small {
+  font-size: 0.813rem;
+  line-height: 1;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
+.uik-button--small .uik-button__text {
+  transform: translateY(0.063rem);
+}
+
+.uik-button--icon {
+  padding: 10px;
+}
+
+.uik-button--small .uik-button__icon {
+  width: 0.813rem;
+  height: 0.813rem;
+}
+
+.uik-button--small .uik-button__icon + .uik-button__text,
+.uik-button--small .uik-button__text + .uik-button__icon {
+  margin-left: 0.438rem;
+}
+
+.uik-button--large {
+  font-size: 1rem;
+  padding: 14px 20px;
+  border-radius: 12px;
+}
+
+.uik-button--icon {
+  padding: 14px;
+}
+
+.uik-button--large .uik-button__icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.uik-button--large .uik-button__icon + .uik-button__text,
+.uik-button--large .uik-button__text + .uik-button__icon {
+  margin-left: 0.75rem;
+}
+
+.uik-button:hover {
+  transition: none;
+  cursor: pointer;
+  background-color: #e1d5ec; /* SASS: darken(var(--bg), 2.5%) */
+}
+
+.uik-button:active {
+  transition: all 0.125s;
+  background-color: #dacce8; /* SASS: darken(var(--bg), 5%) */
+}
+
+.uik-button--fill {
+  color: white;
+  background: var(--gradient);
+  box-shadow: 0 5px 20px -10px var(--secondary);
+}
+
+.uik-button--fill:hover {
+  transition: all 0.125s;
+  filter: brightness(1.2);
+}
+
+.uik-button--fill:active {
+  transition: none;
+  filter: brightness(1.3);
+}
+
+.uik-button--danger {
+  color: white;
+  background-color: var(--danger);
+}
+
+.uik-button--danger:hover {
+  background-color: #ce2727; /* SASS: darken(var(--danger), 5%) */
+}
+
+.uik-button--danger:active {
+  background-color: #b92323; /* SASS: darken(var(--danger), 10%) */
+}
+
+.uik-button--success {
+  color: white;
+  background-color: var(--success);
+}
+
+.uik-button--success:hover {
+  background-color: #36c37d; /* SASS: darken(var(--success), 5%) */
+}
+
+.uik-button--success:active {
+  background-color: #33b977; /* SASS: darken(var(--success), 7.5%) */
+}
+
+.uik-button--loading {
+  position: relative;
+  min-width: 40px;
+  overflow: hidden;
+}
+
+.uik-button--loading .uik-button__text,
+.uik-button--loading .uik-button__icon {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.uik-button .uik-loading {
+  position: absolute;
+}
+
+.uik-button .uik-loading__spinner {
+  width: 14px;
+  height: 14px;
+}
+
+.uik-button--large .uik-loading__spinner {
+  width: 18px;
+  height: 18px;
+}
+
+.uik-button--fill .uik-loading__spinner-dot::before,
+.uik-button--danger .uik-loading__spinner-dot::before,
+.uik-button--success .uik-loading__spinner-dot::before {
+  background: white;
+}
+
+.uik-button--loading .fish-animation {
+  position: absolute;
+  height: 100%;
+  backdrop-filter: none;
+}
+
+.uik-button--loading .fish-animation::before {
+  display: none;
+}
+
+.uik-button--loading .fish-animation__fish {
+  animation-duration: 2s;
+  width: 26px;
+}
+
+.uik-button--loading.uik-button--large .fish-animation__fish {
+  width: 36px;
+}
+
+.uik-button--loading.uik-button--small .fish-animation__fish {
+  width: 20px;
+}
+
+.dark-theme .uik-button {
+  background-color: #372838;
+  color: var(--primary-light);
+}
+
+.dark-theme .uik-button:hover {
+  background-color: #3f283d;
+}
+
+.dark-theme .uik-button:active {
+  background-color: #482943;
+}

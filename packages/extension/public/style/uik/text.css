@@ -1,0 +1,50 @@
+.uik-text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.uik-text--light {
+  color: var(--text-light);
+}
+
+.uik-text--headline {
+  color: var(--primary);
+  font-size: 2.875rem;
+  font-weight: 900;
+  background: -webkit-linear-gradient(0deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.uik-text--title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.uik-text--lead {
+  font-weight: 600;
+}
+
+.uik-text--mini {
+  font-size: 0.875rem;
+}
+
+.dark-theme .uik-text {
+  color: white;
+  font-weight: 400;
+}
+
+.dark-theme .uik-text--light,
+.dark-theme .uik-text--mini {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.dark-theme .uik-text--headline {
+  font-weight: 600;
+  color: var(--primary-light);
+  background: transparent;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+}
