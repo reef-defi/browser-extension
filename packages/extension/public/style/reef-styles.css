@@ -436,3 +436,33 @@ svg.fill-white {
   background-color: var(--primary);
   border-color: transparent;
 }
+
+.dark-theme .modal-content {
+  background-color: #373840;
+}
+
+.dark-theme .modal-content .btn-close {
+  filter: invert(1);
+}
+
+.dark-theme .modal-content .title-text + .btn {
+  color: white;
+}
+
+.dark-theme .modal-content .list-group-item {
+  background-color: transparent;
+  border: none !important;
+  color: white;
+}
+
+.dark-theme #swapModalToggle .field {
+  background-color: #2c2d33;
+}
+
+.dark-theme #swapModalToggle .btn-content-field button {
+  opacity: 1;
+}
+
+.dark-theme #swapModalToggle .modal-footer {
+  background-color: #373840 !important;
+}

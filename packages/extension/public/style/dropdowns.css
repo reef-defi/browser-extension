@@ -22,3 +22,50 @@ div[class^='MenuItem'] > .dropdown,
 .menuItem > div {
   display: flex;
 }
+
+.dark-theme .dropdown-menu {
+  background-color: #373840 !important;
+  border-radius: 15px !important;
+  box-shadow: 0 3px 30px 0 rgba(0, 0, 0, 0.07) !important;
+}
+
+.dark-theme .dropdown-menu .title-text {
+  color: white !important;
+}
+
+.dark-theme .dropdown-menu input {
+  background-color: transparent;
+  border: none;
+  box-shadow: 0 0 0 1px #42444d;
+  color: white;
+  transition: all 0.15s;
+  text-align: right;
+  outline: none !important;
+  position: relative;
+  z-index: 1;
+}
+
+.dark-theme .dropdown-menu input:hover {
+  background-color: #42444d;
+}
+
+.dark-theme .dropdown-menu input:focus {
+  background-color: #2c2d33;
+  box-shadow: 0 0 0 1px var(--primary-light);
+}
+.dark-theme .dropdown-menu input::placeholder {
+  color: white;
+  opacity: 0.5;
+}
+
+.dark-theme .dropdown-menu input + .input-group-text {
+  background-color: transparent;
+  border: none;
+  box-shadow: 0 0 0 1px #42444d;
+  color: white;
+  margin-left: 1px !important;
+}
+
+.dropdown-menu .text-warn {
+  color: var(--danger);
+}
