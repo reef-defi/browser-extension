@@ -22,3 +22,6 @@
   height: 4em;
 }
 
+.notification .navigation {
+  display: none;
+}
