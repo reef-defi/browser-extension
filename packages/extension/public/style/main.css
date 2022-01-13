@@ -6,6 +6,7 @@
 @import url(token-balances.css);
 @import url(token-card.css);
 @import url(dropdowns.css);
+@import url(accounts.css);
 
 * {
   box-sizing: border-box;
