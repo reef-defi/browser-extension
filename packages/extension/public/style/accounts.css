@@ -139,6 +139,10 @@
   background-color: white;
 }
 
+.account-card__identicon:hover {
+  cursor: pointer !important;
+}
+
 .account-card__identicon,
 .account-card__identicon svg {
   width: 66px;
@@ -435,4 +439,73 @@
   padding: 4px 12px;
   border-radius: 0 15px 0 15px;
   background-color: var(--primary);
+}
+
+.dark-theme .accounts__header .branding .logoText {
+  font-weight: 500;
+}
+
+.dark-theme .accounts__header .searchBarWrapper input {
+  background-color: #2c2d33;
+  box-shadow: 0 5px 10px -5px #1a1b20;
+  color: white;
+}
+
+.dark-theme .account-card__wrapper {
+  box-shadow: 0 5px 10px -5px #1a1b20;
+  background-color: #2c2d33;
+}
+
+.dark-theme .account-card__wrapper--selected {
+  box-shadow: inset 0 0 0 2px var(--primary),
+    0 5px 10px -5px #1a1b20;
+  background-color: rgba(169, 49, 133, 0.1);
+}
+
+.dark-theme .account-card__identicon {
+  background-color: #373840;
+}
+
+.dark-theme .account-card__name {
+  color: white;
+  font-weight: 500;
+}
+
+.dark-theme .account-card__rename input {
+  color: #ff62ff;
+  border-color: #ff62ff;
+  font-weight: 500;
+}
+
+.dark-theme .account-card__parent {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.dark-theme .account-card__address {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.dark-theme .uik-button {
+  background-color: rgba(169, 49, 133, 0.16);
+  color: #ff62ff;
+}
+
+.dark-theme .uik-button:hover {
+  background-color: rgba(169, 49, 133, 0.25);
+}
+
+.dark-theme .uik-button:active {
+  background-color: rgba(169, 49, 133, 0.35);
+}
+
+.dark-theme .uik-button--fill {
+  color: white;
+}
+
+.dark-theme .account-card__balance div {
+  background: transparent;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  color: #ff62ff;
+  font-weight: 500;
 }

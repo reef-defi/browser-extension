@@ -354,7 +354,7 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
             { !children
               ? <div>
                 <External />
-                <span>{ name || account?.name || '' }</span>
+                <span>{ name || account?.name || '<No Name>' }</span>
               </div>
               : children }
           </div>
