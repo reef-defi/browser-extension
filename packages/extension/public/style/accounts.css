@@ -1,0 +1,511 @@
+.accounts__header {
+  min-height: 34px !important;
+  border-bottom: none !important;
+  margin-top: 20px;
+  padding: 0 24px;
+}
+
+.accounts__header .branding {
+  margin-left: 0 !important;
+}
+
+.accounts__header .branding > * {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.accounts__header .branding .logoText {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.accounts__header .searchBarWrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.accounts__header .searchBarWrapper .inputFilter {
+  padding: 0 !important;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.accounts__header .searchBarWrapper .inputFilter .resetIcon {
+  bottom: unset !important;
+  top: unset !important;
+  right: 27px !important;
+}
+
+.accounts__header .searchBarWrapper .inputFilter .resetIcon:hover {
+  color: var(--danger);
+}
+
+.accounts__header .searchBarWrapper input {
+  height: 34px !important;
+  border: none;
+  padding: 0 12px;
+  padding-right: 37px;
+  background-color: white;
+  box-shadow: 0 3px 30px 0 rgba(0, 0, 0, 0.07);
+  color: var(--text);
+  font-size: 0.938rem;
+  font-weight: 500;
+  border-radius: 8px;
+  margin-right: 15px;
+  animation: accounts-search-input 0.25s;
+  width: 100%;
+}
+
+@keyframes accounts-search-input {
+  from {
+    padding: 0;
+    width: 0;
+    box-shadow: 0 3px 30px 0 rgba(0, 0, 0, 0);
+  }
+}
+
+.accounts__header .popupMenus .popupToggle {
+  transition: all 0.15s;
+}
+
+.accounts__header .popupMenus .popupToggle svg,
+.accounts__header .searchBarWrapper .searchIcon {
+  transition: all 0.15s;
+}
+
+.accounts__header .popupMenus .popupToggle:hover svg,
+.accounts__header .searchBarWrapper .searchIcon:hover {
+  color: rgb(186, 36, 199);
+}
+
+.accounts__header .popupMenus .popupToggle:active,
+.accounts__header .searchBarWrapper .searchIcon:active {
+  transform: scale(1.2);
+}
+
+.accounts__header .popupMenus .popupToggle:last-child {
+  margin-right: 5px !important;
+}
+
+.account-card__wrapper {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 3px 30px 0 rgba(0, 0, 0, 0.07);
+  padding: 15px;
+  width: 100%;
+  animation: account-card 0.25s;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.account-card__wrapper--selected {
+  box-shadow: inset 0 0 0 2px var(--primary),
+    0 5px 20px -10px rgba(169, 49, 133, 0.25);
+  background-color: rgba(169, 49, 133, 0.1);
+}
+
+@keyframes account-card {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
+.account-card + .account-card {
+  margin-top: 15px;
+}
+
+.account-card__main {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  max-width: 50%;
+}
+
+.account-card__identicon {
+  border-radius: 50%;
+  background-color: white;
+}
+
+.account-card__identicon:hover {
+  cursor: pointer !important;
+}
+
+.account-card__identicon,
+.account-card__identicon svg {
+  width: 66px;
+  min-width: 66px;
+  height: 66px;
+}
+
+.account-card__info {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 15px;
+  padding: 1px 0;
+  max-width: calc(100% - 81px);
+}
+
+.account-card__name {
+  font-size: 1rem;
+  color: var(--text);
+  font-weight: 600;
+  line-height: 1.2;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  word-break: break-all;
+}
+
+.account-card__name > div {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.account-card__name svg {
+  font-size: 0.875rem;
+  transform: translateY(-1px);
+  opacity: 0.75;
+}
+
+.account-card__name svg.hardwareIcon {
+  transform: translateY(-1px) rotate(270deg);
+  margin-right: -3px;
+}
+
+.account-card__name svg + * {
+  margin-left: 6px;
+}
+
+.account-card__rename {
+  position: relative !important;
+  flex: unset !important;
+  left: unset !important;
+  top: unset !important;
+  width: 100% !important;
+  padding-right: 15px;
+}
+
+.account-card__name .danger,
+.account-card__name .belowInput {
+  position: absolute;
+  top: 20px;
+  margin-top: 0 !important;
+  left: 0;
+  z-index: 1;
+  width: 100% !important;
+  max-width: calc(100% - 15px);
+  background-color: white !important;
+  border-left: none;
+  padding: 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  box-shadow: 0 3px 30px 0 rgba(0, 0, 0, 0.07);
+  border-radius: 0 0 10px 10px;
+  line-height: 1.2;
+}
+
+.account-card__name .danger svg,
+.account-card__name .belowInput svg {
+  display: none;
+}
+
+.account-card__rename div {
+  margin: 0;
+}
+
+.account-card__rename label {
+  display: none;
+}
+
+.account-card__rename input {
+  height: auto !important;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  outline: none;
+  font-size: 1rem;
+  color: var(--primary-text);
+  font-weight: 600;
+  line-height: 1.2;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100% !important;
+  border-radius: 0;
+  border: none;
+  border-bottom: dashed 1px var(--primary);
+}
+
+.account-card__parent {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--text-light);
+  line-height: 1.2;
+  font-weight: 500;
+  margin-bottom: 2px;
+  width: 100%;
+}
+
+.account-card__parent svg {
+  margin-right: 5px;
+  font-size: 0.688rem;
+  transform: translateY(-2px);
+}
+
+.account-card__meta {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.account-card__address {
+  font-size: 0.875rem;
+  line-height: 1.3;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.account-card__meta svg {
+  margin-left: 5px;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.15s;
+  transform: translateY(-1px);
+}
+
+.account-card__visibility {
+  margin-left: 10px !important;
+  width: 17.5px !important;
+}
+
+.account-card__visibility--hidden {
+  color: var(--danger) !important;
+}
+
+.account-card__meta svg:hover {
+  color: var(--primary);
+}
+
+.account-card__meta svg:active {
+  color: var(--primary);
+  transform: scale(1.2);
+}
+
+.account-card__bind-btn {
+  background-color: rgba(234, 237, 243, 0.75);
+  color: rgba(25, 35, 60, 0.85);
+  margin-right: 10px;
+}
+
+.account-card__bind-btn:hover,
+.account-card__bind-btn:active {
+  color: var(--primary-text);
+}
+
+.account-card__bind-btn:hover {
+  background-color: rgba(231, 222, 240, 1);
+}
+
+.account-card__bind-btn:active {
+  background-color: #e1d5ec;
+}
+
+.account-card__wrapper--selected .account-card__bind-btn {
+  background-color: rgba(169, 49, 133, 0.16);
+  color: #b83596;
+}
+
+.account-card__wrapper--selected .account-card__bind-btn:hover {
+  background-color: rgba(169, 49, 133, 0.25);
+}
+
+.account-card__wrapper--selected .account-card__bind-btn:active {
+  background-color: rgba(169, 49, 133, 0.35);
+}
+
+.account-card__aside {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.account-card__balance {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 4px;
+  margin-bottom: 7px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.account-card__balance img {
+  width: 16px;
+  margin-right: 6px;
+}
+
+.account-card__balance div {
+  font-size: 0.875rem;
+  line-height: 1.2;
+  font-weight: 900;
+  color: #a93185;
+  background: linear-gradient(to right, #a93185, #5531a9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transform: translateY(1px);
+}
+
+.account-card__select-btn {
+  margin-right: 10px;
+}
+
+.account-card__select-btn--selected {
+  pointer-events: none;
+}
+
+.account-card__actions {
+  position: relative;
+}
+
+.account-card__actions-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 10px;
+  margin-right: -10px;
+  color: var(--text-light);
+  transition: all 0.15s;
+}
+
+.account-card__actions-btn:hover {
+  color: var(--primary);
+}
+
+.account-card__actions-btn:active {
+  color: var(--primary);
+  transform: scale(1.3);
+}
+
+.account-card__actions-btn svg {
+  font-size: 20px;
+}
+
+.account-card .movableMenu {
+  margin-top: 0 !important;
+}
+
+.account-card__chain {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  font-size: 0.688rem;
+  font-weight: 600;
+  color: white;
+  line-height: 1.1;
+  padding: 4px 12px;
+  border-radius: 0 15px 0 15px;
+  background-color: var(--primary);
+}
+
+.dark-theme .accounts__header .branding .logoText {
+  font-weight: 500;
+}
+
+.dark-theme .accounts__header .searchBarWrapper input {
+  background-color: #2c2d33;
+  box-shadow: 0 5px 10px -5px #1a1b20;
+  color: white;
+}
+
+.dark-theme .account-card__wrapper {
+  box-shadow: 0 5px 10px -5px #1a1b20;
+  background-color: #2c2d33;
+}
+
+.dark-theme .account-card__wrapper--selected {
+  box-shadow: inset 0 0 0 2px var(--primary),
+    0 5px 10px -5px #1a1b20;
+  background-color: rgba(169, 49, 133, 0.1);
+}
+
+.dark-theme .account-card__identicon {
+  background-color: #373840;
+}
+
+.dark-theme .account-card__name {
+  color: white;
+  font-weight: 500;
+}
+
+.dark-theme .account-card__rename input {
+  color: #ff62ff;
+  border-color: #ff62ff;
+  font-weight: 500;
+}
+
+.dark-theme .account-card__parent {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.dark-theme .account-card__address {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.dark-theme .uik-button {
+  background-color: rgba(169, 49, 133, 0.16);
+  color: #ff62ff;
+}
+
+.dark-theme .uik-button:hover {
+  background-color: rgba(169, 49, 133, 0.25);
+}
+
+.dark-theme .uik-button:active {
+  background-color: rgba(169, 49, 133, 0.35);
+}
+
+.dark-theme .uik-button--fill {
+  color: white;
+}
+
+.dark-theme .account-card__balance div {
+  background: transparent;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  color: #ff62ff;
+  font-weight: 500;
+}

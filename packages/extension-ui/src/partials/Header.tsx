@@ -73,7 +73,7 @@ function Header ({ children, className = '', onFilter, showAdd, showBackArrow, s
 
   return (
     <div className={`${className} ${smallMargin ? 'smallMargin' : ''}`}>
-      <div className='container'>
+      <div className='container accounts__header'>
         <div className='branding'>
           {showBackArrow
             ? (

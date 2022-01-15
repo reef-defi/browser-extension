@@ -11,7 +11,7 @@ import styled from 'styled-components';
 import { Address, Dropdown, Link, MenuDivider } from '../../components';
 import useGenesisHashOptions from '../../hooks/useGenesisHashOptions';
 import useTranslation from '../../hooks/useTranslation';
-import {editAccount, tieAccount} from '../../messaging';
+import { editAccount, tieAccount } from '../../messaging';
 import { Name } from '../../partials';
 
 interface Props extends AccountJson {
@@ -41,8 +41,8 @@ function Account ({ address, className, genesisHash, isExternal, isHardware, isH
   const _toggleEdit = useCallback(
     (ev?: Event): void => {
       ev?.preventDefault();
-      console.log("edit=",ev);
-      setEditing(({toggleActions}) => ({isEditing: !isEditing, toggleActions: ++toggleActions}))
+      console.log('edit=', ev);
+      setEditing(({ toggleActions }) => ({ isEditing: !isEditing, toggleActions: ++toggleActions }));
     },
     [isEditing]
   );
@@ -109,7 +109,7 @@ function Account ({ address, className, genesisHash, isExternal, isHardware, isH
   ), [_onChangeGenesis, _toggleEdit, address, genesisHash, genesisOptions, isExternal, isHardware, t, type]);
 
   return (
-    <div className={className}>
+    <div className={`${className || ''} account-card`}>
       <Address
         actions={_actions}
         address={address}
@@ -125,7 +125,7 @@ function Account ({ address, className, genesisHash, isExternal, isHardware, isH
         {isEditing && (
           <Name
             address={address}
-            className={`editName ${parentName ? 'withParent' : ''}`}
+            className={`account-card__rename editName ${parentName ? 'withParent' : ''}`}
             isFocused
             label={' '}
             onBlur={_saveChanges}

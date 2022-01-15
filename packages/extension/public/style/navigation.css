@@ -11,6 +11,7 @@
   box-shadow: 0 5px 10px -5px rgba(0,0,0,.1);
   position: sticky;
   top: 0;
+  z-index: 9999;
 }
 .navigation_menu-items {
   display: flex;
