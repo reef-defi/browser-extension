@@ -138,7 +138,7 @@ export async function web3Accounts ({ accountType, ss58Format }: Web3AccountsOpt
 
   const addresses = accounts.map(({ address }) => address);
 
-  console.log(`web3Accounts: Found ${accounts.length} address${accounts.length !== 1 ? 'es' : ''}: ${addresses.join(', ')}`);
+  // console.log(`web3Accounts: Found ${accounts.length} address${accounts.length !== 1 ? 'es' : ''}: ${addresses.join(', ')}`);
 
   return accounts;
 }
