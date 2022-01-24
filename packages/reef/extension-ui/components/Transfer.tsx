@@ -12,7 +12,7 @@ export const Transfer = (): JSX.Element => {
   const provider = useObservableState(appState.providerSubj);
   const accounts = useObservableState(appState.signers$);
   const selectedSigner = useObservableState(appState.selectedSigner$);
-  const signerTokenBalances = useObservableState(appState.selectedSignerTokenBalances$);
+  const signerTokenBalances = useObservableState(appState.tokenPrices$);
   const theme = localStorage.getItem('theme');
 
   const [token, setToken] = useState<reefUtils.DataWithProgress<TokenWithAmount>>(reefUtils.DataProgress.LOADING);

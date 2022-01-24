@@ -126,3 +126,6 @@ export const tokenPrices$ = combineLatest([allAvailableSignerTokens$, reefPrice$
   map(toTokensWithPrice),
   shareReplay(1),
 );
+apolloClientInstance$.subscribe((val: any): any => {
+  console.log("PRICESSSSS=",val);
+})

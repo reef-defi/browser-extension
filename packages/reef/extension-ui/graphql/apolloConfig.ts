@@ -5,7 +5,7 @@ import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { map } from 'rxjs';
 import { selectedNetworkSubj } from '../state/providerState';
-import { getGQLUrls } from '../environment';
+import {getGQLUrls} from "../state/environment";
 
 const splitLink$ = selectedNetworkSubj.pipe(
   map(getGQLUrls),

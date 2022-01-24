@@ -3,7 +3,7 @@ import {BigNumber, ethers} from "ethers";
 import {useEffect, useState} from "react";
 import {TxStatusHandler, TxStatusUpdate} from "@reef-defi/react-lib/dist/utils";
 import {useObservableState} from "../hooks/useObservableState";
-import {provider$, providerSubj} from "../state/providerState";
+import {providerSubj} from "../state/providerState";
 import {Provider} from "@reef-defi/evm-provider";
 
 export enum EvmBindComponentTxType {
