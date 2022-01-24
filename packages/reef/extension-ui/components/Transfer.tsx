@@ -9,7 +9,7 @@ import {TxStatusUpdate} from "@reef-defi/react-lib/dist/utils";
 import {createUpdateActions, UpdateAction, UpdateDataType} from "../state/updateCtxUtil";
 
 export const Transfer = (): JSX.Element => {
-  const provider = useObservableState(appState.provider$);
+  const provider = useObservableState(appState.providerSubj);
   const accounts = useObservableState(appState.signers$);
   const selectedSigner = useObservableState(appState.selectedSigner$);
   const signerTokenBalances = useObservableState(appState.selectedSignerTokenBalances$);
