@@ -1,7 +1,7 @@
 import {Components} from "@reef-defi/react-lib";
 import {useObservableState} from "../hooks/useObservableState";
 import {selectedSigner$} from "../state/accountState";
-import {selectedNetwork$} from "../state/providerState";
+import {selectedNetworkSubj} from "../state/providerState";
 import {allAvailableSignerTokens$} from "../state/tokenState";
 import React from "react";
 import {onTxUpdateReloadSignerBalances} from "../state/util";
@@ -11,7 +11,7 @@ import {createUpdateActions, UpdateAction, UpdateDataType} from "../state/update
 
 export const Swap = (): JSX.Element => {
   const signer = useObservableState(selectedSigner$);
-  const network = useObservableState(selectedNetwork$);
+  const network = useObservableState(selectedNetworkSubj);
   const availableTokens = useObservableState(allAvailableSignerTokens$);
   const theme = localStorage.getItem('theme');
   const onSwapTxUpdate = (txState: TxStatusUpdate) => {

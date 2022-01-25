@@ -1,4 +1,4 @@
-import {map, Observable, shareReplay} from "rxjs";
+import { map, Observable, shareReplay } from 'rxjs';
 
 export enum UpdateDataType {
   ACCOUNT_NATIVE_BALANCE,
@@ -17,50 +17,46 @@ export interface UpdateDataCtx<T> {
   ctx?: any;
 }
 
-export const createUpdateActions = (updateTypes: UpdateDataType[], addresses?: string[]) => {
+export const createUpdateActions = (updateTypes: UpdateDataType[], addresses?: string[]): UpdateAction[] => {
   const updateActions: UpdateAction[] = [];
   if (addresses) {
     addresses.forEach((address) => {
-      updateTypes.forEach(updT => updateActions.push({type: updT, address} as UpdateAction))
+      updateTypes.forEach((updT) => updateActions.push({ type: updT, address } as UpdateAction));
     });
   } else {
-    updateTypes.forEach(updT => updateActions.push({type: updT} as UpdateAction));
+    updateTypes.forEach((updT) => updateActions.push({ type: updT } as UpdateAction));
   }
   return updateActions;
-}
+};
 
-export const getUnwrappedData$ = <T>(dataCtx$: Observable<UpdateDataCtx<T>>): Observable<T> => {
-  return dataCtx$.pipe(
-    map(updCtx => updCtx.data as T),
-    shareReplay(1)
-  );
-}
+export const getUnwrappedData$ = <T>(dataCtx$: Observable<UpdateDataCtx<T>>): Observable<T> => dataCtx$.pipe(
+  map((updCtx) => updCtx.data as T),
+  shareReplay(1),
+);
 
-export const getUpdAddresses = ( updateType: UpdateDataType, updateActions: UpdateAction[]): string[] | null => {
-  let typeUpdateActions = updateActions.filter(ua => ua.type === updateType);
+export const getUpdAddresses = (updateType: UpdateDataType, updateActions: UpdateAction[]): string[] | null => {
+  const typeUpdateActions = updateActions.filter((ua) => ua.type === updateType);
   if (typeUpdateActions.length === 0) {
     return null;
   }
-  if (typeUpdateActions.some(tua => !tua.address)) {
+  if (typeUpdateActions.some((tua) => !tua.address)) {
     return [];
   }
 
-  return typeUpdateActions.map(ua => ua.address as string);
-}
+  return typeUpdateActions.map((ua) => ua.address as string);
+};
 
 export const getAddressUpdateActionTypes = (address?: string, updateActions?: UpdateAction[]): UpdateDataType[] => {
   if (!address || !updateActions) {
     return [];
   }
-  return updateActions.filter(ua => !ua.address || ua.address === address).map(ua => ua.type)
+  return updateActions.filter((ua) => !ua.address || ua.address === address).map((ua) => ua.type)
     .reduce((distinctTypes, curr) => {
       if (distinctTypes.indexOf(curr) < 0) {
         distinctTypes.push(curr);
       }
       return distinctTypes;
     }, [] as UpdateDataType[]);
-}
+};
 
-export const isUpdateAll = (addresses: string[] | null): boolean => {
-  return addresses?.length === 0;
-}
+export const isUpdateAll = (addresses: string[] | null): boolean => addresses?.length === 0;
