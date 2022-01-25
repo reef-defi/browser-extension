@@ -115,7 +115,6 @@ export const allAvailableSignerTokens$ = combineLatest([selectedSignerTokenBalan
 // TODO when network changes signer changes as well? this could make 2 requests unnecessary - check
 export const pools$: Observable<Pool[]> = combineLatest([allAvailableSignerTokens$, selectedNetworkSubj, selectedSigner$]).pipe(
   switchMap(([tkns, network, signer]) => {
-    console.log('LOAD pools=', signer, tkns);
     return signer ? rpc.loadPools(tkns, signer.signer, network.factoryAddress) : [];
   }),
   shareReplay(1),
