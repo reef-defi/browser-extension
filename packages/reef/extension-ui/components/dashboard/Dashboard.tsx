@@ -7,6 +7,7 @@ import { TokenBalances } from './TokenBalances';
 
 export const Dashboard = (): JSX.Element => {
   const tokensWithPrice = useObservableState(tokenPrices$);
+  console.log("TTTT=",tokensWithPrice);
 
   return (<>
     <TokenBalances

@@ -1,15 +1,12 @@
-import {
-  combineLatest, from, map, mergeScan, Observable, of, shareReplay, switchMap, timer,
-} from 'rxjs';
-import {
-  api, Pool, reefTokenWithAmount, rpc, Token,
-} from '@reef-defi/react-lib';
-import { BigNumber, utils } from 'ethers';
-import { ApolloClient, gql } from '@apollo/client';
-import { combineTokensDistinct, toTokensWithPrice } from './util';
-import { selectedSigner$ } from './accountState';
-import { providerSubj, selectedNetworkSubj } from './providerState';
-import { apolloClientInstance$ } from '../graphql/apolloConfig';
+import {combineLatest, map, mergeScan, Observable, of, shareReplay, switchMap, timer,} from 'rxjs';
+import {api, Pool, reefTokenWithAmount, rpc, Token,} from '@reef-defi/react-lib';
+import {BigNumber, utils} from 'ethers';
+import {ApolloClient, gql} from '@apollo/client';
+import {combineTokensDistinct, toTokensWithPrice} from './util';
+import {selectedSigner$} from './accountState';
+import {providerSubj, selectedNetworkSubj} from './providerState';
+import {apolloClientInstance$} from '../graphql/apolloConfig';
+import {Observable as ZenObservable,} from 'zen-observable-ts'
 
 // TODO replace with our own from lib and remove
 const toPlainString = (num: number): string => (`${+num}`).replace(/(-?)(\d*)\.?(\d*)e([+-]\d+)/,
@@ -80,13 +77,18 @@ const tokenBalancesWithContractDataCache = (apollo: ApolloClient<any>) => (state
   });
 };
 
+const zenToRx = <T>(zenObservable: ZenObservable<T>): Observable<T> =>
+  new Observable(
+    observer => zenObservable.subscribe(observer)
+  );
+
 export const selectedSignerTokenBalancesWS$ = combineLatest([apolloClientInstance$, selectedSigner$, providerSubj]).pipe(
   switchMap(([apollo, signer, provider]) => (!signer ? []
-    : from(apollo.subscribe({
-      query: SIGNER_TOKENS_GQL,
-      variables: { accountId: signer.address },
-      fetchPolicy: 'network-only',
-    })).pipe(
+    : zenToRx(apollo.subscribe({
+        query: SIGNER_TOKENS_GQL,
+        variables: {accountId: signer.address},
+        fetchPolicy: 'network-only',
+      })).pipe(
       map((res: any) => (res.data && res.data.token_holder ? res.data.token_holder : undefined)),
       // eslint-disable-next-line camelcase
       switchMap((tokenBalances:{token_address: string, balance: number}[]) => {
