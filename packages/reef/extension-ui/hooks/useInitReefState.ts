@@ -5,13 +5,13 @@ import {AccountJson} from "@reef-defi/extension-base/background/types";
 import {appState} from "../state";
 
 export const useInitReefState = (accounts: AccountJson[]|null): void => {
-  const network = useObservableState(appState.selectedNetwork$);
+  const network = useObservableState(appState.selectedNetworkSubj);
   const [provider, isProviderLoading] = hooks.useProvider(network?.rpcUrl);
 
   useEffect(() => {
 
     if (provider) {
-      appState.provider$.next(provider);
+      appState.providerSubj.next(provider);
     }
     return () => {
       provider?.api.disconnect();

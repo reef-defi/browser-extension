@@ -20,7 +20,7 @@ import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
 
 import { useObservableState } from '../../../reef/extension-ui/hooks/useObservableState';
 import { appState } from '../../../reef/extension-ui/state';
-import { provider$ } from '../../../reef/extension-ui/state/providerState';
+import {provider$, providerSubj} from '../../../reef/extension-ui/state/providerState';
 import details from '../assets/details.svg';
 import useMetadata from '../hooks/useMetadata';
 import useOutsideClick from '../hooks/useOutsideClick';
@@ -108,7 +108,7 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
   const settings = useContext(SettingsContext);
   const [{ account, formatted, genesisHash: recodedGenesis, prefix, type }, setRecoded] = useState<Recoded>(defaultRecoded);
   const chain = useMetadata(genesisHash || recodedGenesis, true);
-  const provider = useObservableState(provider$);
+  const provider = useObservableState(providerSubj);
   const signRequests = useContext(SigningReqContext);
   const [showActionsMenu, setShowActionsMenu] = useState(false);
   const [moveMenuUp, setIsMovedMenu] = useState(false);
