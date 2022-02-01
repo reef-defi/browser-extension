@@ -1,0 +1,95 @@
+main {
+  width: 100%;
+  padding: 25px 20px;
+  flex-grow: 1;
+}
+
+.text {
+  width: 100%;
+  max-width: 800px;
+  font-size: 1rem;
+  line-height: 1.35;
+  color: var(--text);
+  text-align: left;
+  margin: 2rem auto;
+  animation: text-appear 0.5s 0.7s backwards;
+}
+
+@keyframes text-appear {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+}
+
+.text a {
+  color: var(--primary-light);
+  background: -webkit-linear-gradient(0deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+  text-decoration: none;
+  position: relative;
+}
+
+.text a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+  pointer-events: none;
+  background: var(--gradient);
+  transition: all 0.125s;
+  opacity: 0;
+}
+
+.text a:hover::after {
+  opacity: 1;
+  bottom: 0.188rem;
+}
+
+.text a:active {
+  filter: brightness(1.2);
+}
+
+.download {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.download .button {
+  animation: download-btn-appear 0.5s 0.8s backwards;
+}
+
+@keyframes download-btn-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.65);
+  }
+}
+
+.download .button + .button {
+  margin-left: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  .download {
+    flex-flow: column nowrap;
+  }
+
+  .download .button {
+    width: 100%;
+  }
+
+  .download .button + .button {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}

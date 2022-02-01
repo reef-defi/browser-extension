@@ -1,0 +1,55 @@
+@import url(./variables.css);
+@import url(./header.css);
+@import url(./main.css);
+@import url(./images.css);
+@import url(./footer.css);
+@import url(./button.css);
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg);
+  font-family: var(--font-family);
+  margin: 0;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+::-webkit-scrollbar {
+  background: transparent;
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 99px;
+  background: darken(#eaedf3, 5%);
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  background: linear-gradient(180deg, #a93185, #5531a9);
+}
+
+::-webkit-scrollbar-thumb:horizontal:hover {
+  background: linear-gradient(90deg, #a93185, #5531a9);
+}
+
+::-webkit-scrollbar-thumb:horizontal:active {
+  background: linear-gradient(90deg, darken(#a93185, 5%), darken(#5531a9, 5%));
+}
+
+::-webkit-scrollbar-thumb:vertical:active {
+  background: linear-gradient(180deg, darken(#a93185, 5%), darken(#5531a9, 5%));
+}
+
+@media only screen and (max-width: 576px) {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -1,0 +1,63 @@
+@import url(./bubbles.css);
+
+.header {
+  width: 100%;
+  padding: 2rem 0 calc(2rem + 30px) 0;
+  background-color: #e5e1f1;
+  background: var(--gradient);
+  position: relative;
+  overflow: hidden;
+  animation: header-appear 0.5s 0.1s backwards ease-out;
+}
+
+@keyframes header-appear {
+  from {
+    transform: translateY(-100%);
+  }
+}
+
+.header__content {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  animation: header-content 0.5s 0.45s backwards ease-out;
+}
+
+@keyframes header-content {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+.header + * {
+  margin-top: -65px;
+  position: relative;
+  z-index: 1;
+}
+
+.header__logo {
+  width: 3rem;
+  margin-right: 1.25rem;
+  border-radius: 50%;
+  filter: brightness(1.1);
+}
+
+.header__title {
+  font-weight: 400;
+  color: white;
+  margin: 0;
+  font-size: 2rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .header__title {
+    font-size: 1.5rem;
+  }
+
+  .header__logo {
+    width: 2.25rem;
+    margin-right: 0.75rem;
+  }
+}
