@@ -38,26 +38,37 @@
 }
 
 .header__logo {
-  width: 3rem;
-  margin-right: 1.25rem;
-  border-radius: 50%;
+  width: 13rem;
+  margin-right: 2rem;
   filter: brightness(1.1);
 }
-
 .header__title {
-  font-weight: 400;
+  font-family: var(--font-family-title);
+  font-weight: 300;
   color: white;
-  margin: 0;
-  font-size: 2rem;
+  font-size: 6rem;
+  margin: 4rem 0;
+  line-height: 44.982px;
+}
+
+@media only screen and (max-width: 1040px) {
+  .header__title {
+    font-size: 3rem;
+  }
+
+  .header__logo {
+    width: 6rem;
+    margin-right: 0.75rem;
+  }
 }
 
 @media only screen and (max-width: 600px) {
   .header__title {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
 
   .header__logo {
-    width: 2.25rem;
+    width: 5rem;
     margin-right: 0.75rem;
   }
 }

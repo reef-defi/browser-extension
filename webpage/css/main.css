@@ -7,11 +7,11 @@ main {
 .text {
   width: 100%;
   max-width: 800px;
-  font-size: 1rem;
-  line-height: 1.35;
+  font-size: 22px;
+  line-height: 39.9982px;
   color: var(--text);
   text-align: left;
-  margin: 2rem auto;
+  margin: 5rem auto;
   animation: text-appear 0.5s 0.7s backwards;
 }
 
@@ -24,7 +24,7 @@ main {
 
 .text a {
   color: var(--primary-light);
-  background: -webkit-linear-gradient(0deg, var(--primary), var(--secondary));
+  background: linear-gradient(0deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 600;
@@ -36,7 +36,7 @@ main {
   content: "";
   position: absolute;
   left: 0;
-  bottom: 0;
+  bottom: -5px;
   height: 1px;
   width: 100%;
   pointer-events: none;
@@ -47,7 +47,7 @@ main {
 
 .text a:hover::after {
   opacity: 1;
-  bottom: 0.188rem;
+  bottom: 0;
 }
 
 .text a:active {
@@ -61,7 +61,7 @@ main {
   align-items: center;
   width: 100%;
   max-width: 800px;
-  margin: 0 auto;
+  margin: 0 auto 3rem auto;
 }
 
 .download .button {

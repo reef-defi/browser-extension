@@ -26,18 +26,17 @@ body {
   width: 10px;
   height: 10px;
 }
-
 ::-webkit-scrollbar-thumb {
   border-radius: 99px;
   background: darken(#eaedf3, 5%);
 }
 
 ::-webkit-scrollbar-thumb:vertical {
-  background: linear-gradient(180deg, #a93185, #5531a9);
+  background: linear-gradient(180deg, #ad1e6c, #3f127a);
 }
 
 ::-webkit-scrollbar-thumb:horizontal:hover {
-  background: linear-gradient(90deg, #a93185, #5531a9);
+  background: linear-gradient(90deg, #ad1e6c, #3f127a);
 }
 
 ::-webkit-scrollbar-thumb:horizontal:active {

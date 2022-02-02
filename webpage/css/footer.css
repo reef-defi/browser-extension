@@ -4,6 +4,10 @@
   background-color: #e5e1f1;
 }
 
+.footer .text {
+  margin: 3rem auto;
+}
+
 @media only screen and (max-width: 600px) {
   .footer {
     padding: 25px 20px;
