@@ -1,5 +1,5 @@
 {
-  "author": "Reef Finance",
+  "author": "Reef Chain",
   "bugs": "https://github.com/reef-defi/browser-extension/issues",
   "contributors": [],
   "description": "Provides an interfaces around the injected globals for ease of access by dapp developers.",
