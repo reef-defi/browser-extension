@@ -2,7 +2,7 @@
 ![license](https://img.shields.io/badge/License-Apache%202.0-blue?logo=apache&style=flat-square)
 [![npm](https://img.shields.io/npm/v/@reef-defi/extension-dapp?logo=npm&style=flat-square)](https://www.npmjs.com/package/@reef-defi/extension-dapp)
 
-# reef.js extension
+# reef.io wallet extension
 
 A very simple scaffolding browser extension that injects a [@polkadot/api](https://github.com/polkadot-js/api) Signer into a page, along with any associated accounts, allowing for use by any dapp. This is an extensible POC implementation of a Polkadot/Substrate browser signer. To support both
 
@@ -62,8 +62,8 @@ A single file example (React) on how to use the extension can be seen in [ui-exa
 To find out more about how to use the extension as a Dapp developer, cookbook, as well as answers to most frequent questions in the [Polkadot-js extension documentation](https://polkadot.js.org/docs/extension/)
 
 
-## Transition from/support both `polkadot.js`/`reef.js` extensions
-It is possible to support both `reef.js` as well as `polkadot.js` extension in your app. As long as you request the source extension of the injected account, the correct extension will be used to sign the transaction.
+## Transition from/support both `polkadot.js`/`reef.io wallet` extensions
+It is possible to support both `reef.io wallet` as well as `polkadot.js` extension in your app. As long as you request the source extension of the injected account, the correct extension will be used to sign the transaction.
 
 ### Change to `@reef-defi` dependencies
 If you use `@polkadot/extension-dapp` dependencies, change them to `@reef-defi/extension-dapp` dependencies:

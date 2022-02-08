@@ -1,5 +1,5 @@
 {
-  "author": "Reef Finance",
+  "author": "Reef Chain",
   "bugs": "https://github.com/reef-defi/browser-extension/issues",
   "contributors": [],
   "description": "A generic injector (usable to any extension), that populates the base exposed interfaces to be used by dapps.",
