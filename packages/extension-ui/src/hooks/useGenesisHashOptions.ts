@@ -32,11 +32,11 @@ export default function (): Option[] {
       value: ''
     },
     // put the relay chains at the top
-    /*...chains.filter(({ chain }) => chain.includes(RELAY_CHAIN))
+    ...chains.filter(({ chain }) => chain.includes(RELAY_CHAIN))
       .map(({ chain, genesisHash }) => ({
         text: chain,
         value: genesisHash
-      })),*/
+      })),
     ...chains.map(({ chain, genesisHash }) => ({
       text: chain,
       value: genesisHash
