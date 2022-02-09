@@ -21,7 +21,7 @@ import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
 
 import { useObservableState } from '../../../reef/extension-ui/hooks/useObservableState';
 import { appState } from '../../../reef/extension-ui/state';
-import {provider$, providerSubj} from '../../../reef/extension-ui/state/providerState';
+import { provider$, providerSubj } from '../../../reef/extension-ui/state/providerState';
 import details from '../assets/details.svg';
 import useMetadata from '../hooks/useMetadata';
 import useOutsideClick from '../hooks/useOutsideClick';
@@ -100,7 +100,7 @@ function recodeAddress (address: string, accounts: AccountWithChildren[], chain:
 const ACCOUNTS_SCREEN_HEIGHT = 550;
 const defaultRecoded = { account: null, formatted: null, prefix: 42, type: DEFAULT_TYPE };
 
-function Address ({ actions, address, children, className, genesisHash, isExternal, isHardware, isHidden, name, parentName, suri, toggleActions, type: givenType }: Props): React.ReactElement<Props> {
+function Address ({ actions, address, children, className, exporting, genesisHash, isExternal, isHardware, isHidden, name, parentName, suri, toggleActions, type: givenType }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const onAction = useContext(ActionContext);
   const { accounts } = useContext(AccountContext);
@@ -246,7 +246,7 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
           className='account-card__bind-btn'
           onClick={() => openEvmBindView(signer?.address)}
           size='small'
-        ><span>Bind EVM</span></Button>}
+                                                                                                      ><span>Bind EVM</span></Button>}
       </>);
   };
 
@@ -301,13 +301,13 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
             className='account-card__select-btn account-card__select-btn--selected'
             fill
             size='small'
-          >Selected</Button>
+            >Selected</Button>
           : <Button
             className='account-card__select-btn'
             onClick={() => selectAccount(account)}
             size='small'
             type='button'
-          >Select</Button>
+            >Select</Button>
         )}
       </>
     );
@@ -316,7 +316,12 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
   const parentNameSuri = getParentNameSuri(parentName, suri);
 
   return (
-    <div className={`account-card__wrapper ${isSelected() ? 'account-card__wrapper--selected' : ''}`}>
+    <div className={`
+      account-card__wrapper
+      ${isSelected() ? 'account-card__wrapper--selected' : ''}
+      ${exporting ? 'account-card__wrapper--exporting' : ''}
+    `}
+    >
       <div className='account-card__main'>
         <div className='account-card__identicon'>
           <Identicon
@@ -351,7 +356,7 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
             : ''
           }
           <div className='account-card__name'>
-            { !children
+            { !children || exporting
               ? <div>
                 <External />
                 <span>{ name || account?.name || '<No Name>' }</span>
@@ -407,31 +412,41 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
         </div>
       </div>
 
-      <div className='account-card__aside'>
-        <Bind />
-        <SelectButton />
+      {
+        !exporting
+          ? (
+            <div className='account-card__aside'>
+              <Bind />
+              <SelectButton />
 
-        <div className='account-card__actions'>
-          {actions && (
-            <>
-              <button
-                className='account-card__actions-btn'
-                onClick={_onClick}
-              >
-                <FontAwesomeIcon icon={faEllipsisV} />
-              </button>
-              {showActionsMenu && (
-                <Menu
-                  className={`movableMenu ${moveMenuUp ? 'isMoved' : ''}`}
-                  reference={actionsRef}
-                >
-                  {actions}
-                </Menu>
-              )}
-            </>
-          )}
-        </div>
-      </div>
+              <div className='account-card__actions'>
+                {actions && (
+                  <>
+                    <button
+                      className='account-card__actions-btn'
+                      onClick={_onClick}
+                    >
+                      <FontAwesomeIcon icon={faEllipsisV} />
+                    </button>
+                    {showActionsMenu && (
+                      <Menu
+                        className={`movableMenu ${moveMenuUp ? 'isMoved' : ''}`}
+                        reference={actionsRef}
+                      >
+                        {actions}
+                      </Menu>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+          )
+          : ''
+      }
+
+      {
+        exporting ? (<div className='account-card__exporting'>{children}</div>) : ''
+      }
 
       {chain?.genesisHash && (
         <div

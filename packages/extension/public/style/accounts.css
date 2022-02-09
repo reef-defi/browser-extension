@@ -115,6 +115,27 @@
   background-color: rgba(169, 49, 133, 0.1);
 }
 
+.account-card__wrapper--exporting {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.account-card__wrapper--exporting .account-card__main {
+  max-width: 100%;
+  padding: 7px 0 0 12px;
+}
+
+.account-card__exporting {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.account-card__exporting .movedWarning {
+  border-left: none;
+}
+
 @keyframes account-card {
   from {
     transform: scale(0.9);
