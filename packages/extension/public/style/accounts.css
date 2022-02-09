@@ -286,11 +286,16 @@
   align-items: center;
 }
 
+svg + .account-card__address {
+  margin-left: 10px;
+}
+
 .account-card__address {
   font-size: 0.875rem;
   line-height: 1.3;
   font-weight: 500;
   color: var(--text);
+  white-space: nowrap;
 }
 
 .account-card__meta svg {

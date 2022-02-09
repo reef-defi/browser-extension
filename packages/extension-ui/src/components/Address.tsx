@@ -379,6 +379,23 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
               />
             </CopyToClipboard>
 
+            {/*
+            @todo - Uncomment and insert EVM Address
+
+            <div
+              className='account-card__address'
+              title='EVM Address'
+            >EVM Address</div>
+            <CopyToClipboard>
+              <FontAwesomeIcon
+                className='copyIcon'
+                icon={faCopy}
+                onClick={}
+                size='sm'
+                title={t('Copy EVM Address')}
+              />
+            </CopyToClipboard> */}
+
             <FontAwesomeIcon
               className={`account-card__visibility ${isHidden ? 'account-card__visibility--hidden' : ''}`}
               icon={isHidden ? faEyeSlash : faEye}
