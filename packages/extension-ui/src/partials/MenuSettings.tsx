@@ -15,11 +15,6 @@ import useTranslation from '../hooks/useTranslation';
 import { setNotification, windowOpen } from '../messaging';
 import getLanguageOptions from '../util/getLanguageOptions';
 
-interface Option {
-  text: string;
-  value: string;
-}
-
 interface Props extends ThemeProps {
   className?: string;
   reference: React.MutableRefObject<null>;
@@ -28,9 +23,7 @@ interface Props extends ThemeProps {
 const notificationOptions = ['Extension', 'PopUp', 'Window']
   .map((item) => ({ text: item, value: item.toLowerCase() }));
 
-const prefixOptions = settings.availablePrefixes
-  .filter(({ value }) => value !== -1)
-  .map(({ text, value }): Option => ({ text, value: `${value}` }));
+const prefixOptions = [{text: 'Substrate', prefix: '42'}];
 
 function MenuSettings ({ className, reference }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
