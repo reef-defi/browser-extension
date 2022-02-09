@@ -361,6 +361,44 @@ svg.fill-white {
   margin: 0 auto;
 }
 
+.bind-evm .uik-button {
+  width: 100%;
+}
+
+.extrinsic-table {
+  margin-top: 15px;
+}
+
+.extrinsic-table {
+  overflow: initial !important;
+}
+
+.extrinsic-table + * {
+  position: sticky;
+  bottom: 0;
+}
+
+.extrinsic-table tr {
+  line-height: 22px;
+}
+
+.extrinsic-table td.label {
+  font-size: 14px;
+  opacity: 1 !important;
+  color: var(--primary);
+  font-weight: 900;
+  background: -webkit-linear-gradient(0deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: capitalize;
+}
+
+.extrinsic-table td.data {
+  font-size: 14px;
+  opacity: 1 !important;
+  color: black;
+}
+
 .dark-theme .card {
   box-shadow: 0 5px 10px -5px #1a1b20;
   background-color: #2c2d33;

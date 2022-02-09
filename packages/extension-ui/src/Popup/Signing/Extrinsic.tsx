@@ -120,7 +120,7 @@ function Extrinsic ({ className, payload: { era, nonce, tip }, request: { blockN
 
   return (
     <Table
-      className={className}
+      className={`${className || ''} extrinsic-table`}
       isFull
     >
       <tr>
