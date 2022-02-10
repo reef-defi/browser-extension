@@ -114,6 +114,11 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
   const [moveMenuUp, setIsMovedMenu] = useState(false);
   const actionsRef = useRef<HTMLDivElement>(null);
   const { show } = useToast();
+  const [signer, setSigner] = useState<ReefSigner>();
+
+  useEffect(() => {
+      setSigner(signers?.find((s) => s.address === account?.address));
+  }, [signers, account]);
 
   useOutsideClick(actionsRef, () => (showActionsMenu && setShowActionsMenu(!showActionsMenu)));
 
@@ -191,17 +196,6 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
 
   const External = () => {
     const accountName = name || account?.name;
-    const displayName = accountName || t('<unknown>');
-    const selected = selectedAccount?.address === account?.address;
-    const [signer, setSigner] = useState<ReefSigner>();
-
-    useEffect(() => {
-      setSigner(signers?.find((s) => s.address === account?.address));
-    }, [signers]);
-
-    const selectAccount = (account: AccountJson | null): void => {
-      appState.selectAddressSubj.next(account?.address);
-    };
 
     return (
       <>
@@ -226,19 +220,6 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
   };
 
   const Bind = () => {
-    const accountName = name || account?.name;
-    const displayName = accountName || t('<unknown>');
-    const selected = selectedAccount?.address === account?.address;
-    const [signer, setSigner] = useState<ReefSigner>();
-
-    useEffect(() => {
-      setSigner(signers?.find((s) => s.address === account?.address));
-    }, [signers]);
-
-    const selectAccount = (account: AccountJson | null): void => {
-      appState.selectAddressSubj.next(account?.address);
-    };
-
     return (
       <>
         {!(!!signRequests && !!signRequests.length) && signer && !signer?.isEvmClaimed && provider && <Button
@@ -250,16 +231,6 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
   };
 
   const Balance = () => {
-    const accountName = name || account?.name;
-    const [signer, setSigner] = useState<ReefSigner>();
-
-    useEffect(() => {
-      setSigner(signers?.find((s) => s.address === account?.address));
-    }, [signers]);
-
-    const selectAccount = (account: AccountJson | null): void => {
-      appState.selectAddressSubj.next(account?.address);
-    };
 
     return (
       <>
@@ -270,24 +241,12 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
 
   const isSelected = () => {
     const selected = selectedAccount?.address === account?.address;
-    const [signer, setSigner] = useState<ReefSigner>();
-
-    useEffect(() => {
-      setSigner(signers?.find((s) => s.address === account?.address));
-    }, [signers]);
-
     return !(!!signRequests && !!signRequests.length) && selectedAccount && selected;
   };
 
   const SelectButton = () => {
     const accountName = name || account?.name;
-    const displayName = accountName || t('<unknown>');
     const selected = selectedAccount?.address === account?.address;
-    const [signer, setSigner] = useState<ReefSigner>();
-
-    useEffect(() => {
-      setSigner(signers?.find((s) => s.address === account?.address));
-    }, [signers]);
 
     const selectAccount = (account: AccountJson | null): void => {
       appState.selectAddressSubj.next(account?.address);
@@ -364,19 +323,6 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
           </div>
 
           <div className='account-card__meta'>
-            <div
-              className='account-card__address'
-              title={formatted || address || ''}
-            >{utils.toAddressShortDisplay(formatted || address || '')}</div>
-            <CopyToClipboard text={(formatted && formatted) || ''}>
-              <FontAwesomeIcon
-                className='copyIcon'
-                icon={faCopy}
-                onClick={_onCopy}
-                size='sm'
-                title={t('Copy Address')}
-              />
-            </CopyToClipboard>
 
             <FontAwesomeIcon
               className={`account-card__visibility ${isHidden ? 'account-card__visibility--hidden' : ''}`}
@@ -385,6 +331,35 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
               size='sm'
               title={t('Account Visibility')}
             />
+
+            <div
+              className='account-card__address'
+              title={formatted || address || ''}
+            >Account: {utils.toAddressShortDisplay(formatted || address || '')}</div>
+            <CopyToClipboard text={(formatted && formatted) || ''}>
+              <FontAwesomeIcon
+                className='copyIcon'
+                icon={faCopy}
+                onClick={_onCopy}
+                size='sm'
+                title={t('Copy Reef Account Address')}
+              />
+            </CopyToClipboard>
+
+            <div
+              className='account-card__address'
+              title={signer?.evmAddress || ''}
+            >EVM address: {utils.toAddressShortDisplay(signer?.evmAddress || '')}</div>
+            <CopyToClipboard text={(signer?.evmAddress) || ''}>
+              <FontAwesomeIcon
+                className='copyIcon'
+                icon={faCopy}
+                onClick={_onCopy}
+                size='sm'
+                title={t('Copy Ethereum VM Address')}
+              />
+            </CopyToClipboard>
+
           </div>
         </div>
       </div>

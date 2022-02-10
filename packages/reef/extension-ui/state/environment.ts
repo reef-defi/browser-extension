@@ -15,6 +15,7 @@ export const getGQLUrls = (network: Network): {ws:string, http:string} => {
   const { mainnet } = availableNetworks;
   if (network.rpcUrl === testnet.rpcUrl || network.rpcUrl === mainnet.rpcUrl) {
     const wssBase = network.reefscanUrl.replace('https', 'wss');
+    console.log("nnnn=", network.reefscanUrl,{ ws: `${wssBase}/graphql`, http: `${network.reefscanUrl}/graphql` });
     return { ws: `${wssBase}/graphql`, http: `${network.reefscanUrl}/graphql` };
   }
   return { ws: 'ws://localhost:8080/v1/graphql', http: 'http://localhost:8080/v1/graphql' };
