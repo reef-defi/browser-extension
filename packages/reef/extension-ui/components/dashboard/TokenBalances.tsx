@@ -9,23 +9,14 @@ const { DataProgress, getData, isDataSet } = utils;
 
 interface TokenBalances {
   tokens: utils.DataWithProgress<TokenWithAmount[]>;
-  onRefresh: any;
 }
 
-export const TokenBalances = ({ isRefreshing, onRefresh, tokens }: TokenBalances): JSX.Element => (
+export const TokenBalances = ({ isRefreshing, tokens }: TokenBalances): JSX.Element => (
   <div className='token-balances'>
     <div className='token-balances__head'>
       <UikText
         text='Tokens'
         type='title'
-      />
-      <Button
-        icon={faSyncAlt}
-        loader='fish'
-        loading={isRefreshing}
-        onClick={onRefresh}
-        size='small'
-        text='Refresh'
       />
 
     </div>

@@ -23,8 +23,6 @@ interface Props extends ThemeProps {
 const notificationOptions = ['Extension', 'PopUp', 'Window']
   .map((item) => ({ text: item, value: item.toLowerCase() }));
 
-const prefixOptions = [{text: 'Substrate', prefix: '42'}];
-
 function MenuSettings ({ className, reference }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const [camera, setCamera] = useState(settings.camera === 'on');
@@ -95,18 +93,6 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
           checkedLabel={t<string>('Dark')}
           onChange={_onChangeTheme}
           uncheckedLabel={t<string>('Light')}
-        />
-      </MenuItem>
-      <MenuItem
-        className='setting'
-        title={t<string>('Display address format for')}
-      >
-        <Dropdown
-          className='dropdown'
-          label=''
-          onChange={_onChangePrefix}
-          options={prefixOptions}
-          value={`${prefix}`}
         />
       </MenuItem>
       <MenuItem
