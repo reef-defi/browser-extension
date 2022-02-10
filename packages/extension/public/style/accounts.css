@@ -345,38 +345,6 @@ svg + .account-card__address {
   transform: scale(1.2);
 }
 
-.account-card__bind-btn {
-  background-color: rgba(234, 237, 243, 0.75);
-  color: rgba(25, 35, 60, 0.85);
-  margin-right: 10px;
-}
-
-.account-card__bind-btn:hover,
-.account-card__bind-btn:active {
-  color: var(--primary-text);
-}
-
-.account-card__bind-btn:hover {
-  background-color: rgba(231, 222, 240, 1);
-}
-
-.account-card__bind-btn:active {
-  background-color: #e1d5ec;
-}
-
-.account-card__wrapper--selected .account-card__bind-btn {
-  background-color: rgba(169, 49, 133, 0.16);
-  color: #b83596;
-}
-
-.account-card__wrapper--selected .account-card__bind-btn:hover {
-  background-color: rgba(169, 49, 133, 0.25);
-}
-
-.account-card__wrapper--selected .account-card__bind-btn:active {
-  background-color: rgba(169, 49, 133, 0.35);
-}
-
 .account-card__aside {
   display: flex;
   flex-flow: row nowrap;
@@ -411,7 +379,8 @@ svg + .account-card__address {
   transform: translateY(1px);
 }
 
-.account-card__select-btn {
+.account-card__select-btn,
+.account-card__bind-btn {
   margin-right: 10px;
 }
 

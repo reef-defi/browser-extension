@@ -225,9 +225,10 @@ function Address ({ actions, address, children, className, exporting, genesisHas
       <>
         {!(!!signRequests && !!signRequests.length) && signer && !signer?.isEvmClaimed && provider && <Button
           className='account-card__bind-btn'
+          fill
           onClick={() => openEvmBindView(signer?.address)}
           size='small'
-        ><span>Bind EVM</span></Button>}
+                                                                                                      ><span>Bind EVM</span></Button>}
       </>);
   };
 
@@ -379,7 +380,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           ? (
             <div className='account-card__aside'>
               { !signer?.evmAddress ? <Bind /> : '' }
-              <SelectButton />
+              { !isSelected() ? <SelectButton /> : '' }
 
               <div className='account-card__actions'>
                 {actions && (
