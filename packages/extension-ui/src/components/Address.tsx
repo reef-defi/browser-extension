@@ -410,18 +410,8 @@ function Address ({ actions, address, children, className, exporting, genesisHas
         exporting ? (<div className='account-card__exporting'>{children}</div>) : ''
       }
 
-      {chain?.genesisHash && (
-        <div
-          className='account-card__chain'
-          data-field='chain'
-          style={
-            chain.definition.color
-              ? { backgroundColor: chain.definition.color }
-              : undefined
-          }
-        >
-          {chain.name.replace(' Relay Chain', '')}
-        </div>
+      {isSelected() && (
+        <div className='account-card__chain'>Selected</div>
       )}
     </div>
   );
