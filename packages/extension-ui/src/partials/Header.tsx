@@ -187,13 +187,6 @@ export default React.memo(styled(Header)(({ theme }: Props) => `
         width: 28px;
         margin: 8px 12px 12px 0;
       }
-
-      .logoText {
-        color: ${theme.textColor};
-        font-family: ${theme.fontFamily};
-        font-size: 20px;
-        line-height: 27px;
-      }
     }
 
     .popupMenus, .searchBarWrapper {
