@@ -329,19 +329,10 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           </div>
 
           <div className='account-card__meta'>
-
-            <FontAwesomeIcon
-              className={`account-card__visibility ${isHidden ? 'account-card__visibility--hidden' : ''}`}
-              icon={isHidden ? faEyeSlash : faEye}
-              onClick={_toggleVisibility}
-              size='sm'
-              title={t('Account Visibility')}
-            />
-
             <div
               className='account-card__address'
               title={formatted || address || ''}
-            >Account: {utils.toAddressShortDisplay(formatted || address || '')}</div>
+            >{utils.toAddressShortDisplay(formatted || address || '')}</div>
             <CopyToClipboard text={(formatted && formatted) || ''}>
               <FontAwesomeIcon
                 className='copyIcon'
@@ -352,36 +343,25 @@ function Address ({ actions, address, children, className, exporting, genesisHas
               />
             </CopyToClipboard>
 
-            <div
-              className='account-card__address'
-              title={signer?.evmAddress || ''}
-            >EVM address: {utils.toAddressShortDisplay(signer?.evmAddress || '')}</div>
-            <CopyToClipboard text={(signer?.evmAddress) || ''}>
-              <FontAwesomeIcon
-                className='copyIcon'
-                icon={faCopy}
-                onClick={_onCopy}
-                size='sm'
-                title={t('Copy Ethereum VM Address')}
-              />
-            </CopyToClipboard>
-
-            {/*
-            @todo - Uncomment and insert EVM Address
-
-            <div
-              className='account-card__address'
-              title='EVM Address'
-            >EVM Address</div>
-            <CopyToClipboard>
-              <FontAwesomeIcon
-                className='copyIcon'
-                icon={faCopy}
-                onClick={}
-                size='sm'
-                title={t('Copy EVM Address')}
-              />
-            </CopyToClipboard> */}
+            {
+              signer?.evmAddress
+                ? <>
+                  <div
+                    className='account-card__address'
+                    title={signer?.evmAddress || ''}
+                  >EVM: {utils.toAddressShortDisplay(signer?.evmAddress || '')}</div>
+                  <CopyToClipboard text={(signer?.evmAddress) || ''}>
+                    <FontAwesomeIcon
+                      className='copyIcon'
+                      icon={faCopy}
+                      onClick={_onCopy}
+                      size='sm'
+                      title={t('Copy Ethereum VM Address')}
+                    />
+                  </CopyToClipboard>
+                </>
+                : ''
+            }
 
             <FontAwesomeIcon
               className={`account-card__visibility ${isHidden ? 'account-card__visibility--hidden' : ''}`}
@@ -398,7 +378,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
         !exporting
           ? (
             <div className='account-card__aside'>
-              <Bind />
+              { !signer?.evmAddress ? <Bind /> : '' }
               <SelectButton />
 
               <div className='account-card__actions'>
