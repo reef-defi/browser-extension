@@ -26,6 +26,12 @@
   font-family: var(--font-family-title) !important;
 }
 
+.jxLJMJ {
+  height: auto !important;
+  overflow: initial !important;
+  padding-bottom: 25px;
+}
+
 .accounts__header .searchBarWrapper {
   display: flex;
   flex-flow: row nowrap;

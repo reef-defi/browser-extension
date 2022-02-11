@@ -9,6 +9,7 @@ import { ActionBar, ActionContext, Button, ButtonArea, Checkbox, Link } from '..
 import useTranslation from '../../../hooks/useTranslation';
 import { approveSignPassword, cancelSignRequest, isSignLocked } from '../../../messaging';
 import Unlock from '../Unlock';
+import { CTA } from './../../../../../reef/extension-ui/uik';
 
 interface Props {
   buttonText: string;
@@ -105,13 +106,13 @@ function SignArea ({ buttonText, className, error, isExternal, isFirst, setError
             />
           )}
           <RememberPasswordCheckbox />
-          <Button
-            isBusy={isBusy}
-            isDisabled={(!!isLocked && !password) || !!error}
+          <CTA
+            disabled={(!!isLocked && !password) || !!error}
+            loading={isBusy}
             onClick={_onSign}
           >
             {buttonText}
-          </Button>
+          </CTA>
         </>
       )}
       <ActionBar className='cancelButton'>

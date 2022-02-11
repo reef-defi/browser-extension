@@ -8,10 +8,11 @@ import React, { useCallback, useContext, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import styled from 'styled-components';
 
-import { AccountContext, ActionBar, ActionContext, ActionText, Button, InputWithLabel, Warning } from '../components';
+import { AccountContext, ActionBar, ActionContext, ActionText, InputWithLabel, Warning } from '../components';
 import useTranslation from '../hooks/useTranslation';
 import { exportAccounts } from '../messaging';
 import { Header } from '../partials';
+import { CTA } from './../../../reef/extension-ui/uik';
 
 const MIN_LENGTH = 6;
 
@@ -84,16 +85,16 @@ function ExportAll ({ className }: Props): React.ReactElement<Props> {
               {error}
             </Warning>
           )}
-          <Button
+          <CTA
             className='export-button'
+            danger
             data-export-button
-            isBusy={isBusy}
-            isDanger
-            isDisabled={pass.length === 0 || !!error}
+            disabled={pass.length === 0 || !!error}
+            loading={isBusy}
             onClick={_onExportAllButtonClick}
           >
             {t<string>('I want to export all my accounts')}
-          </Button>
+          </CTA>
           <ActionBar className='withMarginTop'>
             <ActionText
               className='center'

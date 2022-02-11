@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 import { useObservableState } from '../hooks/useObservableState';
 import { providerSubj } from '../state/providerState';
-import { Button } from './../uik';
+import { CTA } from './../uik';
 
 export enum EvmBindComponentTxType {
   TRANSFER = 'TRANSFER',
@@ -151,11 +151,11 @@ export const EvmBindComponent = ({ bindSigner, onTxUpdate, signers }: EvmBindCom
                     )}
                   />
                   </p>
-                  <Button
-                    fill
+                  <CTA
                     onClick={() => transfer(transferBalanceFrom, bindSigner, MIN_BALANCE, getUpdateTxCallback([onTxUpdate as TxStatusHandler, setTxStatus]))}
+                    size='small'
                   >Continue
-                  </Button>
+                  </CTA>
                 </div>
                 }
               </div>
@@ -164,11 +164,11 @@ export const EvmBindComponent = ({ bindSigner, onTxUpdate, signers }: EvmBindCom
               {(!txStatus) && hasBalanceForBinding(bindFor.balance) &&
               <div>
                 <p>Account is ready to create Ethereum VM address.</p>
-                <Button
-                  fill
+                <CTA
                   onClick={() => bindAccount(getUpdateTxCallback([onTxUpdate as TxStatusHandler, setTxStatus]))}
+                  size='small'
                 >Continue
-                </Button>
+                </CTA>
               </div>
               }
 
