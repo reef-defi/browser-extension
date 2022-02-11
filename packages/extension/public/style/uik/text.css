@@ -20,11 +20,11 @@
 
 .uik-text--title {
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .uik-text--lead {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .uik-text--mini {
@@ -42,7 +42,7 @@
 }
 
 .dark-theme .uik-text--headline {
-  font-weight: 600;
+  font-weight: 500;
   color: var(--primary-light);
   background: transparent;
   -webkit-background-clip: unset;

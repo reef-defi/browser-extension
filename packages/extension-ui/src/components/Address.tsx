@@ -21,7 +21,7 @@ import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
 
 import { useObservableState } from '../../../reef/extension-ui/hooks/useObservableState';
 import { appState } from '../../../reef/extension-ui/state';
-import {provider$, providerSubj} from '../../../reef/extension-ui/state/providerState';
+import { provider$, providerSubj } from '../../../reef/extension-ui/state/providerState';
 import details from '../assets/details.svg';
 import useMetadata from '../hooks/useMetadata';
 import useOutsideClick from '../hooks/useOutsideClick';
@@ -100,7 +100,7 @@ function recodeAddress (address: string, accounts: AccountWithChildren[], chain:
 const ACCOUNTS_SCREEN_HEIGHT = 550;
 const defaultRecoded = { account: null, formatted: null, prefix: 42, type: DEFAULT_TYPE };
 
-function Address ({ actions, address, children, className, genesisHash, isExternal, isHardware, isHidden, name, parentName, suri, toggleActions, type: givenType }: Props): React.ReactElement<Props> {
+function Address ({ actions, address, children, className, exporting, genesisHash, isExternal, isHardware, isHidden, name, parentName, suri, toggleActions, type: givenType }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const onAction = useContext(ActionContext);
   const { accounts } = useContext(AccountContext);
@@ -118,7 +118,7 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
   const [signer, setSigner] = useState<ReefSigner>();
 
   useEffect(() => {
-      setSigner(signers?.find((s) => s.address === account?.address));
+    setSigner(signers?.find((s) => s.address === account?.address));
   }, [signers, account]);
 
   useOutsideClick(actionsRef, () => (showActionsMenu && setShowActionsMenu(!showActionsMenu)));
@@ -225,14 +225,14 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
       <>
         {!(!!signRequests && !!signRequests.length) && signer && !signer?.isEvmClaimed && provider && <Button
           className='account-card__bind-btn'
+          fill
           onClick={() => openEvmBindView(signer?.address)}
           size='small'
-        ><span>Bind EVM</span></Button>}
+                                                                                                      ><span>Bind EVM</span></Button>}
       </>);
   };
 
   const Balance = () => {
-
     return (
       <>
         <div>{ utils.toReefBalanceDisplay(signer?.balance).replace('-', '0.00').replace(' REEF', '') }</div>
@@ -242,6 +242,7 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
 
   const isSelected = () => {
     const selected = selectedAccount?.address === account?.address;
+
     return !(!!signRequests && !!signRequests.length) && selectedAccount && selected;
   };
 
@@ -275,7 +276,12 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
   const parentNameSuri = getParentNameSuri(parentName, suri);
 
   return (
-    <div className={`account-card__wrapper ${isSelected() ? 'account-card__wrapper--selected' : ''}`}>
+    <div className={`
+      account-card__wrapper
+      ${isSelected() ? 'account-card__wrapper--selected' : ''}
+      ${exporting ? 'account-card__wrapper--exporting' : ''}
+    `}
+    >
       <div className='account-card__main'>
         <div className='account-card__identicon'>
           <Identicon
@@ -310,7 +316,7 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
             : ''
           }
           <div className='account-card__name'>
-            { !children
+            { !children || exporting
               ? <div>
                 <External />
                 <span>{ name || account?.name || '<No Name>' }</span>
@@ -324,19 +330,10 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
           </div>
 
           <div className='account-card__meta'>
-
-            <FontAwesomeIcon
-              className={`account-card__visibility ${isHidden ? 'account-card__visibility--hidden' : ''}`}
-              icon={isHidden ? faEyeSlash : faEye}
-              onClick={_toggleVisibility}
-              size='sm'
-              title={t('Account Visibility')}
-            />
-
             <div
               className='account-card__address'
               title={formatted || address || ''}
-            >Account: {utils.toAddressShortDisplay(formatted || address || '')}</div>
+            >{utils.toAddressShortDisplay(formatted || address || '')}</div>
             <CopyToClipboard text={(formatted && formatted) || ''}>
               <FontAwesomeIcon
                 className='copyIcon'
@@ -347,62 +344,75 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
               />
             </CopyToClipboard>
 
-            <div
-              className='account-card__address'
-              title={signer?.evmAddress || ''}
-            >EVM address: {utils.toAddressShortDisplay(signer?.evmAddress || '')}</div>
-            <CopyToClipboard text={(signer?.evmAddress) || ''}>
-              <FontAwesomeIcon
-                className='copyIcon'
-                icon={faCopy}
-                onClick={_onCopy}
-                size='sm'
-                title={t('Copy Ethereum VM Address')}
-              />
-            </CopyToClipboard>
+            {
+              signer?.evmAddress
+                ? <>
+                  <div
+                    className='account-card__address'
+                    title={signer?.evmAddress || ''}
+                  >EVM: {utils.toAddressShortDisplay(signer?.evmAddress || '')}</div>
+                  <CopyToClipboard text={(signer?.evmAddress) || ''}>
+                    <FontAwesomeIcon
+                      className='copyIcon'
+                      icon={faCopy}
+                      onClick={_onCopy}
+                      size='sm'
+                      title={t('Copy Ethereum VM Address')}
+                    />
+                  </CopyToClipboard>
+                </>
+                : ''
+            }
 
+            <FontAwesomeIcon
+              className={`account-card__visibility ${isHidden ? 'account-card__visibility--hidden' : ''}`}
+              icon={isHidden ? faEyeSlash : faEye}
+              onClick={_toggleVisibility}
+              size='sm'
+              title={t('Account Visibility')}
+            />
           </div>
         </div>
       </div>
 
-      <div className='account-card__aside'>
-        <Bind />
-        <SelectButton />
+      {
+        !exporting
+          ? (
+            <div className='account-card__aside'>
+              { !signer?.evmAddress ? <Bind /> : '' }
+              { !isSelected() ? <SelectButton /> : '' }
 
-        <div className='account-card__actions'>
-          {actions && (
-            <>
-              <button
-                className='account-card__actions-btn'
-                onClick={_onClick}
-              >
-                <FontAwesomeIcon icon={faEllipsisV} />
-              </button>
-              {showActionsMenu && (
-                <Menu
-                  className={`movableMenu ${moveMenuUp ? 'isMoved' : ''}`}
-                  reference={actionsRef}
-                >
-                  {actions}
-                </Menu>
-              )}
-            </>
-          )}
-        </div>
-      </div>
+              <div className='account-card__actions'>
+                {actions && (
+                  <>
+                    <button
+                      className='account-card__actions-btn'
+                      onClick={_onClick}
+                    >
+                      <FontAwesomeIcon icon={faEllipsisV} />
+                    </button>
+                    {showActionsMenu && (
+                      <Menu
+                        className={`movableMenu ${moveMenuUp ? 'isMoved' : ''}`}
+                        reference={actionsRef}
+                      >
+                        {actions}
+                      </Menu>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+          )
+          : ''
+      }
 
-      {chain?.genesisHash && (
-        <div
-          className='account-card__chain'
-          data-field='chain'
-          style={
-            chain.definition.color
-              ? { backgroundColor: chain.definition.color }
-              : undefined
-          }
-        >
-          {chain.name.replace(' Relay Chain', '')}
-        </div>
+      {
+        exporting ? (<div className='account-card__exporting'>{children}</div>) : ''
+      }
+
+      {isSelected() && (
+        <div className='account-card__chain'>Selected</div>
       )}
     </div>
   );

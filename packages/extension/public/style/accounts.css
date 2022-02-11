@@ -16,7 +16,7 @@
 
 .accounts__header .branding .logoText {
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text);
   line-height: 1.3;
 }
@@ -115,6 +115,27 @@
   background-color: rgba(169, 49, 133, 0.1);
 }
 
+.account-card__wrapper--exporting {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.account-card__wrapper--exporting .account-card__main {
+  max-width: 100%;
+  padding: 7px 0 0 12px;
+}
+
+.account-card__exporting {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.account-card__exporting .movedWarning {
+  border-left: none;
+}
+
 @keyframes account-card {
   from {
     transform: scale(0.9);
@@ -163,7 +184,7 @@
 .account-card__name {
   font-size: 1rem;
   color: var(--text);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.2;
   display: flex;
   flex-flow: row nowrap;
@@ -247,7 +268,6 @@
   outline: none;
   font-size: 1rem;
   color: var(--primary-text);
-  font-weight: 600;
   line-height: 1.2;
   display: flex;
   flex-flow: row nowrap;
@@ -286,11 +306,16 @@
   align-items: center;
 }
 
+svg + .account-card__address {
+  margin-left: 10px;
+}
+
 .account-card__address {
   font-size: 0.875rem;
   line-height: 1.3;
   font-weight: 500;
   color: var(--text);
+  white-space: nowrap;
 }
 
 .account-card__meta svg {
@@ -317,38 +342,6 @@
 .account-card__meta svg:active {
   color: var(--primary);
   transform: scale(1.2);
-}
-
-.account-card__bind-btn {
-  background-color: rgba(234, 237, 243, 0.75);
-  color: rgba(25, 35, 60, 0.85);
-  margin-right: 10px;
-}
-
-.account-card__bind-btn:hover,
-.account-card__bind-btn:active {
-  color: var(--primary-text);
-}
-
-.account-card__bind-btn:hover {
-  background-color: rgba(231, 222, 240, 1);
-}
-
-.account-card__bind-btn:active {
-  background-color: #e1d5ec;
-}
-
-.account-card__wrapper--selected .account-card__bind-btn {
-  background-color: rgba(169, 49, 133, 0.16);
-  color: #b83596;
-}
-
-.account-card__wrapper--selected .account-card__bind-btn:hover {
-  background-color: rgba(169, 49, 133, 0.25);
-}
-
-.account-card__wrapper--selected .account-card__bind-btn:active {
-  background-color: rgba(169, 49, 133, 0.35);
 }
 
 .account-card__aside {
@@ -385,7 +378,8 @@
   transform: translateY(1px);
 }
 
-.account-card__select-btn {
+.account-card__select-btn,
+.account-card__bind-btn {
   margin-right: 10px;
 }
 
@@ -433,7 +427,7 @@
   top: 0;
   right: 0;
   font-size: 0.688rem;
-  font-weight: 600;
+  font-weight: 500;
   color: white;
   line-height: 1.1;
   padding: 4px 12px;

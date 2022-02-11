@@ -13,6 +13,13 @@
   top: 0;
   z-index: 9999;
 }
+
+.navigation .jarRFH,
+.navigation .hUmkYm {
+  max-height: unset !important;
+  top: 30px;
+}
+
 .navigation_menu-items {
   display: flex;
   margin: 0;
@@ -52,7 +59,7 @@
   justify-content: flex-start;
   align-items: center;
   height: 100%;
-  margin: 0 20px;
+  margin: 0 10px;
 }
 
 .navigation__link {
@@ -136,6 +143,13 @@
   transition: all 0.125s;
 }
 
+.navigation__settings-icon {
+  font-size: 18px;
+  margin-left: -2px;
+  margin-right: 8px;
+  color: #898e9c;
+}
+
 .navigation__account-info {
   display: flex;
   flex-flow: column nowrap;
@@ -147,9 +161,13 @@
 .navigation__account-name {
   font-size: 0.813rem;
   line-height: 1.2;
-  font-weight: 600;
+  font-weight: 500;
   color: #19233c;
   padding-top: 2px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100px;
 }
 
 .navigation__account-address {
@@ -190,10 +208,17 @@
 }
 
 .navigation__account:hover,
-.navigation__account:active {
+.navigation__account:active,
+.navigation__account--active {
   color: #a93185;
   background-color: white;
   box-shadow: 0 5px 10px -5px rgba(0,0,0,.2);
+}
+
+.navigation__account:hover .navigation__settings-icon,
+.navigation__account:active .navigation__settings-icon,
+.navigation__account--active .navigation__settings-icon {
+  color: #a93185;
 }
 
 .navigation--dark {
@@ -229,7 +254,8 @@
 }
 
 .navigation--dark .navigation__account:hover,
-.navigation--dark .navigation__account:active {
+.navigation--dark .navigation__account:active,
+.navigation--dark .navigation__account--active {
   color: rgba(255,255,255,.75);
   box-shadow: none;
   background-color: #42444d;
@@ -255,4 +281,10 @@
   -webkit-text-fill-color: unset;
   background: transparent;
   font-weight: 500;
+}
+
+.navigation--dark .navigation__account:hover .navigation__settings-icon,
+.navigation--dark .navigation__account:active .navigation__settings-icon,
+.navigation--dark .navigation__account--active .navigation__settings-icon {
+  color: white;
 }

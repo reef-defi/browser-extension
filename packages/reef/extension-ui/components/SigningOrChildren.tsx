@@ -1,12 +1,12 @@
-import React, {useContext} from 'react';
-import Signing from "@reef-defi/extension-ui/Popup/Signing";
-import {SigningReqContext} from "@reef-defi/extension-ui/components";
+import { SigningReqContext } from '@reef-defi/extension-ui/components';
+import Signing from '@reef-defi/extension-ui/Popup/Signing';
+import React, { useContext } from 'react';
 
 interface SigningOrComponent{
   children: any;
 }
 
-export const SigningOrChildren = ({children}: SigningOrComponent): JSX.Element => {
+export const SigningOrChildren = ({ children }: SigningOrComponent): JSX.Element => {
   const signRequests = useContext(SigningReqContext);
 
   return (
@@ -16,7 +16,7 @@ export const SigningOrChildren = ({children}: SigningOrComponent): JSX.Element =
           {children}
         </div>
       }
-      {(!!signRequests && !!signRequests.length) && <Signing/>}
+      {(!!signRequests && !!signRequests.length) && <Signing />}
     </>
   );
 };

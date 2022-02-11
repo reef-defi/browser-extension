@@ -15,6 +15,11 @@
   transition: all 0.125s;
 }
 
+.uik-button,
+.uik-button * {
+  font-family: var(--font-family-secondary) !important;
+}
+
 .uik-button--icon {
   padding: 11px;
 }
