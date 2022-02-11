@@ -121,7 +121,7 @@ function SeedAndPath ({ className, onAccountChange, onNextStep, type }: Props): 
       <VerticalSpace />
       <ButtonArea>
         <NextStepButton
-          isDisabled={!address || !!error}
+          disabled={!address || !!error}
           onClick={onNextStep}
         >
           {t<string>('Next')}

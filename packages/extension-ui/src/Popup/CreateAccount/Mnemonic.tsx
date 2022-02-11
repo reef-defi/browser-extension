@@ -50,7 +50,7 @@ function Mnemonic ({ onNextStep, seed }: Props): React.ReactElement<Props> {
       />
       <ButtonArea>
         <NextStepButton
-          isDisabled={!isMnemonicSaved}
+          disabled={!isMnemonicSaved}
           onClick={onNextStep}
         >
           {t<string>('Next step')}

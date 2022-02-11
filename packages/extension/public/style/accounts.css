@@ -21,6 +21,17 @@
   line-height: 1.3;
 }
 
+.logoText,
+.logoText * {
+  font-family: var(--font-family-title) !important;
+}
+
+.jxLJMJ {
+  height: auto !important;
+  overflow: initial !important;
+  padding-bottom: 25px;
+}
+
 .accounts__header .searchBarWrapper {
   display: flex;
   flex-flow: row nowrap;
@@ -184,7 +195,7 @@
 .account-card__name {
   font-size: 1rem;
   color: var(--text);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.2;
   display: flex;
   flex-flow: row nowrap;
@@ -268,6 +279,7 @@
   outline: none;
   font-size: 1rem;
   color: var(--primary-text);
+  font-weight: 600;
   line-height: 1.2;
   display: flex;
   flex-flow: row nowrap;
@@ -306,6 +318,10 @@
   align-items: center;
 }
 
+.account-card__meta + .account-card__meta {
+  margin-top: 1px;
+}
+
 svg + .account-card__address {
   margin-left: 10px;
 }
@@ -327,19 +343,24 @@ svg + .account-card__address {
 }
 
 .account-card__visibility {
-  margin-left: 10px !important;
   width: 17.5px !important;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-right: 7px;
 }
 
 .account-card__visibility--hidden {
   color: var(--danger) !important;
 }
 
-.account-card__meta svg:hover {
+.account-card__meta svg:hover,
+.account-card__visibility:hover {
   color: var(--primary);
 }
 
-.account-card__meta svg:active {
+.account-card__meta svg:active,
+.account-card__visibility:active {
   color: var(--primary);
   transform: scale(1.2);
 }
@@ -427,7 +448,7 @@ svg + .account-card__address {
   top: 0;
   right: 0;
   font-size: 0.688rem;
-  font-weight: 500;
+  font-weight: 600;
   color: white;
   line-height: 1.1;
   padding: 4px 12px;
