@@ -8,10 +8,11 @@ import React, { useCallback, useContext, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import styled from 'styled-components';
 
-import { ActionBar, ActionContext, ActionText, Address, Button, InputWithLabel, Warning } from '../components';
+import { ActionBar, ActionContext, ActionText, Address, InputWithLabel, Warning } from '../components';
 import useTranslation from '../hooks/useTranslation';
 import { exportAccount } from '../messaging';
 import { Header } from '../partials';
+import { CTA } from './../../../reef/extension-ui/uik';
 
 const MIN_LENGTH = 6;
 
@@ -90,16 +91,16 @@ function Export ({ className, match: { params: { address } } }: Props): React.Re
                 {error}
               </Warning>
             )}
-            <Button
+            <CTA
               className='export-button'
+              danger
               data-export-button
-              isBusy={isBusy}
-              isDanger
-              isDisabled={pass.length === 0 || !!error}
+              disabled={pass.length === 0 || !!error}
+              loading={isBusy}
               onClick={_onExportButtonClick}
             >
               {t<string>('I want to export this account')}
-            </Button>
+            </CTA>
             <ActionBar className='withMarginTop'>
               <ActionText
                 className='center'

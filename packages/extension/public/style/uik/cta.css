@@ -1,0 +1,103 @@
+.uik-cta {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  white-space: nowrap;
+  border-radius: 999px;
+  font-size: 1rem;
+  line-height: 22.984px;
+  font-family: 'tenon', sans-serif;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.4s;
+  text-decoration: none;
+  color: white;
+  background: #681cff;
+  box-shadow: 0 0.313rem 1.25rem -0.625rem #681cff;
+  width: 100%;
+}
+
+.uik-cta--small {
+  padding: 0.5rem 1rem;
+}
+
+.uik-cta > * {
+  position: relative;
+  z-index: 1;
+  color: white;
+}
+
+.uik-cta::after {
+  content: "";
+  z-index: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #fd3f83);
+  transform: translateY(100%);
+  transition: opacity 0.4s linear, transform 0.4s linear;
+}
+
+.uik-cta:hover {
+  cursor: pointer;
+  box-shadow: 0 0.313rem 1.25rem -0.625rem #fd3f83 !important;
+}
+
+.uik-cta:hover::after {
+  opacity: 1;
+  transform: none;
+}
+
+.uik-cta:active {
+  transition: none;
+  filter: brightness(1.2);
+}
+
+.uik-cta--danger {
+  background-color: var(--danger);
+  box-shadow: 0 0.313rem 1.25rem -0.625rem var(--danger);
+}
+
+.uik-cta--disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  color: rgba(white, 0.5);
+}
+
+.uik-cta--loading {
+  pointer-events: none;
+}
+
+.uik-cta--loading > *:not(.fish-animation) {
+  opacity: 0;
+}
+
+.uik-cta--loading .fish-animation {
+  position: absolute;
+  height: 100%;
+  backdrop-filter: none;
+}
+
+.uik-cta--loading .fish-animation::before {
+  display: none;
+}
+
+.uik-cta--loading .fish-animation__fish {
+  animation-duration: 3s;
+  width: 26px;
+}
+
+.uik-cta--loading.uik-cta--large .fish-animation__fish {
+  width: 36px;
+}
+
+.uik-cta--loading.uik-cta--small .fish-animation__fish {
+  width: 20px;
+}
