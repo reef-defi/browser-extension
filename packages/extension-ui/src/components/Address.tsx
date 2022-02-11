@@ -228,7 +228,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           fill
           onClick={() => openEvmBindView(signer?.address)}
           size='small'
-        ><span>Bind EVM</span></Button>}
+                                                                                                      ><span>Bind EVM</span></Button>}
       </>);
   };
 
@@ -261,13 +261,13 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             className='account-card__select-btn account-card__select-btn--selected'
             fill
             size='small'
-            >Selected</Button>
+          >Selected</Button>
           : <Button
             className='account-card__select-btn'
             onClick={() => selectAccount(account)}
             size='small'
             type='button'
-            >Select</Button>
+          >Select</Button>
         )}
       </>
     );
@@ -325,6 +325,13 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           </div>
 
           <div className='account-card__balance'>
+            <FontAwesomeIcon
+              className={`account-card__visibility ${isHidden ? 'account-card__visibility--hidden' : ''}`}
+              icon={isHidden ? faEyeSlash : faEye}
+              onClick={_toggleVisibility}
+              size='sm'
+              title={t('Account Visibility')}
+            />
             <img src='https://s2.coinmarketcap.com/static/img/coins/64x64/6951.png' />
             <div>{ <Balance /> }</div>
           </div>
@@ -343,14 +350,6 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                 title={t('Copy Reef Account Address')}
               />
             </CopyToClipboard>
-
-            <FontAwesomeIcon
-              className={`account-card__visibility ${isHidden ? 'account-card__visibility--hidden' : ''}`}
-              icon={isHidden ? faEyeSlash : faEye}
-              onClick={_toggleVisibility}
-              size='sm'
-              title={t('Account Visibility')}
-            />
           </div>
 
           {

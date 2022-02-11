@@ -343,19 +343,24 @@ svg + .account-card__address {
 }
 
 .account-card__visibility {
-  margin-left: 10px !important;
   width: 17.5px !important;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-right: 7px;
 }
 
 .account-card__visibility--hidden {
   color: var(--danger) !important;
 }
 
-.account-card__meta svg:hover {
+.account-card__meta svg:hover,
+.account-card__visibility:hover {
   color: var(--primary);
 }
 
-.account-card__meta svg:active {
+.account-card__meta svg:active,
+.account-card__visibility:active {
   color: var(--primary);
   transform: scale(1.2);
 }
