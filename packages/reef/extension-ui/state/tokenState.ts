@@ -2,11 +2,10 @@ import {combineLatest, map, mergeScan, Observable, of, shareReplay, switchMap, t
 import {api, Pool, reefTokenWithAmount, rpc, Token,} from '@reef-defi/react-lib';
 import {BigNumber, utils} from 'ethers';
 import {ApolloClient, gql} from '@apollo/client';
-import {combineTokensDistinct, toTokensWithPrice} from './util';
+import {combineTokensDistinct, toTokensWithPrice, zenToRx} from './util';
 import {selectedSigner$} from './accountState';
 import {providerSubj, selectedNetworkSubj} from './providerState';
 import {apolloClientInstance$} from '../graphql/apolloConfig';
-import {Observable as ZenObservable,} from 'zen-observable-ts'
 
 // TODO replace with our own from lib and remove
 const toPlainString = (num: number): string => (`${+num}`).replace(/(-?)(\d*)\.?(\d*)e([+-]\d+)/,
@@ -76,11 +75,6 @@ const tokenBalancesWithContractDataCache = (apollo: ApolloClient<any>) => (state
     return { tokens: tkns, contractData: cData };
   });
 };
-
-const zenToRx = <T>(zenObservable: ZenObservable<T>): Observable<T> =>
-  new Observable(
-    observer => zenObservable.subscribe(observer)
-  );
 
 export const selectedSignerTokenBalancesWS$ = combineLatest([apolloClientInstance$, selectedSigner$, providerSubj]).pipe(
   switchMap(([apollo, signer, provider]) => (!signer ? []
