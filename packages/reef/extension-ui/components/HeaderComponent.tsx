@@ -1,6 +1,6 @@
 import type { ThemeProps } from '../types';
 
-import { faCog, faExchangeAlt, faHome, faPaperPlane, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faCoins, faExchangeAlt, faPaperPlane, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ActionContext } from '@reef-defi/extension-ui/components';
 import { utils } from '@reef-defi/react-lib';
@@ -137,7 +137,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
       >
         <FontAwesomeIcon
           className='navigation__link-icon'
-          icon={faHome}
+          icon={faCoins}
         />
       </a>
       <a
