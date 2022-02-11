@@ -344,13 +344,23 @@ function Address ({ actions, address, children, className, exporting, genesisHas
               />
             </CopyToClipboard>
 
-            {
-              signer?.evmAddress
-                ? <>
+            <FontAwesomeIcon
+              className={`account-card__visibility ${isHidden ? 'account-card__visibility--hidden' : ''}`}
+              icon={isHidden ? faEyeSlash : faEye}
+              onClick={_toggleVisibility}
+              size='sm'
+              title={t('Account Visibility')}
+            />
+          </div>
+
+          {
+            signer?.evmAddress
+              ? <>
+                <div className='account-card__meta'>
                   <div
                     className='account-card__address'
                     title={signer?.evmAddress || ''}
-                  >EVM: {utils.toAddressShortDisplay(signer?.evmAddress || '')}</div>
+                  >EVM Address: {utils.toAddressShortDisplay(signer?.evmAddress || '')}</div>
                   <CopyToClipboard text={(signer?.evmAddress) || ''}>
                     <FontAwesomeIcon
                       className='copyIcon'
@@ -360,18 +370,10 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                       title={t('Copy Ethereum VM Address')}
                     />
                   </CopyToClipboard>
-                </>
-                : ''
-            }
-
-            <FontAwesomeIcon
-              className={`account-card__visibility ${isHidden ? 'account-card__visibility--hidden' : ''}`}
-              icon={isHidden ? faEyeSlash : faEye}
-              onClick={_toggleVisibility}
-              size='sm'
-              title={t('Account Visibility')}
-            />
-          </div>
+                </div>
+              </>
+              : ''
+          }
         </div>
       </div>
 
@@ -379,7 +381,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
         !exporting
           ? (
             <div className='account-card__aside'>
-              { !signer?.evmAddress ? <Bind /> : '' }
+              { signer?.evmAddress ? <Bind /> : '' }
               { !isSelected() ? <SelectButton /> : '' }
 
               <div className='account-card__actions'>
