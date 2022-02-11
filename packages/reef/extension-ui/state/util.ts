@@ -5,6 +5,8 @@ import Signer from "@reef-defi/extension-base/page/Signer";
 import {InjectedAccountWithMeta} from "@reef-defi/extension-inject/types";
 import {reloadSignersSubject} from "./accountState";
 import {UpdateAction} from "./updateCtxUtil";
+import {Observable as ZenObservable} from "zen-observable-ts";
+import {Observable} from "rxjs";
 
 export const combineTokensDistinct = ([tokens1, tokens2 ]:[Token[], Token[]])=>{
   const combinedT = [...tokens1];
@@ -35,3 +37,8 @@ export const onTxUpdateReloadSignerBalances = (txUpdateData: utils.TxStatusUpdat
     setTimeout(() => reloadSignersSubject.next({updateActions}), delay);
   }
 };
+
+export const zenToRx = <T>(zenObservable: ZenObservable<T>): Observable<T> =>
+  new Observable(
+    observer => zenObservable.subscribe(observer)
+  );
