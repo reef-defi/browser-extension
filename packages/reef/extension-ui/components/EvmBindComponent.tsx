@@ -1,10 +1,12 @@
-import {Components, ReefSigner, utils} from "@reef-defi/react-lib";
-import {BigNumber, ethers} from "ethers";
-import {useEffect, useState} from "react";
-import {TxStatusHandler, TxStatusUpdate} from "@reef-defi/react-lib/dist/utils";
-import {useObservableState} from "../hooks/useObservableState";
-import {providerSubj} from "../state/providerState";
-import {Provider} from "@reef-defi/evm-provider";
+import { Provider } from '@reef-defi/evm-provider';
+import { Components, ReefSigner, utils } from '@reef-defi/react-lib';
+import { TxStatusHandler, TxStatusUpdate } from '@reef-defi/react-lib/dist/utils';
+import { BigNumber, ethers } from 'ethers';
+import { useEffect, useState } from 'react';
+
+import { useObservableState } from '../hooks/useObservableState';
+import { providerSubj } from '../state/providerState';
+import { Button } from './../uik';
 
 export enum EvmBindComponentTxType {
   TRANSFER = 'TRANSFER',
@@ -24,12 +26,12 @@ const getUpdateTxCallback = (fns: TxStatusHandler[]): TxStatusHandler => (val) =
 
 const MIN_BALANCE = ethers.utils.parseEther('6');
 
-function getSignersWithEnoughBalance(signers: ReefSigner[], bindFor: ReefSigner) {
-  return signers?.length ? signers.filter(sig => sig.address !== bindFor.address && sig.balance.gt(MIN_BALANCE.mul(BigNumber.from('2')))) : [];
+function getSignersWithEnoughBalance (signers: ReefSigner[], bindFor: ReefSigner) {
+  return signers?.length ? signers.filter((sig) => sig.address !== bindFor.address && sig.balance.gt(MIN_BALANCE.mul(BigNumber.from('2')))) : [];
 }
 
-export const EvmBindComponent = ({bindSigner, signers, onTxUpdate}: EvmBindComponent): JSX.Element => {
-  const provider = useObservableState(providerSubj)
+export const EvmBindComponent = ({ bindSigner, onTxUpdate, signers }: EvmBindComponent): JSX.Element => {
+  const provider = useObservableState(providerSubj);
   const [bindFor, setBindFor] = useState(bindSigner);
   const [availableTxAccounts, setAvailableTxAccounts] = useState<ReefSigner[]>([]);
   const [transferBalanceFrom, setTransferBalanceFrom] = useState<ReefSigner>();
@@ -45,6 +47,7 @@ export const EvmBindComponent = ({bindSigner, signers, onTxUpdate}: EvmBindCompo
 
   useEffect(() => {
     const fromSigners = getSignersWithEnoughBalance(signers, bindFor);
+
     setAvailableTxAccounts(fromSigners);
   }, [signers, bindFor]);
 
@@ -56,38 +59,42 @@ export const EvmBindComponent = ({bindSigner, signers, onTxUpdate}: EvmBindCompo
     if (!provider) {
       return;
     }
+
     const txIdent = await utils.sendToNativeAddress(provider, from, MIN_BALANCE, to.address, (val: TxStatusUpdate) => {
       if (val.error || val.isInBlock) {
-        onTxUpd({...val, componentTxType: EvmBindComponentTxType.TRANSFER, addresses: [from.address, to.address]});
+        onTxUpd({ ...val, componentTxType: EvmBindComponentTxType.TRANSFER, addresses: [from.address, to.address] });
       }
-      if(val.isInBlock){
+
+      if (val.isInBlock) {
         bindAccount(getUpdateTxCallback([onTxUpdate as TxStatusHandler, setTxStatus]));
       }
     });
-    onTxUpd({txIdent, componentTxType: EvmBindComponentTxType.TRANSFER, addresses: [from.address, to.address]})
-  }
+
+    onTxUpd({ txIdent, componentTxType: EvmBindComponentTxType.TRANSFER, addresses: [from.address, to.address] });
+  };
 
   const onAccountSelect = (_: any, selected: ReefSigner): void => setTransferBalanceFrom(selected);
 
   const bindAccount = (onTxUpdate: TxStatusHandler) => {
     const txIdent = utils.bindEvmAddress(bindFor, provider as Provider, (val: TxStatusUpdate) => {
       if (val.error || val.isInBlock) {
-        onTxUpdate({...val, componentTxType: EvmBindComponentTxType.BIND, addresses: [bindFor.address]})
+        onTxUpdate({ ...val, componentTxType: EvmBindComponentTxType.BIND, addresses: [bindFor.address] });
       }
     }, true);
+
     if (txIdent) {
-      onTxUpdate({txIdent, componentTxType: EvmBindComponentTxType.BIND, addresses: [bindFor.address]});
+      onTxUpdate({ txIdent, componentTxType: EvmBindComponentTxType.BIND, addresses: [bindFor.address] });
     }
   };
 
   return (
-    <div className="mx-auto">
+    <div className='mx-auto bind-evm'>
       <Components.Display.ComponentCenter>
         <Components.Card.Card>
           <Components.Card.CardHeader>
-            <Components.Card.CardHeaderBlank/>
-            <Components.Card.CardTitle title="Register Ethereum VM Address"/>
-            <Components.Card.CardHeaderBlank/>
+            <Components.Card.CardHeaderBlank />
+            <Components.Card.CardTitle title='Register Ethereum VM Address' />
+            <Components.Card.CardHeaderBlank />
           </Components.Card.CardHeader>
           <Components.Card.SubCard>
             <p>Creating Ethereum VM address for {bindFor.name}
@@ -96,7 +103,7 @@ export const EvmBindComponent = ({bindSigner, signers, onTxUpdate}: EvmBindCompo
             <Components.Display.FlexRow>
               <p>Account {bindFor.name}
                 <Components.Text.MiniText>({utils.toAddressShortDisplay(bindFor.address)})</Components.Text.MiniText> already
-                has Ethereum VM address<br/>
+                has Ethereum VM address<br />
                 {bindFor.evmAddress}
               </p>
             </Components.Display.FlexRow>}
@@ -109,7 +116,8 @@ export const EvmBindComponent = ({bindSigner, signers, onTxUpdate}: EvmBindCompo
                 {!txStatus.error && txStatus.isInBlock && txStatus.componentTxType === EvmBindComponentTxType.TRANSFER && (<>
                   <p>Transfer complete. Now execute bind transaction.</p>
                   <button
-                    onClick={() => bindAccount(getUpdateTxCallback([onTxUpdate as TxStatusHandler, setTxStatus]))}>Continue
+                    onClick={() => bindAccount(getUpdateTxCallback([onTxUpdate as TxStatusHandler, setTxStatus]))}
+                  >Continue
                     and bind
                   </button>
                 </>)}
@@ -123,40 +131,45 @@ export const EvmBindComponent = ({bindSigner, signers, onTxUpdate}: EvmBindCompo
               <div>
                 {!txStatus && !transferBalanceFrom &&
                 <p>Please add some Reef to this address for Ethereum VM binding transaction fee.</p>}
-                {!txStatus && !!transferBalanceFrom && <Components.Display.FlexRow>
+                {!txStatus && !!transferBalanceFrom && <div>
                   <p>First send {utils.toReefBalanceDisplay(MIN_BALANCE)} for
-                    transaction<br/> from {transferBalanceFrom.name}
-                    <Components.Modal.OpenModalButton
-                      id="selectMyAddress"
-                      className="btn-empty link-text text-xs text-primary pl-1rem">
+                    transaction<br /> from {transferBalanceFrom.name}
+                  <Components.Modal.OpenModalButton
+                    className='btn-empty link-text text-xs text-primary pl-1rem'
+                    id='selectMyAddress'
+                  >
                       (change)
-                    </Components.Modal.OpenModalButton>
-                    <Components.AccountListModal
-                      id="selectMyAddress"
-                      accounts={availableTxAccounts}
-                      selectAccount={onAccountSelect}
-                      title={(
-                        <div>
+                  </Components.Modal.OpenModalButton>
+                  <Components.AccountListModal
+                    accounts={availableTxAccounts}
+                    id='selectMyAddress'
+                    selectAccount={onAccountSelect}
+                    title={(
+                      <div>
                           Select account
-                        </div>
-                      )}
-                    />
+                      </div>
+                    )}
+                  />
                   </p>
-                  <button
-                    onClick={() => transfer(transferBalanceFrom, bindSigner, MIN_BALANCE, getUpdateTxCallback([onTxUpdate as TxStatusHandler, setTxStatus]))}>Continue
-                  </button>
-                </Components.Display.FlexRow>
+                  <Button
+                    fill
+                    onClick={() => transfer(transferBalanceFrom, bindSigner, MIN_BALANCE, getUpdateTxCallback([onTxUpdate as TxStatusHandler, setTxStatus]))}
+                  >Continue
+                  </Button>
+                </div>
                 }
               </div>
               }
 
               {(!txStatus) && hasBalanceForBinding(bindFor.balance) &&
-              <Components.Display.FlexRow>
+              <div>
                 <p>Account is ready to create Ethereum VM address.</p>
-                <button
-                  onClick={() => bindAccount(getUpdateTxCallback([onTxUpdate as TxStatusHandler, setTxStatus]))}>Continue
-                </button>
-              </Components.Display.FlexRow>
+                <Button
+                  fill
+                  onClick={() => bindAccount(getUpdateTxCallback([onTxUpdate as TxStatusHandler, setTxStatus]))}
+                >Continue
+                </Button>
+              </div>
               }
 
             </div>}
@@ -165,5 +178,5 @@ export const EvmBindComponent = ({bindSigner, signers, onTxUpdate}: EvmBindCompo
         </Components.Card.Card>
       </Components.Display.ComponentCenter>
     </div>
-  )
-}
+  );
+};

@@ -1,14 +1,19 @@
-import { faExchangeAlt, faHome, faPaperPlane, faWallet } from '@fortawesome/free-solid-svg-icons';
+import type { ThemeProps } from '../types';
+
+import { faCog, faExchangeAlt, faHome, faPaperPlane, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ActionContext } from '@reef-defi/extension-ui/components';
 import { utils } from '@reef-defi/react-lib';
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useObservableState } from '../../../reef/extension-ui/hooks/useObservableState';
 import { appState } from '../state';
+import useOutsideClick from './../../../extension-ui/src/hooks/useOutsideClick';
+import MenuSettings from './../../../extension-ui/src/partials/MenuSettings';
 
 interface NavHeaderComp {
+  showSettings?: boolean;
 }
 
 function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
@@ -19,6 +24,20 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
   const openRoute = useCallback(
     (path: string) => onAction(path),
     [onAction]
+  );
+
+  const addRef = useRef(null);
+  const setRef = useRef(null);
+
+  const [isSettingsOpen, setShowSettings] = useState(false);
+
+  useOutsideClick(setRef, (): void => {
+    isSettingsOpen && setShowSettings(!isSettingsOpen);
+  });
+
+  const _toggleSettings = useCallback(
+    (): void => setShowSettings((isSettingsOpen) => !isSettingsOpen),
+    []
   );
 
   const theme = localStorage.getItem('theme');
@@ -169,10 +188,14 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
     </div>
 
     <button
-      className='navigation__account'
-      onClick={() => openRoute('/accounts')}
+      className={`navigation__account ${isSettingsOpen ? 'navigation__account--active' : ''}`}
+      onClick={_toggleSettings}
       type='button'
     >
+      <FontAwesomeIcon
+        className='navigation__settings-icon'
+        icon={faCog}
+      />
       <div className='navigation__account-info'>
         <div className='navigation__account-name'>{selectedAccount?.name}</div>
         <div className='navigation__account-address'>{utils.toAddressShortDisplay(selectedAccount?.address || '')}</div>
@@ -183,6 +206,9 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
       </div>
     </button>
 
+    {isSettingsOpen && (
+      <MenuSettings reference={setRef} />
+    )}
   </div>);
 }
 
