@@ -188,14 +188,10 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
     </div>
 
     <button
-      className={`navigation__account ${isSettingsOpen ? 'navigation__account--active' : ''}`}
-      onClick={_toggleSettings}
+      className='navigation__account'
+      onClick={() => { openRoute('/accounts'); }}
       type='button'
     >
-      <FontAwesomeIcon
-        className='navigation__settings-icon'
-        icon={faCog}
-      />
       <div className='navigation__account-info'>
         <div className='navigation__account-name'>{selectedAccount?.name}</div>
         <div className='navigation__account-address'>{utils.toAddressShortDisplay(selectedAccount?.address || '')}</div>
@@ -204,6 +200,16 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
         <img src='https://s2.coinmarketcap.com/static/img/coins/64x64/6951.png' />
         <div className='navigation__account-tokens-amount'>{selectedAccount ? utils.toReefBalanceDisplay(selectedAccount.balance).replace('-', '0.00').replace(' REEF', '') : ''}</div>
       </div>
+    </button>
+
+    <button
+      className={`navigation__settings-btn ${isSettingsOpen ? 'navigation__settings-btn--active' : ''}`}
+      onClick={_toggleSettings}
+    >
+      <FontAwesomeIcon
+        className='navigation__settings-icon'
+        icon={faCog}
+      />
     </button>
 
     {isSettingsOpen && (
