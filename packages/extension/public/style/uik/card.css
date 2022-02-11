@@ -22,6 +22,7 @@
   font-size: 20px;
   color: var(--text);
   line-height: 1.25;
+  font-weight: 600;
 }
 
 .uik-card .uik-card__head + .uik-card__content {
