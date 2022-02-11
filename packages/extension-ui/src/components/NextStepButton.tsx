@@ -8,20 +8,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import styled from 'styled-components';
 
-import Button from './Button';
+import { CTA } from './../../../reef/extension-ui/uik';
 
-type Props = React.ComponentProps<typeof Button>;
+type Props = React.ComponentProps<typeof CTA>;
 
 function NextStepButton ({ children, ...props }: Props): React.ReactElement<Props> {
   return (
-    <Button {...props}>
+    <CTA
+      {...props}
+      className='next-step-btn'
+    >
       {children}
       <FontAwesomeIcon
         className='arrowRight'
         icon={faArrowRight}
         size='sm'
       />
-    </Button>
+    </CTA>
   );
 }
 

@@ -361,7 +361,7 @@ svg.fill-white {
   margin: 0 auto;
 }
 
-.bind-evm .uik-button {
+.bind-evm .uik-cta {
   width: 100%;
 }
 
@@ -397,6 +397,23 @@ svg.fill-white {
   font-size: 14px;
   opacity: 1 !important;
   color: black;
+}
+
+.next-step-btn {
+  width: 100%;
+}
+
+.next-step-btn .uik-cta__text {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.next-step-btn .arrowRight {
+  position: absolute;
+  right: 0;
 }
 
 .dark-theme .card {

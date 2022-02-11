@@ -2,8 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap');
 
 :root {
-  --font-family: 'Space Grotesk', sans-serif;
-  --font-family-secondary: 'Nunito Sans', sans-serif;
+  --font-family: 'Nunito Sans', sans-serif;
+  --font-family-title: 'Space Grotesk', sans-serif;
   --bg: #eeebf6;
   --text: #19233c;
   --text-light: #898e9c;

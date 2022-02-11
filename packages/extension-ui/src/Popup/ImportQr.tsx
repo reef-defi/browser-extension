@@ -70,7 +70,7 @@ export default function ImportQr (): React.ReactElement {
           <VerticalSpace />
           <ButtonArea>
             <NextStepButton
-              isDisabled={!name}
+              disabled={!name}
               onClick={_onCreate}
             >
               {t<string>('Add the account with identified address')}

@@ -5,7 +5,7 @@ import React from 'react';
 import { WithTranslation } from 'react-i18next';
 
 import Header from '../partials/Header';
-import Button from './Button';
+import { CTA } from './../../../reef/extension-ui/uik';
 import ButtonArea from './ButtonArea';
 import translate from './translate';
 import VerticalSpace from './VerticalSpace';
@@ -58,11 +58,11 @@ class ErrorBoundary extends React.Component<Props> {
           </div>
           <VerticalSpace />
           <ButtonArea>
-            <Button
+            <CTA
               onClick={this.#goHome}
             >
               {t<string>('Back to home')}
-            </Button>
+            </CTA>
           </ButtonArea>
         </>
       )
