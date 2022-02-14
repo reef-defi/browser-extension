@@ -44,7 +44,7 @@ const signersInjected$ = combineLatest([providerSubj, of(injectionSigner), accou
 
 export const reloadSignersSubj = new Subject<UpdateDataCtx<ReefSigner[]>>();
 
-const signersLocallyUpdatedData$: Observable<ReefSigner[]> = reloadSignersSubj.pipe(
+const signersLocallyUpdatedData$: Observable<ReefSigner[]> = reloadSignersSubject.pipe(
   filter((reloadCtx) => !!reloadCtx.updateActions.length),
   withLatestFrom(signersInjected$),
   mergeScan((state: { all: ReefSigner[], allUpdated: ReefSigner[], lastUpdated: ReefSigner[] }, [updateCtx, signersInjected]): any => {
