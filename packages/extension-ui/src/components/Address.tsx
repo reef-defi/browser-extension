@@ -48,6 +48,7 @@ export interface Props {
   suri?: string;
   toggleActions?: number;
   type?: KeypairType;
+  exporting?: any;
 }
 
 interface Recoded {
@@ -245,7 +246,6 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   };
 
   const SelectButton = () => {
-    const accountName = name || account?.name;
     const selected = selectedAccount?.address === account?.address;
 
     const selectAccount = (account: AccountJson | null): void => {
