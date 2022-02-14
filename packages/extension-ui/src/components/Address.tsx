@@ -1,40 +1,38 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { AccountJson, AccountWithChildren } from '@reef-defi/extension-base/background/types';
-import type { Chain } from '@reef-defi/extension-chains/types';
-import type { IconTheme } from '@polkadot/react-identicon/types';
-import type { SettingsStruct } from '@polkadot/ui-settings/types';
-import type { KeypairType } from '@polkadot/util-crypto/types';
-import type { ThemeProps } from '../types';
+import type {AccountJson, AccountWithChildren} from '@reef-defi/extension-base/background/types';
+import type {Chain} from '@reef-defi/extension-chains/types';
+import type {IconTheme} from '@polkadot/react-identicon/types';
+import type {SettingsStruct} from '@polkadot/ui-settings/types';
+import type {KeypairType} from '@polkadot/util-crypto/types';
+import type {ThemeProps} from '../types';
 
-import { faUsb } from '@fortawesome/free-brands-svg-icons';
-import { faCopy, faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
-import { faCodeBranch, faEllipsisV, faQrcode } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Components, ReefSigner, utils } from '@reef-defi/react-lib';
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import {faUsb} from '@fortawesome/free-brands-svg-icons';
+import {faCopy, faEye, faEyeSlash} from '@fortawesome/free-regular-svg-icons';
+import {faCodeBranch, faEllipsisV, faQrcode} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {ReefSigner, utils} from '@reef-defi/react-lib';
+import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import styled from 'styled-components';
 
-import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
+import {decodeAddress, encodeAddress} from '@polkadot/util-crypto';
 
-import { useObservableState } from '../../../reef/extension-ui/hooks/useObservableState';
-import { appState } from '../../../reef/extension-ui/state';
-import { provider$, providerSubj } from '../../../reef/extension-ui/state/providerState';
-import details from '../assets/details.svg';
+import {useObservableState} from '../../../reef/extension-ui/hooks/useObservableState';
+import {appState} from '../../../reef/extension-ui/state';
+import {providerSubj} from '../../../reef/extension-ui/state/providerState';
 import useMetadata from '../hooks/useMetadata';
 import useOutsideClick from '../hooks/useOutsideClick';
 import useToast from '../hooks/useToast';
 import useTranslation from '../hooks/useTranslation';
-import { showAccount } from '../messaging';
-import { DEFAULT_TYPE } from '../util/defaultType';
+import {showAccount} from '../messaging';
+import {DEFAULT_TYPE} from '../util/defaultType';
 import getParentNameSuri from '../util/getParentNameSuri';
-import { Button } from './../../../reef/extension-ui/uik';
-import { AccountContext, ActionContext, SettingsContext, SigningReqContext } from './contexts';
+import {Button} from './../../../reef/extension-ui/uik';
+import {AccountContext, ActionContext, SettingsContext, SigningReqContext} from './contexts';
 import Identicon from './Identicon';
 import Menu from './Menu';
-import Svg from './Svg';
 
 export interface Props {
   actions?: React.ReactNode;
@@ -380,7 +378,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
         !exporting
           ? (
             <div className='account-card__aside'>
-              { !signer?.evmAddress ? <Bind /> : '' }
+              { !signer?.isEvmClaimed ? <Bind /> : '' }
               { !isSelected() ? <SelectButton /> : '' }
 
               <div className='account-card__actions'>
