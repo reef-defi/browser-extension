@@ -10,7 +10,7 @@
     "url": "https://github.com/reef-defi/browser-extension.git"
   },
   "sideEffects": false,
-  "version": "0.41.4",
+  "version": "0.41.5",
   "workspaces": [
     "packages/*"
   ],
