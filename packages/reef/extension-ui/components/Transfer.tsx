@@ -1,18 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {appState} from "../state";
-import {TokenWithAmount, utils as reefUtils} from "@reef-defi/react-lib";
-import {useObservableState} from "../hooks/useObservableState";
+import {appState, hooks, ReefSigner, TokenWithAmount, utils as reefUtils} from "@reef-defi/react-lib";
 import {Components} from "@reef-defi/react-lib/";
-import {onTxUpdateReloadSignerBalances} from "../state/util";
 import {SigningOrChildren} from "./SigningOrChildren";
-import {TxStatusUpdate} from "@reef-defi/react-lib/dist/utils";
-import {createUpdateActions, UpdateAction, UpdateDataType} from "../state/updateCtxUtil";
+import {Provider} from "@reef-defi/evm-provider";
 
 export const Transfer = (): JSX.Element => {
-  const provider = useObservableState(appState.providerSubj);
-  const accounts = useObservableState(appState.signers$);
-  const selectedSigner = useObservableState(appState.selectedSigner$);
-  const signerTokenBalances = useObservableState(appState.tokenPrices$);
+  const provider: Provider | undefined = hooks.useObservableState(appState.providerSubj);
+  const accounts: ReefSigner[] | undefined = hooks.useObservableState(appState.signers$);
+  const selectedSigner: ReefSigner | undefined = hooks.useObservableState(appState.selectedSigner$);
+  const signerTokenBalances: TokenWithAmount[] | undefined = hooks.useObservableState(appState.tokenPrices$);
   const theme = localStorage.getItem('theme');
 
   const [token, setToken] = useState<reefUtils.DataWithProgress<TokenWithAmount>>(reefUtils.DataProgress.LOADING);
@@ -30,6 +26,7 @@ export const Transfer = (): JSX.Element => {
         setToken(tkn);
         return;
       }
+
       /* if (!isDataSet(signerTokenBalance?.balanceValue) && isDataSet(signerTokens)) {
         const sTkns = getData(signerTokens);
         const sToken = sTkns ? sTkns[0] : undefined;
@@ -46,14 +43,14 @@ export const Transfer = (): JSX.Element => {
     // }, [signerTokenBalances, signerTokens]);
   }, [signerTokenBalances]);
 
-  const onTransferTxUpdate = (txState: TxStatusUpdate) => {
+  /*const onTransferTxUpdate = (txState: TxStatusUpdate) => {
     const updateTypes = [UpdateDataType.ACCOUNT_NATIVE_BALANCE];
     if (txState.txTypeEvm) {
       updateTypes.push(UpdateDataType.ACCOUNT_TOKENS);
     }
-    const updateActions: UpdateAction[] = createUpdateActions(updateTypes, txState.addresses);
+    const updateActions: UpdateAction[] = appState.createUpdateActions(updateTypes, txState.addresses);
     onTxUpdateReloadSignerBalances(txState, updateActions);
-  };
+  };*/
 
   return (
     <SigningOrChildren>
@@ -65,7 +62,7 @@ export const Transfer = (): JSX.Element => {
         <Components.TransferComponent tokens={signerTokenBalances} from={selectedSigner}
                                       token={token as TokenWithAmount} provider={provider} accounts={accounts}
                                       currentAccount={selectedSigner}
-                                      onTxUpdate={(state) => onTransferTxUpdate(state)}/>
+                                      />
       </div>
       }
     </SigningOrChildren>

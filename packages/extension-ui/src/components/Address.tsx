@@ -12,16 +12,12 @@ import {faUsb} from '@fortawesome/free-brands-svg-icons';
 import {faCopy, faEye, faEyeSlash} from '@fortawesome/free-regular-svg-icons';
 import {faCodeBranch, faEllipsisV, faQrcode} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {ReefSigner, utils} from '@reef-defi/react-lib';
+import {appState, hooks, ReefSigner, utils} from '@reef-defi/react-lib';
 import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import styled from 'styled-components';
 
 import {decodeAddress, encodeAddress} from '@polkadot/util-crypto';
-
-import {useObservableState} from '../../../reef/extension-ui/hooks/useObservableState';
-import {appState} from '../../../reef/extension-ui/state';
-import {providerSubj} from '../../../reef/extension-ui/state/providerState';
 import useMetadata from '../hooks/useMetadata';
 import useOutsideClick from '../hooks/useOutsideClick';
 import useToast from '../hooks/useToast';
@@ -33,6 +29,7 @@ import {Button} from './../../../reef/extension-ui/uik';
 import {AccountContext, ActionContext, SettingsContext, SigningReqContext} from './contexts';
 import Identicon from './Identicon';
 import Menu from './Menu';
+import {Provider} from "@reef-defi/evm-provider";
 
 export interface Props {
   actions?: React.ReactNode;
@@ -103,12 +100,12 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   const { t } = useTranslation();
   const onAction = useContext(ActionContext);
   const { accounts } = useContext(AccountContext);
-  const selectedAccount = useObservableState(appState.selectedSigner$);
-  const signers = useObservableState(appState.signers$);
+  const selectedAccount: ReefSigner|undefined = hooks.useObservableState(appState.selectedSigner$);
+  const signers: ReefSigner[]|undefined = hooks.useObservableState(appState.signers$);
   const settings = useContext(SettingsContext);
   const [{ account, formatted, genesisHash: recodedGenesis, prefix, type }, setRecoded] = useState<Recoded>(defaultRecoded);
   const chain = useMetadata(genesisHash || recodedGenesis, true);
-  const provider = useObservableState(providerSubj);
+  const provider: Provider|undefined = hooks.useObservableState(appState.providerSubj);
   const signRequests = useContext(SigningReqContext);
   const [showActionsMenu, setShowActionsMenu] = useState(false);
   const [moveMenuUp, setIsMovedMenu] = useState(false);

@@ -1,9 +1,9 @@
 {
   "author": "Reef Chain",
-  "description": "Manage your Reef chain accounts outside of dapps. Injects the accounts and allows signing transactions for a specific account.",
+  "description": "Manage your Reef Chain accounts outside of dapps. Injects the accounts and allows signing transactions for a specific account.",
   "homepage_url": "https://github.com/reef-defi/browser-extension",
-  "name": "reef.io wallet extension",
-  "short_name": "reef.io wallet",
+  "name": "Reef Chain browser extension",
+  "short_name": "Reef Chain extension",
   "manifest_version": 2,
   "permissions": [
     "storage",
@@ -16,7 +16,7 @@
     "persistent": true
   },
   "browser_action": {
-    "default_title": "reef.io wallet",
+    "default_title": "Reef extension",
     "default_popup": "index.html"
   },
   "content_scripts": [
