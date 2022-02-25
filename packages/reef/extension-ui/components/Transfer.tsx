@@ -43,15 +43,6 @@ export const Transfer = (): JSX.Element => {
     // }, [signerTokenBalances, signerTokens]);
   }, [signerTokenBalances]);
 
-  /*const onTransferTxUpdate = (txState: TxStatusUpdate) => {
-    const updateTypes = [UpdateDataType.ACCOUNT_NATIVE_BALANCE];
-    if (txState.txTypeEvm) {
-      updateTypes.push(UpdateDataType.ACCOUNT_TOKENS);
-    }
-    const updateActions: UpdateAction[] = appState.createUpdateActions(updateTypes, txState.addresses);
-    onTxUpdateReloadSignerBalances(txState, updateActions);
-  };*/
-
   return (
     <SigningOrChildren>
       {!reefUtils.isDataSet(token) && token === reefUtils.DataProgress.LOADING && <Components.Loading.Loading/>}
