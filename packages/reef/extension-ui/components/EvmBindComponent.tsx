@@ -1,11 +1,8 @@
 import { Provider } from '@reef-defi/evm-provider';
-import { Components, ReefSigner, utils } from '@reef-defi/react-lib';
+import { Components, ReefSigner, utils, appState, hooks } from '@reef-defi/react-lib';
 import { TxStatusHandler, TxStatusUpdate } from '@reef-defi/react-lib/dist/utils';
 import { BigNumber, ethers } from 'ethers';
 import { useEffect, useState } from 'react';
-
-import { useObservableState } from '../hooks/useObservableState';
-import { providerSubj } from '../state/providerState';
 import { CTA } from './../uik';
 
 export enum EvmBindComponentTxType {
@@ -31,7 +28,7 @@ function getSignersWithEnoughBalance (signers: ReefSigner[], bindFor: ReefSigner
 }
 
 export const EvmBindComponent = ({ bindSigner, onTxUpdate, signers }: EvmBindComponent): JSX.Element => {
-  const provider = useObservableState(providerSubj);
+  const provider: Provider|undefined = hooks.useObservableState(appState.providerSubj);
   const [bindFor, setBindFor] = useState(bindSigner);
   const [availableTxAccounts, setAvailableTxAccounts] = useState<ReefSigner[]>([]);
   const [transferBalanceFrom, setTransferBalanceFrom] = useState<ReefSigner>();
