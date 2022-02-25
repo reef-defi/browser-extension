@@ -525,3 +525,21 @@ svg.fill-white {
 .dark-theme .logoText {
   color: white !important;
 }
+
+button.btn-select {
+  background: transparent !important;
+  border-color: #bfbfbf !important;
+  color: #212529 !important;
+}
+
+button.btn-select:hover {
+  color: white !important;
+  border-color: transparent !important;
+  background: #5531a9 !important;
+}
+
+button.btn-select:active {
+  color: white !important;
+  border-color: transparent !important;
+  background: #46288b !important;
+}

@@ -1,31 +1,24 @@
-import {Components} from "@reef-defi/react-lib";
-import {useObservableState} from "../hooks/useObservableState";
-import {selectedSigner$} from "../state/accountState";
-import {selectedNetworkSubj} from "../state/providerState";
-import {allAvailableSignerTokens$} from "../state/tokenState";
+import {appState, Components, hooks, Network, ReefSigner, Token} from "@reef-defi/react-lib";
 import React from "react";
-import {onTxUpdateReloadSignerBalances} from "../state/util";
 import {SigningOrChildren} from "./SigningOrChildren";
-import {TxStatusUpdate} from "@reef-defi/react-lib/dist/utils";
-import {createUpdateActions, UpdateAction, UpdateDataType} from "../state/updateCtxUtil";
 
 export const Swap = (): JSX.Element => {
-  const signer = useObservableState(selectedSigner$);
-  const network = useObservableState(selectedNetworkSubj);
-  const availableTokens = useObservableState(allAvailableSignerTokens$);
+  const signer: ReefSigner | undefined = hooks.useObservableState(appState.selectedSigner$);
+  const network: Network | undefined = hooks.useObservableState(appState.selectedNetworkSubj);
+  const availableTokens: Token[] | undefined = hooks.useObservableState(appState.allAvailableSignerTokens$);
   const theme = localStorage.getItem('theme');
-  const onSwapTxUpdate = (txState: TxStatusUpdate) => {
+  /*const onSwapTxUpdate = (txState: TxStatusUpdate) => {
     const updateTypes = [UpdateDataType.ACCOUNT_NATIVE_BALANCE, UpdateDataType.ACCOUNT_TOKENS];
     const updateActions: UpdateAction[] = createUpdateActions(updateTypes, txState.addresses);
     onTxUpdateReloadSignerBalances(txState, updateActions);
-  };
+  };*/
 
   return (
     <SigningOrChildren>
       {!!signer && !!network && !!availableTokens && !!availableTokens.length &&
       <div className={theme === 'dark' ? 'theme-dark' : ''}>
         <Components.SwapComponent account={signer} network={network} tokens={availableTokens}
-                                  onTxUpdate={onSwapTxUpdate}></Components.SwapComponent></div>}
+                                  ></Components.SwapComponent></div>}
     </SigningOrChildren>
   );
 }

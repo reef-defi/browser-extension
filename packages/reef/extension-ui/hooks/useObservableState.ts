@@ -1,6 +1,4 @@
-import {Observable, Subscription} from "rxjs";
-import {useEffect, useState} from "react";
-
+/*
 export const useObservableState = <T>(observable: Observable<T>): T | undefined => {
   const [value, setValue] = useState<T>();
   let subs: Subscription;
@@ -12,7 +10,7 @@ export const useObservableState = <T>(observable: Observable<T>): T | undefined 
     return () => subs?.unsubscribe();
   }, [observable]);
   return value;
-};
+};*/
 
 /*
 export const useObservableStateProgress = <T>(observable: Observable<DataWithProgress<T>>): utils.DataWithProgress<T> => {
