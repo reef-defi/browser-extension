@@ -1,14 +1,10 @@
-import type { ThemeProps } from '../types';
-
-import { faCog, faCoins, faExchangeAlt, faPaperPlane, faWallet } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ActionContext } from '@reef-defi/extension-ui/components';
-import { utils } from '@reef-defi/react-lib';
-import React, { useCallback, useContext, useRef, useState } from 'react';
+import {faCog, faCoins, faExchangeAlt, faPaperPlane, faWallet} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {ActionContext} from '@reef-defi/extension-ui/components';
+import {appState, hooks, ReefSigner, utils} from '@reef-defi/react-lib';
+import React, {useCallback, useContext, useRef, useState} from 'react';
 import styled from 'styled-components';
 
-import { useObservableState } from '../../../reef/extension-ui/hooks/useObservableState';
-import { appState } from '../state';
 import useOutsideClick from './../../../extension-ui/src/hooks/useOutsideClick';
 import MenuSettings from './../../../extension-ui/src/partials/MenuSettings';
 
@@ -18,15 +14,13 @@ interface NavHeaderComp {
 
 function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
   const onAction = useContext(ActionContext);
-  // const provider = useObservableState(appState.provider$)
-  // const accounts = useObservableState(appState.signers$)
-  const selectedAccount = useObservableState(appState.selectedSigner$);
+  const selectedAccount: ReefSigner|undefined = hooks.useObservableState(appState.selectedSigner$);
   const openRoute = useCallback(
     (path: string) => onAction(path),
     [onAction]
   );
 
-  const addRef = useRef(null);
+  // const addRef = useRef(null);
   const setRef = useRef(null);
 
   const [isSettingsOpen, setShowSettings] = useState(false);

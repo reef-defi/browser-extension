@@ -1,14 +1,9 @@
-import { ReefSigner, utils } from '@reef-defi/react-lib';
-import React, { useEffect, useState } from 'react';
+import {appState, hooks, ReefSigner} from '@reef-defi/react-lib';
+import React, {useEffect, useState} from 'react';
+import {EvmBindComponent} from './EvmBindComponent';
+import {SigningOrChildren} from './SigningOrChildren';
 
-import { useObservableState } from '../hooks/useObservableState';
-import { appState } from '../state';
-import { UpdateAction, UpdateDataType } from '../state/updateCtxUtil';
-import { onTxUpdateReloadSignerBalances } from '../state/util';
-import { EvmBindComponent, EvmBindComponentTxType } from './EvmBindComponent';
-import { SigningOrChildren } from './SigningOrChildren';
-
-const onTxUpdate = (state: utils.TxStatusUpdate) => {
+/*const onTxUpdate = (state: utils.TxStatusUpdate) => {
   let updateActions: UpdateAction[] = [];
 
   if (state.componentTxType === EvmBindComponentTxType.BIND) {
@@ -38,11 +33,11 @@ const onTxUpdate = (state: utils.TxStatusUpdate) => {
   }
 
   onTxUpdateReloadSignerBalances(state, updateActions);
-};
+};*/
 
 export const Bind = (): JSX.Element => {
-  const accounts = useObservableState(appState.signers$);
-  const selectedSigner = useObservableState(appState.selectedSigner$);
+  const accounts: ReefSigner[] | undefined = hooks.useObservableState(appState.signers$);
+  const selectedSigner: ReefSigner | undefined = hooks.useObservableState(appState.selectedSigner$);
   const [bindSigner, setBindSigner] = useState<ReefSigner>();
   const theme = localStorage.getItem('theme');
 
@@ -64,7 +59,6 @@ export const Bind = (): JSX.Element => {
       {bindSigner && accounts && (<div className={theme === 'dark' ? 'theme-dark' : ''}>
         <EvmBindComponent
           bindSigner={bindSigner}
-          onTxUpdate={onTxUpdate}
           signers={accounts}
         ></EvmBindComponent></div>)}
     </SigningOrChildren>
