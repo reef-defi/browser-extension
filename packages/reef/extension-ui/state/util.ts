@@ -29,13 +29,6 @@ export function toReefSigner(acc: AccountJson, provider: Provider, injectionSign
   return rpc.accountToSigner(accWithMeta, provider, injectionSigner);
 }
 
-/*export const onTxUpdateReloadSignerBalances = (txUpdateData: utils.TxStatusUpdate, updateActions: UpdateAction[]): void => {
-  if (txUpdateData?.isInBlock || txUpdateData?.error) {
-    const delay = txUpdateData.txTypeEvm ? 2000 : 0;
-    setTimeout(() => appState.reloadSignersSubj.next({updateActions}), delay);
-  }
-};*/
-
 export const zenToRx = <T>(zenObservable: ZenObservable<T>): Observable<T> =>
   new Observable(
     observer => zenObservable.subscribe(observer)
