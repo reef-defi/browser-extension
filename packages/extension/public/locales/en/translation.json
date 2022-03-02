@@ -164,5 +164,7 @@
   "Hardware Wallet Account": "",
   "External Account": "",
   "Copy Address": "",
-  "Account Visibility": ""
+  "Account Visibility": "",
+  "Copy Reef Account Address": "",
+  "Copy Ethereum VM Address": ""
 }
