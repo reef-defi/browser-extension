@@ -101,7 +101,8 @@ export const EvmBindComponent = ({ bindSigner, onTxUpdate, signers }: EvmBindCom
               <p>Account {bindFor.name}
                 <Components.Text.MiniText>({utils.toAddressShortDisplay(bindFor.address)})</Components.Text.MiniText> already
                 has Ethereum VM address<br />
-                {bindFor.evmAddress}
+                {bindFor.evmAddress}<br/>
+                Use this address ONLY on Reef chain.
               </p>
             </Components.Display.FlexRow>}
             {!bindFor.isEvmClaimed &&
