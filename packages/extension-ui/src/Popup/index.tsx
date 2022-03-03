@@ -76,7 +76,7 @@ export default function Popup (): React.ReactElement {
   const [accounts, setAccounts] = useState<null | AccountJson[]>(null);
   const provider: Provider|undefined = hooks.useObservableState(appState.providerSubj);
   const signers = useReefSigners(accounts, provider);
-  hooks.useInitReefState(signers, innitialNetwork);
+  hooks.useInitReefState( innitialNetwork,'Reef Chain Extension', signers);
   const [accountCtx, setAccountCtx] = useState<AccountsContext>({ accounts: [], hierarchy: [] });
   const [authRequests, setAuthRequests] = useState<null | AuthorizeRequest[]>(null);
   const [cameraOn, setCameraOn] = useState(startSettings.camera === 'on');
