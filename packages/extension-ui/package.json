@@ -33,7 +33,7 @@
     "@reef-defi/extension-base": "^0.41.2",
     "@reef-defi/extension-dapp": "^0.41.2",
     "@reef-defi/extension-inject": "^0.41.2",
-    "@reef-defi/react-lib": "^1.0.30",
+    "@reef-defi/react-lib": "^1.0.31",
     "boostrap": "^2.0.0",
     "file-saver": "^2.0.5",
     "graphql": "^16.2.0",
