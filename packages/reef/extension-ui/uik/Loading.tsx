@@ -1,5 +1,10 @@
 import React from 'react';
-
+interface Loading{
+  className?:string;
+  color?: 'white'|'black';
+  size?: 'small'|string;
+  text?: string;
+}
 export const Loading = ({ className, color, size, text }: Loading): JSX.Element => (
   <div className={`
       uik-loading

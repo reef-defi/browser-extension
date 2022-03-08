@@ -1,6 +1,16 @@
-import React from 'react';
+import React, {MouseEventHandler} from 'react';
 
 import { FishAnimation } from './index';
+interface CTA {
+  children?: any[];
+  className?: string;
+  danger?: boolean;
+  disabled?: boolean;
+  loading?: boolean;
+  onClick?: MouseEventHandler;
+  size?: 'small';
+  text?: string;
+}
 
 export const CTA = ({ children,
   className,
@@ -19,7 +29,7 @@ export const CTA = ({ children,
       ${danger ? 'uik-cta--danger' : ''}
       ${className || ''}
     `}
-    disabled={disabled || null}
+    disabled={disabled}
     onClick={onClick}
     type='button'
   >

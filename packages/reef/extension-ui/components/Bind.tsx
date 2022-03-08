@@ -1,13 +1,12 @@
-import {appState, hooks, ReefSigner} from '@reef-defi/react-lib';
+import {appState, hooks, ReefSigner, Components} from '@reef-defi/react-lib';
 import React, {useEffect, useState} from 'react';
-import {EvmBindComponent, EvmBindComponentTxType} from './EvmBindComponent';
 import {SigningOrChildren} from './SigningOrChildren';
 import {TxStatusUpdate} from "@reef-defi/react-lib/dist/utils";
 
 const onTxUpdate = (state: TxStatusUpdate) => {
   let updateActions: appState.UpdateAction[] = [];
 
-  if (state.componentTxType === EvmBindComponentTxType.BIND) {
+  if (state.componentTxType === Components.EvmBindComponentTxType.BIND) {
     // bind
     if (state.addresses && state.addresses.length) {
       state.addresses.forEach((address) => {
@@ -58,11 +57,11 @@ export const Bind = (): JSX.Element => {
   return (
     <SigningOrChildren>
       {bindSigner && accounts && (<div className={theme === 'dark' ? 'theme-dark' : ''}>
-        <EvmBindComponent
+        <Components.EvmBindComponent
           bindSigner={bindSigner}
           onTxUpdate={onTxUpdate}
           signers={accounts}
-        ></EvmBindComponent></div>)}
+        ></Components.EvmBindComponent></div>)}
     </SigningOrChildren>
   );
 };
