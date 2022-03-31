@@ -29,6 +29,7 @@ import useTranslation from '../hooks/useTranslation';
 import { showAccount } from '../messaging';
 import { DEFAULT_TYPE } from '../util/defaultType';
 import getParentNameSuri from '../util/getParentNameSuri';
+import notify from './../../../reef/extension-ui/notify';
 import { Button } from './../../../reef/extension-ui/uik';
 import { AccountContext, ActionContext, SettingsContext, SigningReqContext } from './contexts';
 import Identicon from './Identicon';
@@ -180,11 +181,6 @@ function Address ({ actions, address, children, className, exporting, genesisHas
     [showActionsMenu]
   );
 
-  const _onCopy = useCallback(
-    () => show(t('Copied')),
-    [show, t]
-  );
-
   const _toggleVisibility = useCallback(
     () => address && showAccount(address, isHidden || false).catch(console.error),
     [address, isHidden]
@@ -228,7 +224,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           fill
           onClick={() => openEvmBindView(signer?.address)}
           size='small'
-                                                                                                      ><span>Bind EVM</span></Button>}
+        ><span>Bind EVM</span></Button>}
       </>);
   };
 
@@ -260,13 +256,13 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             className='account-card__select-btn account-card__select-btn--selected'
             fill
             size='small'
-          >Selected</Button>
+            >Selected</Button>
           : <Button
             className='account-card__select-btn'
             onClick={() => selectAccount(account)}
             size='small'
             type='button'
-          >Select</Button>
+            >Select</Button>
         )}
       </>
     );
@@ -287,7 +283,10 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             className='identityIcon'
             iconTheme={theme}
             isExternal={isExternal}
-            onCopy={_onCopy}
+            onCopy={() => notify.info({
+              message: 'Copied to clipboard',
+              aliveFor: 2
+            })}
             prefix={prefix}
             value={formatted || address}
           />
@@ -347,7 +346,10 @@ function Address ({ actions, address, children, className, exporting, genesisHas
               <FontAwesomeIcon
                 className='copyIcon'
                 icon={faCopy}
-                onClick={_onCopy}
+                onClick={() => notify.info({
+                  message: 'Copied Reef Account Address to clipboard.',
+                  aliveFor: 2
+                })}
                 size='sm'
                 title={t('Copy Reef Account Address')}
               />
@@ -366,7 +368,11 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                     <FontAwesomeIcon
                       className='copyIcon'
                       icon={faCopy}
-                      onClick={_onCopy}
+                      onClick={() => notify.danger({
+                        message: 'Copied Ethereum VM Address to clipboard.\nDO NOT use this Reef EVM address on any other chains. ONLY use it on Reef chain.',
+                        keepAlive: true,
+                        children: <Button text='I understand' />
+                      })}
                       size='sm'
                       title={t('Copy Ethereum VM Address')}
                     />
