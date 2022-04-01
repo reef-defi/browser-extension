@@ -16,7 +16,6 @@ import { Dashboard } from '../../../reef/extension-ui/components/dashboard/Dashb
 import { HeaderComponent } from '../../../reef/extension-ui/components/HeaderComponent';
 import { Swap } from '../../../reef/extension-ui/components/Swap';
 import { Transfer } from '../../../reef/extension-ui/components/Transfer';
-import { useInitReefState } from '../../../reef/extension-ui/hooks/useInitReefState';
 import { ErrorBoundary, Loading } from '../components';
 import { AccountContext, ActionContext, AuthorizeReqContext, MediaContext, MetadataReqContext, SettingsContext, SigningReqContext } from '../components/contexts';
 import ToastProvider from '../components/Toast/ToastProvider';
@@ -38,6 +37,10 @@ import PhishingDetected from './PhishingDetected';
 import RestoreJson from './RestoreJson';
 import Signing from './Signing';
 import Welcome from './Welcome';
+import {innitialNetwork} from "../../../reef/extension-ui/state/environment";
+import {useReefSigners} from "../../../reef/extension-ui/hooks/useReefSigners";
+import {hooks, appState} from "@reef-defi/react-lib";
+import {Provider} from "@reef-defi/evm-provider";
 
 const startSettings = uiSettings.get();
 
@@ -71,8 +74,9 @@ function initAccountContext (accounts: AccountJson[], selectedAccount: AccountJs
 
 export default function Popup (): React.ReactElement {
   const [accounts, setAccounts] = useState<null | AccountJson[]>(null);
-
-  useInitReefState(accounts);
+  const provider: Provider|undefined = hooks.useObservableState(appState.providerSubj);
+  const signers = useReefSigners(accounts, provider);
+  hooks.useInitReefState( 'Reef Chain Extension', innitialNetwork,signers);
   const [accountCtx, setAccountCtx] = useState<AccountsContext>({ accounts: [], hierarchy: [] });
   const [authRequests, setAuthRequests] = useState<null | AuthorizeRequest[]>(null);
   const [cameraOn, setCameraOn] = useState(startSettings.camera === 'on');

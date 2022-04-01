@@ -12,16 +12,14 @@ import { faUsb } from '@fortawesome/free-brands-svg-icons';
 import { faCopy, faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { faCodeBranch, faEllipsisV, faQrcode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ReefSigner, utils } from '@reef-defi/react-lib';
+import { Provider } from '@reef-defi/evm-provider';
+import { appState, hooks, ReefSigner, utils } from '@reef-defi/react-lib';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import styled from 'styled-components';
 
 import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
 
-import { useObservableState } from '../../../reef/extension-ui/hooks/useObservableState';
-import { appState } from '../../../reef/extension-ui/state';
-import { providerSubj } from '../../../reef/extension-ui/state/providerState';
 import useMetadata from '../hooks/useMetadata';
 import useOutsideClick from '../hooks/useOutsideClick';
 import useToast from '../hooks/useToast';
@@ -105,12 +103,12 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   const { t } = useTranslation();
   const onAction = useContext(ActionContext);
   const { accounts } = useContext(AccountContext);
-  const selectedAccount = useObservableState(appState.selectedSigner$);
-  const signers = useObservableState(appState.signers$);
+  const selectedAccount: ReefSigner|undefined = hooks.useObservableState(appState.selectedSigner$);
+  const signers: ReefSigner[]|undefined = hooks.useObservableState(appState.signers$);
   const settings = useContext(SettingsContext);
   const [{ account, formatted, genesisHash: recodedGenesis, prefix, type }, setRecoded] = useState<Recoded>(defaultRecoded);
   const chain = useMetadata(genesisHash || recodedGenesis, true);
-  const provider = useObservableState(providerSubj);
+  const provider: Provider|undefined = hooks.useObservableState(appState.providerSubj);
   const signRequests = useContext(SigningReqContext);
   const [showActionsMenu, setShowActionsMenu] = useState(false);
   const [moveMenuUp, setIsMovedMenu] = useState(false);
@@ -224,7 +222,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           fill
           onClick={() => openEvmBindView(signer?.address)}
           size='small'
-        ><span>Bind EVM</span></Button>}
+                                                                                                      ><span>Bind EVM</span></Button>}
       </>);
   };
 
@@ -256,13 +254,13 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             className='account-card__select-btn account-card__select-btn--selected'
             fill
             size='small'
-            >Selected</Button>
+          >Selected</Button>
           : <Button
             className='account-card__select-btn'
             onClick={() => selectAccount(account)}
             size='small'
             type='button'
-            >Select</Button>
+          >Select</Button>
         )}
       </>
     );

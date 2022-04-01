@@ -1,48 +1,43 @@
-import { ReefSigner, utils } from '@reef-defi/react-lib';
-import React, { useEffect, useState } from 'react';
+import {appState, hooks, ReefSigner, Components} from '@reef-defi/react-lib';
+import React, {useEffect, useState} from 'react';
+import {SigningOrChildren} from './SigningOrChildren';
+import {TxStatusUpdate} from "@reef-defi/react-lib/dist/utils";
 
-import { useObservableState } from '../hooks/useObservableState';
-import { appState } from '../state';
-import { UpdateAction, UpdateDataType } from '../state/updateCtxUtil';
-import { onTxUpdateReloadSignerBalances } from '../state/util';
-import { EvmBindComponent, EvmBindComponentTxType } from './EvmBindComponent';
-import { SigningOrChildren } from './SigningOrChildren';
+const onTxUpdate = (state: TxStatusUpdate) => {
+  let updateActions: appState.UpdateAction[] = [];
 
-const onTxUpdate = (state: utils.TxStatusUpdate) => {
-  let updateActions: UpdateAction[] = [];
-
-  if (state.componentTxType === EvmBindComponentTxType.BIND) {
+  if (state.componentTxType === Components.EvmBindComponentTxType.BIND) {
     // bind
     if (state.addresses && state.addresses.length) {
       state.addresses.forEach((address) => {
         updateActions.push({
-          type: UpdateDataType.ACCOUNT_EVM_BINDING,
+          type: appState.UpdateDataType.ACCOUNT_EVM_BINDING,
           address
-        } as UpdateAction);
+        } as appState.UpdateAction);
         updateActions.push({
-          type: UpdateDataType.ACCOUNT_NATIVE_BALANCE,
+          type: appState.UpdateDataType.ACCOUNT_NATIVE_BALANCE,
           address
-        } as UpdateAction);
+        } as appState.UpdateAction);
       });
     } else {
-      updateActions = [{ type: UpdateDataType.ACCOUNT_EVM_BINDING }, { type: UpdateDataType.ACCOUNT_NATIVE_BALANCE }];
+      updateActions = [{ type: appState.UpdateDataType.ACCOUNT_EVM_BINDING }, { type: appState.UpdateDataType.ACCOUNT_NATIVE_BALANCE }];
     }
   } else {
     // transaction
     updateActions = state.addresses && state.addresses.length
       ? state.addresses.map((address) => ({
-        type: UpdateDataType.ACCOUNT_NATIVE_BALANCE,
+        type: appState.UpdateDataType.ACCOUNT_NATIVE_BALANCE,
         address
-      } as UpdateAction))
-      : [{ type: UpdateDataType.ACCOUNT_NATIVE_BALANCE }];
+      } as appState.UpdateAction))
+      : [{ type: appState.UpdateDataType.ACCOUNT_NATIVE_BALANCE }];
   }
 
-  onTxUpdateReloadSignerBalances(state, updateActions);
+  appState.onTxUpdateResetSigners(state, updateActions);
 };
 
 export const Bind = (): JSX.Element => {
-  const accounts = useObservableState(appState.signers$);
-  const selectedSigner = useObservableState(appState.selectedSigner$);
+  const accounts: ReefSigner[] | undefined = hooks.useObservableState(appState.signers$);
+  const selectedSigner: ReefSigner | undefined = hooks.useObservableState(appState.selectedSigner$);
   const [bindSigner, setBindSigner] = useState<ReefSigner>();
   const theme = localStorage.getItem('theme');
 
@@ -62,11 +57,11 @@ export const Bind = (): JSX.Element => {
   return (
     <SigningOrChildren>
       {bindSigner && accounts && (<div className={theme === 'dark' ? 'theme-dark' : ''}>
-        <EvmBindComponent
+        <Components.EvmBindComponent
           bindSigner={bindSigner}
           onTxUpdate={onTxUpdate}
           signers={accounts}
-        ></EvmBindComponent></div>)}
+        ></Components.EvmBindComponent></div>)}
     </SigningOrChildren>
   );
 };

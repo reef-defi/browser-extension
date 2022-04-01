@@ -3,8 +3,6 @@ import {AccountJson} from "@reef-defi/extension-base/background/types";
 import {Provider} from "@reef-defi/evm-provider";
 import Signer from "@reef-defi/extension-base/page/Signer";
 import {InjectedAccountWithMeta} from "@reef-defi/extension-inject/types";
-import {reloadSignersSubject} from "./accountState";
-import {UpdateAction} from "./updateCtxUtil";
 import {Observable as ZenObservable} from "zen-observable-ts";
 import {Observable} from "rxjs";
 
@@ -30,13 +28,6 @@ export function toReefSigner(acc: AccountJson, provider: Provider, injectionSign
   };
   return rpc.accountToSigner(accWithMeta, provider, injectionSigner);
 }
-
-export const onTxUpdateReloadSignerBalances = (txUpdateData: utils.TxStatusUpdate, updateActions: UpdateAction[]): void => {
-  if (txUpdateData?.isInBlock || txUpdateData?.error) {
-    const delay = txUpdateData.txTypeEvm ? 2000 : 0;
-    setTimeout(() => reloadSignersSubject.next({updateActions}), delay);
-  }
-};
 
 export const zenToRx = <T>(zenObservable: ZenObservable<T>): Observable<T> =>
   new Observable(
