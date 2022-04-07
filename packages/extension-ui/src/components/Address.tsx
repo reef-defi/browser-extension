@@ -1,35 +1,37 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type {AccountJson, AccountWithChildren} from '@reef-defi/extension-base/background/types';
-import type {Chain} from '@reef-defi/extension-chains/types';
-import type {IconTheme} from '@polkadot/react-identicon/types';
-import type {SettingsStruct} from '@polkadot/ui-settings/types';
-import type {KeypairType} from '@polkadot/util-crypto/types';
-import type {ThemeProps} from '../types';
+import type { AccountJson, AccountWithChildren } from '@reef-defi/extension-base/background/types';
+import type { Chain } from '@reef-defi/extension-chains/types';
+import type { IconTheme } from '@polkadot/react-identicon/types';
+import type { SettingsStruct } from '@polkadot/ui-settings/types';
+import type { KeypairType } from '@polkadot/util-crypto/types';
+import type { ThemeProps } from '../types';
 
-import {faUsb} from '@fortawesome/free-brands-svg-icons';
-import {faCopy, faEye, faEyeSlash} from '@fortawesome/free-regular-svg-icons';
-import {faCodeBranch, faEllipsisV, faQrcode} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {appState, hooks, ReefSigner, utils} from '@reef-defi/react-lib';
-import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
+import { faUsb } from '@fortawesome/free-brands-svg-icons';
+import { faCopy, faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+import { faCodeBranch, faEllipsisV, faQrcode } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Provider } from '@reef-defi/evm-provider';
+import { appState, hooks, ReefSigner, utils } from '@reef-defi/react-lib';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import styled from 'styled-components';
 
-import {decodeAddress, encodeAddress} from '@polkadot/util-crypto';
+import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
+
 import useMetadata from '../hooks/useMetadata';
 import useOutsideClick from '../hooks/useOutsideClick';
 import useToast from '../hooks/useToast';
 import useTranslation from '../hooks/useTranslation';
-import {showAccount} from '../messaging';
-import {DEFAULT_TYPE} from '../util/defaultType';
+import { showAccount } from '../messaging';
+import { DEFAULT_TYPE } from '../util/defaultType';
 import getParentNameSuri from '../util/getParentNameSuri';
-import {Button} from './../../../reef/extension-ui/uik';
-import {AccountContext, ActionContext, SettingsContext, SigningReqContext} from './contexts';
+import notify from './../../../reef/extension-ui/notify';
+import { Button } from './../../../reef/extension-ui/uik';
+import { AccountContext, ActionContext, SettingsContext, SigningReqContext } from './contexts';
 import Identicon from './Identicon';
 import Menu from './Menu';
-import {Provider} from "@reef-defi/evm-provider";
 
 export interface Props {
   actions?: React.ReactNode;
@@ -46,6 +48,7 @@ export interface Props {
   toggleActions?: number;
   type?: KeypairType;
   exporting?: any;
+  presentation?: boolean;
 }
 
 interface Recoded {
@@ -96,7 +99,7 @@ function recodeAddress (address: string, accounts: AccountWithChildren[], chain:
 const ACCOUNTS_SCREEN_HEIGHT = 550;
 const defaultRecoded = { account: null, formatted: null, prefix: 42, type: DEFAULT_TYPE };
 
-function Address ({ actions, address, children, className, exporting, genesisHash, isExternal, isHardware, isHidden, name, parentName, suri, toggleActions, type: givenType }: Props): React.ReactElement<Props> {
+function Address ({ actions, address, children, className, exporting, genesisHash, isExternal, isHardware, isHidden, name, parentName, presentation, suri, toggleActions, type: givenType }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const onAction = useContext(ActionContext);
   const { accounts } = useContext(AccountContext);
@@ -176,11 +179,6 @@ function Address ({ actions, address, children, className, exporting, genesisHas
     [showActionsMenu]
   );
 
-  const _onCopy = useCallback(
-    () => show(t('Copied')),
-    [show, t]
-  );
-
   const _toggleVisibility = useCallback(
     () => address && showAccount(address, isHidden || false).catch(console.error),
     [address, isHidden]
@@ -224,7 +222,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           fill
           onClick={() => openEvmBindView(signer?.address)}
           size='small'
-        ><span>Bind EVM</span></Button>}
+                                                                                                      ><span>Bind EVM</span></Button>}
       </>);
   };
 
@@ -256,13 +254,13 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             className='account-card__select-btn account-card__select-btn--selected'
             fill
             size='small'
-            >Selected</Button>
+          >Selected</Button>
           : <Button
             className='account-card__select-btn'
             onClick={() => selectAccount(account)}
             size='small'
             type='button'
-            >Select</Button>
+          >Select</Button>
         )}
       </>
     );
@@ -283,7 +281,10 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             className='identityIcon'
             iconTheme={theme}
             isExternal={isExternal}
-            onCopy={_onCopy}
+            onCopy={() => notify.info({
+              message: 'Copied to clipboard',
+              aliveFor: 2
+            })}
             prefix={prefix}
             value={formatted || address}
           />
@@ -320,13 +321,16 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           </div>
 
           <div className='account-card__balance'>
-            <FontAwesomeIcon
-              className={`account-card__visibility ${isHidden ? 'account-card__visibility--hidden' : ''}`}
-              icon={isHidden ? faEyeSlash : faEye}
-              onClick={_toggleVisibility}
-              size='sm'
-              title={t('Account Visibility')}
-            />
+            {
+              !presentation &&
+              <FontAwesomeIcon
+                className={`account-card__visibility ${isHidden ? 'account-card__visibility--hidden' : ''}`}
+                icon={isHidden ? faEyeSlash : faEye}
+                onClick={_toggleVisibility}
+                size='sm'
+                title={t('Account Visibility')}
+              />
+            }
             <img src='https://s2.coinmarketcap.com/static/img/coins/64x64/6951.png' />
             <div>{ <Balance /> }</div>
           </div>
@@ -340,7 +344,10 @@ function Address ({ actions, address, children, className, exporting, genesisHas
               <FontAwesomeIcon
                 className='copyIcon'
                 icon={faCopy}
-                onClick={_onCopy}
+                onClick={() => notify.info({
+                  message: 'Copied Reef Account Address to clipboard.',
+                  aliveFor: 2
+                })}
                 size='sm'
                 title={t('Copy Reef Account Address')}
               />
@@ -359,7 +366,11 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                     <FontAwesomeIcon
                       className='copyIcon'
                       icon={faCopy}
-                      onClick={_onCopy}
+                      onClick={() => notify.danger({
+                        message: 'Copied Ethereum VM Address to clipboard.\nDO NOT use this Reef EVM address on any other chains. ONLY use it on Reef chain.',
+                        keepAlive: true,
+                        children: <Button text='I understand' />
+                      })}
                       size='sm'
                       title={t('Copy Ethereum VM Address')}
                     />
@@ -376,7 +387,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           ? (
             <div className='account-card__aside'>
               { !signer?.isEvmClaimed ? <Bind /> : '' }
-              { !isSelected() ? <SelectButton /> : '' }
+              { !isSelected() && !presentation ? <SelectButton /> : '' }
 
               <div className='account-card__actions'>
                 {actions && (
