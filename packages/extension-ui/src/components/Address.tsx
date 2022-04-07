@@ -339,7 +339,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             <div
               className='account-card__address'
               title={formatted || address || ''}
-            >{utils.toAddressShortDisplay(formatted || address || '')}</div>
+            >Native address: {utils.toAddressShortDisplay(formatted || address || '')}</div>
             <CopyToClipboard text={(formatted && formatted) || ''}>
               <FontAwesomeIcon
                 className='copyIcon'
