@@ -1,0 +1,200 @@
+.uik-icon {
+  fill: currentColor;
+  height: auto;
+}
+
+.uik-alert {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 3px 30px 0 rgba(0, 0, 0, 0.07);
+  padding: 20px 25px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  z-index: 10;
+  width: 30rem;
+  position: relative;
+
+  --text: #19233C;
+  --primary: #932fc8;
+  --primary-light: #A53187;
+  --secondary: #4D13BC;
+  --danger: #ff2436;
+  --success: #35c57d;
+  --gradient: linear-gradient(
+    to right,
+    var(--primary-light),
+    var(--secondary)
+  );
+}
+
+.uik-alert__content {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-right: 15px;
+}
+
+.uik-alert__text {
+  margin-top: -0.063rem;
+  font-size: 0.938rem;
+  color: var(--text);
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: left;
+  white-space: pre-line;
+  word-break: break-word;
+}
+
+.uik-alert__close-btn {
+  border: none;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  color: var(--text);
+  transition: all 0.125s;
+  opacity: 0.5;
+}
+
+.uik-alert__close-btn-icon {
+  width: 10px;
+  min-width: 10px;
+}
+
+.uik-alert__close-btn:hover {
+  opacity: 1;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.uik-alert__close-btn:active {
+  opacity: 1;
+  color: var(--primary);
+  transform: scale(1.25);
+}
+
+.uik-alert__buttons {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 15px 0 5px 0;
+}
+
+.uik-alert__buttons > * {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.uik-alert__buttons > * + * {
+  margin-left: 15px;
+}
+
+.uik-alert__icon {
+  color: var(--primary-light);
+  width: 20px;
+  min-width: 20px;
+  margin-right: 15px;
+}
+
+.uik-alert--danger .uik-alert__icon {
+  color: var(--danger);
+}
+
+.uik-alert--success .uik-alert__icon {
+  color: var(--success);
+}
+
+.uik-alert--autoclose {
+  overflow: hidden;
+}
+
+.uik-alert--autoclose::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: var(--gradient);
+  animation: uik-alert-timer var(--alive-for) linear forwards;
+  pointer-events: none;
+  opacity: 1;
+}
+
+@keyframes uik-alert-timer {
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+.uik-alert--autoclose .uik-alert__content > * {
+    z-index: 2;
+}
+
+.uik-alert--autoclose .uik-alert__content > *:not(.uik-alert__close-btn) {
+  position: relative;
+}
+
+.uik-alert--autoclose.uik-alert--danger::after {
+  background: var(--danger);
+}
+
+.uik-alert--autoclose.uik-alert--success::after {
+  background: var(--success);
+}
+
+.uik-notifications {
+  position: fixed;
+  z-index: 1000;
+  bottom: 0;
+  right: 0;
+  padding: 15px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 27rem;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.uik-notifications .uik-alert {
+  width: 100%;
+  animation: uik-open-notification 0.5s;
+}
+
+.uik-notifications .uik-alert--close {
+  animation: uik-close-notification 0.25s ease-in;
+}
+
+.uik-notifications .uik-alert + .uik-alert {
+  margin-top: 10px;
+}
+
+@keyframes uik-close-notification {
+  to {
+    transform: translateX(calc(100% + 15px));
+  }
+}
+
+@keyframes uik-open-notification {
+  from {
+    transform: translateX(calc(100% + 15px));
+  }
+}

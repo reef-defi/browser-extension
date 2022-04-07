@@ -70,6 +70,7 @@ function Export ({ className, match: { params: { address } } }: Props): React.Re
         <Address
           address={address}
           exporting
+          presentation
         >
           <Warning className='movedWarning'>
             {t<string>("You are exporting your account. Keep it safe and don't share it with anyone.")}
