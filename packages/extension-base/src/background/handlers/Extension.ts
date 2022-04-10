@@ -58,8 +58,6 @@ import { keyExtractSuri, mnemonicGenerate, mnemonicValidate } from '@reef-defi/u
 import {TypeRegistry} from '@polkadot/types';
 import keyring from '@polkadot/ui-keyring';
 import {accounts as accountsObservable} from '@polkadot/ui-keyring/observable/accounts';
-import {assert, isHex} from '@polkadot/util';
-import {keyExtractSuri, mnemonicGenerate, mnemonicValidate} from '@polkadot/util-crypto';
 
 import State from './State';
 import {createSubscription, unsubscribe} from './subscriptions';

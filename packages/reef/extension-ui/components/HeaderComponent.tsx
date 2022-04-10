@@ -1,9 +1,9 @@
+
 import {faCog, faCoins, faExchangeAlt, faPaperPlane, faWallet} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {ActionContext} from '@reef-defi/extension-ui/components';
 import {appState, hooks, ReefSigner, utils} from '@reef-defi/react-lib';
 import React, {useCallback, useContext, useRef, useState} from 'react';
-import styled from 'styled-components';
 
 import useOutsideClick from './../../../extension-ui/src/hooks/useOutsideClick';
 import MenuSettings from './../../../extension-ui/src/partials/MenuSettings';
@@ -212,7 +212,10 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
   </div>);
 }
 
+export const HeaderComponent = NavHeaderComp;
+
+/*
 export const HeaderComponent = styled(NavHeaderComp)`
   background: #ccc;
   .nav-header{background: #000;}
-  `;
+  `;*/

@@ -40,8 +40,8 @@
     "sinon-chrome": "^3.0.1"
   },
   "resolutions": {
-    "@polkadot/api": "^6.7.1",
-    "@polkadot/types": "^6.7.1",
+    "@polkadot/api": "~6.4.2",
+    "@polkadot/types": "~6.4.2",
     "@reef-defi/keyring": "^7.8.2",
     "@reef-defi/networks": "^7.8.2",
     "@reef-defi/util": "^7.8.2",
