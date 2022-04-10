@@ -72,7 +72,6 @@ function initAccountContext (accounts: AccountJson[], selectedAccount: AccountJs
   };
 }
 
-console.log("ttttttt1=");
 export default function Popup (): React.ReactElement {
   const [accounts, setAccounts] = useState<null | AccountJson[]>(null);
   const provider: Provider|undefined = hooks.useObservableState(appState.providerSubj);
