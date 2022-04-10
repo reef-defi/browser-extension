@@ -7,6 +7,7 @@ import React, {useCallback, useContext, useRef, useState} from 'react';
 
 import useOutsideClick from './../../../extension-ui/src/hooks/useOutsideClick';
 import MenuSettings from './../../../extension-ui/src/partials/MenuSettings';
+import styled from "styled-components";
 
 interface NavHeaderComp {
   showSettings?: boolean;
@@ -212,10 +213,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
   </div>);
 }
 
-export const HeaderComponent = NavHeaderComp;
-
-/*
 export const HeaderComponent = styled(NavHeaderComp)`
   background: #ccc;
   .nav-header{background: #000;}
-  `;*/
+  `;
