@@ -126,7 +126,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
         onClick={(ev) => {
           ev.stopPropagation();
           ev.preventDefault();
-          openRoute('/');
+          openRoute('/tokens');
         }}
         title='Dashboard'
       >
