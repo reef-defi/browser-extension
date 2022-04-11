@@ -17,8 +17,9 @@ export const useReefSigners = (accounts: AccountJson[] | null, provider: Provide
         setSigners([]);
         return;
       }
-      const sgnrs: ReefSigner[] = await Promise.all<ReefSigner>(accounts?.map((acc: AccountJson) => toReefSigner(acc, provider, injectionSigner)));
-      setSigners(sgnrs);
+      const sgnrs: any[] = await Promise.all<ReefSigner|undefined>(accounts?.map((acc: AccountJson) => toReefSigner(acc, provider, injectionSigner)));
+
+      setSigners(sgnrs.filter(s=>!!s));
     }
     initAsync();
   }, [accounts, provider]);

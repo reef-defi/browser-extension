@@ -1,5 +1,9 @@
 import React from 'react';
 
+interface UikText {
+  children?: any; className?: any; text?: any; type?: any;
+}
+
 export const UikText = ({ children, className, text, type }: UikText): JSX.Element => (
   <div className={`
       uik-text

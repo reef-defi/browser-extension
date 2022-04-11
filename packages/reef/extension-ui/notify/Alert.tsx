@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Icon from './Icon';
 
 const getIcon = (type: string) => {
-  const map = { success: faCheckCircle, danger: faExclamationTriangle };
+  const map: any = { success: faCheckCircle, danger: faExclamationTriangle };
 
   return map[type] || faInfoCircle;
 };

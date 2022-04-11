@@ -1,5 +1,9 @@
 import React from 'react';
 
+interface Card {
+  children: any; className: any; head: any; largePadding: any;
+}
+
 export const Card = ({ children, className, head, largePadding }: Card): JSX.Element => (
   <div className={`
     uik-card

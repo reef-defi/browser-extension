@@ -132,7 +132,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
       >
         <FontAwesomeIcon
           className='navigation__link-icon'
-          icon={faCoins}
+          icon={faCoins as any}
         />
       </a>
       <a
@@ -147,7 +147,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
       >
         <FontAwesomeIcon
           className='navigation__link-icon navigation__link-icon--plane'
-          icon={faPaperPlane}
+          icon={faPaperPlane as any}
         />
       </a>
       <a
@@ -162,7 +162,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
       >
         <FontAwesomeIcon
           className='navigation__link-icon'
-          icon={faExchangeAlt}
+          icon={faExchangeAlt as any}
         />
       </a>
       <a
@@ -177,7 +177,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
       >
         <FontAwesomeIcon
           className='navigation__link-icon'
-          icon={faWallet}
+          icon={faWallet as any}
         />
       </a>
     </div>
@@ -203,7 +203,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
     >
       <FontAwesomeIcon
         className='navigation__settings-icon'
-        icon={faCog}
+        icon={faCog as any}
       />
     </button>
 

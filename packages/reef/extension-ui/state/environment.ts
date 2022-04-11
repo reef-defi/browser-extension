@@ -1,6 +1,6 @@
 import {availableNetworks} from '@reef-defi/react-lib';
 
-export const innitialNetwork = availableNetworks.mainnet;
+export const innitialNetwork = availableNetworks.testnet;
 // export const innitialNetwork = availableNetworks.testnet;
     /*export const innitialNetwork = {
   name: 'testnet',
