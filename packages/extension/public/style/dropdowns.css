@@ -1,9 +1,15 @@
+.navigation {
+  position: relative ;
+}
+
 .jarRFH,
-.hUmkYm {
+.jMBqLx,
+.hUmkYm,
+.uRZic {
   max-height: calc(100vh - 77px);
   overflow: auto;
-  margin-top: 20px !important;
   animation: dropdown-appear 0.2s;
+  top: 0;
 }
 
 @keyframes dropdown-appear {
