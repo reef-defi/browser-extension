@@ -399,6 +399,18 @@ svg.fill-white {
   color: black;
 }
 
+.dark-theme .extrinsic-table td.label {
+  background: transparent;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  color: #ff62ff;
+  font-weight: 600;
+}
+
+.dark-theme .extrinsic-table td.data {
+  color: rgba(255, 255, 255, 0.8);
+}
+
 .next-step-btn {
   width: 100%;
 }
@@ -460,8 +472,15 @@ svg.fill-white {
 
 .dark-theme .card .btn-select {
   border: none;
-  background-color: #42444d;
-  color: white;
+  color: white !important;
+}
+
+.dark-theme .card .btn-empty.link-text.text-xs {
+  color: #ff62ff !important;
+}
+
+.dark-theme .card .btn-select:not(.btn-reef) {
+  background-color: #42444d !important;
 }
 
 .dark-theme .card .btn-select:hover {
@@ -542,4 +561,13 @@ button.btn-select:active {
   color: white !important;
   border-color: transparent !important;
   background: #46288b !important;
+}
+
+.dark-theme .modal-dialog .field {
+  background-color: transparent;
+  border: none;
+}
+
+.dark-theme .modal-dialog .modal-footer {
+  background-color: transparent !important;
 }

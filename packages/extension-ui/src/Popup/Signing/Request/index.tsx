@@ -86,9 +86,11 @@ export default function Request ({ account: { accountIndex, addressOffset, isExt
         <div>
           <Address
             address={json.address}
+            exporting
             genesisHash={json.genesisHash}
             isExternal={isExternal}
             isHardware={isHardware}
+            presentation
           />
         </div>
         {isExternal && !isHardware
@@ -139,7 +141,9 @@ export default function Request ({ account: { accountIndex, addressOffset, isExt
         <div>
           <Address
             address={address}
+            exporting
             isExternal={isExternal}
+            presentation
           />
         </div>
         {isExternal && !isHardware && account?.genesisHash
