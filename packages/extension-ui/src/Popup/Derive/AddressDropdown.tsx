@@ -37,7 +37,9 @@ function AddressDropdown ({ allAddresses, className, onSelect, selectedAddress, 
         <Address
           address={selectedAddress}
           className='address'
+          exporting
           genesisHash={selectedGenesis}
+          presentation
         />
       </div>
       <div className={`dropdown ${isDropdownVisible ? 'visible' : ''}`}>
@@ -50,7 +52,9 @@ function AddressDropdown ({ allAddresses, className, onSelect, selectedAddress, 
             <Address
               address={address}
               className='address'
+              exporting
               genesisHash={genesisHash}
+              presentation
             />
           </div>
         ))}

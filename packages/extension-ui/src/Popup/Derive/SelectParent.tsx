@@ -124,6 +124,7 @@ export default function SelectParent ({ className, isLocked, onDerivationConfirm
           ? (
             <Address
               address={parentAddress}
+              exporting
               genesisHash={parentGenesis}
               presentation
             />
