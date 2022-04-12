@@ -463,6 +463,10 @@ svg.fill-white {
   color: white !important;
 }
 
+.dark-theme .card .btn-empty.link-text.text-xs {
+  color: #ff62ff !important;
+}
+
 .dark-theme .card .btn-select:not(.btn-reef) {
   background-color: #42444d !important;
 }
