@@ -460,8 +460,11 @@ svg.fill-white {
 
 .dark-theme .card .btn-select {
   border: none;
-  background-color: #42444d;
-  color: white;
+  color: white !important;
+}
+
+.dark-theme .card .btn-select:not(.btn-reef) {
+  background-color: #42444d !important;
 }
 
 .dark-theme .card .btn-select:hover {
