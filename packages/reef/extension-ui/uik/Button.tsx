@@ -2,6 +2,21 @@ import React from 'react';
 
 import { FishAnimation, Icon, Loading } from './index';
 
+interface Button {
+  children?: any;
+  className?: any;
+  danger?: any;
+  fill?: any;
+  icon?: any;
+  iconOnly?: any;
+  loader?: any;
+  loading?: any;
+  onClick?: any;
+  size?: any;
+  success?: any;
+  text?: any;
+}
+
 export const Button = ({ children,
   className,
   danger,

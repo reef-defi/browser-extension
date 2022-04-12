@@ -236,7 +236,8 @@ describe('Derive', () => {
       expect(wrapper.find('Warning')).toHaveLength(0);
     });
 
-    it('takes selected address from URL as parent account', () => {
+    it.only('takes selected address from URL as parent account', () => {
+      console.log('TTTTTT===',wrapper.find('[data-field="name"]'))
       expect(wrapper.find('[data-field="name"]').first().text()).toBe('B');
     });
 

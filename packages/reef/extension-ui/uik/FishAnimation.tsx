@@ -1,5 +1,9 @@
 import React from 'react';
 
+interface FishAnimation {
+  className?: any;
+}
+
 export const FishAnimation = ({ className }: FishAnimation): JSX.Element => (
   <div className='fish-animation'>
     <svg
