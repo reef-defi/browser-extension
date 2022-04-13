@@ -236,13 +236,12 @@ describe('Derive', () => {
       expect(wrapper.find('Warning')).toHaveLength(0);
     });
 
-    it.only('takes selected address from URL as parent account', () => {
-      console.log('TTTTTT===',wrapper.find('[data-field="name"]'))
-      expect(wrapper.find('[data-field="name"]').first().text()).toBe('B');
+    it('takes selected address from URL as parent account', () => {
+      expect(wrapper.find('.account-card__name').first().text()).toBe('B');
     });
 
     it('selects internal root accounts as other options, no external and no Ethereum account', () => {
-      const options = wrapper.find('[data-parent-option] [data-field="name"]').map((el) => el.text());
+      const options = wrapper.find('[data-parent-option] .account-card__name').map((el) => el.text());
 
       expect(options).toEqual(['A', 'B', 'D', 'Ethereum']);
     });
@@ -267,7 +266,7 @@ describe('Derive', () => {
     });
 
     it('parent is taken from URL', () => {
-      expect(wrapper.find('[data-field="name"]').first().text()).toBe('B');
+      expect(wrapper.find('.account-card__name').first().text()).toBe('B');
     });
 
     describe('Second phase', () => {

@@ -36,7 +36,7 @@ describe('Account component', () => {
 
   it('shows Export option if account is not external', async () => {
     wrapper = mountAccountComponent({ isExternal: false, type: 'ed25519' });
-    wrapper.find('.settings').first().simulate('click');
+    wrapper.find('.account-card__actions-btn').first().simulate('click');
     await act(flushAllPromises);
 
     expect(wrapper.find('a.menuItem').length).toBe(4);
@@ -49,7 +49,7 @@ describe('Account component', () => {
 
   it('does not show Export option if account is external', async () => {
     wrapper = mountAccountComponent({ isExternal: true, type: 'ed25519' });
-    wrapper.find('.settings').first().simulate('click');
+    wrapper.find('.account-card__actions-btn').first().simulate('click');
     await act(flushAllPromises);
 
     expect(wrapper.find('a.menuItem').length).toBe(2);
@@ -60,7 +60,7 @@ describe('Account component', () => {
 
   it('shows Derive option if account is of ethereum type', async () => {
     wrapper = mountAccountComponent({ isExternal: false, type: 'ethereum' });
-    wrapper.find('.settings').first().simulate('click');
+    wrapper.find('.account-card__actions-btn').first().simulate('click');
     await act(flushAllPromises);
 
     expect(wrapper.find('a.menuItem').length).toBe(4);
@@ -73,7 +73,7 @@ describe('Account component', () => {
 
   it('does not show genesis hash selection dropsown if account is hardware', async () => {
     wrapper = mountAccountComponent({ isExternal: true, isHardware: true });
-    wrapper.find('.settings').first().simulate('click');
+    wrapper.find('.account-card__actions-btn').first().simulate('click');
     await act(flushAllPromises);
 
     expect(wrapper.find('a.menuItem').length).toBe(2);
