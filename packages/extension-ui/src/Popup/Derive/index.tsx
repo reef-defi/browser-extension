@@ -84,6 +84,7 @@ function Derive ({ isLocked }: Props): React.ReactElement<Props> {
           <div>
             <Address
               address={account.address}
+              exporting
               genesisHash={parentGenesis}
               name={name}
               presentation

@@ -271,7 +271,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   return (
     <div className={`
       account-card__wrapper
-      ${isSelected() ? 'account-card__wrapper--selected' : ''}
+      ${isSelected() && !presentation ? 'account-card__wrapper--selected' : ''}
       ${exporting ? 'account-card__wrapper--exporting' : ''}
     `}
     >
@@ -362,7 +362,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                     className='account-card__address'
                     title={signer?.evmAddress || ''}
                   >EVM Address: {utils.toAddressShortDisplay(signer?.evmAddress || '')}</div>
-                  <CopyToClipboard text={(signer?.evmAddress)?`${signer.evmAddress}(ONLY for Reef chain!)`: ''}>
+                  <CopyToClipboard text={(signer?.evmAddress) ? `${signer.evmAddress}(ONLY for Reef chain!)` : ''}>
                     <FontAwesomeIcon
                       className='copyIcon'
                       icon={faCopy}
@@ -418,7 +418,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
         exporting ? (<div className='account-card__exporting'>{children}</div>) : ''
       }
 
-      {isSelected() && (
+      {isSelected() && !presentation && (
         <div className='account-card__chain'>Selected</div>
       )}
     </div>
