@@ -5,7 +5,7 @@ import { Card, UikText } from './../../uik';
 
 const { isDataSet } = reefUtils;
 
-const { calculateBalanceValue, showBalance, toCurrencyFormat } = reefUtils;
+const { showBalance, toCurrencyFormat } = reefUtils;
 // const { Loading } = Components.Loading;
 
 const getBalance = (token: TokenWithAmount) => {

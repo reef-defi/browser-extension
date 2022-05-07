@@ -28,7 +28,7 @@ import { showAccount } from '../messaging';
 import { DEFAULT_TYPE } from '../util/defaultType';
 import getParentNameSuri from '../util/getParentNameSuri';
 import notify from './../../../reef/extension-ui/notify';
-import { Button } from './../../../reef/extension-ui/uik';
+import {Button, Loading} from './../../../reef/extension-ui/uik';
 import { AccountContext, ActionContext, SettingsContext, SigningReqContext } from './contexts';
 import Identicon from './Identicon';
 import Menu from './Menu';
@@ -277,7 +277,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
     >
       <div className='account-card__main'>
         <div className='account-card__identicon'>
-          <Identicon
+          {signer && <Identicon
             className='identityIcon'
             iconTheme={theme}
             isExternal={isExternal}
@@ -287,7 +287,8 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             })}
             prefix={prefix}
             value={formatted || address}
-          />
+          />}
+          {!signer && <div className={'account-card__identicon--loading'}><Loading/></div>}
         </div>
 
         <div className='account-card__info'>
@@ -320,7 +321,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
               : children }
           </div>
 
-          <div className='account-card__balance'>
+          {signer && <div className='account-card__balance'>
             {
               !presentation &&
               <FontAwesomeIcon
@@ -331,9 +332,9 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                 title={t('Account Visibility')}
               />
             }
-            <img src='https://s2.coinmarketcap.com/static/img/coins/64x64/6951.png' />
-            <div>{ <Balance /> }</div>
-          </div>
+            <img src='https://s2.coinmarketcap.com/static/img/coins/64x64/6951.png'/>
+            <div>{<Balance/>}</div>
+          </div>}
 
           <div className='account-card__meta'>
             <div

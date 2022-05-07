@@ -3,6 +3,7 @@ import {appState, hooks, ReefSigner, TokenWithAmount, utils as reefUtils} from "
 import {Components} from "@reef-defi/react-lib/";
 import {SigningOrChildren} from "./SigningOrChildren";
 import {Provider} from "@reef-defi/evm-provider";
+import {Loading} from "../uik";
 
 export const Transfer = (): JSX.Element => {
   const provider: Provider | undefined = hooks.useObservableState(appState.providerSubj);
@@ -16,7 +17,7 @@ export const Transfer = (): JSX.Element => {
   useEffect(() => {
     if (reefUtils.isDataSet(signerTokenBalances)) {
       const sigTokens = reefUtils.getData(signerTokenBalances);
-      if (!sigTokens?.length) {
+      if (sigTokens === null) {
         setToken(reefUtils.DataProgress.NO_DATA);
         return;
       }
@@ -45,7 +46,7 @@ export const Transfer = (): JSX.Element => {
 
   return (
     <SigningOrChildren>
-      {!reefUtils.isDataSet(token) && token === reefUtils.DataProgress.LOADING && <Components.Loading.Loading/>}
+      {!reefUtils.isDataSet(token) && token === reefUtils.DataProgress.LOADING && <Loading/>}
       {!reefUtils.isDataSet(token) && token === reefUtils.DataProgress.NO_DATA &&
       <div>No tokens for transaction.</div>}
       {provider && reefUtils.isDataSet(token) && signerTokenBalances && reefUtils.isDataSet(signerTokenBalances) && selectedSigner && accounts
@@ -53,7 +54,7 @@ export const Transfer = (): JSX.Element => {
         <Components.TransferComponent tokens={signerTokenBalances} from={selectedSigner}
                                       token={token as TokenWithAmount} provider={provider} accounts={accounts}
                                       currentAccount={selectedSigner}
-                                      />
+        />
       </div>
       }
     </SigningOrChildren>

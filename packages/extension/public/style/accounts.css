@@ -182,6 +182,10 @@
   height: 66px;
 }
 
+.account-card__identicon--loading{
+  padding-top: 0.8em;
+}
+
 .account-card__info {
   display: flex;
   flex-flow: column nowrap;
