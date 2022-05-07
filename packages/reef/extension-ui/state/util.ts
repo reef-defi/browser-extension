@@ -14,5 +14,5 @@ export function toReefSigner(acc: AccountJson, provider: Provider, injectionSign
     },
     type: acc.type
   };
-  return rpc.accountToSigner(accWithMeta, provider, injectionSigner);
+  return rpc.metaAccountToSigner(accWithMeta, provider, injectionSigner);
 }
