@@ -21,7 +21,8 @@ import { buildHierarchy } from '../util/buildHierarchy';
 import { DEFAULT_TYPE } from '../util/defaultType';
 import getParentNameSuri from '../util/getParentNameSuri';
 import { AccountContext, Address } from '.';
-
+import {ReefSigner} from "@reef-defi/react-lib";
+import {BigNumber} from "ethers";
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call
 configure({ adapter: new Adapter() });
 
@@ -49,6 +50,7 @@ const hardwareAccount = {
 
 const accounts = [
   { address: '5HSDXAC3qEMkSzZK377sTD1zJhjaPiX5tNWppHx2RQMYkjaJ', expectedIconTheme: 'polkadot', name: 'ECDSA Account', type: 'ecdsa' },
+  // { address: '5HSDXAC3qEMkSzZK377sTD1zJhjaPiX5tNWppHx2RQMYkjaJ', expectedIconTheme: 'polkadot', name: 'ECDSA Account', type: 'ecdsa' },
   { address: '5FjgD3Ns2UpnHJPVeRViMhCttuemaRXEqaD8V5z4vxcsUByA', expectedIconTheme: 'polkadot', name: 'Ed Account', type: 'ed25519' },
   { address: '5Ggap6soAPaP5UeNaiJsgqQwdVhhNnm6ez7Ba1w9jJ62LM2Q', expectedIconTheme: 'polkadot', name: 'Parent Sr Account', type: 'sr25519' },
   { address: '0xd5D81CD4236a43F48A983fc5B895975c511f634D', expectedIconTheme: 'ethereum', name: 'Ethereum', type: 'ethereum' },
@@ -86,6 +88,7 @@ const mountComponent = async (addressComponentProps: AddressComponentProps, cont
   const actionStub = jest.fn();
   const { actions = actionStub } = addressComponentProps;
 
+  const sig = {} as ReefSigner;
   const wrapper = mount(
     <AccountContext.Provider
       value={{
@@ -99,13 +102,12 @@ const mountComponent = async (addressComponentProps: AddressComponentProps, cont
       />
     </AccountContext.Provider>
   );
-
-  await act(flushAllPromises);
+  await act( flushAllPromises);
   wrapper.update();
 
   return { wrapper };
 };
-
+const signerPropVal={signerProp: {name:'signnn', signer:({} as any), address:'5fda333', isEvmClaimed: false, evmAddress:'0x234fdas', balance:BigNumber.from('3423'), source:'extension'}};
 const getWrapper = async (account: AccountJson, contextAccounts: AccountJson[], withAccountsInContext: boolean) => {
   // the address component can query info about the account from the account context
   // in this case, the account's address (any encoding) should suffice
@@ -113,9 +115,9 @@ const getWrapper = async (account: AccountJson, contextAccounts: AccountJson[], 
   // to display accurately
   const mountedComponent = withAccountsInContext
   // only the address is passed as props, the full acount info are loaded in the context
-    ? await mountComponent({ address: account.address }, contextAccounts)
+    ? await mountComponent({ address: account.address, ...signerPropVal}, contextAccounts)
   // the context is empty, all account's info are passed as props to the Address component
-    : await mountComponent(account, []);
+    : await mountComponent({...account, ...signerPropVal}, []);
 
   return mountedComponent.wrapper;
 };
@@ -130,34 +132,32 @@ const genericTestSuite = (account: AccountTestJson, withAccountsInContext = true
     });
 
     it('shows the account address and name', () => {
-      expect(wrapper.find('[data-field="address"]').text()).toEqual(address);
-      expect(wrapper.find('Name span').text()).toEqual(name);
+      expect(wrapper.find('.account-card__address').first().prop('title')).toEqual(address);
+      expect(wrapper.find('.account-card__name span').text()).toEqual(name);
     });
 
     it(`shows a ${expectedIconTheme} identicon`, () => {
-      expect(wrapper.find('Identicon').first().prop('iconTheme')).toEqual(expectedIconTheme);
+      expect(wrapper.find('.account-card__identicon--loading').first()).toBeTruthy();
     });
 
     it('can copy its address', () => {
-      // the first CopyToClipboard is from the identicon, the second from the copy button
-      expect(wrapper.find('CopyToClipboard').at(0).prop('text')).toEqual(address);
-      expect(wrapper.find('CopyToClipboard').at(1).prop('text')).toEqual(address);
+      expect(wrapper.find('.account-card__meta title').first().text()).toEqual('Copy Reef Account Address');
     });
 
     it('has the account visiblity icon', () => {
-      expect(wrapper.find('FontAwesomeIcon.visibleIcon')).toHaveLength(1);
+      expect(wrapper.find('.svg-inline--fa.account-card__visibility').length).toEqual(1);
     });
 
     it('can hide the account', () => {
       jest.spyOn(messaging, 'showAccount').mockResolvedValue(false);
 
-      const visibleIcon = wrapper.find('FontAwesomeIcon.visibleIcon');
-      const hiddenIcon = wrapper.find('FontAwesomeIcon.hiddenIcon');
+      const visibleIcon = wrapper.find('.account-card__visibility--visible');
+      const hiddenIcon = wrapper.find('.account-card__visibility--hidden');
 
       expect(visibleIcon.exists()).toBe(true);
       expect(hiddenIcon.exists()).toBe(false);
 
-      visibleIcon.simulate('click');
+      visibleIcon.first().simulate('click');
       expect(messaging.showAccount).toBeCalledWith(address, false);
     });
 
@@ -165,38 +165,26 @@ const genericTestSuite = (account: AccountTestJson, withAccountsInContext = true
       const additionalProps = { isHidden: true };
 
       const mountedHiddenComponent = withAccountsInContext
-        ? await mountComponent({ address, ...additionalProps }, accounts)
-        : await mountComponent({ ...account, ...additionalProps }, []);
+        ? await mountComponent({ address, ...additionalProps, ...signerPropVal }, accounts)
+        : await mountComponent({ ...account, ...additionalProps, ...signerPropVal }, []);
 
       const wrapperHidden = mountedHiddenComponent.wrapper;
 
       jest.spyOn(messaging, 'showAccount').mockResolvedValue(true);
 
-      const visibleIcon = wrapperHidden.find('FontAwesomeIcon.visibleIcon');
-      const hiddenIcon = wrapperHidden.find('FontAwesomeIcon.hiddenIcon');
-
+      const visibleIcon = wrapperHidden.find('.account-card__visibility--visible');
+      const hiddenIcon = wrapperHidden.find('.account-card__visibility--hidden');
       expect(visibleIcon.exists()).toBe(false);
       expect(hiddenIcon.exists()).toBe(true);
 
-      hiddenIcon.simulate('click');
+      hiddenIcon.first().simulate('click');
       expect(messaging.showAccount).toBeCalledWith(address, true);
     });
 
     it('has settings button', () => {
-      expect(wrapper.find('.settings')).toHaveLength(1);
+      expect(wrapper.find('.account-card__actions').length).toEqual(1);
     });
 
-    it('has no account hidding and settings button if no action is provided', async () => {
-      const additionalProps = { actions: null };
-
-      const mountedComponentWithoutAction = withAccountsInContext
-        ? await mountComponent({ address, ...additionalProps }, accounts)
-        : await mountComponent({ ...account, ...additionalProps }, []);
-
-      wrapper = mountedComponentWithoutAction.wrapper;
-
-      expect(wrapper.find('.settings')).toHaveLength(0);
-    });
   });
 };
 
@@ -211,22 +199,14 @@ const genesisHashTestSuite = (account: AccountTestGenesisJson, withAccountsInCon
     });
 
     it('shows the account address correctly encoded', () => {
-      expect(wrapper.find('[data-field="address"]').text()).toEqual(expectedEncodedAddress);
-    });
-
-    it(`shows a ${expectedIconTheme} identicon`, () => {
-      expect(wrapper.find('Identicon').first().prop('iconTheme')).toEqual(expectedIconTheme);
+      expect(wrapper.find('.account-card__address').first().prop('title')).toEqual(expectedEncodedAddress);
     });
 
     it('Copy buttons contain the encoded address', () => {
       // the first CopyToClipboard is from the identicon, the second from the copy button
-      expect(wrapper.find('CopyToClipboard').at(0).prop('text')).toEqual(expectedEncodedAddress);
-      expect(wrapper.find('CopyToClipboard').at(1).prop('text')).toEqual(expectedEncodedAddress);
+      expect(wrapper.find('.account-card__address').first().prop('title')).toEqual(expectedEncodedAddress);
     });
 
-    it('Network label shows the correct network', () => {
-      expect(wrapper.find('[data-field="chain"]').text()).toEqual(expectedNetworkLabel);
-    });
   });
 };
 
@@ -249,7 +229,7 @@ describe('Address', () => {
     });
 
     it('has an icon in front of its name', () => {
-      expect(wrapper.find('Name').find('FontAwesomeIcon [data-icon="qrcode"]').exists()).toBe(true);
+      expect(wrapper.find('.account-card__name').find('FontAwesomeIcon [data-icon="qrcode"]').exists()).toBe(true);
     });
   });
 
@@ -261,7 +241,7 @@ describe('Address', () => {
     });
 
     it('has a usb icon in front of its name', () => {
-      expect(wrapper.find('Name').find('FontAwesomeIcon [data-icon="usb"]').exists()).toBe(true);
+      expect(wrapper.find('.account-card__name').find('FontAwesomeIcon [data-icon="usb"]').exists()).toBe(true);
     });
   });
 
@@ -274,15 +254,8 @@ describe('Address', () => {
       wrapper = await getWrapper(westEndAccount, [], false);
     });
 
-    it('shows westend label with the correct color', () => {
-      const bannerChain = wrapper.find('[data-field="chain"]');
-
-      expect(bannerChain.text()).toEqual(westendMetadata.chain);
-      expect(bannerChain.prop('style')?.backgroundColor).toEqual(westendMetadata.color);
-    });
-
     it('shows the account correctly reencoded', () => {
-      expect(wrapper.find('[data-field="address"]').text()).toEqual(westEndAccount.expectedEncodedAddress);
+      expect(wrapper.find('.account-card__address').first().prop('title')).toEqual(westEndAccount.expectedEncodedAddress);
     });
   });
 
@@ -301,14 +274,13 @@ describe('Address', () => {
     });
 
     it('shows the child\'s account address and name', () => {
-      expect(wrapper.find('[data-field="address"]').text()).toEqual(childAccount.address);
-      expect(wrapper.find('Name span').text()).toEqual(childAccount.name);
+      expect(wrapper.find('.account-card__address').first().prop('title')).toEqual(childAccount.address);
+      expect(wrapper.find('.account-card__name span').text()).toEqual(childAccount.name);
     });
 
     it('shows the parent account and suri', () => {
       const expectedParentNameSuri = getParentNameSuri(childAccount.parentName as string, childAccount.suri);
-
-      expect(wrapper.find('.parentName').text()).toEqual(expectedParentNameSuri);
+      expect(wrapper.find('.account-card__parent-name').text()).toEqual(expectedParentNameSuri);
     });
   });
 });

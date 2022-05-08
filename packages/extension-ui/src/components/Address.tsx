@@ -32,6 +32,7 @@ import {Button, Loading} from './../../../reef/extension-ui/uik';
 import { AccountContext, ActionContext, SettingsContext, SigningReqContext } from './contexts';
 import Identicon from './Identicon';
 import Menu from './Menu';
+import {BigNumber} from "ethers";
 
 export interface Props {
   actions?: React.ReactNode;
@@ -49,6 +50,7 @@ export interface Props {
   type?: KeypairType;
   exporting?: any;
   presentation?: boolean;
+  signerProp?: ReefSigner;
 }
 
 interface Recoded {
@@ -99,7 +101,7 @@ function recodeAddress (address: string, accounts: AccountWithChildren[], chain:
 const ACCOUNTS_SCREEN_HEIGHT = 550;
 const defaultRecoded = { account: null, formatted: null, prefix: 42, type: DEFAULT_TYPE };
 
-function Address ({ actions, address, children, className, exporting, genesisHash, isExternal, isHardware, isHidden, name, parentName, presentation, suri, toggleActions, type: givenType }: Props): React.ReactElement<Props> {
+function Address ({ actions, address, children, className, exporting, genesisHash, isExternal, isHardware, isHidden, name, parentName, presentation, suri, toggleActions, type: givenType, signerProp }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const onAction = useContext(ActionContext);
   const { accounts } = useContext(AccountContext);
@@ -114,10 +116,13 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   const [moveMenuUp, setIsMovedMenu] = useState(false);
   const actionsRef = useRef<HTMLDivElement>(null);
   const { show } = useToast();
-  const [signer, setSigner] = useState<ReefSigner>();
+  const [signer, setSigner] = useState<ReefSigner|undefined>(signerProp);
 
   useEffect(() => {
-    setSigner(signers?.find((s) => s.address === account?.address));
+    const foundSigner = signers?.find((s) => s.address === account?.address);
+    if(foundSigner){
+      setSigner(foundSigner);
+    }
   }, [signers, account]);
 
   useOutsideClick(actionsRef, () => (showActionsMenu && setShowActionsMenu(!showActionsMenu)));
@@ -325,7 +330,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             {
               !presentation &&
               <FontAwesomeIcon
-                className={`account-card__visibility ${isHidden ? 'account-card__visibility--hidden' : ''}`}
+                className={`account-card__visibility ${isHidden ? 'account-card__visibility--hidden' : 'account-card__visibility--visible'}`}
                 icon={isHidden ? faEyeSlash : faEye}
                 onClick={_toggleVisibility}
                 size='sm'

@@ -12,7 +12,7 @@ import React, { useState } from 'react';
 import { act } from 'react-dom/test-utils';
 import { ThemeProvider } from 'styled-components';
 
-import { ActionContext, Address, Button, Input, SigningReqContext, themes } from '../../components';
+import { ActionContext, Address, Input, SigningReqContext, themes } from '../../components';
 import * as messaging from '../../messaging';
 import * as MetadataCache from '../../MetadataCache';
 import { flushAllPromises } from '../../testHelpers';
@@ -242,16 +242,16 @@ describe('Signing requests', () => {
 
   describe('Request rendering', () => {
     it('correctly displays request 1', () => {
-      expect(wrapper.find(Address).find('.fullAddress').text()).toBe(signRequests[0].account.address);
+      expect(wrapper.find(Address).find('.account-card__address').prop('title')).toBe(signRequests[0].account.address);
       expect(wrapper.find(Extrinsic).find('td.data').map((el): string => el.text())).toEqual([
         'https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fwestend-rpc.polkadot.io#/accounts',
         'Westend',
         '45',
         '3',
-        `balances.transferKeepAlive(dest, value){
-  "dest": "5GYQRJj3NUznYDzCduENRcocMsyxmb6tjb5xW87ZMErBe9R7",
-  "value": "123.0000 WND"
-}`,
+        'balances.transferKeepAlive(dest, value)[\n' +
+        '  "5GYQRJj3NUznYDzCduENRcocMsyxmb6tjb5xW87ZMErBe9R7",\n' +
+        '  "123.0000 WND"\n' +
+        ']',
         'Same as the [`transfer`] call, but with a check that the transfer will not kill the origin account.',
         'mortal, valid from {{birth}} to {{death}}'
       ]);
@@ -260,17 +260,17 @@ describe('Signing requests', () => {
     it('correctly displays request 2', async () => {
       wrapper.find('FontAwesomeIcon.arrowRight').simulate('click');
       await act(flushAllPromises);
+      expect(wrapper.find(Address).find('.account-card__address').prop('title')).toBe(signRequests[1].account.address);
 
-      expect(wrapper.find(Address).find('.fullAddress').text()).toBe(signRequests[1].account.address);
       expect(wrapper.find(Extrinsic).find('td.data').map((el): string => el.text())).toEqual([
         'https://polkadot.js.org/apps',
         'Westend',
         '45',
         '3',
-        `balances.transfer(dest, value){
-  "dest": "5Ggap6soAPaP5UeNaiJsgqQwdVhhNnm6ez7Ba1w9jJ62LM2Q",
-  "value": "200.0000 mWND"
-}`,
+        'balances.transfer(dest, value)[\n' +
+        '  "5Ggap6soAPaP5UeNaiJsgqQwdVhhNnm6ez7Ba1w9jJ62LM2Q",\n' +
+        '  "200.0000 mWND"\n' +
+        ']',
         'Transfer some liquid free balance to another account.',
         'mortal, valid from {{birth}} to {{death}}'
       ]);
@@ -288,8 +288,7 @@ describe('Signing requests', () => {
     it('passes request id and password to approve call', async () => {
       wrapper.find(Input).simulate('change', { target: { value: 'hunter1' } });
       await act(flushAllPromises);
-
-      wrapper.find(Button).find('button').simulate('click');
+      wrapper.find('.uik-cta__text').simulate('click');
       await act(flushAllPromises);
       wrapper.update();
 
@@ -303,7 +302,7 @@ describe('Signing requests', () => {
       wrapper.find(Input).simulate('change', { target: { value: 'hunter1' } });
       await act(flushAllPromises);
 
-      wrapper.find(Button).find('button').simulate('click');
+      wrapper.find('.uik-cta__text').simulate('click');
       await act(flushAllPromises);
       wrapper.update();
 
@@ -321,7 +320,7 @@ describe('Signing requests', () => {
       wrapper.find(Input).simulate('change', { target: { value: 'anything' } });
       await act(flushAllPromises);
 
-      wrapper.find(Button).find('button').simulate('click');
+      wrapper.find('.uik-cta__text').simulate('click');
       await act(flushAllPromises);
       wrapper.update();
 

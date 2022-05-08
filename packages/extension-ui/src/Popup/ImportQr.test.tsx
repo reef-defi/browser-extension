@@ -76,15 +76,14 @@ describe('ImportQr component', () => {
 
   describe('Address component', () => {
     it('shows account as external', () => {
-      expect(wrapper.find('Name').find('FontAwesomeIcon [data-icon="qrcode"]').exists()).toBe(true);
+      expect(wrapper.find('.account-card__name .externalIcon').exists()).toBe(true);
     });
 
     it('shows the correct name', () => {
-      expect(wrapper.find('Name span').text()).toEqual(mockedAccount.name);
+      expect(wrapper.find('.account-card__name span').text()).toEqual(mockedAccount.name);
     });
 
-    it.only('shows the correct address', () => {
-      console.debug("AAAA=",mockedAccount.content.substring(mockedAccount.content.length-4));
+    it('shows the correct address', () => {
       expect(wrapper.find('.account-card__address').text().endsWith(mockedAccount.content.substring(mockedAccount.content.length-4))).toEqual(true);
     });
   });
@@ -97,7 +96,7 @@ describe('ImportQr component', () => {
     await typeName(wrapper, 'a');
 
     expect(wrapper.find('.warning-message').first().text()).toBe('Account name is too short');
-    expect(wrapper.find(Button).prop('isDisabled')).toBe(true);
+    expect(wrapper.find('.next-step-btn').first().getElement().props.disabled).toBe(true);
   });
 
   it('has no error message and button enabled with a long name', async () => {
