@@ -8,9 +8,6 @@ tmp/
 .env.test.local
 .env.production.local
 .npmrc
-.yarn/*
-!.yarn/releases
-!.yarn/plugins
 .pnp.*
 cc-test-reporter
 lerna-debug.log*
@@ -24,7 +21,5 @@ _book
 docs/html
 .idea
 /.yalc/
-/.yarn/
 /packages/extension-ui/yalc.lock
 /yalc.lock
-/.yarn/
