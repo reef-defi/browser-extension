@@ -1,15 +1,15 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../types';
+import type { ThemeProps } from '../types'
 
-import { faCopy } from '@fortawesome/free-regular-svg-icons';
-import React, { MouseEventHandler } from 'react';
-import styled from 'styled-components';
+import { faCopy } from '@fortawesome/free-regular-svg-icons'
+import React, { MouseEventHandler } from 'react'
+import styled from 'styled-components'
 
-import useTranslation from '../hooks/useTranslation';
-import ActionText from './ActionText';
-import TextAreaWithLabel from './TextAreaWithLabel';
+import useTranslation from '../hooks/useTranslation'
+import ActionText from './ActionText'
+import TextAreaWithLabel from './TextAreaWithLabel'
 
 interface Props {
   seed: string;
@@ -18,7 +18,7 @@ interface Props {
 }
 
 function MnemonicSeed ({ className, onCopy, seed }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <div className={className}>
@@ -38,7 +38,7 @@ function MnemonicSeed ({ className, onCopy, seed }: Props): React.ReactElement<P
         />
       </div>
     </div>
-  );
+  )
 }
 
 export default styled(MnemonicSeed)(({ theme }: ThemeProps) => `
@@ -64,4 +64,4 @@ export default styled(MnemonicSeed)(({ theme }: ThemeProps) => `
       padding: 14px;
     }
   }
-`);
+`)

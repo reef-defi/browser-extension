@@ -1,9 +1,9 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../types';
+import type { ThemeProps } from '../types'
 
-import styled, { css } from 'styled-components';
+import styled, { css } from 'styled-components'
 
 interface Props extends ThemeProps {
   withError?: boolean;
@@ -30,7 +30,7 @@ const TextInput = css(({ theme, withError }: Props) => `
     box-shadow: none;
     outline: none;
   }
-`);
+`)
 
-export const TextArea = styled.textarea<Props>`${TextInput}`;
-export const Input = styled.input<Props>`${TextInput}`;
+export const TextArea = styled.textarea<Props>`${TextInput}`
+export const Input = styled.input<Props>`${TextInput}`

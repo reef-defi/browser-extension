@@ -1,13 +1,13 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { IconTheme } from '@polkadot/react-identicon/types';
-import type { ThemeProps } from '../types';
+import type { IconTheme } from '@polkadot/react-identicon/types'
+import type { ThemeProps } from '../types'
 
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
-import Icon from '@polkadot/react-identicon';
+import Icon from '@polkadot/react-identicon'
 
 interface Props {
   className?: string;
@@ -30,7 +30,7 @@ function Identicon ({ className, iconTheme, onCopy, prefix, value }: Props): Rea
         value={value}
       />
     </div>
-  );
+  )
 }
 
 export default styled(Identicon)(({ theme }: ThemeProps) => `
@@ -49,4 +49,4 @@ export default styled(Identicon)(({ theme }: ThemeProps) => `
       display: none;
     }
   }
-`);
+`)

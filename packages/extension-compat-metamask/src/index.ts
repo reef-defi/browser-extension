@@ -1,13 +1,13 @@
 // Copyright 2019-2020 @polkadot/extension-dapp authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { Injected, InjectedAccount, InjectedWindow } from '@reef-defi/extension-inject/types';
-import type { HexString } from '@reef-defi/util/types';
-import type { SignerPayloadRaw, SignerResult } from '@polkadot/types/types';
+import type { Injected, InjectedAccount, InjectedWindow } from '@reef-defi/extension-inject/types'
+import type { HexString } from '@reef-defi/util/types'
+import type { SignerPayloadRaw, SignerResult } from '@polkadot/types/types'
 
-import detectEthereumProvider from '@metamask/detect-provider';
-import { assert } from '@reef-defi/util';
-import Web3 from 'web3';
+import detectEthereumProvider from '@metamask/detect-provider'
+import { assert } from '@reef-defi/util'
+import Web3 from 'web3'
 
 interface RequestArguments {
   method: string;
@@ -30,9 +30,9 @@ interface Web3Window extends InjectedWindow {
 }
 
 function isMetaMaskProvider (prov: unknown): EthereumProvider {
-  assert(prov && (prov as EthereumProvider).isMetaMask, 'Injected provider is not MetaMask');
+  assert(prov && (prov as EthereumProvider).isMetaMask, 'Injected provider is not MetaMask')
 
-  return (prov as EthereumProvider);
+  return (prov as EthereumProvider)
 }
 
 // transform the Web3 accounts into a simple address/name array
@@ -41,7 +41,7 @@ function transformAccounts (accounts: string[]): InjectedAccount[] {
     address,
     name: `MetaMask Address #${i}`,
     type: 'ethereum'
-  }));
+  }))
 }
 
 // add a compat interface of metaMaskSource to window.injectedWeb3
@@ -49,51 +49,51 @@ function injectMetaMaskWeb3 (win: Web3Window): void {
   // decorate the compat interface
   win.injectedWeb3.Web3Source = {
     enable: async (): Promise<Injected> => {
-      const providerRaw = await detectEthereumProvider({ mustBeMetaMask: true });
-      const provider = isMetaMaskProvider(providerRaw);
+      const providerRaw = await detectEthereumProvider({ mustBeMetaMask: true })
+      const provider = isMetaMaskProvider(providerRaw)
 
-      await provider.request({ method: 'eth_requestAccounts' });
+      await provider.request({ method: 'eth_requestAccounts' })
 
       return {
         accounts: {
           get: async (): Promise<InjectedAccount[]> => {
-            const response = (await provider.request({ method: 'eth_requestAccounts' })) as string[];
+            const response = (await provider.request({ method: 'eth_requestAccounts' })) as string[]
 
-            return transformAccounts(response);
+            return transformAccounts(response)
           },
           subscribe: (cb: (accounts: InjectedAccount[]) => void): (() => void) => {
             const sub = provider.on('accountsChanged', (accounts): void => {
-              cb(transformAccounts(accounts as string[]));
-            });
+              cb(transformAccounts(accounts as string[]))
+            })
             // TODO: add onchainchanged
 
             return (): void => {
-              sub.unsubscribe();
-            };
+              sub.unsubscribe()
+            }
           }
         },
         signer: {
           signRaw: async (raw: SignerPayloadRaw): Promise<SignerResult> => {
-            const signature = (await provider.request({ method: 'eth_sign', params: [raw.address, Web3.utils.sha3(raw.data)] })) as HexString;
+            const signature = (await provider.request({ method: 'eth_sign', params: [raw.address, Web3.utils.sha3(raw.data)] })) as HexString
 
-            return { id: 0, signature };
+            return { id: 0, signature }
           }
         }
-      };
+      }
     },
     version: '0' // TODO: win.ethereum.version
-  };
+  }
 }
 
 export default function initMetaMask (): Promise<boolean> {
   return new Promise((resolve): void => {
-    const win = window as Window & Web3Window;
+    const win = window as Window & Web3Window
 
     if (win.ethereum) {
-      injectMetaMaskWeb3(win);
-      resolve(true);
+      injectMetaMaskWeb3(win)
+      resolve(true)
     } else {
-      resolve(false);
+      resolve(false)
     }
-  });
+  })
 }

@@ -1,14 +1,14 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../types';
+import type { ThemeProps } from '../types'
 
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import styled from 'styled-components';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
+import styled from 'styled-components'
 
-import { CTA } from './../../../reef/extension-ui/uik';
+import { CTA } from './../../../reef/extension-ui/uik'
 
 type Props = React.ComponentProps<typeof CTA>;
 
@@ -25,7 +25,7 @@ function NextStepButton ({ children, ...props }: Props): React.ReactElement<Prop
         size='sm'
       />
     </CTA>
-  );
+  )
 }
 
 export default styled(NextStepButton)(({ theme }: ThemeProps) => `
@@ -35,4 +35,4 @@ export default styled(NextStepButton)(({ theme }: ThemeProps) => `
     margin-right: 1px;
     color: ${theme.buttonTextColor};
   }
-`);
+`)

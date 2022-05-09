@@ -1,10 +1,10 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../types';
+import type { ThemeProps } from '../types'
 
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
 interface Props {
   banner?: React.ReactNode;
@@ -18,7 +18,7 @@ function Box ({ banner, children, className }: Props): React.ReactElement<Props>
       {children}
       {banner && <div className='banner'>{banner}</div>}
     </article>
-  );
+  )
 }
 
 export default styled(Box)(({ theme }: ThemeProps) => `
@@ -42,4 +42,4 @@ export default styled(Box)(({ theme }: ThemeProps) => `
     right: 0;
     top: 0;
   }
-`);
+`)

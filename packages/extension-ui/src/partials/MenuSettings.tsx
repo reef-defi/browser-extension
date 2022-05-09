@@ -1,19 +1,19 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { Theme, ThemeProps } from '../types';
+import type { Theme, ThemeProps } from '../types'
 
-import { faExpand, faTasks } from '@fortawesome/free-solid-svg-icons';
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import { faExpand, faTasks } from '@fortawesome/free-solid-svg-icons'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import styled, { ThemeContext } from 'styled-components'
 
-import settings from '@polkadot/ui-settings';
+import settings from '@polkadot/ui-settings'
 
-import { ActionContext, ActionText, Checkbox, Dropdown, Menu, MenuDivider, MenuItem, Svg, Switch, themes, ThemeSwitchContext } from '../components';
-import useIsPopup from '../hooks/useIsPopup';
-import useTranslation from '../hooks/useTranslation';
-import { setNotification, windowOpen } from '../messaging';
-import getLanguageOptions from '../util/getLanguageOptions';
+import { ActionContext, ActionText, Checkbox, Dropdown, Menu, MenuDivider, MenuItem, Svg, Switch, themes, ThemeSwitchContext } from '../components'
+import useIsPopup from '../hooks/useIsPopup'
+import useTranslation from '../hooks/useTranslation'
+import { setNotification, windowOpen } from '../messaging'
+import getLanguageOptions from '../util/getLanguageOptions'
 
 interface Props extends ThemeProps {
   className?: string;
@@ -21,63 +21,63 @@ interface Props extends ThemeProps {
 }
 
 const notificationOptions = ['Extension', 'PopUp', 'Window']
-  .map((item) => ({ text: item, value: item.toLowerCase() }));
+  .map((item) => ({ text: item, value: item.toLowerCase() }))
 
 function MenuSettings ({ className, reference }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation();
-  const [camera, setCamera] = useState(settings.camera === 'on');
-  const [prefix, setPrefix] = useState(`${settings.prefix === -1 ? 42 : settings.prefix}`);
-  const [notification, updateNotification] = useState(settings.notification);
-  const themeContext = useContext(ThemeContext as React.Context<Theme>);
-  const setTheme = useContext(ThemeSwitchContext);
-  const isPopup = useIsPopup();
-  const languageOptions = useMemo(() => getLanguageOptions(), []);
-  const onAction = useContext(ActionContext);
+  const { t } = useTranslation()
+  const [camera, setCamera] = useState(settings.camera === 'on')
+  const [prefix, setPrefix] = useState(`${settings.prefix === -1 ? 42 : settings.prefix}`)
+  const [notification, updateNotification] = useState(settings.notification)
+  const themeContext = useContext(ThemeContext as React.Context<Theme>)
+  const setTheme = useContext(ThemeSwitchContext)
+  const isPopup = useIsPopup()
+  const languageOptions = useMemo(() => getLanguageOptions(), [])
+  const onAction = useContext(ActionContext)
 
   useEffect(() => {
-    settings.set({ camera: camera ? 'on' : 'off' });
-  }, [camera]);
+    settings.set({ camera: camera ? 'on' : 'off' })
+  }, [camera])
 
   const _onChangePrefix = useCallback(
     (value: string): void => {
-      setPrefix(value);
-      settings.set({ prefix: parseInt(value, 10) });
+      setPrefix(value)
+      settings.set({ prefix: parseInt(value, 10) })
     },
     []
-  );
+  )
 
   const _onChangeNotification = useCallback(
     (value: string): void => {
-      setNotification(value).catch(console.error);
+      setNotification(value).catch(console.error)
 
-      updateNotification(value);
-      settings.set({ notification: value });
+      updateNotification(value)
+      settings.set({ notification: value })
     },
     []
-  );
+  )
 
   const _onChangeTheme = useCallback(
     (checked: boolean): void => setTheme(checked ? 'dark' : 'light'),
     [setTheme]
-  );
+  )
 
   const _onWindowOpen = useCallback(
     () => windowOpen('/').catch(console.error),
     []
-  );
+  )
 
   const _onChangeLang = useCallback(
     (value: string): void => {
-      settings.set({ i18nLang: value });
+      settings.set({ i18nLang: value })
     },
     []
-  );
+  )
 
   const _goToAuthList = useCallback(
     () => {
-      onAction('auth-list');
+      onAction('auth-list')
     }, [onAction]
-  );
+  )
 
   return (
     <Menu
@@ -150,7 +150,7 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
         </MenuItem>
       )}
     </Menu>
-  );
+  )
 }
 
 export default React.memo(styled(MenuSettings)(({ theme }: Props) => `
@@ -199,4 +199,4 @@ export default React.memo(styled(MenuSettings)(({ theme }: Props) => `
       width: 100%;
     }
   }
-`));
+`))

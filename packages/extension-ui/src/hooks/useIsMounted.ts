@@ -1,18 +1,18 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react'
 
 export default function useIsMounted (): boolean {
-  const isMounted = useRef(false);
+  const isMounted = useRef(false)
 
   useEffect((): () => void => {
-    isMounted.current = true;
+    isMounted.current = true
 
     return (): void => {
-      isMounted.current = false;
-    };
-  }, []);
+      isMounted.current = false
+    }
+  }, [])
 
-  return isMounted.current;
+  return isMounted.current
 }

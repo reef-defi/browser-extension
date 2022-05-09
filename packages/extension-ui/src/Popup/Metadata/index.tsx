@@ -1,16 +1,16 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useContext } from 'react';
+import React, { useContext } from 'react'
 
-import { Loading, MetadataReqContext } from '../../components';
-import useTranslation from '../../hooks/useTranslation';
-import { Header } from '../../partials';
-import Request from './Request';
+import { Loading, MetadataReqContext } from '../../components'
+import useTranslation from '../../hooks/useTranslation'
+import { Header } from '../../partials'
+import Request from './Request'
 
 export default function Metadata (): React.ReactElement {
-  const { t } = useTranslation();
-  const requests = useContext(MetadataReqContext);
+  const { t } = useTranslation()
+  const requests = useContext(MetadataReqContext)
 
   return (
     <>
@@ -23,9 +23,9 @@ export default function Metadata (): React.ReactElement {
             request={requests[0].request}
             url={requests[0].url}
           />
-        )
+          )
         : <Loading />
       }
     </>
-  );
+  )
 }

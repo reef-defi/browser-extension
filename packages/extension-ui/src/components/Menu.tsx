@@ -1,10 +1,10 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../types';
+import type { ThemeProps } from '../types'
 
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
 interface Props {
   children: React.ReactNode;
@@ -20,7 +20,7 @@ function Menu ({ children, className, reference }: Props): React.ReactElement<Pr
     >
       {children}
     </div>
-  );
+  )
 }
 
 export default styled(Menu)(({ theme }: ThemeProps) => `
@@ -34,4 +34,4 @@ export default styled(Menu)(({ theme }: ThemeProps) => `
   position: absolute;
   right: 0;
   z-index: 2;
-`);
+`)

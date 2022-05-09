@@ -1,13 +1,15 @@
-import { faCheckCircle, faExclamationTriangle, faInfoCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
-import React, { useEffect, useRef, useState } from 'react';
+import { faCheckCircle, faExclamationTriangle, faInfoCircle, faTimes } from '@fortawesome/free-solid-svg-icons'
+import React, { useEffect, useRef, useState } from 'react'
 
-import Icon from './Icon';
+import Icon from './Icon'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 
-const getIcon = (type: string) => {
-  const map: any = { success: faCheckCircle, danger: faExclamationTriangle };
+const getIcon = (type: string): IconDefinition => {
+  const map: any = { success: faCheckCircle, danger: faExclamationTriangle }
 
-  return map[type] || faInfoCircle;
-};
+  const mapItem = map[type]
+  return mapItem || faInfoCircle
+}
 
 export interface Props {
   type: string,
@@ -18,50 +20,53 @@ export interface Props {
   children?: any
 }
 
-const Alert = ({ aliveFor,
+const Alert = ({
+  aliveFor,
   children,
   className,
   onClose,
   text,
-  type }: Props): JSX.Element => {
-  const [closing, setClosing] = useState(false);
+  type
+}: Props): JSX.Element => {
+  const [closing, setClosing] = useState(false)
 
-  let hovered = false;
-  let delayed = false;
+  let hovered = false
+  let delayed = false
 
   const close = () => {
     if (onClose && !closing) {
-      setClosing(true);
-      onClose();
+      setClosing(true)
+      onClose()
     }
-  };
+  }
 
-  const actions = useRef(null);
+  const actions = useRef(null)
 
   useEffect(() => {
     if (actions.current) {
       // @ts-ignore-next-line
-      const buttons = actions.current.children;
+      const buttons = actions.current.children
 
       for (let i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener('click', close);
+        const button:any = buttons[i]
+        button.addEventListener('click', close)
       }
     }
 
     if (onClose && aliveFor) {
       const timer = setTimeout(() => {
         if (hovered) {
-          delayed = true;
+          delayed = true
         } else {
-          close();
+          close()
         }
-      }, 1000 * aliveFor);
+      }, 1000 * aliveFor)
 
-      return () => clearTimeout(timer);
+      return () => clearTimeout(timer)
     }
-
-    return () => {};
-  }, []);
+    // @ts-ignore-no-empty-function
+    return function () {}
+  }, [])
 
   return (
     <div
@@ -72,10 +77,10 @@ const Alert = ({ aliveFor,
         ${!!onClose && !!aliveFor ? 'uik-alert--autoclose' : ''}
         ${className || ''}
       `}
-      onMouseEnter={() => { hovered = true; }}
+      onMouseEnter={() => { hovered = true }}
       onMouseLeave={() => {
-        hovered = false;
-        if (delayed) close();
+        hovered = false
+        if (delayed) close()
       }}
       style={
         (
@@ -118,7 +123,7 @@ const Alert = ({ aliveFor,
           </div>
       }
     </div>
-  );
-};
+  )
+}
 
-export default Alert;
+export default Alert

@@ -1,13 +1,13 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useCallback, useState } from 'react';
-import styled from 'styled-components';
+import React, { useCallback, useState } from 'react'
+import styled from 'styled-components'
 
-import useTranslation from '../hooks/useTranslation';
-import Label from './Label';
-import { Input } from './TextInputs';
-import Warning from './Warning';
+import useTranslation from '../hooks/useTranslation'
+import Label from './Label'
+import { Input } from './TextInputs'
+import Warning from './Warning'
 
 interface Props {
   className?: string;
@@ -27,30 +27,30 @@ interface Props {
 }
 
 function InputWithLabel ({ className, defaultValue, disabled, isError, isFocused, isReadOnly, label = '', onBlur, onChange, onEnter, placeholder, type = 'text', value, withoutMargin }: Props): React.ReactElement<Props> {
-  const [isCapsLock, setIsCapsLock] = useState(false);
-  const { t } = useTranslation();
+  const [isCapsLock, setIsCapsLock] = useState(false)
+  const { t } = useTranslation()
 
   const _checkKey = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>): void => {
-      onEnter && event.key === 'Enter' && onEnter();
+      onEnter && event.key === 'Enter' && onEnter()
 
       if (type === 'password') {
         if (event.getModifierState('CapsLock')) {
-          setIsCapsLock(true);
+          setIsCapsLock(true)
         } else {
-          setIsCapsLock(false);
+          setIsCapsLock(false)
         }
       }
     },
     [onEnter, type]
-  );
+  )
 
   const _onChange = useCallback(
     ({ target: { value } }: React.ChangeEvent<HTMLInputElement>): void => {
-      onChange && onChange(value);
+      onChange && onChange(value)
     },
     [onChange]
-  );
+  )
 
   return (
     <Label
@@ -77,7 +77,7 @@ function InputWithLabel ({ className, defaultValue, disabled, isError, isFocused
         <Warning isBelowInput>{t<string>('Warning: Caps lock is on')}</Warning>
       )}
     </Label>
-  );
+  )
 }
 
 export default styled(InputWithLabel)`
@@ -90,4 +90,4 @@ export default styled(InputWithLabel)`
       margin-top: 6px;
     }
   }
-`;
+`

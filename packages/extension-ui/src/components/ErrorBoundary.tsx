@@ -1,14 +1,14 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributor
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
-import { WithTranslation } from 'react-i18next';
+import React from 'react'
+import { WithTranslation } from 'react-i18next'
 
-import Header from '../partials/Header';
-import { CTA } from './../../../reef/extension-ui/uik';
-import ButtonArea from './ButtonArea';
-import translate from './translate';
-import VerticalSpace from './VerticalSpace';
+import Header from '../partials/Header'
+import { CTA } from './../../../reef/extension-ui/uik'
+import ButtonArea from './ButtonArea'
+import translate from './translate'
+import VerticalSpace from './VerticalSpace'
 
 interface Props extends WithTranslation {
   children: React.ReactNode;
@@ -23,29 +23,24 @@ interface State {
 
 // NOTE: This is the only way to do an error boundary, via extend
 class ErrorBoundary extends React.Component<Props> {
-  public override state: State = { error: null };
+  public override state: State = { error: null }
 
   public static getDerivedStateFromError (error: Error): Partial<State> {
-    return { error };
+    return { error }
   }
 
   public override componentDidUpdate (prevProps: Props) {
-    const { error } = this.state;
-    const { trigger } = this.props;
+    const { error } = this.state
+    const { trigger } = this.props
 
     if (error !== null && (prevProps.trigger !== trigger)) {
-      this.setState({ error: null });
+      this.setState({ error: null })
     }
   }
 
-  #goHome = () => {
-    this.setState({ error: null });
-    window.location.hash = '/';
-  };
-
   public override render (): React.ReactNode {
-    const { children, t } = this.props;
-    const { error } = this.state;
+    const { children, t } = this.props
+    const { error } = this.state
 
     return error
       ? (
@@ -65,9 +60,14 @@ class ErrorBoundary extends React.Component<Props> {
             </CTA>
           </ButtonArea>
         </>
-      )
-      : children;
+        )
+      : children
+  }
+
+  #goHome = () => {
+    this.setState({ error: null })
+    window.location.hash = '/'
   }
 }
 
-export default translate(ErrorBoundary);
+export default translate(ErrorBoundary)

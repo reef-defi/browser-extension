@@ -1,12 +1,12 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../types';
+import type { ThemeProps } from '../types'
 
-import React, { useCallback } from 'react';
-import styled from 'styled-components';
+import React, { useCallback } from 'react'
+import styled from 'styled-components'
 
-import Checkmark from '../assets/checkmark.svg';
+import Checkmark from '../assets/checkmark.svg'
 
 interface Props {
   checked: boolean;
@@ -20,12 +20,12 @@ function Checkbox ({ checked, className, label, onChange, onClick }: Props): Rea
   const _onChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => onChange && onChange(event.target.checked),
     [onChange]
-  );
+  )
 
   const _onClick = useCallback(
     () => onClick && onClick(),
     [onClick]
-  );
+  )
 
   return (
     <div className={className}>
@@ -40,7 +40,7 @@ function Checkbox ({ checked, className, label, onChange, onClick }: Props): Rea
         <span />
       </label>
     </div>
-  );
+  )
 }
 
 export default styled(Checkbox)(({ theme }: ThemeProps) => `
@@ -97,4 +97,4 @@ export default styled(Checkbox)(({ theme }: ThemeProps) => `
       display: block;
     }
   }
-`);
+`)

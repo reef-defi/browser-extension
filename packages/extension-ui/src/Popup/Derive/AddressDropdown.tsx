@@ -1,14 +1,14 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../../types';
+import type { ThemeProps } from '../../types'
 
-import React, { useCallback, useRef, useState } from 'react';
-import styled from 'styled-components';
+import React, { useCallback, useRef, useState } from 'react'
+import styled from 'styled-components'
 
-import arrow from '../../assets/arrow-down.svg';
-import { Address } from '../../components';
-import useOutsideClick from '../../hooks/useOutsideClick';
+import arrow from '../../assets/arrow-down.svg'
+import { Address } from '../../components'
+import useOutsideClick from '../../hooks/useOutsideClick'
 
 interface Props {
   allAddresses: [string, string | null][];
@@ -19,14 +19,14 @@ interface Props {
 }
 
 function AddressDropdown ({ allAddresses, className, onSelect, selectedAddress, selectedGenesis }: Props): React.ReactElement<Props> {
-  const [isDropdownVisible, setDropdownVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const [isDropdownVisible, setDropdownVisible] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
 
-  const _hideDropdown = useCallback(() => setDropdownVisible(false), []);
-  const _toggleDropdown = useCallback(() => setDropdownVisible(!isDropdownVisible), [isDropdownVisible]);
-  const _selectParent = useCallback((newParent: string) => () => onSelect(newParent), [onSelect]);
+  const _hideDropdown = useCallback(() => setDropdownVisible(false), [])
+  const _toggleDropdown = useCallback(() => setDropdownVisible(!isDropdownVisible), [isDropdownVisible])
+  const _selectParent = useCallback((newParent: string) => () => onSelect(newParent), [onSelect])
 
-  useOutsideClick(ref, _hideDropdown);
+  useOutsideClick(ref, _hideDropdown)
 
   return (
     <div className={className}>
@@ -60,7 +60,7 @@ function AddressDropdown ({ allAddresses, className, onSelect, selectedAddress, 
         ))}
       </div>
     </div>
-  );
+  )
 }
 
 export default styled(AddressDropdown)(({ theme }: ThemeProps) => `
@@ -109,4 +109,4 @@ export default styled(AddressDropdown)(({ theme }: ThemeProps) => `
       cursor: pointer;
     }
   }
-`);
+`)

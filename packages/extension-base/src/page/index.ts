@@ -1,11 +1,11 @@
 // Copyright 2019-2021 @polkadot/extension authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { MessageTypes, MessageTypesWithNoSubscriptions, MessageTypesWithNullRequest, MessageTypesWithSubscriptions, RequestTypes, ResponseTypes, SubscriptionMessageTypes, TransportRequestMessage, TransportResponseMessage } from '../background/types';
+import type { MessageTypes, MessageTypesWithNoSubscriptions, MessageTypesWithNullRequest, MessageTypesWithSubscriptions, RequestTypes, ResponseTypes, SubscriptionMessageTypes, TransportRequestMessage, TransportResponseMessage } from '../background/types'
 
-import { PORT_PAGE } from '@reef-defi/extension-base/defaults';
+import { PORT_PAGE } from '@reef-defi/extension-base/defaults'
 
-import Injected from './Injected';
+import Injected from './Injected'
 
 // when sending a message from the injector to the extension, we
 //  - create an event - this we send to the loader
@@ -24,8 +24,8 @@ export interface Handler {
 
 export type Handlers = Record<string, Handler>;
 
-const handlers: Handlers = {};
-let idCounter = 0;
+const handlers: Handlers = {}
+let idCounter = 0
 
 // a generic message sender that creates an event, returning a promise that will
 // resolve once the event is resolved (by the response listener just below this)
@@ -35,57 +35,57 @@ export function sendMessage<TMessageType extends MessageTypesWithSubscriptions>(
 
 export function sendMessage<TMessageType extends MessageTypes> (message: TMessageType, request?: RequestTypes[TMessageType], subscriber?: (data: unknown) => void): Promise<ResponseTypes[TMessageType]> {
   return new Promise((resolve, reject): void => {
-    const id = `${Date.now()}.${++idCounter}`;
+    const id = `${Date.now()}.${++idCounter}`
 
-    handlers[id] = { reject, resolve, subscriber };
+    handlers[id] = { reject, resolve, subscriber }
 
     const transportRequestMessage: TransportRequestMessage<TMessageType> = {
       id,
       message,
       origin: PORT_PAGE,
       request: request || null as RequestTypes[TMessageType]
-    };
+    }
 
-    window.postMessage(transportRequestMessage, '*');
-  });
+    window.postMessage(transportRequestMessage, '*')
+  })
 }
 
 // the enable function, called by the dapp to allow access
 export async function enable (origin: string): Promise<Injected> {
-  await sendMessage('pub(authorize.tab)', { origin });
+  await sendMessage('pub(authorize.tab)', { origin })
 
-  return new Injected(sendMessage);
+  return new Injected(sendMessage)
 }
 
 // redirect users if this page is considered as phishing, otherwise return false
 export async function redirectIfPhishing (): Promise<boolean> {
-  const res = await sendMessage('pub(phishing.redirectIfDenied)');
+  const res = await sendMessage('pub(phishing.redirectIfDenied)')
 
-  return res;
+  return res
 }
 
 export function handleResponse<TMessageType extends MessageTypes> (data: TransportResponseMessage<TMessageType> & { subscription?: string }): void {
-  const handler = handlers[data.id];
+  const handler = handlers[data.id]
 
   if (!handler) {
-    console.error(`Unknown response: ${JSON.stringify(data)}`);
+    console.error(`Unknown response: ${JSON.stringify(data)}`)
 
-    return;
+    return
   }
 
   if (!handler.subscriber) {
-    delete handlers[data.id];
+    delete handlers[data.id]
   }
 
   if (data.subscription) {
     // eslint-disable-next-line @typescript-eslint/ban-types
-    (handler.subscriber as Function)(data.subscription);
+    (handler.subscriber as Function)(data.subscription)
   } else if (data.error) {
-    handler.reject(new Error(data.error));
-    if(data.error.indexOf('Unable to retrieve keypair')>-1){
+    handler.reject(new Error(data.error))
+    if (data.error.indexOf('Unable to retrieve keypair') > -1) {
       alert('Please refresh the page and try again. No keypair info.')
     }
   } else {
-    handler.resolve(data.response);
+    handler.resolve(data.response)
   }
 }

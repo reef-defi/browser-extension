@@ -1,14 +1,14 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react'
 
-import { QrScanAddress } from '@polkadot/react-qr';
+import { QrScanAddress } from '@polkadot/react-qr'
 
-import { ActionContext, Address, ButtonArea, NextStepButton, VerticalSpace } from '../components';
-import useTranslation from '../hooks/useTranslation';
-import { createAccountExternal } from '../messaging';
-import { Header, Name } from '../partials';
+import { ActionContext, Address, ButtonArea, NextStepButton, VerticalSpace } from '../components'
+import useTranslation from '../hooks/useTranslation'
+import { createAccountExternal } from '../messaging'
+import { Header, Name } from '../partials'
 
 interface QrAccount {
   content: string;
@@ -17,29 +17,29 @@ interface QrAccount {
 }
 
 export default function ImportQr (): React.ReactElement {
-  const { t } = useTranslation();
-  const onAction = useContext(ActionContext);
-  const [account, setAccount] = useState<QrAccount | null>(null);
-  const [name, setName] = useState<string | null>(null);
+  const { t } = useTranslation()
+  const onAction = useContext(ActionContext)
+  const [account, setAccount] = useState<QrAccount | null>(null)
+  const [name, setName] = useState<string | null>(null)
 
   const _setAccount = useCallback(
     (qrAccount: QrAccount) => {
-      setAccount(qrAccount);
-      setName(qrAccount?.name || null);
+      setAccount(qrAccount)
+      setName(qrAccount?.name || null)
     },
     []
-  );
+  )
 
   const _onCreate = useCallback(
     (): void => {
       if (account && name) {
         createAccountExternal(name, account.content, account.genesisHash)
           .then(() => onAction('/'))
-          .catch((error: Error) => console.error(error));
+          .catch((error: Error) => console.error(error))
       }
     },
     [account, name, onAction]
-  );
+  )
 
   return (
     <>
@@ -79,5 +79,5 @@ export default function ImportQr (): React.ReactElement {
         </>
       )}
     </>
-  );
+  )
 }

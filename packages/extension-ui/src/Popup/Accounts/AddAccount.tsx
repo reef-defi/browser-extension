@@ -1,27 +1,27 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../../types';
+import type { ThemeProps } from '../../types'
 
-import React, { useCallback, useContext } from 'react';
-import styled from 'styled-components';
+import React, { useCallback, useContext } from 'react'
+import styled from 'styled-components'
 
-import { ActionContext } from '../../components';
-import useTranslation from '../../hooks/useTranslation';
-import Header from '../../partials/Header';
-import AddAccountImage from './AddAccountImage';
+import { ActionContext } from '../../components'
+import useTranslation from '../../hooks/useTranslation'
+import Header from '../../partials/Header'
+import AddAccountImage from './AddAccountImage'
 
 interface Props extends ThemeProps {
   className?: string;
 }
 
 function AddAccount ({ className }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation();
-  const onAction = useContext(ActionContext);
+  const { t } = useTranslation()
+  const onAction = useContext(ActionContext)
   const _onClick = useCallback(
     () => onAction('/account/create'),
     [onAction]
-  );
+  )
 
   return (
     <>
@@ -39,7 +39,7 @@ function AddAccount ({ className }: Props): React.ReactElement<Props> {
         </div>
       </div>
     </>
-  );
+  )
 }
 
 export default React.memo(styled(AddAccount)(({ theme }: Props) => `
@@ -67,4 +67,4 @@ export default React.memo(styled(AddAccount)(({ theme }: Props) => `
     margin: 0 30px;
     color: ${theme.subTextColor};
   }
-`));
+`))

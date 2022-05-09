@@ -1,14 +1,14 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../types';
+import type { ThemeProps } from '../types'
 
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import styled from 'styled-components';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
+import styled from 'styled-components'
 
-import Button from './Button';
+import Button from './Button'
 
 interface Props {
   className?: string;
@@ -27,7 +27,7 @@ function BackButton ({ className, onClick }: Props): React.ReactElement<Props> {
         size='sm'
       />
     </Button>
-  );
+  )
 }
 
 export default styled(BackButton)(({ theme }: ThemeProps) => `
@@ -44,4 +44,4 @@ export default styled(BackButton)(({ theme }: ThemeProps) => `
   &:not(:disabled):hover {
     background: ${theme.backButtonBackgroundHover};
   }
-`);
+`)

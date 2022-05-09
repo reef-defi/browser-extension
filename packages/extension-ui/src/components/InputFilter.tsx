@@ -1,13 +1,13 @@
 // Copyright 2017-2021 @polkadot/react-components authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useCallback, useRef } from 'react';
-import styled from 'styled-components';
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useCallback, useRef } from 'react'
+import styled from 'styled-components'
 
-import { ThemeProps } from '../types';
-import { Input } from './TextInputs';
+import { ThemeProps } from '../types'
+import { Input } from './TextInputs'
 
 interface Props extends ThemeProps {
   className?: string;
@@ -18,16 +18,16 @@ interface Props extends ThemeProps {
 }
 
 function InputFilter ({ className, onChange, placeholder, value, withReset = false }: Props) {
-  const inputRef: React.RefObject<HTMLInputElement> | null = useRef(null);
+  const inputRef: React.RefObject<HTMLInputElement> | null = useRef(null)
 
   const onChangeFilter = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.value);
-  }, [onChange]);
+    onChange(event.target.value)
+  }, [onChange])
 
   const onResetFilter = useCallback(() => {
-    onChange('');
-    inputRef.current && inputRef.current.select();
-  }, [onChange]);
+    onChange('')
+    inputRef.current && inputRef.current.select()
+  }, [onChange])
 
   return (
     <div className={className}>
@@ -50,7 +50,7 @@ function InputFilter ({ className, onChange, placeholder, value, withReset = fal
         />
       )}
     </div>
-  );
+  )
 }
 
 export default styled(InputFilter)(({ theme }: Props) => `
@@ -65,4 +65,4 @@ export default styled(InputFilter)(({ theme }: Props) => `
     color: ${theme.iconNeutralColor};
     cursor: pointer;
   }
-`);
+`)

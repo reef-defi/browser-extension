@@ -1,12 +1,12 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import type { ThemeProps } from '../types';
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import type { ThemeProps } from '../types'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { MouseEventHandler } from 'react';
-import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { MouseEventHandler } from 'react'
+import styled from 'styled-components'
 
 interface Props {
   className?: string;
@@ -24,7 +24,7 @@ function ActionText ({ className, icon, onClick, text }: Props): React.ReactElem
       {icon && <FontAwesomeIcon icon={icon} />}
       <span>{text}</span>
     </div>
-  );
+  )
 }
 
 export default styled(ActionText)(({ theme }: ThemeProps) => `
@@ -44,4 +44,4 @@ export default styled(ActionText)(({ theme }: ThemeProps) => `
     position: relative;
     top: 2px;
   }
-`);
+`)

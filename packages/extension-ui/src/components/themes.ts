@@ -44,7 +44,7 @@ const darkTheme = {
   subTextColor: '#DDD',
   textColor: '#FFFFFF',
   textColorDanger: '#FF8686'
-};
+}
 
 export declare type Theme = typeof darkTheme;
 
@@ -75,25 +75,25 @@ const lightTheme: Theme = {
   subTextColor: '#454545',
   textColor: '#242529',
   textColorDanger: '#ba24c7'
-};
+}
 
 export const themes = {
   dark: darkTheme,
   light: lightTheme
-};
+}
 
 export declare type AvailableThemes = keyof typeof themes;
 
 export function chooseTheme (): AvailableThemes {
-  const preferredTheme = localStorage.getItem('theme');
+  const preferredTheme = localStorage.getItem('theme')
 
   if (preferredTheme) {
     return preferredTheme === 'dark'
       ? 'dark'
-      : 'light';
+      : 'light'
   }
 
   return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches
     ? 'light'
-    : 'dark';
+    : 'dark'
 }

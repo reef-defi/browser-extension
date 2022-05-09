@@ -1,13 +1,13 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../types';
+import type { ThemeProps } from '../types'
 
-import React, { useCallback } from 'react';
-import styled from 'styled-components';
+import React, { useCallback } from 'react'
+import styled from 'styled-components'
 
-import arrow from '../assets/arrow-down.svg';
-import Label from './Label';
+import arrow from '../assets/arrow-down.svg'
+import Label from './Label'
 
 interface DropdownOption {
   text: string;
@@ -32,7 +32,7 @@ function Dropdown ({ className, defaultValue, isDisabled, isFocussed, label, onB
     ({ target: { value } }: React.ChangeEvent<HTMLSelectElement>) =>
       onChange && onChange(value.trim()),
     [onChange]
-  );
+  )
 
   return (
     <>
@@ -59,7 +59,7 @@ function Dropdown ({ className, defaultValue, isDisabled, isFocussed, label, onB
         </select>
       </Label>
     </>
-  );
+  )
 }
 
 export default React.memo(styled(Dropdown)(({ isError, label, theme }: Props) => `
@@ -100,4 +100,4 @@ export default React.memo(styled(Dropdown)(({ isError, label, theme }: Props) =>
     background: url(${arrow}) center no-repeat;
     pointer-events: none;
   }
-`));
+`))

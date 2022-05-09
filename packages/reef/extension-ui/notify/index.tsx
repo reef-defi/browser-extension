@@ -1,7 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-import Notifications, { Notification } from './Notifications';
+import Notifications, { Notification } from './Notifications'
 
 export interface NewNotification {
   message: string,
@@ -10,69 +10,71 @@ export interface NewNotification {
   children?: any
 }
 
-const notifications: Notification[] = [];
+const notifications: Notification[] = []
 
 const getContainer = (): HTMLElement => {
-  const containerId = 'uik-notifications-container';
+  const containerId = 'uik-notifications-container'
 
-  let el = document.getElementById(containerId);
+  let el = document.getElementById(containerId)
 
-  if (el) return el;
+  if (el) return el
 
-  el = document.createElement('div');
-  el.id = containerId;
-  document.body.appendChild(el);
+  el = document.createElement('div')
+  el.id = containerId
+  document.body.appendChild(el)
 
-  return el;
-};
+  return el
+}
 
 const generateId = (): number => {
-  let id = Math.floor(Math.random() * 1000000);
+  let id = Math.floor(Math.random() * 1000000)
 
   const isUnique = ((): boolean => {
-    return !notifications.find((item) => item.id === id);
-  })();
+    return !notifications.find((item) => item.id === id)
+  })()
 
-  if (!isUnique) id = generateId();
+  if (!isUnique) id = generateId()
 
-  return id;
-};
+  return id
+}
 
-const add = ({ params,
-  type }: {
+const add = ({
+  params,
+  type
+}: {
   type: string,
   params?: NewNotification | string
 }) => {
-  const id = generateId();
+  const id = generateId()
 
   if (typeof params === 'string') {
-    params = { message: params };
+    params = { message: params }
   }
 
-  notifications.push({ id, type, ...params });
-  render();
-};
+  notifications.push({ id, type, ...params })
+  render()
+}
 
 const remove = (id: number) => {
   setTimeout(() => {
-    const notification = notifications.find((notification) => notification.id === id);
+    const notification = notifications.find((notification) => notification.id === id)
 
     if (notification) {
-      const index = notifications.indexOf(notification);
+      const index = notifications.indexOf(notification)
 
-      notifications.splice(index, 1);
-      render();
+      notifications.splice(index, 1)
+      render()
     }
-  }, 0.25 * 1000);
-};
+  }, 0.25 * 1000)
+}
 
 const render = () => {
-  const container: HTMLElement = getContainer();
+  const container: HTMLElement = getContainer()
 
   if (!notifications.length) {
-    container.remove();
+    container.remove()
 
-    return;
+    return
   }
 
   ReactDOM.render(
@@ -81,15 +83,15 @@ const render = () => {
       onClose={remove}
     />,
     container
-  );
-};
+  )
+}
 
-const info = (params: NewNotification | string) => { add({ type: 'info', params }); };
+const info = (params: NewNotification | string) => { add({ type: 'info', params }) }
 
-const success = (params: NewNotification | string) => { add({ type: 'success', params }); };
+const success = (params: NewNotification | string) => { add({ type: 'success', params }) }
 
-const danger = (params: NewNotification | string) => { add({ type: 'danger', params }); };
+const danger = (params: NewNotification | string) => { add({ type: 'danger', params }) }
 
-const notify = { info, success, danger };
+const notify = { info, success, danger }
 
-export default notify;
+export default notify

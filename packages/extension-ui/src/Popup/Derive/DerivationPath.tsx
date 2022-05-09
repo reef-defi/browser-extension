@@ -1,15 +1,15 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../../types';
+import type { ThemeProps } from '../../types'
 
-import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useCallback, useEffect, useState } from 'react';
-import styled from 'styled-components';
+import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useCallback, useEffect, useState } from 'react'
+import styled from 'styled-components'
 
-import { Button, InputWithLabel } from '../../components';
-import useTranslation from '../../hooks/useTranslation';
+import { Button, InputWithLabel } from '../../components'
+import useTranslation from '../../hooks/useTranslation'
 
 interface Props extends ThemeProps{
   className?: string;
@@ -22,20 +22,20 @@ interface Props extends ThemeProps{
 }
 
 function DerivationPath ({ className, defaultPath, isError, onChange, withSoftPath }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation();
-  const [path, setPath] = useState<string>(defaultPath);
-  const [isDisabled, setIsDisabled] = useState(true);
+  const { t } = useTranslation()
+  const [path, setPath] = useState<string>(defaultPath)
+  const [isDisabled, setIsDisabled] = useState(true)
 
   useEffect(() => {
-    setPath(defaultPath);
-  }, [defaultPath]);
+    setPath(defaultPath)
+  }, [defaultPath])
 
-  const _onExpand = useCallback(() => setIsDisabled(!isDisabled), [isDisabled]);
+  const _onExpand = useCallback(() => setIsDisabled(!isDisabled), [isDisabled])
 
   const _onChange = useCallback((newPath: string): void => {
-    setPath(newPath);
-    onChange(newPath);
-  }, [onChange]);
+    setPath(newPath)
+    onChange(newPath)
+  }, [onChange])
 
   return (
     <div className={className}>
@@ -69,7 +69,7 @@ function DerivationPath ({ className, defaultPath, isError, onChange, withSoftPa
         </Button>
       </div>
     </div>
-  );
+  )
 }
 
 export default React.memo(styled(DerivationPath)(({ theme }: Props) => `
@@ -109,4 +109,4 @@ export default React.memo(styled(DerivationPath)(({ theme }: Props) => `
       opacity: 50%;
     }
   }
-`));
+`))

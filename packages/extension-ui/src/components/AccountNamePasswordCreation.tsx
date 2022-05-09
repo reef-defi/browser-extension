@@ -1,10 +1,10 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react'
 
-import { Name, Password } from '../partials';
-import { BackButton, ButtonArea, NextStepButton, VerticalSpace } from '.';
+import { Name, Password } from '../partials'
+import { BackButton, ButtonArea, NextStepButton, VerticalSpace } from '.'
 
 interface Props {
   buttonLabel: string;
@@ -15,30 +15,30 @@ interface Props {
 }
 
 function AccountNamePasswordCreation ({ buttonLabel, isBusy, onBackClick, onCreate, onNameChange }: Props): React.ReactElement<Props> {
-  const [name, setName] = useState<string | null>(null);
-  const [password, setPassword] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(null)
+  const [password, setPassword] = useState<string | null>(null)
 
   const _onCreate = useCallback(
     () => name && password && onCreate(name, password),
     [name, password, onCreate]
-  );
+  )
 
   const _onNameChange = useCallback(
     (name: string | null) => {
-      onNameChange(name || '');
-      setName(name);
+      onNameChange(name || '')
+      setName(name)
     },
     [onNameChange]
-  );
+  )
 
   const _onBackClick = useCallback(
     () => {
-      _onNameChange(null);
-      setPassword(null);
-      onBackClick();
+      _onNameChange(null)
+      setPassword(null)
+      onBackClick()
     },
     [_onNameChange, onBackClick]
-  );
+  )
 
   return (
     <>
@@ -60,7 +60,7 @@ function AccountNamePasswordCreation ({ buttonLabel, isBusy, onBackClick, onCrea
         </NextStepButton>
       </ButtonArea>
     </>
-  );
+  )
 }
 
-export default React.memo(AccountNamePasswordCreation);
+export default React.memo(AccountNamePasswordCreation)

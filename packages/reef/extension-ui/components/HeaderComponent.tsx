@@ -1,41 +1,41 @@
 
-import {faCog, faCoins, faExchangeAlt, faPaperPlane, faWallet} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {ActionContext} from '@reef-defi/extension-ui/components';
-import {appState, hooks, ReefSigner, utils} from '@reef-defi/react-lib';
-import React, {useCallback, useContext, useRef, useState} from 'react';
+import { faCog, faCoins, faExchangeAlt, faPaperPlane, faWallet } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { ActionContext } from '@reef-defi/extension-ui/components'
+import { appState, hooks, ReefSigner, utils } from '@reef-defi/react-lib'
+import React, { useCallback, useContext, useRef, useState } from 'react'
 
-import useOutsideClick from './../../../extension-ui/src/hooks/useOutsideClick';
-import MenuSettings from './../../../extension-ui/src/partials/MenuSettings';
-import styled from "styled-components";
+import useOutsideClick from './../../../extension-ui/src/hooks/useOutsideClick'
+import MenuSettings from './../../../extension-ui/src/partials/MenuSettings'
+import styled from 'styled-components'
 
 interface NavHeaderComp {
   showSettings?: boolean;
 }
 
 function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
-  const onAction = useContext(ActionContext);
-  const selectedAccount: ReefSigner|undefined = hooks.useObservableState(appState.selectedSigner$);
+  const onAction = useContext(ActionContext)
+  const selectedAccount: ReefSigner|undefined = hooks.useObservableState(appState.selectedSigner$)
   const openRoute = useCallback(
     (path: string) => onAction(path),
     [onAction]
-  );
+  )
 
   // const addRef = useRef(null);
-  const setRef = useRef(null);
+  const setRef = useRef(null)
 
-  const [isSettingsOpen, setShowSettings] = useState(false);
+  const [isSettingsOpen, setShowSettings] = useState(false)
 
   useOutsideClick(setRef, (): void => {
-    isSettingsOpen && setShowSettings(!isSettingsOpen);
-  });
+    isSettingsOpen && setShowSettings(!isSettingsOpen)
+  })
 
   const _toggleSettings = useCallback(
     (): void => setShowSettings((isSettingsOpen) => !isSettingsOpen),
     []
-  );
+  )
 
-  const theme = localStorage.getItem('theme');
+  const theme = localStorage.getItem('theme')
 
   return (<div className={theme === 'dark' ? 'navigation navigation--dark' : 'navigation'}>
     <div className='reef-logo'>
@@ -124,9 +124,9 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
         className='navigation__link'
         href='#'
         onClick={(ev) => {
-          ev.stopPropagation();
-          ev.preventDefault();
-          openRoute('/tokens');
+          ev.stopPropagation()
+          ev.preventDefault()
+          openRoute('/tokens')
         }}
         title='Dashboard'
       >
@@ -139,9 +139,9 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
         className='navigation__link'
         href='#'
         onClick={(ev) => {
-          ev.stopPropagation();
-          ev.preventDefault();
-          openRoute('/transfer');
+          ev.stopPropagation()
+          ev.preventDefault()
+          openRoute('/transfer')
         }}
         title='Send'
       >
@@ -154,9 +154,9 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
         className='navigation__link'
         href='#'
         onClick={(ev) => {
-          ev.stopPropagation();
-          ev.preventDefault();
-          openRoute('/swap');
+          ev.stopPropagation()
+          ev.preventDefault()
+          openRoute('/swap')
         }}
         title='Swap'
       >
@@ -169,9 +169,9 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
         className='navigation__link'
         href='#'
         onClick={(ev) => {
-          ev.stopPropagation();
-          ev.preventDefault();
-          openRoute('/accounts');
+          ev.stopPropagation()
+          ev.preventDefault()
+          openRoute('/accounts')
         }}
         title='Accounts'
       >
@@ -184,7 +184,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
 
     <button
       className='navigation__account'
-      onClick={() => { openRoute('/accounts'); }}
+      onClick={() => { openRoute('/accounts') }}
       type='button'
     >
       <div className='navigation__account-info'>
@@ -210,10 +210,10 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
     {isSettingsOpen && (
       <MenuSettings reference={setRef} />
     )}
-  </div>);
+  </div>)
 }
 
 export const HeaderComponent = styled(NavHeaderComp)`
   background: #ccc;
   .nav-header{background: #000;}
-  `;
+  `

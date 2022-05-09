@@ -1,12 +1,12 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../types';
+import type { ThemeProps } from '../types'
 
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
-import spinnerSrc from '../assets/spinner.png';
+import spinnerSrc from '../assets/spinner.png'
 
 interface Props extends ThemeProps {
   className?: string;
@@ -19,7 +19,7 @@ function Spinner ({ className = '', size = 'normal' }: Props): React.ReactElemen
       className={`${className} ${size}Size`}
       src={spinnerSrc}
     />
-  );
+  )
 }
 
 export default React.memo(styled(Spinner)`
@@ -30,4 +30,4 @@ export default React.memo(styled(Spinner)`
   position: absolute;
   width: 3rem;
   z-index:
-`);
+`)

@@ -1,30 +1,30 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react'
 
-import { getAllMetatdata } from '../messaging';
-import chains from '../util/chains';
-import useTranslation from './useTranslation';
+import { getAllMetatdata } from '../messaging'
+import chains from '../util/chains'
+import useTranslation from './useTranslation'
 
 interface Option {
   text: string;
   value: string;
 }
 
-const RELAY_CHAIN = 'Relay Chain';
+const RELAY_CHAIN = 'Relay Chain'
 
 export default function (): Option[] {
-  const { t } = useTranslation();
-  const [metadataChains, setMetadatachains] = useState<Option[]>([]);
+  const { t } = useTranslation()
+  const [metadataChains, setMetadatachains] = useState<Option[]>([])
 
   useEffect(() => {
     getAllMetatdata().then((metadataDefs) => {
-      const res = metadataDefs.map((metadata) => ({ text: metadata.chain, value: metadata.genesisHash }));
+      const res = metadataDefs.map((metadata) => ({ text: metadata.chain, value: metadata.genesisHash }))
 
-      setMetadatachains(res);
-    }).catch(console.error);
-  }, []);
+      setMetadatachains(res)
+    }).catch(console.error)
+  }, [])
 
   const hashes = useMemo(() => [
     {
@@ -48,11 +48,11 @@ export default function (): Option[] {
         ...metadataChains.filter(
           ({ value }) => {
             return !chains.find(
-              ({ genesisHash }) => genesisHash === value);
+              ({ genesisHash }) => genesisHash === value)
           }
         ))
       .sort((a, b) => a.text.localeCompare(b.text))
-  ], [metadataChains, t]);
+  ], [metadataChains, t])
 
-  return hashes;
+  return hashes
 }

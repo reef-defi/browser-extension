@@ -1,10 +1,10 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../types';
+import type { ThemeProps } from '../types'
 
-import React, { useCallback } from 'react';
-import styled from 'styled-components';
+import React, { useCallback } from 'react'
+import styled from 'styled-components'
 
 interface Props {
   checked: boolean;
@@ -18,7 +18,7 @@ function Switch ({ checked, checkedLabel, className, onChange, uncheckedLabel }:
   const _onChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => onChange(event.target.checked),
     [onChange]
-  );
+  )
 
   return (
     <div className={className}>
@@ -34,7 +34,7 @@ function Switch ({ checked, checkedLabel, className, onChange, uncheckedLabel }:
       </label>
       <span>{checkedLabel}</span>
     </div>
-  );
+  )
 }
 
 export default styled(Switch)(({ theme }: ThemeProps) => `
@@ -80,4 +80,4 @@ export default styled(Switch)(({ theme }: ThemeProps) => `
       border-radius: 50%;
     }
   }
-`);
+`)

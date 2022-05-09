@@ -1,51 +1,51 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import '../../../../../__mocks__/chrome';
+import '../../../../../__mocks__/chrome'
 
-import type { SigningRequest } from '@reef-defi/extension-base/background/types';
+import type { SigningRequest } from '@reef-defi/extension-base/background/types'
 
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import { configure, mount, ReactWrapper } from 'enzyme';
-import { EventEmitter } from 'events';
-import React, { useState } from 'react';
-import { act } from 'react-dom/test-utils';
-import { ThemeProvider } from 'styled-components';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { configure, mount, ReactWrapper } from 'enzyme'
+import { EventEmitter } from 'events'
+import React, { useState } from 'react'
+import { act } from 'react-dom/test-utils'
+import { ThemeProvider } from 'styled-components'
 
-import { ActionContext, Address, Input, SigningReqContext, themes } from '../../components';
-import * as messaging from '../../messaging';
-import * as MetadataCache from '../../MetadataCache';
-import { flushAllPromises } from '../../testHelpers';
-import Extrinsic from './Extrinsic';
-import { westendMetadata } from './metadataMock';
-import Qr from './Qr';
-import Request from './Request';
-import TransactionIndex from './TransactionIndex';
-import Signing from '.';
+import { ActionContext, Address, Input, SigningReqContext, themes } from '../../components'
+import * as messaging from '../../messaging'
+import * as MetadataCache from '../../MetadataCache'
+import { flushAllPromises } from '../../testHelpers'
+import Extrinsic from './Extrinsic'
+import { westendMetadata } from './metadataMock'
+import Qr from './Qr'
+import Request from './Request'
+import TransactionIndex from './TransactionIndex'
+import Signing from '.'
 
 // For this file, there are a lot of them
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call
-configure({ adapter: new Adapter() });
+configure({ adapter: new Adapter() })
 
 describe('Signing requests', () => {
-  let wrapper: ReactWrapper;
-  let onActionStub: jest.Mock;
-  let signRequests: SigningRequest[] = [];
+  let wrapper: ReactWrapper
+  let onActionStub: jest.Mock
+  let signRequests: SigningRequest[] = []
 
-  const emitter = new EventEmitter();
+  const emitter = new EventEmitter()
 
   function MockRequestsProvider (): React.ReactElement {
-    const [requests, setRequests] = useState(signRequests);
+    const [requests, setRequests] = useState(signRequests)
 
-    emitter.on('request', setRequests);
+    emitter.on('request', setRequests)
 
     return (
       <SigningReqContext.Provider value={requests}>
         <Signing />
       </SigningReqContext.Provider>
-    );
+    )
   }
 
   const mountComponent = async (): Promise<void> => {
@@ -56,18 +56,18 @@ describe('Signing requests', () => {
           <MockRequestsProvider />
         </ThemeProvider>
       </ActionContext.Provider>
-    );
-    await act(flushAllPromises);
-    wrapper.update();
-  };
+    )
+    await act(flushAllPromises)
+    wrapper.update()
+  }
 
-  const check = (input: ReactWrapper): unknown => input.simulate('change', { target: { checked: true } });
+  const check = (input: ReactWrapper): unknown => input.simulate('change', { target: { checked: true } })
 
   beforeEach(async () => {
-    jest.spyOn(messaging, 'cancelSignRequest').mockResolvedValue(true);
-    jest.spyOn(messaging, 'approveSignPassword').mockResolvedValue(true);
-    jest.spyOn(messaging, 'isSignLocked').mockResolvedValue({ isLocked: true, remainingTime: 0 });
-    jest.spyOn(MetadataCache, 'getSavedMeta').mockResolvedValue(westendMetadata);
+    jest.spyOn(messaging, 'cancelSignRequest').mockResolvedValue(true)
+    jest.spyOn(messaging, 'approveSignPassword').mockResolvedValue(true)
+    jest.spyOn(messaging, 'isSignLocked').mockResolvedValue({ isLocked: true, remainingTime: 0 })
+    jest.spyOn(MetadataCache, 'getSavedMeta').mockResolvedValue(westendMetadata)
 
     signRequests = [
       {
@@ -145,55 +145,55 @@ describe('Signing requests', () => {
         },
         url: 'https://polkadot.js.org/apps'
       }
-    ];
-    onActionStub = jest.fn();
-    await mountComponent();
-  });
+    ]
+    onActionStub = jest.fn()
+    await mountComponent()
+  })
 
   describe('Switching between requests', () => {
     it('initially first request should be shown', () => {
-      expect(wrapper.find(TransactionIndex).text()).toBe('1/2');
-      expect(wrapper.find(Request).prop('signId')).toBe(signRequests[0].id);
-    });
+      expect(wrapper.find(TransactionIndex).text()).toBe('1/2')
+      expect(wrapper.find(Request).prop('signId')).toBe(signRequests[0].id)
+    })
 
     it('only the right arrow should be active on first screen', async () => {
-      expect(wrapper.find('FontAwesomeIcon.arrowLeft')).toHaveLength(1);
-      expect(wrapper.find('FontAwesomeIcon.arrowLeft.active')).toHaveLength(0);
-      expect(wrapper.find('FontAwesomeIcon.arrowRight.active')).toHaveLength(1);
-      wrapper.find('FontAwesomeIcon.arrowLeft').simulate('click');
-      await act(flushAllPromises);
+      expect(wrapper.find('FontAwesomeIcon.arrowLeft')).toHaveLength(1)
+      expect(wrapper.find('FontAwesomeIcon.arrowLeft.active')).toHaveLength(0)
+      expect(wrapper.find('FontAwesomeIcon.arrowRight.active')).toHaveLength(1)
+      wrapper.find('FontAwesomeIcon.arrowLeft').simulate('click')
+      await act(flushAllPromises)
 
-      expect(wrapper.find(TransactionIndex).text()).toBe('1/2');
-    });
+      expect(wrapper.find(TransactionIndex).text()).toBe('1/2')
+    })
 
     it('should display second request after clicking right arrow', async () => {
-      wrapper.find('FontAwesomeIcon.arrowRight').simulate('click');
-      await act(flushAllPromises);
+      wrapper.find('FontAwesomeIcon.arrowRight').simulate('click')
+      await act(flushAllPromises)
 
-      expect(wrapper.find(TransactionIndex).text()).toBe('2/2');
-      expect(wrapper.find(Request).prop('signId')).toBe(signRequests[1].id);
-    });
+      expect(wrapper.find(TransactionIndex).text()).toBe('2/2')
+      expect(wrapper.find(Request).prop('signId')).toBe(signRequests[1].id)
+    })
 
     it('only the left should be active on second screen', async () => {
-      wrapper.find('FontAwesomeIcon.arrowRight').simulate('click');
-      await act(flushAllPromises);
+      wrapper.find('FontAwesomeIcon.arrowRight').simulate('click')
+      await act(flushAllPromises)
 
-      expect(wrapper.find('FontAwesomeIcon.arrowLeft.active')).toHaveLength(1);
-      expect(wrapper.find('FontAwesomeIcon.arrowRight')).toHaveLength(1);
-      expect(wrapper.find('FontAwesomeIcon.arrowRight.active')).toHaveLength(0);
-      expect(wrapper.find(TransactionIndex).text()).toBe('2/2');
-    });
+      expect(wrapper.find('FontAwesomeIcon.arrowLeft.active')).toHaveLength(1)
+      expect(wrapper.find('FontAwesomeIcon.arrowRight')).toHaveLength(1)
+      expect(wrapper.find('FontAwesomeIcon.arrowRight.active')).toHaveLength(0)
+      expect(wrapper.find(TransactionIndex).text()).toBe('2/2')
+    })
 
     it('should display previous request after the left arrow has been clicked', async () => {
-      wrapper.find('FontAwesomeIcon.arrowRight').simulate('click');
-      await act(flushAllPromises);
-      wrapper.find('FontAwesomeIcon.arrowLeft').simulate('click');
-      await act(flushAllPromises);
+      wrapper.find('FontAwesomeIcon.arrowRight').simulate('click')
+      await act(flushAllPromises)
+      wrapper.find('FontAwesomeIcon.arrowLeft').simulate('click')
+      await act(flushAllPromises)
 
-      expect(wrapper.find(TransactionIndex).text()).toBe('1/2');
-      expect(wrapper.find(Request).prop('signId')).toBe(signRequests[0].id);
-    });
-  });
+      expect(wrapper.find(TransactionIndex).text()).toBe('1/2')
+      expect(wrapper.find(Request).prop('signId')).toBe(signRequests[0].id)
+    })
+  })
 
   describe('External account', () => {
     it('shows Qr scanner for external accounts', async () => {
@@ -233,16 +233,16 @@ describe('Signing requests', () => {
           sign: jest.fn()
         },
         url: 'https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fwestend-rpc.polkadot.io#/accounts'
-      }];
-      await mountComponent();
-      expect(wrapper.find(Extrinsic)).toHaveLength(0);
-      expect(wrapper.find(Qr)).toHaveLength(1);
-    });
-  });
+      }]
+      await mountComponent()
+      expect(wrapper.find(Extrinsic)).toHaveLength(0)
+      expect(wrapper.find(Qr)).toHaveLength(1)
+    })
+  })
 
   describe('Request rendering', () => {
     it('correctly displays request 1', () => {
-      expect(wrapper.find(Address).find('.account-card__address').prop('title')).toBe(signRequests[0].account.address);
+      expect(wrapper.find(Address).find('.account-card__address').prop('title')).toBe(signRequests[0].account.address)
       expect(wrapper.find(Extrinsic).find('td.data').map((el): string => el.text())).toEqual([
         'https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fwestend-rpc.polkadot.io#/accounts',
         'Westend',
@@ -254,13 +254,13 @@ describe('Signing requests', () => {
         ']',
         'Same as the [`transfer`] call, but with a check that the transfer will not kill the origin account.',
         'mortal, valid from {{birth}} to {{death}}'
-      ]);
-    });
+      ])
+    })
 
     it('correctly displays request 2', async () => {
-      wrapper.find('FontAwesomeIcon.arrowRight').simulate('click');
-      await act(flushAllPromises);
-      expect(wrapper.find(Address).find('.account-card__address').prop('title')).toBe(signRequests[1].account.address);
+      wrapper.find('FontAwesomeIcon.arrowRight').simulate('click')
+      await act(flushAllPromises)
+      expect(wrapper.find(Address).find('.account-card__address').prop('title')).toBe(signRequests[1].account.address)
 
       expect(wrapper.find(Extrinsic).find('td.data').map((el): string => el.text())).toEqual([
         'https://polkadot.js.org/apps',
@@ -273,72 +273,72 @@ describe('Signing requests', () => {
         ']',
         'Transfer some liquid free balance to another account.',
         'mortal, valid from {{birth}} to {{death}}'
-      ]);
-    });
-  });
+      ])
+    })
+  })
 
   describe('Submitting', () => {
     it('passes request id to cancel call', async () => {
-      wrapper.find('.cancelButton').find('a').simulate('click');
-      await act(flushAllPromises);
+      wrapper.find('.cancelButton').find('a').simulate('click')
+      await act(flushAllPromises)
 
-      expect(messaging.cancelSignRequest).toBeCalledWith(signRequests[0].id);
-    });
+      expect(messaging.cancelSignRequest).toBeCalledWith(signRequests[0].id)
+    })
 
     it('passes request id and password to approve call', async () => {
-      wrapper.find(Input).simulate('change', { target: { value: 'hunter1' } });
-      await act(flushAllPromises);
-      wrapper.find('.uik-cta__text').simulate('click');
-      await act(flushAllPromises);
-      wrapper.update();
+      wrapper.find(Input).simulate('change', { target: { value: 'hunter1' } })
+      await act(flushAllPromises)
+      wrapper.find('.uik-cta__text').simulate('click')
+      await act(flushAllPromises)
+      wrapper.update()
 
-      expect(messaging.approveSignPassword).toBeCalledWith(signRequests[0].id, false, 'hunter1');
-    });
+      expect(messaging.approveSignPassword).toBeCalledWith(signRequests[0].id, false, 'hunter1')
+    })
 
     it('asks the background to cache the password when the relevant checkbox is checked', async () => {
-      check(wrapper.find('input[type="checkbox"]'));
-      await act(flushAllPromises);
+      check(wrapper.find('input[type="checkbox"]'))
+      await act(flushAllPromises)
 
-      wrapper.find(Input).simulate('change', { target: { value: 'hunter1' } });
-      await act(flushAllPromises);
+      wrapper.find(Input).simulate('change', { target: { value: 'hunter1' } })
+      await act(flushAllPromises)
 
-      wrapper.find('.uik-cta__text').simulate('click');
-      await act(flushAllPromises);
-      wrapper.update();
+      wrapper.find('.uik-cta__text').simulate('click')
+      await act(flushAllPromises)
+      wrapper.update()
 
-      expect(messaging.approveSignPassword).toBeCalledWith(signRequests[0].id, true, 'hunter1');
-    });
+      expect(messaging.approveSignPassword).toBeCalledWith(signRequests[0].id, true, 'hunter1')
+    })
 
     it('shows an error when the password is wrong', async () => {
       // silencing the following expected console.error
-      console.error = jest.fn();
+      console.error = jest.fn()
       // eslint-disable-next-line @typescript-eslint/require-await
       jest.spyOn(messaging, 'approveSignPassword').mockImplementation(async () => {
-        throw new Error('Unable to decode using the supplied passphrase');
-      });
+        throw new Error('Unable to decode using the supplied passphrase')
+      })
 
-      wrapper.find(Input).simulate('change', { target: { value: 'anything' } });
-      await act(flushAllPromises);
+      wrapper.find(Input).simulate('change', { target: { value: 'anything' } })
+      await act(flushAllPromises)
 
-      wrapper.find('.uik-cta__text').simulate('click');
-      await act(flushAllPromises);
-      wrapper.update();
+      wrapper.find('.uik-cta__text').simulate('click')
+      await act(flushAllPromises)
+      wrapper.update()
 
-      expect(wrapper.find('.warning-message').first().text()).toBe('Unable to decode using the supplied passphrase');
-    });
+      expect(wrapper.find('.warning-message').first().text()).toBe('Unable to decode using the supplied passphrase')
+    })
 
     it('when last request has been removed/cancelled, shows the previous one', async () => {
-      wrapper.find('FontAwesomeIcon.arrowRight').simulate('click');
-      await act(flushAllPromises);
+      wrapper.find('FontAwesomeIcon.arrowRight').simulate('click')
+      await act(flushAllPromises)
 
       act(() => {
-        emitter.emit('request', [signRequests[0]]);
-      });
-      await act(flushAllPromises);
-      wrapper.update();
+        emitter.emit('request', [signRequests[0]])
+      })
+      await act(flushAllPromises)
+      wrapper.update()
 
-      expect(wrapper.find(TransactionIndex)).toHaveLength(0);
-      expect(wrapper.find(Request).prop('signId')).toBe(signRequests[0].id);
-    });
-  });
-});
+      expect(wrapper.find(TransactionIndex)).toHaveLength(0)
+      expect(wrapper.find(Request).prop('signId')).toBe(signRequests[0].id)
+    })
+  })
+})

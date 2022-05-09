@@ -1,11 +1,11 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 
-import useIsMounted from '../hooks/useIsMounted';
-import { Result, Validator } from '../util/validators';
-import Warning from './Warning';
+import useIsMounted from '../hooks/useIsMounted'
+import { Result, Validator } from '../util/validators'
+import Warning from './Warning'
 
 interface BasicProps {
   isError?: boolean;
@@ -22,31 +22,31 @@ type Props<T extends BasicProps> = T & {
 }
 
 function ValidatedInput<T extends Record<string, unknown>> ({ className, component: Input, defaultValue, onValidatedChange, validator, ...props }: Props<T>): React.ReactElement<Props<T>> {
-  const [value, setValue] = useState(defaultValue || '');
-  const [validationResult, setValidationResult] = useState<Result<string>>(Result.ok(''));
-  const isMounted = useIsMounted();
+  const [value, setValue] = useState(defaultValue || '')
+  const [validationResult, setValidationResult] = useState<Result<string>>(Result.ok(''))
+  const isMounted = useIsMounted()
 
   useEffect(() => {
     if (defaultValue) {
-      setValue(defaultValue);
+      setValue(defaultValue)
     }
-  }, [defaultValue]);
+  }, [defaultValue])
 
   useEffect(() => {
     // Do not show any error on first mount
     if (!isMounted) {
-      return;
+      return
     }
 
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     (async (): Promise<void> => {
-      const result = await validator(value);
+      const result = await validator(value)
 
-      setValidationResult(result);
-      onValidatedChange(Result.isOk(result) ? value : null);
-    })();
+      setValidationResult(result)
+      onValidatedChange(Result.isOk(result) ? value : null)
+    })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value, validator, onValidatedChange]);
+  }, [value, validator, onValidatedChange])
 
   return (
     <div className={className}>
@@ -65,7 +65,7 @@ function ValidatedInput<T extends Record<string, unknown>> ({ className, compone
         </Warning>
       )}
     </div>
-  );
+  )
 }
 
-export default ValidatedInput;
+export default ValidatedInput

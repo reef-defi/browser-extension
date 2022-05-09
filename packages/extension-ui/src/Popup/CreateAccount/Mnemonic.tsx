@@ -1,11 +1,11 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react'
 
-import { ButtonArea, Checkbox, MnemonicSeed, NextStepButton, VerticalSpace, Warning } from '../../components';
-import useToast from '../../hooks/useToast';
-import useTranslation from '../../hooks/useTranslation';
+import { ButtonArea, Checkbox, MnemonicSeed, NextStepButton, VerticalSpace, Warning } from '../../components'
+import useToast from '../../hooks/useToast'
+import useTranslation from '../../hooks/useTranslation'
 
 interface Props {
   onNextStep: () => void;
@@ -13,25 +13,25 @@ interface Props {
 }
 
 const onCopy = (): void => {
-  const mnemonicSeedTextElement = document.querySelector('textarea');
+  const mnemonicSeedTextElement = document.querySelector('textarea')
 
   if (!mnemonicSeedTextElement) {
-    return;
+    return
   }
 
-  mnemonicSeedTextElement.select();
-  document.execCommand('copy');
-};
+  mnemonicSeedTextElement.select()
+  document.execCommand('copy')
+}
 
 function Mnemonic ({ onNextStep, seed }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation();
-  const [isMnemonicSaved, setIsMnemonicSaved] = useState(false);
-  const { show } = useToast();
+  const { t } = useTranslation()
+  const [isMnemonicSaved, setIsMnemonicSaved] = useState(false)
+  const { show } = useToast()
 
   const _onCopy = useCallback((): void => {
-    onCopy();
-    show(t('Copied'));
-  }, [show, t]);
+    onCopy()
+    show(t('Copied'))
+  }, [show, t])
 
   return (
     <>
@@ -57,7 +57,7 @@ function Mnemonic ({ onNextStep, seed }: Props): React.ReactElement<Props> {
         </NextStepButton>
       </ButtonArea>
     </>
-  );
+  )
 }
 
-export default React.memo(Mnemonic);
+export default React.memo(Mnemonic)

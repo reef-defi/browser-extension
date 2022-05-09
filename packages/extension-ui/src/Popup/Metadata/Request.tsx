@@ -1,16 +1,16 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { MetadataDef } from '@reef-defi/extension-inject/types';
-import type { ThemeProps } from '../../types';
+import type { MetadataDef } from '@reef-defi/extension-inject/types'
+import type { ThemeProps } from '../../types'
 
-import React, { useCallback, useContext } from 'react';
-import styled from 'styled-components';
+import React, { useCallback, useContext } from 'react'
+import styled from 'styled-components'
 
-import { ActionBar, ActionContext, Button, Link, Table, Warning } from '../../components';
-import useMetadata from '../../hooks/useMetadata';
-import useTranslation from '../../hooks/useTranslation';
-import { approveMetaRequest, rejectMetaRequest } from '../../messaging';
+import { ActionBar, ActionContext, Button, Link, Table, Warning } from '../../components'
+import useMetadata from '../../hooks/useMetadata'
+import useTranslation from '../../hooks/useTranslation'
+import { approveMetaRequest, rejectMetaRequest } from '../../messaging'
 
 interface Props {
   className?: string;
@@ -20,27 +20,27 @@ interface Props {
 }
 
 function Request ({ className, metaId, request, url }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation();
-  const chain = useMetadata(request.genesisHash);
-  const onAction = useContext(ActionContext);
+  const { t } = useTranslation()
+  const chain = useMetadata(request.genesisHash)
+  const onAction = useContext(ActionContext)
 
   const _onApprove = useCallback(
     (): void => {
       approveMetaRequest(metaId)
         .then(() => onAction())
-        .catch(console.error);
+        .catch(console.error)
     },
     [metaId, onAction]
-  );
+  )
 
   const _onReject = useCallback(
     (): void => {
       rejectMetaRequest(metaId)
         .then(() => onAction())
-        .catch(console.error);
+        .catch(console.error)
     },
     [metaId, onAction]
-  );
+  )
 
   return (
     <div className={className}>
@@ -90,7 +90,7 @@ function Request ({ className, metaId, request, url }: Props): React.ReactElemen
         </ActionBar>
       </div>
     </div>
-  );
+  )
 }
 
 export default styled(Request)(({ theme }: ThemeProps) => `
@@ -128,4 +128,4 @@ export default styled(Request)(({ theme }: ThemeProps) => `
   .requestWarning {
     margin: 24px 24px 0 1.45rem;
   }
-`);
+`)
