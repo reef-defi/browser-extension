@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 interface FishAnimation {
   className?: string;
@@ -66,4 +66,4 @@ export const FishAnimation = ({ className }: FishAnimation): JSX.Element => (
       </g>
     </svg>
   </div>
-)
+);

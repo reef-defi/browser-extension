@@ -40,5 +40,5 @@ export default function getLanguageOptions (): Option[] {
       text: 'اردو',
       value: 'ur'
     }
-  ]
+  ];
 }

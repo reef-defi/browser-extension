@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 interface Card {
   children: any; className: string; head: any; largePadding: any;
@@ -14,4 +14,4 @@ export const Card = ({ children, className, head, largePadding }: Card): JSX.Ele
     {head ? (<div className='uik-card__head'>{head}</div>) : ''}
     <div className='uik-card__content'>{children}</div>
   </div>
-)
+);

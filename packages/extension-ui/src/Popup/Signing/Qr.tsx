@@ -1,18 +1,18 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { HexString } from '@reef-defi/util/types'
-import type { ExtrinsicPayload } from '@polkadot/types/interfaces'
+import type { HexString } from '@reef-defi/util/types';
+import type { ExtrinsicPayload } from '@polkadot/types/interfaces';
 
-import { wrapBytes } from '@reef-defi/extension-dapp/wrapBytes'
-import React, { useCallback, useMemo, useState } from 'react'
-import styled from 'styled-components'
+import { wrapBytes } from '@reef-defi/extension-dapp/wrapBytes';
+import React, { useCallback, useMemo, useState } from 'react';
+import styled from 'styled-components';
 
-import { QrDisplayPayload, QrScanSignature } from '@polkadot/react-qr'
+import { QrDisplayPayload, QrScanSignature } from '@polkadot/react-qr';
 
-import { Button } from '../../components'
-import useTranslation from '../../hooks/useTranslation'
-import { CMD_MORTAL, CMD_SIGN_MESSAGE } from './Request'
+import { Button } from '../../components';
+import useTranslation from '../../hooks/useTranslation';
+import { CMD_MORTAL, CMD_SIGN_MESSAGE } from './Request';
 
 interface Props {
   address: string;
@@ -26,27 +26,27 @@ interface Props {
 }
 
 function Qr ({ address, className, cmd, genesisHash, onSignature, payload }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation()
-  const [isScanning, setIsScanning] = useState(false)
+  const { t } = useTranslation();
+  const [isScanning, setIsScanning] = useState(false);
 
   const payloadU8a = useMemo(
     () => {
       switch (cmd) {
         case CMD_MORTAL:
-          return (payload as ExtrinsicPayload).toU8a()
+          return (payload as ExtrinsicPayload).toU8a();
         case CMD_SIGN_MESSAGE:
-          return wrapBytes(payload as string)
+          return wrapBytes(payload as string);
         default:
-          return null
+          return null;
       }
     },
     [cmd, payload]
-  )
+  );
 
   const _onShowQr = useCallback(
     () => setIsScanning(true),
     []
-  )
+  );
 
   if (!payloadU8a) {
     return (
@@ -55,7 +55,7 @@ function Qr ({ address, className, cmd, genesisHash, onSignature, payload }: Pro
           Transaction command:{cmd} not supported.
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -70,7 +70,7 @@ function Qr ({ address, className, cmd, genesisHash, onSignature, payload }: Pro
               genesisHash={genesisHash}
               payload={payloadU8a}
             />
-            )
+          )
         }
       </div>
       {!isScanning && (
@@ -82,7 +82,7 @@ function Qr ({ address, className, cmd, genesisHash, onSignature, payload }: Pro
         </Button>
       )}
     </div>
-  )
+  );
 }
 
 export default styled(Qr)`
@@ -100,4 +100,4 @@ export default styled(Qr)`
   .scanButton {
     margin-bottom: 8px;
   }
-`
+`;

@@ -1,20 +1,20 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../types'
+import type { ThemeProps } from '../types';
 
-import { faArrowLeft, faCog, faPlusCircle, faSearch } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useCallback, useRef, useState } from 'react'
-import styled from 'styled-components'
+import { faArrowLeft, faCog, faPlusCircle, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useCallback, useRef, useState } from 'react';
+import styled from 'styled-components';
 
-import logo from '../assets/pjs.svg'
-import InputFilter from '../components/InputFilter'
-import Link from '../components/Link'
-import useOutsideClick from '../hooks/useOutsideClick'
-import useTranslation from '../hooks/useTranslation'
-import MenuAdd from './MenuAdd'
-import MenuSettings from './MenuSettings'
+import logo from '../assets/pjs.svg';
+import InputFilter from '../components/InputFilter';
+import Link from '../components/Link';
+import useOutsideClick from '../hooks/useOutsideClick';
+import useTranslation from '../hooks/useTranslation';
+import MenuAdd from './MenuAdd';
+import MenuSettings from './MenuSettings';
 
 interface Props extends ThemeProps {
   children?: React.ReactNode;
@@ -29,47 +29,47 @@ interface Props extends ThemeProps {
 }
 
 function Header ({ children, className = '', onFilter, showAdd, showBackArrow, showSearch, showSettings, smallMargin = false, text }: Props): React.ReactElement<Props> {
-  const [isAddOpen, setShowAdd] = useState(false)
-  const [isSettingsOpen, setShowSettings] = useState(false)
-  const [isSearchOpen, setShowSearch] = useState(false)
-  const [filter, setFilter] = useState('')
-  const { t } = useTranslation()
-  const addRef = useRef(null)
-  const setRef = useRef(null)
+  const [isAddOpen, setShowAdd] = useState(false);
+  const [isSettingsOpen, setShowSettings] = useState(false);
+  const [isSearchOpen, setShowSearch] = useState(false);
+  const [filter, setFilter] = useState('');
+  const { t } = useTranslation();
+  const addRef = useRef(null);
+  const setRef = useRef(null);
 
   useOutsideClick(addRef, (): void => {
-    isAddOpen && setShowAdd(!isAddOpen)
-  })
+    isAddOpen && setShowAdd(!isAddOpen);
+  });
 
   useOutsideClick(setRef, (): void => {
-    isSettingsOpen && setShowSettings(!isSettingsOpen)
-  })
+    isSettingsOpen && setShowSettings(!isSettingsOpen);
+  });
 
   const _toggleAdd = useCallback(
     (): void => setShowAdd((isAddOpen) => !isAddOpen),
     []
-  )
+  );
 
   const _toggleSettings = useCallback(
     (): void => setShowSettings((isSettingsOpen) => !isSettingsOpen),
     []
-  )
+  );
 
   const _onChangeFilter = useCallback((filter: string) => {
-    setFilter(filter)
-    onFilter && onFilter(filter)
-  }, [onFilter])
+    setFilter(filter);
+    onFilter && onFilter(filter);
+  }, [onFilter]);
 
   const _toggleSearch = useCallback(
     (): void => {
       if (isSearchOpen) {
-        _onChangeFilter('')
+        _onChangeFilter('');
       }
 
-      setShowSearch((isSearchOpen) => !isSearchOpen)
+      setShowSearch((isSearchOpen) => !isSearchOpen);
     },
     [_onChangeFilter, isSearchOpen]
-  )
+  );
 
   return (
     <div className={`${className} ${smallMargin ? 'smallMargin' : ''}`}>
@@ -86,13 +86,13 @@ function Header ({ children, className = '', onFilter, showAdd, showBackArrow, s
                   icon={faArrowLeft}
                 />
               </Link>
-              )
+            )
             : (
               <img
                 className='logo'
                 src={logo}
               />
-              )
+            )
           }
           <span className='logoText'>{text || 'reef-js'}</span>
         </div>
@@ -151,7 +151,7 @@ function Header ({ children, className = '', onFilter, showAdd, showBackArrow, s
         {children}
       </div>
     </div>
-  )
+  );
 }
 
 export default React.memo(styled(Header)(({ theme }: Props) => `
@@ -257,4 +257,4 @@ export default React.memo(styled(Header)(({ theme }: Props) => `
   &.smallMargin {
     margin-bottom: 15px;
   }
-`))
+`));

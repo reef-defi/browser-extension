@@ -1,18 +1,18 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { AccountJson } from '@reef-defi/extension-base/background/types'
+import type { AccountJson } from '@reef-defi/extension-base/background/types';
 
-import { canDerive } from '@reef-defi/extension-base/utils'
-import { ThemeProps } from '@reef-defi/extension-ui/types'
-import React, { useCallback, useMemo, useState } from 'react'
-import styled from 'styled-components'
+import { canDerive } from '@reef-defi/extension-base/utils';
+import { ThemeProps } from '@reef-defi/extension-ui/types';
+import React, { useCallback, useMemo, useState } from 'react';
+import styled from 'styled-components';
 
-import { Address, Dropdown, Link, MenuDivider } from '../../components'
-import useGenesisHashOptions from '../../hooks/useGenesisHashOptions'
-import useTranslation from '../../hooks/useTranslation'
-import { editAccount, tieAccount } from '../../messaging'
-import { Name } from '../../partials'
+import { Address, Dropdown, Link, MenuDivider } from '../../components';
+import useGenesisHashOptions from '../../hooks/useGenesisHashOptions';
+import useTranslation from '../../hooks/useTranslation';
+import { editAccount, tieAccount } from '../../messaging';
+import { Name } from '../../partials';
 
 interface Props extends AccountJson {
   className?: string;
@@ -25,38 +25,38 @@ interface EditState {
 }
 
 function Account ({ address, className, genesisHash, isExternal, isHardware, isHidden, name, parentName, suri, type }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation()
-  const [{ isEditing, toggleActions }, setEditing] = useState<EditState>({ isEditing: false, toggleActions: 0 })
-  const [editedName, setName] = useState<string | undefined | null>(name)
-  const genesisOptions = useGenesisHashOptions()
+  const { t } = useTranslation();
+  const [{ isEditing, toggleActions }, setEditing] = useState<EditState>({ isEditing: false, toggleActions: 0 });
+  const [editedName, setName] = useState<string | undefined | null>(name);
+  const genesisOptions = useGenesisHashOptions();
 
   const _onChangeGenesis = useCallback(
     (genesisHash?: string | null): void => {
       tieAccount(address, genesisHash || null)
-        .catch(console.error)
+        .catch(console.error);
     },
     [address]
-  )
+  );
 
   const _toggleEdit = useCallback(
     (ev?: Event): void => {
-      ev?.preventDefault()
-      console.log('edit=', ev)
-      setEditing(({ toggleActions }) => ({ isEditing: !isEditing, toggleActions: ++toggleActions }))
+      ev?.preventDefault();
+      console.log('edit=', ev);
+      setEditing(({ toggleActions }) => ({ isEditing: !isEditing, toggleActions: ++toggleActions }));
     },
     [isEditing]
-  )
+  );
 
   const _saveChanges = useCallback(
     (): void => {
       editedName &&
         editAccount(address, editedName)
-          .catch(console.error)
+          .catch(console.error);
 
-      _toggleEdit()
+      _toggleEdit();
     },
     [editedName, address, _toggleEdit]
-  )
+  );
 
   const _actions = useMemo(() => (
     <>
@@ -106,7 +106,7 @@ function Account ({ address, className, genesisHash, isExternal, isHardware, isH
         </>
       )}
     </>
-  ), [_onChangeGenesis, _toggleEdit, address, genesisHash, genesisOptions, isExternal, isHardware, t, type])
+  ), [_onChangeGenesis, _toggleEdit, address, genesisHash, genesisOptions, isExternal, isHardware, t, type]);
 
   return (
     <div className={`${className || ''} account-card`}>
@@ -134,7 +134,7 @@ function Account ({ address, className, genesisHash, isExternal, isHardware, isH
         )}
       </Address>
     </div>
-  )
+  );
 }
 
 export default styled(Account)(({ theme }: ThemeProps) => `
@@ -178,4 +178,4 @@ export default styled(Account)(({ theme }: ThemeProps) => `
       margin: 0;
     }
   }
-`)
+`);

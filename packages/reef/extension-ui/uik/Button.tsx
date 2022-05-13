@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-import { FishAnimation, Icon, Loading } from './index'
+import { FishAnimation, Icon, Loading } from './index';
 
 interface Button {
   children?: any;
@@ -17,8 +17,7 @@ interface Button {
   text?: any;
 }
 
-export const Button = ({
-  children,
+export const Button = ({ children,
   className,
   danger,
   fill,
@@ -29,8 +28,7 @@ export const Button = ({
   onClick,
   size,
   success,
-  text
-}: Button): JSX.Element => (
+  text }: Button): JSX.Element => (
   <button
     className={`
       uik-button
@@ -55,4 +53,4 @@ export const Button = ({
       : ''}
     <span className='uik-button__text'>{children}{text}</span>
   </button>
-)
+);

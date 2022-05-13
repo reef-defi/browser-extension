@@ -1,16 +1,16 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { RequestAuthorizeTab } from '@reef-defi/extension-base/background/types'
-import type { ThemeProps } from '../../types'
+import type { RequestAuthorizeTab } from '@reef-defi/extension-base/background/types';
+import type { ThemeProps } from '../../types';
 
-import React, { useCallback, useContext } from 'react'
-import { Trans } from 'react-i18next'
-import styled from 'styled-components'
+import React, { useCallback, useContext } from 'react';
+import { Trans } from 'react-i18next';
+import styled from 'styled-components';
 
-import { ActionBar, ActionContext, Button, Icon, Link, Warning } from '../../components'
-import useTranslation from '../../hooks/useTranslation'
-import { approveAuthRequest, rejectAuthRequest } from '../../messaging'
+import { ActionBar, ActionContext, Button, Icon, Link, Warning } from '../../components';
+import useTranslation from '../../hooks/useTranslation';
+import { approveAuthRequest, rejectAuthRequest } from '../../messaging';
 
 interface Props extends ThemeProps {
   authId: string;
@@ -21,22 +21,22 @@ interface Props extends ThemeProps {
 }
 
 function Request ({ authId, className, isFirst, request: { origin }, url }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation()
-  const onAction = useContext(ActionContext)
+  const { t } = useTranslation();
+  const onAction = useContext(ActionContext);
 
   const _onApprove = useCallback(
     () => approveAuthRequest(authId)
       .then(() => onAction())
       .catch((error: Error) => console.error(error)),
     [authId, onAction]
-  )
+  );
 
   const _onReject = useCallback(
     () => rejectAuthRequest(authId)
       .then(() => onAction())
       .catch((error: Error) => console.error(error)),
     [authId, onAction]
-  )
+  );
 
   return (
     <div className={className}>
@@ -81,7 +81,7 @@ function Request ({ authId, className, isFirst, request: { origin }, url }: Prop
         </ActionBar>
       </div>
     </div>
-  )
+  );
 }
 
 export default styled(Request)(({ theme }: Props) => `
@@ -142,4 +142,4 @@ export default styled(Request)(({ theme }: Props) => `
     margin: 8px 0 15px 0;
     text-decoration: underline;
   }
-`)
+`);

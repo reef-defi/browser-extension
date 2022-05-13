@@ -1,12 +1,12 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../types'
+import type { ThemeProps } from '../types';
 
-import React, { useCallback } from 'react'
-import styled from 'styled-components'
+import React, { useCallback } from 'react';
+import styled from 'styled-components';
 
-import Spinner from './Spinner'
+import Spinner from './Spinner';
 
 interface Props extends ThemeProps {
   className?: string;
@@ -22,17 +22,17 @@ function Button ({ children, className = '', isBusy, isDisabled, onClick, to }: 
   const _onClick = useCallback(
     (): void => {
       if (isBusy || isDisabled) {
-        return
+        return;
       }
 
-      onClick && onClick()
+      onClick && onClick();
 
       if (to) {
-        window.location.hash = to
+        window.location.hash = to;
       }
     },
     [isBusy, isDisabled, onClick, to]
-  )
+  );
 
   return (
     <button
@@ -44,7 +44,7 @@ function Button ({ children, className = '', isBusy, isDisabled, onClick, to }: 
       <div className='disabledOverlay' />
       <Spinner className='busyOverlay' />
     </button>
-  )
+  );
 }
 
 export default styled(Button)(({ isDanger, theme }: Props) => `
@@ -105,4 +105,4 @@ export default styled(Button)(({ isDanger, theme }: Props) => `
   &.isDisabled .disabledOverlay {
     visibility: visible;
   }
-`)
+`);

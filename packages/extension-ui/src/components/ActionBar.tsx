@@ -1,8 +1,8 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 interface Props {
   children: React.ReactNode;
@@ -14,7 +14,7 @@ function ActionBar ({ children, className }: Props): React.ReactElement<Props> {
     <div className={className}>
       {children}
     </div>
-  )
+  );
 }
 
 export default styled(ActionBar)`
@@ -31,4 +31,4 @@ export default styled(ActionBar)`
   a+a {
     margin-left: 0.75rem;
   }
-`
+`;

@@ -1,12 +1,12 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../types'
+import type { ThemeProps } from '../types';
 
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
-import styled from 'styled-components'
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
+import styled from 'styled-components';
 
 interface Props extends ThemeProps {
   children: React.ReactNode;
@@ -24,7 +24,7 @@ function Warning ({ children, className = '', isBelowInput, isDanger }: Props): 
       />
       <div className='warning-message'>{children}</div>
     </div>
-  )
+  );
 }
 
 export default React.memo(styled(Warning)<Props>(({ isDanger, theme }: Props) => `
@@ -58,4 +58,4 @@ export default React.memo(styled(Warning)<Props>(({ isDanger, theme }: Props) =>
     margin: 5px 10px 5px 0;
     color: ${isDanger ? theme.iconDangerColor : theme.iconWarningColor};
   }
-`))
+`));

@@ -1,11 +1,11 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useContext, useMemo } from 'react'
+import React, { useContext, useMemo } from 'react';
 
-import { AccountContext, InputWithLabel, ValidatedInput } from '../components'
-import useTranslation from '../hooks/useTranslation'
-import { isNotShorterThan } from '../util/validators'
+import { AccountContext, InputWithLabel, ValidatedInput } from '../components';
+import useTranslation from '../hooks/useTranslation';
+import { isNotShorterThan } from '../util/validators';
 
 interface Props {
   address?: string;
@@ -18,12 +18,12 @@ interface Props {
 }
 
 export default function Name ({ address, className, isFocused, label, onBlur, onChange, value }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation()
-  const { accounts } = useContext(AccountContext)
-  const isNameValid = useMemo(() => isNotShorterThan(3, t<string>('Account name is too short')), [t])
+  const { t } = useTranslation();
+  const { accounts } = useContext(AccountContext);
+  const isNameValid = useMemo(() => isNotShorterThan(3, t<string>('Account name is too short')), [t]);
 
-  const account = accounts.find((account) => account.address === address)
-  const startValue = value || account?.name
+  const account = accounts.find((account) => account.address === address);
+  const startValue = value || account?.name;
 
   return (
     <ValidatedInput
@@ -39,5 +39,5 @@ export default function Name ({ address, className, isFocused, label, onBlur, on
       type='text'
       validator={isNameValid}
     />
-  )
+  );
 }

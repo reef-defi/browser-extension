@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 
 interface Icon { className?: string; icon?: string;}
 
@@ -8,4 +8,4 @@ export const Icon = ({ className, icon }: Icon): JSX.Element => (
     className={`uik-icon ${className || ''}`}
     icon={icon}
   />
-)
+);

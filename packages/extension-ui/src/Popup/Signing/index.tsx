@@ -1,38 +1,38 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { SignerPayloadJSON } from '@polkadot/types/types'
+import type { SignerPayloadJSON } from '@polkadot/types/types';
 
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 
-import { Loading, SigningReqContext } from '../../components'
-import useTranslation from '../../hooks/useTranslation'
-import { Header } from '../../partials'
-import Request from './Request'
-import TransactionIndex from './TransactionIndex'
+import { Loading, SigningReqContext } from '../../components';
+import useTranslation from '../../hooks/useTranslation';
+import { Header } from '../../partials';
+import Request from './Request';
+import TransactionIndex from './TransactionIndex';
 
 export default function Signing (): React.ReactElement {
-  const { t } = useTranslation()
-  const requests = useContext(SigningReqContext)
-  const [requestIndex, setRequestIndex] = useState(0)
+  const { t } = useTranslation();
+  const requests = useContext(SigningReqContext);
+  const [requestIndex, setRequestIndex] = useState(0);
 
   const _onNextClick = useCallback(
     () => setRequestIndex((requestIndex) => requestIndex + 1),
     []
-  )
+  );
 
   const _onPreviousClick = useCallback(
     () => setRequestIndex((requestIndex) => requestIndex - 1),
     []
-  )
+  );
 
   useEffect(() => {
     setRequestIndex(
       (requestIndex) => requestIndex < requests.length
         ? requestIndex
         : requests.length - 1
-    )
-  }, [requests])
+    );
+  }, [requests]);
 
   // protect against removal overflows/underflows
   const request = requests.length !== 0
@@ -41,8 +41,8 @@ export default function Signing (): React.ReactElement {
         ? requests[requestIndex]
         : requests[requests.length - 1]
       : requests[0]
-    : null
-  const isTransaction = !!((request?.request?.payload as SignerPayloadJSON)?.blockNumber)
+    : null;
+  const isTransaction = !!((request?.request?.payload as SignerPayloadJSON)?.blockNumber);
 
   return request
     ? (
@@ -66,6 +66,6 @@ export default function Signing (): React.ReactElement {
           url={request.url}
         />
       </>
-      )
-    : <Loading />
+    )
+    : <Loading />;
 }

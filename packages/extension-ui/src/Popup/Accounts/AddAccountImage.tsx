@@ -7,10 +7,10 @@
 /* eslint-disable react/jsx-sort-props */
 /* eslint-disable react/jsx-max-props-per-line */
 
-import type { ThemeProps } from '../../types'
+import type { ThemeProps } from '../../types';
 
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 interface Props extends ThemeProps {
   className?: string;
@@ -74,7 +74,7 @@ function AddAccountImage ({ className, onClick }: Props): React.ReactElement<Pro
         </filter>
       </defs>
     </svg>
-  )
+  );
 }
 
 export default React.memo(styled(AddAccountImage)(({ theme }: Props) => `
@@ -90,4 +90,4 @@ export default React.memo(styled(AddAccountImage)(({ theme }: Props) => `
     stroke: ${theme.inputBorderColor};
     fill: ${theme.addAccountImageBackground};
   }
-`))
+`));

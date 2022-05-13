@@ -1,10 +1,10 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../types'
+import type { ThemeProps } from '../types';
 
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 interface Props extends ThemeProps {
   children: React.ReactNode;
@@ -21,7 +21,7 @@ function MenuItem ({ children, className = '', title }: Props): React.ReactEleme
       )}
       {children}
     </div>
-  )
+  );
 }
 
 export default styled(MenuItem)(({ theme }: ThemeProps) => `
@@ -43,4 +43,4 @@ export default styled(MenuItem)(({ theme }: ThemeProps) => `
   &+&.isTitled {
     margin-top: 16px;
   }
-`)
+`);

@@ -1,38 +1,38 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { AccountJson, AccountWithChildren } from '@reef-defi/extension-base/background/types'
-import type { Chain } from '@reef-defi/extension-chains/types'
-import type { IconTheme } from '@polkadot/react-identicon/types'
-import type { SettingsStruct } from '@polkadot/ui-settings/types'
-import type { KeypairType } from '@polkadot/util-crypto/types'
-import type { ThemeProps } from '../types'
+import type { AccountJson, AccountWithChildren } from '@reef-defi/extension-base/background/types';
+import type { Chain } from '@reef-defi/extension-chains/types';
+import type { IconTheme } from '@polkadot/react-identicon/types';
+import type { SettingsStruct } from '@polkadot/ui-settings/types';
+import type { KeypairType } from '@polkadot/util-crypto/types';
+import type { ThemeProps } from '../types';
 
-import { faUsb } from '@fortawesome/free-brands-svg-icons'
-import { faCopy, faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
-import { faCodeBranch, faEllipsisV, faQrcode } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Provider } from '@reef-defi/evm-provider'
-import { appState, hooks, ReefSigner, utils } from '@reef-defi/react-lib'
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
-import CopyToClipboard from 'react-copy-to-clipboard'
-import styled from 'styled-components'
+import { faUsb } from '@fortawesome/free-brands-svg-icons';
+import { faCopy, faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+import { faCodeBranch, faEllipsisV, faQrcode } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Provider } from '@reef-defi/evm-provider';
+import { appState, hooks, ReefSigner, utils } from '@reef-defi/react-lib';
+import { BigNumber } from 'ethers';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import CopyToClipboard from 'react-copy-to-clipboard';
+import styled from 'styled-components';
 
-import { decodeAddress, encodeAddress } from '@polkadot/util-crypto'
+import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
 
-import useMetadata from '../hooks/useMetadata'
-import useOutsideClick from '../hooks/useOutsideClick'
-import useToast from '../hooks/useToast'
-import useTranslation from '../hooks/useTranslation'
-import { showAccount } from '../messaging'
-import { DEFAULT_TYPE } from '../util/defaultType'
-import getParentNameSuri from '../util/getParentNameSuri'
-import notify from './../../../reef/extension-ui/notify'
-import { Button, Loading } from './../../../reef/extension-ui/uik'
-import { AccountContext, ActionContext, SettingsContext, SigningReqContext } from './contexts'
-import Identicon from './Identicon'
-import Menu from './Menu'
-import { BigNumber } from 'ethers'
+import useMetadata from '../hooks/useMetadata';
+import useOutsideClick from '../hooks/useOutsideClick';
+import useToast from '../hooks/useToast';
+import useTranslation from '../hooks/useTranslation';
+import { showAccount } from '../messaging';
+import { DEFAULT_TYPE } from '../util/defaultType';
+import getParentNameSuri from '../util/getParentNameSuri';
+import notify from './../../../reef/extension-ui/notify';
+import { Button, Loading } from './../../../reef/extension-ui/uik';
+import { AccountContext, ActionContext, SettingsContext, SigningReqContext } from './contexts';
+import Identicon from './Identicon';
+import Menu from './Menu';
 
 export interface Props {
   actions?: React.ReactNode;
@@ -63,28 +63,28 @@ interface Recoded {
 
 // find an account in our list
 function findSubstrateAccount (accounts: AccountJson[], publicKey: Uint8Array): AccountJson | null {
-  const pkStr = publicKey.toString()
+  const pkStr = publicKey.toString();
 
   return accounts.find(({ address }): boolean =>
     decodeAddress(address).toString() === pkStr
-  ) || null
+  ) || null;
 }
 
 // find an account in our list
 function findAccountByAddress (accounts: AccountJson[], _address: string): AccountJson | null {
   return accounts.find(({ address }): boolean =>
     address === _address
-  ) || null
+  ) || null;
 }
 
 // recodes an supplied address using the prefix/genesisHash, include the actual saved account & chain
 function recodeAddress (address: string, accounts: AccountWithChildren[], chain: Chain | null, settings: SettingsStruct): Recoded {
   // decode and create a shortcut for the encoded address
-  const publicKey = decodeAddress(address)
+  const publicKey = decodeAddress(address);
 
   // find our account using the actual publicKey, and then find the associated chain
-  const account = findSubstrateAccount(accounts, publicKey)
-  const prefix = chain ? chain.ss58Format : (settings.prefix === -1 ? 42 : settings.prefix)
+  const account = findSubstrateAccount(accounts, publicKey);
+  const prefix = chain ? chain.ss58Format : (settings.prefix === -1 ? 42 : settings.prefix);
 
   // always allow the actual settings to override the display
   return {
@@ -95,46 +95,47 @@ function recodeAddress (address: string, accounts: AccountWithChildren[], chain:
     genesisHash: account?.genesisHash,
     prefix,
     type: account?.type || DEFAULT_TYPE
-  }
+  };
 }
 
-const ACCOUNTS_SCREEN_HEIGHT = 550
-const defaultRecoded = { account: null, formatted: null, prefix: 42, type: DEFAULT_TYPE }
+const ACCOUNTS_SCREEN_HEIGHT = 550;
+const defaultRecoded = { account: null, formatted: null, prefix: 42, type: DEFAULT_TYPE };
 
-function Address ({ actions, address, children, className, exporting, genesisHash, isExternal, isHardware, isHidden, name, parentName, presentation, suri, toggleActions, type: givenType, signerProp }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation()
-  const onAction = useContext(ActionContext)
-  const { accounts } = useContext(AccountContext)
-  const selectedAccount: ReefSigner|undefined = hooks.useObservableState(appState.selectedSigner$)
-  const signers: ReefSigner[]|undefined = hooks.useObservableState(appState.signers$)
-  const settings = useContext(SettingsContext)
-  const [{ account, formatted, genesisHash: recodedGenesis, prefix, type }, setRecoded] = useState<Recoded>(defaultRecoded)
-  const chain = useMetadata(genesisHash || recodedGenesis, true)
-  const provider: Provider|undefined = hooks.useObservableState(appState.providerSubj)
-  const signRequests = useContext(SigningReqContext)
-  const [showActionsMenu, setShowActionsMenu] = useState(false)
-  const [moveMenuUp, setIsMovedMenu] = useState(false)
-  const actionsRef = useRef<HTMLDivElement>(null)
-  const { show } = useToast()
-  const [signer, setSigner] = useState<ReefSigner|undefined>(signerProp)
+function Address ({ actions, address, children, className, exporting, genesisHash, isExternal, isHardware, isHidden, name, parentName, presentation, signerProp, suri, toggleActions, type: givenType }: Props): React.ReactElement<Props> {
+  const { t } = useTranslation();
+  const onAction = useContext(ActionContext);
+  const { accounts } = useContext(AccountContext);
+  const selectedAccount: ReefSigner|undefined = hooks.useObservableState(appState.selectedSigner$);
+  const signers: ReefSigner[]|undefined = hooks.useObservableState(appState.signers$);
+  const settings = useContext(SettingsContext);
+  const [{ account, formatted, genesisHash: recodedGenesis, prefix, type }, setRecoded] = useState<Recoded>(defaultRecoded);
+  const chain = useMetadata(genesisHash || recodedGenesis, true);
+  const provider: Provider|undefined = hooks.useObservableState(appState.providerSubj);
+  const signRequests = useContext(SigningReqContext);
+  const [showActionsMenu, setShowActionsMenu] = useState(false);
+  const [moveMenuUp, setIsMovedMenu] = useState(false);
+  const actionsRef = useRef<HTMLDivElement>(null);
+  const { show } = useToast();
+  const [signer, setSigner] = useState<ReefSigner|undefined>(signerProp);
 
   useEffect(() => {
-    const foundSigner = signers?.find((s) => s.address === account?.address)
-    if (foundSigner) {
-      setSigner(foundSigner)
-    }
-  }, [signers, account])
+    const foundSigner = signers?.find((s) => s.address === account?.address);
 
-  useOutsideClick(actionsRef, () => (showActionsMenu && setShowActionsMenu(!showActionsMenu)))
+    if (foundSigner) {
+      setSigner(foundSigner);
+    }
+  }, [signers, account]);
+
+  useOutsideClick(actionsRef, () => (showActionsMenu && setShowActionsMenu(!showActionsMenu)));
 
   useEffect((): void => {
     if (!address) {
-      setRecoded(defaultRecoded)
+      setRecoded(defaultRecoded);
 
-      return
+      return;
     }
 
-    const accountByAddress = findAccountByAddress(accounts, address)
+    const accountByAddress = findAccountByAddress(accounts, address);
 
     // addressconsole.log(
     //   address,
@@ -154,48 +155,48 @@ function Address ({ actions, address, children, className, exporting, genesisHas
         (!accountByAddress && givenType === 'ethereum')
       )
         ? { account: accountByAddress, formatted: address, type: 'ethereum' }
-        : recodeAddress(address, accounts, chain, settings))
-  }, [accounts, address, chain, givenType, settings])
+        : recodeAddress(address, accounts, chain, settings));
+  }, [accounts, address, chain, givenType, settings]);
 
   useEffect(() => {
     if (!showActionsMenu) {
-      setIsMovedMenu(false)
+      setIsMovedMenu(false);
     } else if (actionsRef.current) {
-      const { bottom } = actionsRef.current.getBoundingClientRect()
+      const { bottom } = actionsRef.current.getBoundingClientRect();
 
       if (bottom > ACCOUNTS_SCREEN_HEIGHT) {
-        setIsMovedMenu(true)
+        setIsMovedMenu(true);
       }
     }
-  }, [showActionsMenu])
+  }, [showActionsMenu]);
 
   useEffect((): void => {
-    setShowActionsMenu(false)
-  }, [toggleActions])
+    setShowActionsMenu(false);
+  }, [toggleActions]);
 
   const theme = (
     type === 'ethereum'
       ? 'ethereum'
       : (chain?.icon || 'polkadot')
-  ) as IconTheme
+  ) as IconTheme;
 
   const _onClick = useCallback(
     () => setShowActionsMenu(!showActionsMenu),
     [showActionsMenu]
-  )
+  );
 
   const _toggleVisibility = useCallback(
     () => address && showAccount(address, isHidden || false).catch(console.error),
     [address, isHidden]
-  )
+  );
 
   const openEvmBindView = useCallback(
     (bindAddress) => onAction(`/bind?bindAddress=${bindAddress}`),
     [onAction]
-  )
+  );
 
   const External = () => {
-    const accountName = name || account?.name
+    const accountName = name || account?.name;
 
     return (
       <>
@@ -207,17 +208,17 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                 icon={faUsb}
                 title={t('Hardware Wallet Account')}
               />
-              )
+            )
             : (
               <FontAwesomeIcon
                 className='externalIcon'
                 icon={faQrcode}
                 title={t('External Account')}
               />
-              )
+            )
         )}
-      </>)
-  }
+      </>);
+  };
 
   const Bind = () => {
     return (
@@ -227,30 +228,30 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           fill
           onClick={() => openEvmBindView(signer?.address)}
           size='small'
-                                                                                                      ><span>Bind EVM</span></Button>}
-      </>)
-  }
+        ><span>Bind EVM</span></Button>}
+      </>);
+  };
 
   const Balance = () => {
     return (
       <>
         <div>{ utils.toReefBalanceDisplay(signer?.balance).replace('-', '0.00').replace(' REEF', '') }</div>
       </>
-    )
-  }
+    );
+  };
 
   const isSelected = () => {
-    const selected = selectedAccount?.address === account?.address
+    const selected = selectedAccount?.address === account?.address;
 
-    return !(!!signRequests && !!signRequests.length) && selectedAccount && selected
-  }
+    return !(!!signRequests && !!signRequests.length) && selectedAccount && selected;
+  };
 
   const SelectButton = () => {
-    const selected = selectedAccount?.address === account?.address
+    const selected = selectedAccount?.address === account?.address;
 
     const selectAccount = (account: AccountJson | null): void => {
-      appState.selectAddressSubj.next(account?.address)
-    }
+      appState.selectAddressSubj.next(account?.address);
+    };
 
     return (
       <>
@@ -268,10 +269,10 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           >Select</Button>
         )}
       </>
-    )
-  }
+    );
+  };
 
-  const parentNameSuri = getParentNameSuri(parentName, suri)
+  const parentNameSuri = getParentNameSuri(parentName, suri);
 
   return (
     <div className={`
@@ -287,13 +288,13 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             iconTheme={theme}
             isExternal={isExternal}
             onCopy={() => notify.info({
-              message: 'Copied to clipboard',
-              aliveFor: 2
+              aliveFor: 2,
+              message: 'Copied to clipboard'
             })}
             prefix={prefix}
             value={formatted || address}
           />}
-          {!signer && <div className={'account-card__identicon--loading'}><Loading/></div>}
+          {!signer && <div className={'account-card__identicon--loading'}><Loading /></div>}
         </div>
 
         <div className='account-card__info'>
@@ -314,7 +315,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                   </span>
                 </div>
               </>
-              )
+            )
             : ''
           }
           <div className='account-card__name'>
@@ -337,8 +338,8 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                 title={t('Account Visibility')}
               />
             }
-            <img src='https://s2.coinmarketcap.com/static/img/coins/64x64/6951.png'/>
-            <div>{<Balance/>}</div>
+            <img src='https://s2.coinmarketcap.com/static/img/coins/64x64/6951.png' />
+            <div>{<Balance />}</div>
           </div>}
 
           <div className='account-card__meta'>
@@ -351,8 +352,8 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                 className='copyIcon'
                 icon={faCopy}
                 onClick={() => notify.info({
-                  message: 'Copied Reef Account Address to clipboard.',
-                  aliveFor: 2
+                  aliveFor: 2,
+                  message: 'Copied Reef Account Address to clipboard.'
                 })}
                 size='sm'
                 title={t('Copy Reef Account Address')}
@@ -373,9 +374,9 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                       className='copyIcon'
                       icon={faCopy}
                       onClick={() => notify.danger({
-                        message: 'Copied to clipboard.\nDO NOT use this Reef EVM address on any other chain. ONLY use it on Reef chain.',
+                        children: <Button text='I understand' />,
                         keepAlive: true,
-                        children: <Button text='I understand' />
+                        message: 'Copied to clipboard.\nDO NOT use this Reef EVM address on any other chain. ONLY use it on Reef chain.'
                       })}
                       size='sm'
                       title={t('Copy Ethereum VM Address')}
@@ -416,7 +417,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                 )}
               </div>
             </div>
-            )
+          )
           : ''
       }
 
@@ -428,7 +429,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
         <div className='account-card__chain'>Selected</div>
       )}
     </div>
-  )
+  );
 }
 
 export default styled(Address)(({ theme }: ThemeProps) => `
@@ -607,4 +608,4 @@ export default styled(Address)(({ theme }: ThemeProps) => `
       background: ${theme.readonlyInputBackground};
     }
   }
-`)
+`);

@@ -1,20 +1,20 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { KeypairType } from '@reef-defi/util-crypto/types'
-import type { ThemeProps } from '../../types'
-import type { AccountInfo } from '.'
+import type { KeypairType } from '@reef-defi/util-crypto/types';
+import type { ThemeProps } from '../../types';
+import type { AccountInfo } from '.';
 
-import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { validateSeed } from '@reef-defi/extension-ui/messaging'
-import { objectSpread } from '@reef-defi/util'
-import React, { useCallback, useEffect, useState } from 'react'
-import styled from 'styled-components'
+import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { validateSeed } from '@reef-defi/extension-ui/messaging';
+import { objectSpread } from '@reef-defi/util';
+import React, { useCallback, useEffect, useState } from 'react';
+import styled from 'styled-components';
 
-import { ButtonArea, Dropdown, InputWithLabel, NextStepButton, TextAreaWithLabel, VerticalSpace, Warning } from '../../components'
-import useGenesisHashOptions from '../../hooks/useGenesisHashOptions'
-import useTranslation from '../../hooks/useTranslation'
+import { ButtonArea, Dropdown, InputWithLabel, NextStepButton, TextAreaWithLabel, VerticalSpace, Warning } from '../../components';
+import useGenesisHashOptions from '../../hooks/useGenesisHashOptions';
+import useTranslation from '../../hooks/useTranslation';
 
 interface Props {
   className?: string;
@@ -24,47 +24,47 @@ interface Props {
 }
 
 function SeedAndPath ({ className, onAccountChange, onNextStep, type }: Props): React.ReactElement {
-  const { t } = useTranslation()
-  const genesisOptions = useGenesisHashOptions()
-  const [address, setAddress] = useState('')
-  const [seed, setSeed] = useState<string | null>(null)
-  const [path, setPath] = useState<string | null>(null)
-  const [advanced, setAdvances] = useState(false)
-  const [error, setError] = useState('')
-  const [genesis, setGenesis] = useState('')
+  const { t } = useTranslation();
+  const genesisOptions = useGenesisHashOptions();
+  const [address, setAddress] = useState('');
+  const [seed, setSeed] = useState<string | null>(null);
+  const [path, setPath] = useState<string | null>(null);
+  const [advanced, setAdvances] = useState(false);
+  const [error, setError] = useState('');
+  const [genesis, setGenesis] = useState('');
 
   useEffect(() => {
     // No need to validate an empty seed
     // we have a dedicated error for this
     if (!seed) {
-      onAccountChange(null)
+      onAccountChange(null);
 
-      return
+      return;
     }
 
-    const suri = `${seed || ''}${path || ''}`
+    const suri = `${seed || ''}${path || ''}`;
 
     validateSeed(suri, type)
       .then((validatedAccount) => {
-        setError('')
-        setAddress(validatedAccount.address)
+        setError('');
+        setAddress(validatedAccount.address);
         onAccountChange(
           objectSpread<AccountInfo>({}, validatedAccount, { genesis, type })
-        )
+        );
       })
       .catch(() => {
-        setAddress('')
-        onAccountChange(null)
+        setAddress('');
+        onAccountChange(null);
         setError(path
           ? t<string>('Invalid mnemonic seed or derivation path')
           : t<string>('Invalid mnemonic seed')
-        )
-      })
-  }, [t, genesis, seed, path, onAccountChange, type])
+        );
+      });
+  }, [t, genesis, seed, path, onAccountChange, type]);
 
   const _onToggleAdvanced = useCallback(() => {
-    setAdvances(!advanced)
-  }, [advanced])
+    setAdvances(!advanced);
+  }, [advanced]);
 
   return (
     <>
@@ -128,7 +128,7 @@ function SeedAndPath ({ className, onAccountChange, onNextStep, type }: Props): 
         </NextStepButton>
       </ButtonArea>
     </>
-  )
+  );
 }
 
 export default styled(SeedAndPath)(({ theme }: ThemeProps) => `
@@ -161,4 +161,4 @@ export default styled(SeedAndPath)(({ theme }: ThemeProps) => `
   .seedError {
     margin-bottom: 1rem;
   }
-`)
+`);
