@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Icon from './Icon';
 
 const getIcon = (type: string): IconDefinition => {
-  const map: any = { success: faCheckCircle, danger: faExclamationTriangle };
+  const map: any = { danger: faExclamationTriangle, success: faCheckCircle };
 
   const mapItem = map[type];
 
@@ -105,7 +105,7 @@ const Alert = ({ aliveFor,
           !!onClose &&
               <button
                 className='uik-alert__close-btn'
-                onClick={close}
+                onClick={() => close()}
               >
                 <Icon
                   className='uik-alert__close-btn-icon'

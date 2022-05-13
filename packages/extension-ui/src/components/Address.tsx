@@ -228,7 +228,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           fill
           onClick={() => openEvmBindView(signer?.address)}
           size='small'
-                                                                                                      ><span>Bind EVM</span></Button>}
+        ><span>Bind EVM</span></Button>}
       </>);
   };
 
@@ -288,8 +288,8 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             iconTheme={theme}
             isExternal={isExternal}
             onCopy={() => notify.info({
-              message: 'Copied to clipboard',
-              aliveFor: 2
+              aliveFor: 2,
+              message: 'Copied to clipboard'
             })}
             prefix={prefix}
             value={formatted || address}
@@ -352,8 +352,8 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                 className='copyIcon'
                 icon={faCopy}
                 onClick={() => notify.info({
-                  message: 'Copied Reef Account Address to clipboard.',
-                  aliveFor: 2
+                  aliveFor: 2,
+                  message: 'Copied Reef Account Address to clipboard.'
                 })}
                 size='sm'
                 title={t('Copy Reef Account Address')}
@@ -374,9 +374,9 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                       className='copyIcon'
                       icon={faCopy}
                       onClick={() => notify.danger({
-                        message: 'Copied to clipboard.\nDO NOT use this Reef EVM address on any other chain. ONLY use it on Reef chain.',
+                        children: <Button text='I understand' />,
                         keepAlive: true,
-                        children: <Button text='I understand' />
+                        message: 'Copied to clipboard.\nDO NOT use this Reef EVM address on any other chain. ONLY use it on Reef chain.'
                       })}
                       size='sm'
                       title={t('Copy Ethereum VM Address')}

@@ -84,12 +84,12 @@ const render = () => {
   );
 };
 
-const info = (params: NewNotification | string) => { add({ type: 'info', params }); };
+const info = (params: NewNotification | string) => { add({ params, type: 'info' }); };
 
-const success = (params: NewNotification | string) => { add({ type: 'success', params }); };
+const success = (params: NewNotification | string) => { add({ params, type: 'success' }); };
 
-const danger = (params: NewNotification | string) => { add({ type: 'danger', params }); };
+const danger = (params: NewNotification | string) => { add({ params, type: 'danger' }); };
 
-const notify = { info, success, danger };
+const notify = { danger, info, success };
 
 export default notify;

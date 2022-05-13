@@ -110,7 +110,17 @@ const mountComponent = async (addressComponentProps: AddressComponentProps, cont
   return { wrapper };
 };
 
-const signerPropVal = { signerProp: { name: 'signnn', signer: ({} as any), address: '5fda333', isEvmClaimed: false, evmAddress: '0x234fdas', balance: BigNumber.from('3423'), source: 'extension' } };
+const signerPropVal = {
+  signerProp: {
+    address: '5fda333',
+    balance: BigNumber.from('3423'),
+    evmAddress: '0x234fdas',
+    isEvmClaimed: false,
+    name: 'signnn',
+    signer: ({} as any),
+    source: 'extension'
+  }
+};
 
 const getWrapper = async (account: AccountJson, contextAccounts: AccountJson[], withAccountsInContext: boolean) => {
   // the address component can query info about the account from the account context

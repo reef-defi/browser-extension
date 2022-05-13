@@ -12,12 +12,12 @@ const onTxUpdate = (state: TxStatusUpdate) => {
     if (state.addresses && state.addresses.length) {
       state.addresses.forEach((address) => {
         updateActions.push({
-          type: appState.UpdateDataType.ACCOUNT_EVM_BINDING,
-          address
+          address,
+          type: appState.UpdateDataType.ACCOUNT_EVM_BINDING
         } as appState.UpdateAction);
         updateActions.push({
-          type: appState.UpdateDataType.ACCOUNT_NATIVE_BALANCE,
-          address
+          address,
+          type: appState.UpdateDataType.ACCOUNT_NATIVE_BALANCE
         } as appState.UpdateAction);
       });
     } else {
@@ -27,8 +27,8 @@ const onTxUpdate = (state: TxStatusUpdate) => {
     // transaction
     updateActions = state.addresses && state.addresses.length
       ? state.addresses.map((address) => ({
-        type: appState.UpdateDataType.ACCOUNT_NATIVE_BALANCE,
-        address
+        address,
+        type: appState.UpdateDataType.ACCOUNT_NATIVE_BALANCE
       } as appState.UpdateAction))
       : [{ type: appState.UpdateDataType.ACCOUNT_NATIVE_BALANCE }];
   }
@@ -57,7 +57,7 @@ export const Bind = (): JSX.Element => {
     }
 
     setBindSigner(paramAccount || selectedSigner);
-  }, [selectedSigner]);
+  }, [accounts, selectedSigner]);
 
   return (
     <SigningOrChildren>
