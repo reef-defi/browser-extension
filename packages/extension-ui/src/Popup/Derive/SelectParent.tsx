@@ -1,15 +1,15 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { canDerive } from '@reef-defi/extension-base/utils'
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { canDerive } from '@reef-defi/extension-base/utils';
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
-import { AccountContext, ActionContext, Address, ButtonArea, InputWithLabel, Label, NextStepButton, VerticalSpace, Warning } from '../../components'
-import useTranslation from '../../hooks/useTranslation'
-import { validateAccount, validateDerivationPath } from '../../messaging'
-import { nextDerivationPath } from '../../util/nextDerivationPath'
-import AddressDropdown from './AddressDropdown'
-import DerivationPath from './DerivationPath'
+import { AccountContext, ActionContext, Address, ButtonArea, InputWithLabel, Label, NextStepButton, VerticalSpace, Warning } from '../../components';
+import useTranslation from '../../hooks/useTranslation';
+import { validateAccount, validateDerivationPath } from '../../messaging';
+import { nextDerivationPath } from '../../util/nextDerivationPath';
+import AddressDropdown from './AddressDropdown';
+import DerivationPath from './DerivationPath';
 
 interface Props {
   className?: string;
@@ -20,40 +20,40 @@ interface Props {
 }
 
 // match any single slash
-const singleSlashRegex = /([^/]|^)\/([^/]|$)/
+const singleSlashRegex = /([^/]|^)\/([^/]|$)/;
 
 export default function SelectParent ({ className, isLocked, onDerivationConfirmed, parentAddress, parentGenesis }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation()
-  const onAction = useContext(ActionContext)
-  const [isBusy, setIsBusy] = useState(false)
-  const { accounts, hierarchy } = useContext(AccountContext)
-  const defaultPath = useMemo(() => nextDerivationPath(accounts, parentAddress), [accounts, parentAddress])
-  const [suriPath, setSuriPath] = useState<null | string>(defaultPath)
-  const [parentPassword, setParentPassword] = useState<string>('')
-  const [isProperParentPassword, setIsProperParentPassword] = useState(false)
-  const [pathError, setPathError] = useState('')
-  const passwordInputRef = useRef<HTMLDivElement>(null)
+  const { t } = useTranslation();
+  const onAction = useContext(ActionContext);
+  const [isBusy, setIsBusy] = useState(false);
+  const { accounts, hierarchy } = useContext(AccountContext);
+  const defaultPath = useMemo(() => nextDerivationPath(accounts, parentAddress), [accounts, parentAddress]);
+  const [suriPath, setSuriPath] = useState<null | string>(defaultPath);
+  const [parentPassword, setParentPassword] = useState<string>('');
+  const [isProperParentPassword, setIsProperParentPassword] = useState(false);
+  const [pathError, setPathError] = useState('');
+  const passwordInputRef = useRef<HTMLDivElement>(null);
   const allowSoftDerivation = useMemo(() => {
-    const parent = accounts.find(({ address }) => address === parentAddress)
+    const parent = accounts.find(({ address }) => address === parentAddress);
 
-    return parent?.type === 'sr25519'
-  }, [accounts, parentAddress])
+    return parent?.type === 'sr25519';
+  }, [accounts, parentAddress]);
 
   // reset the password field if the parent address changes
   useEffect(() => {
-    setParentPassword('')
-  }, [parentAddress])
+    setParentPassword('');
+  }, [parentAddress]);
 
   useEffect(() => {
     // forbid the use of password since Keyring ignores it
     if (suriPath?.includes('///')) {
-      setPathError(t('`///password` not supported for derivation'))
+      setPathError(t('`///password` not supported for derivation'));
     }
 
     if (!allowSoftDerivation && suriPath && singleSlashRegex.test(suriPath)) {
-      setPathError(t('Soft derivation is only allowed for sr25519 accounts'))
+      setPathError(t('Soft derivation is only allowed for sr25519 accounts'));
     }
-  }, [allowSoftDerivation, suriPath, t])
+  }, [allowSoftDerivation, suriPath, t]);
 
   const allAddresses = useMemo(
     () => hierarchy
@@ -61,61 +61,61 @@ export default function SelectParent ({ className, isLocked, onDerivationConfirm
       .filter(({ type }) => canDerive(type))
       .map(({ address, genesisHash }): [string, string | null] => [address, genesisHash || null]),
     [hierarchy]
-  )
+  );
 
   const _onParentPasswordEnter = useCallback(
     (parentPassword: string): void => {
-      setParentPassword(parentPassword)
-      setIsProperParentPassword(!!parentPassword)
+      setParentPassword(parentPassword);
+      setIsProperParentPassword(!!parentPassword);
     },
     []
-  )
+  );
 
   const _onSuriPathChange = useCallback(
     (path: string): void => {
-      setSuriPath(path)
-      setPathError('')
+      setSuriPath(path);
+      setPathError('');
     },
     []
-  )
+  );
 
   const _onParentChange = useCallback(
     (address: string) => onAction(`/account/derive/${address}`),
     [onAction]
-  )
+  );
 
   const _onSubmit = useCallback(
     async (): Promise<void> => {
       if (suriPath && parentAddress && parentPassword) {
-        setIsBusy(true)
+        setIsBusy(true);
 
-        const isUnlockable = await validateAccount(parentAddress, parentPassword)
+        const isUnlockable = await validateAccount(parentAddress, parentPassword);
 
         if (isUnlockable) {
           try {
-            const account = await validateDerivationPath(parentAddress, suriPath, parentPassword)
+            const account = await validateDerivationPath(parentAddress, suriPath, parentPassword);
 
-            onDerivationConfirmed({ account, parentPassword })
+            onDerivationConfirmed({ account, parentPassword });
           } catch (error) {
-            setIsBusy(false)
-            setPathError(t('Invalid derivation path'))
-            console.error(error)
+            setIsBusy(false);
+            setPathError(t('Invalid derivation path'));
+            console.error(error);
           }
         } else {
-          setIsBusy(false)
-          setIsProperParentPassword(false)
+          setIsBusy(false);
+          setIsProperParentPassword(false);
         }
       }
     },
     [parentAddress, parentPassword, onDerivationConfirmed, suriPath, t]
-  )
+  );
 
   useEffect(() => {
-    setParentPassword('')
-    setIsProperParentPassword(false)
+    setParentPassword('');
+    setIsProperParentPassword(false);
 
-    passwordInputRef.current?.querySelector('input')?.focus()
-  }, [_onParentPasswordEnter])
+    passwordInputRef.current?.querySelector('input')?.focus();
+  }, [_onParentPasswordEnter]);
 
   return (
     <>
@@ -128,7 +128,7 @@ export default function SelectParent ({ className, isLocked, onDerivationConfirm
               genesisHash={parentGenesis}
               presentation
             />
-            )
+          )
           : (
             <Label label={t<string>('Choose Parent Account:')}>
               <AddressDropdown
@@ -138,7 +138,7 @@ export default function SelectParent ({ className, isLocked, onDerivationConfirm
                 selectedGenesis={parentGenesis}
               />
             </Label>
-            )
+          )
         }
         <div ref={passwordInputRef}>
           <InputWithLabel
@@ -192,5 +192,5 @@ export default function SelectParent ({ className, isLocked, onDerivationConfirm
         </NextStepButton>
       </ButtonArea>
     </>
-  )
+  );
 }

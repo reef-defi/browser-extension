@@ -1,6 +1,7 @@
-import React, { MouseEventHandler } from 'react'
+import React, { MouseEventHandler } from 'react';
 
-import { FishAnimation } from './index'
+import { FishAnimation } from './index';
+
 interface CTA {
   children?: any[];
   className?: string;
@@ -12,16 +13,14 @@ interface CTA {
   text?: string;
 }
 
-export const CTA = ({
-  children,
+export const CTA = ({ children,
   className,
   danger,
   disabled,
   loading,
   onClick,
   size,
-  text
-}: CTA): JSX.Element => (
+  text }: CTA): JSX.Element => (
   <button
     className={`
       uik-cta
@@ -38,4 +37,4 @@ export const CTA = ({
     {loading ? <FishAnimation /> : ''}
     <span className='uik-cta__text'>{children}{text}</span>
   </button>
-)
+);

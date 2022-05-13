@@ -1,42 +1,42 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../../types'
+import type { ThemeProps } from '../../types';
 
-import { AuthUrlInfo, AuthUrls } from '@reef-defi/extension-base/background/handlers/State'
-import { InputFilter } from '@reef-defi/extension-ui/components'
-import React, { useCallback, useEffect, useState } from 'react'
-import styled from 'styled-components'
+import { AuthUrlInfo, AuthUrls } from '@reef-defi/extension-base/background/handlers/State';
+import { InputFilter } from '@reef-defi/extension-ui/components';
+import React, { useCallback, useEffect, useState } from 'react';
+import styled from 'styled-components';
 
-import useTranslation from '../../hooks/useTranslation'
-import { getAuthList, toggleAuthorization } from '../../messaging'
-import { Header } from '../../partials'
-import WebsiteEntry from './WebsiteEntry'
+import useTranslation from '../../hooks/useTranslation';
+import { getAuthList, toggleAuthorization } from '../../messaging';
+import { Header } from '../../partials';
+import WebsiteEntry from './WebsiteEntry';
 
 interface Props extends ThemeProps {
   className?: string;
 }
 
 function AuthManagement ({ className }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation()
-  const [authList, setAuthList] = useState<AuthUrls | null>(null)
-  const [filter, setFilter] = useState('')
+  const { t } = useTranslation();
+  const [authList, setAuthList] = useState<AuthUrls | null>(null);
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
     getAuthList()
       .then(({ list }) => setAuthList(list))
-      .catch((e) => console.error(e))
-  }, [])
+      .catch((e) => console.error(e));
+  }, []);
 
   const _onChangeFilter = useCallback((filter: string) => {
-    setFilter(filter)
-  }, [])
+    setFilter(filter);
+  }, []);
 
   const toggleAuth = useCallback((url: string) => {
     toggleAuthorization(url)
       .then(({ list }) => setAuthList(list))
-      .catch(console.error)
-  }, [])
+      .catch(console.error);
+  }, []);
 
   return (
     <>
@@ -75,7 +75,7 @@ function AuthManagement ({ className }: Props): React.ReactElement<Props> {
         </div>
       </>
     </>
-  )
+  );
 }
 
 export default styled(AuthManagement)`
@@ -85,4 +85,4 @@ export default styled(AuthManagement)`
   .empty-list {
     text-align: center;
   }
-`
+`;

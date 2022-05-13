@@ -1,23 +1,23 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { AccountJson, RequestSign } from '@reef-defi/extension-base/background/types'
-import type { HexString } from '@reef-defi/util/types'
-import type { ExtrinsicPayload } from '@polkadot/types/interfaces'
-import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types'
+import type { AccountJson, RequestSign } from '@reef-defi/extension-base/background/types';
+import type { HexString } from '@reef-defi/util/types';
+import type { ExtrinsicPayload } from '@polkadot/types/interfaces';
+import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 
-import { decodeAddress } from '@reef-defi/util-crypto'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { decodeAddress } from '@reef-defi/util-crypto';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 
-import { TypeRegistry } from '@polkadot/types'
+import { TypeRegistry } from '@polkadot/types';
 
-import { AccountContext, ActionContext, Address, VerticalSpace } from '../../../components'
-import { approveSignSignature } from '../../../messaging'
-import Bytes from '../Bytes'
-import Extrinsic from '../Extrinsic'
-import LedgerSign from '../LedgerSign'
-import Qr from '../Qr'
-import SignArea from './SignArea'
+import { AccountContext, ActionContext, Address, VerticalSpace } from '../../../components';
+import { approveSignSignature } from '../../../messaging';
+import Bytes from '../Bytes';
+import Extrinsic from '../Extrinsic';
+import LedgerSign from '../LedgerSign';
+import Qr from '../Qr';
+import SignArea from './SignArea';
 
 interface Props {
   account: AccountJson;
@@ -33,53 +33,53 @@ interface Data {
   payload: ExtrinsicPayload | null;
 }
 
-export const CMD_MORTAL = 2
-export const CMD_SIGN_MESSAGE = 3
+export const CMD_MORTAL = 2;
+export const CMD_SIGN_MESSAGE = 3;
 
 // keep it global, we can and will re-use this across requests
-const registry = new TypeRegistry()
+const registry = new TypeRegistry();
 
 function isRawPayload (payload: SignerPayloadJSON | SignerPayloadRaw): payload is SignerPayloadRaw {
-  return !!(payload as SignerPayloadRaw).data
+  return !!(payload as SignerPayloadRaw).data;
 }
 
 export default function Request ({ account: { accountIndex, addressOffset, isExternal, isHardware }, buttonText, isFirst, request, signId, url }: Props): React.ReactElement<Props> | null {
-  const onAction = useContext(ActionContext)
-  const [{ hexBytes, payload }, setData] = useState<Data>({ hexBytes: null, payload: null })
-  const [error, setError] = useState<string | null>(null)
-  const { accounts } = useContext(AccountContext)
+  const onAction = useContext(ActionContext);
+  const [{ hexBytes, payload }, setData] = useState<Data>({ hexBytes: null, payload: null });
+  const [error, setError] = useState<string | null>(null);
+  const { accounts } = useContext(AccountContext);
 
   useEffect((): void => {
-    const payload = request.payload
+    const payload = request.payload;
 
     if (isRawPayload(payload)) {
       setData({
         hexBytes: payload.data,
         payload: null
-      })
+      });
     } else {
-      registry.setSignedExtensions(payload.signedExtensions)
+      registry.setSignedExtensions(payload.signedExtensions);
 
       setData({
         hexBytes: null,
         payload: registry.createType('ExtrinsicPayload', payload, { version: payload.version })
-      })
+      });
     }
-  }, [request])
+  }, [request]);
 
   const _onSignature = useCallback(
     ({ signature }: { signature: HexString }): Promise<void> =>
       approveSignSignature(signId, signature)
         .then(() => onAction())
         .catch((error: Error): void => {
-          setError(error.message)
-          console.error(error)
+          setError(error.message);
+          console.error(error);
         }),
     [onAction, signId]
-  )
+  );
 
   if (payload !== null) {
-    const json = request.payload as SignerPayloadJSON
+    const json = request.payload as SignerPayloadJSON;
 
     return (
       <>
@@ -102,14 +102,14 @@ export default function Request ({ account: { accountIndex, addressOffset, isExt
               onSignature={_onSignature}
               payload={payload}
             />
-            )
+          )
           : (
             <Extrinsic
               payload={payload}
               request={json}
               url={url}
             />
-            )
+          )
         }
         {isHardware && (
           <LedgerSign
@@ -131,10 +131,10 @@ export default function Request ({ account: { accountIndex, addressOffset, isExt
           signId={signId}
         />
       </>
-    )
+    );
   } else if (hexBytes !== null) {
-    const { address, data } = request.payload as SignerPayloadRaw
-    const account = accounts.find((account) => decodeAddress(account.address).toString() === decodeAddress(address).toString())
+    const { address, data } = request.payload as SignerPayloadRaw;
+    const account = accounts.find((account) => decodeAddress(account.address).toString() === decodeAddress(address).toString());
 
     return (
       <>
@@ -155,13 +155,13 @@ export default function Request ({ account: { accountIndex, addressOffset, isExt
               onSignature={_onSignature}
               payload={data}
             />
-            )
+          )
           : (
             <Bytes
               bytes={data}
               url={url}
             />
-            )
+          )
         }
         <VerticalSpace />
         <SignArea
@@ -173,8 +173,8 @@ export default function Request ({ account: { accountIndex, addressOffset, isExt
           signId={signId}
         />
       </>
-    )
+    );
   }
 
-  return null
+  return null;
 }

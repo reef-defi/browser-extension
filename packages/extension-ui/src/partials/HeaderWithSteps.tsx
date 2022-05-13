@@ -1,13 +1,13 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../types'
+import type { ThemeProps } from '../types';
 
-import React, { useCallback, useContext } from 'react'
-import styled from 'styled-components'
+import React, { useCallback, useContext } from 'react';
+import styled from 'styled-components';
 
-import { ActionContext, ActionText } from '../components'
-import Header from './Header'
+import { ActionContext, ActionText } from '../components';
+import Header from './Header';
 
 interface Props extends ThemeProps {
   className?: string;
@@ -16,11 +16,11 @@ interface Props extends ThemeProps {
 }
 
 function HeaderWithSteps ({ className, step, text }: Props): React.ReactElement<Props> {
-  const onAction = useContext(ActionContext)
+  const onAction = useContext(ActionContext);
 
   const _onCancel = useCallback(() => {
-    onAction('/')
-  }, [onAction])
+    onAction('/');
+  }, [onAction]);
 
   return (
     <Header
@@ -38,7 +38,7 @@ function HeaderWithSteps ({ className, step, text }: Props): React.ReactElement<
         />
       </div>
     </Header>
-  )
+  );
 }
 
 export default React.memo(styled(HeaderWithSteps)(({ theme }: Props) => `
@@ -63,4 +63,4 @@ export default React.memo(styled(HeaderWithSteps)(({ theme }: Props) => `
     line-height: ${theme.labelLineHeight};
     color: ${theme.textColor};
   }
-`))
+`));

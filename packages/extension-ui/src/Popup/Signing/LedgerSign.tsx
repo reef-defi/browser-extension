@@ -1,17 +1,17 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { HexString } from '@reef-defi/util/types'
-import type { ExtrinsicPayload } from '@polkadot/types/interfaces'
+import type { HexString } from '@reef-defi/util/types';
+import type { ExtrinsicPayload } from '@polkadot/types/interfaces';
 
-import { faSync } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useCallback, useEffect, useState } from 'react'
-import styled from 'styled-components'
+import { faSync } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useCallback, useEffect, useState } from 'react';
+import styled from 'styled-components';
 
-import { Button, Warning } from '../../components'
-import { useLedger } from '../../hooks/useLedger'
-import useTranslation from '../../hooks/useTranslation'
+import { Button, Warning } from '../../components';
+import { useLedger } from '../../hooks/useLedger';
+import useTranslation from '../../hooks/useTranslation';
 
 interface Props {
   accountIndex?: number;
@@ -25,39 +25,39 @@ interface Props {
 }
 
 function LedgerSign ({ accountIndex, addressOffset, className, error, genesisHash, onSignature, payload, setError }: Props): React.ReactElement<Props> {
-  const [isBusy, setIsBusy] = useState(false)
-  const { t } = useTranslation()
-  const { error: ledgerError, isLoading: ledgerLoading, isLocked: ledgerLocked, ledger, refresh, warning: ledgerWarning } = useLedger(genesisHash, accountIndex, addressOffset)
+  const [isBusy, setIsBusy] = useState(false);
+  const { t } = useTranslation();
+  const { error: ledgerError, isLoading: ledgerLoading, isLocked: ledgerLocked, ledger, refresh, warning: ledgerWarning } = useLedger(genesisHash, accountIndex, addressOffset);
 
   useEffect(() => {
     if (ledgerError) {
-      setError(ledgerError)
+      setError(ledgerError);
     }
-  }, [ledgerError, setError])
+  }, [ledgerError, setError]);
 
   const _onRefresh = useCallback(() => {
-    refresh()
-    setError(null)
-  }, [refresh, setError])
+    refresh();
+    setError(null);
+  }, [refresh, setError]);
 
   const _onSignLedger = useCallback(
     (): void => {
       if (!ledger || !payload || !onSignature) {
-        return
+        return;
       }
 
-      setError(null)
-      setIsBusy(true)
+      setError(null);
+      setIsBusy(true);
       ledger.sign(payload.toU8a(true), accountIndex, addressOffset)
         .then((signature) => {
-          onSignature(signature)
+          onSignature(signature);
         }).catch((e: Error) => {
-          setError(e.message)
-          setIsBusy(false)
-        })
+          setError(e.message);
+          setIsBusy(false);
+        });
     },
     [accountIndex, addressOffset, ledger, onSignature, payload, setError]
-  )
+  );
 
   return (
     <div className={className}>
@@ -80,7 +80,7 @@ function LedgerSign ({ accountIndex, addressOffset, className, error, genesisHas
             <FontAwesomeIcon icon={faSync} />
             {t<string>('Refresh')}
           </Button>
-          )
+        )
         : (
           <Button
             isBusy={isBusy || ledgerLoading}
@@ -88,11 +88,11 @@ function LedgerSign ({ accountIndex, addressOffset, className, error, genesisHas
           >
             {t<string>('Sign on Ledger')}
           </Button>
-          )
+        )
       }
     </div>
 
-  )
+  );
 }
 
 export default styled(LedgerSign)`
@@ -102,4 +102,4 @@ export default styled(LedgerSign)`
   .danger {
     margin-bottom: .5rem;
   }
-`
+`;

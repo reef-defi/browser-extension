@@ -1,7 +1,7 @@
 // Copyright 2019-2021 @polkadot/extension authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-const config = require('@reef-defi/dev/config/jest.cjs')
+const config = require('@reef-defi/dev/config/jest.cjs');
 
 module.exports = {
   ...config,
@@ -14,4 +14,4 @@ module.exports = {
       '<rootDir>/__mocks__/fileMock.js'
   },
   testEnvironment: 'jsdom'
-}
+};

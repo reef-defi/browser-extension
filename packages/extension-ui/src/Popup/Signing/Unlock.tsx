@@ -1,10 +1,10 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useCallback } from 'react'
+import React, { useCallback } from 'react';
 
-import { InputWithLabel, Warning } from '../../components'
-import useTranslation from '../../hooks/useTranslation'
+import { InputWithLabel, Warning } from '../../components';
+import useTranslation from '../../hooks/useTranslation';
 
 interface Props {
   className?: string;
@@ -17,15 +17,15 @@ interface Props {
 }
 
 function Unlock ({ className, error, isBusy, onSign, password, setError, setPassword }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const _onChangePassword = useCallback(
     (password: string): void => {
-      setPassword(password)
-      setError(null)
+      setPassword(password);
+      setError(null);
     },
     [setError, setPassword]
-  )
+  );
 
   return (
     <div className={className}>
@@ -49,7 +49,7 @@ function Unlock ({ className, error, isBusy, onSign, password, setError, setPass
         </Warning>
       )}
     </div>
-  )
+  );
 }
 
-export default React.memo(Unlock)
+export default React.memo(Unlock);

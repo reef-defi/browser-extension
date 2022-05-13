@@ -1,11 +1,11 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { MetadataDefBase } from '@reef-defi/extension-inject/types'
+import type { MetadataDefBase } from '@reef-defi/extension-inject/types';
 
-import { selectableNetworks } from '@reef-defi/networks'
+import { selectableNetworks } from '@reef-defi/networks';
 
-const hashes: MetadataDefBase[] = [] /* selectableNetworks
+const hashes: MetadataDefBase[] = []; /* selectableNetworks
   .filter(({ genesisHash, displayName }) => {
     return !!genesisHash.length
   })
@@ -16,4 +16,4 @@ const hashes: MetadataDefBase[] = [] /* selectableNetworks
     ss58Format: network.prefix
   })); */
 
-export default hashes
+export default hashes;

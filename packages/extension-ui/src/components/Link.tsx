@@ -1,11 +1,11 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../types'
+import type { ThemeProps } from '../types';
 
-import React from 'react'
-import { Link as RouterLink } from 'react-router-dom'
-import styled from 'styled-components'
+import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import styled from 'styled-components';
 
 interface Props {
   children?: React.ReactNode;
@@ -26,7 +26,7 @@ function Link ({ children, className = '', isDisabled, onClick, title, to }: Pro
       >
         {children}
       </div>
-    )
+    );
   }
 
   return to
@@ -39,7 +39,7 @@ function Link ({ children, className = '', isDisabled, onClick, title, to }: Pro
       >
         {children}
       </RouterLink>
-      )
+    )
     : (
       <a
         className={className}
@@ -49,7 +49,7 @@ function Link ({ children, className = '', isDisabled, onClick, title, to }: Pro
       >
         {children}
       </a>
-      )
+    );
 }
 
 export default styled(Link)(({ isDanger, theme }: Props & ThemeProps) => `
@@ -72,4 +72,4 @@ export default styled(Link)(({ isDanger, theme }: Props & ThemeProps) => `
   &.isDisabled {
     opacity: 0.4;
   }
-`)
+`);

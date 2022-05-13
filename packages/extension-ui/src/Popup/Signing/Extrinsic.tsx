@@ -1,18 +1,18 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { Chain } from '@reef-defi/extension-chains/types'
-import type { Call, ExtrinsicEra, ExtrinsicPayload } from '@polkadot/types/interfaces'
-import type { AnyJson, SignerPayloadJSON } from '@polkadot/types/types'
+import type { Chain } from '@reef-defi/extension-chains/types';
+import type { Call, ExtrinsicEra, ExtrinsicPayload } from '@polkadot/types/interfaces';
+import type { AnyJson, SignerPayloadJSON } from '@polkadot/types/types';
 
-import { bnToBn, formatNumber } from '@reef-defi/util'
-import BN from 'bn.js'
-import { TFunction } from 'i18next'
-import React, { useMemo, useRef } from 'react'
+import { bnToBn, formatNumber } from '@reef-defi/util';
+import BN from 'bn.js';
+import { TFunction } from 'i18next';
+import React, { useMemo, useRef } from 'react';
 
-import { Table } from '../../components'
-import useMetadata from '../../hooks/useMetadata'
-import useTranslation from '../../hooks/useTranslation'
+import { Table } from '../../components';
+import useMetadata from '../../hooks/useMetadata';
+import useTranslation from '../../hooks/useTranslation';
 
 interface Decoded {
   args: AnyJson | null;
@@ -27,28 +27,28 @@ interface Props {
 }
 
 function displayDecodeVersion (message: string, chain: Chain, specVersion: BN): string {
-  return `${message}: chain=${chain.name}, specVersion=${chain.specVersion.toString()} (request specVersion=${specVersion.toString()})`
+  return `${message}: chain=${chain.name}, specVersion=${chain.specVersion.toString()} (request specVersion=${specVersion.toString()})`;
 }
 
 function decodeMethod (data: string, chain: Chain, specVersion: BN): Decoded {
-  let args: AnyJson | null = null
-  let method: Call | null = null
+  let args: AnyJson | null = null;
+  let method: Call | null = null;
 
   try {
     if (specVersion.eqn(chain.specVersion)) {
-      method = chain.registry.createType('Call', data)
-      args = (method.toHuman() as { args: AnyJson }).args
+      method = chain.registry.createType('Call', data);
+      args = (method.toHuman() as { args: AnyJson }).args;
     } else {
-      console.log(displayDecodeVersion('Outdated metadata to decode', chain, specVersion))
+      console.log(displayDecodeVersion('Outdated metadata to decode', chain, specVersion));
     }
   } catch (error) {
-    console.error(`${displayDecodeVersion('Error decoding method', chain, specVersion)}:: ${(error as Error).message}`)
+    console.error(`${displayDecodeVersion('Error decoding method', chain, specVersion)}:: ${(error as Error).message}`);
 
-    args = null
-    method = null
+    args = null;
+    method = null;
   }
 
-  return { args, method }
+  return { args, method };
 }
 
 function renderMethod (data: string, { args, method }: Decoded, t: TFunction): React.ReactNode {
@@ -58,7 +58,7 @@ function renderMethod (data: string, { args, method }: Decoded, t: TFunction): R
         <td className='label'>{t<string>('method data')}</td>
         <td className='data'>{data}</td>
       </tr>
-    )
+    );
   }
 
   return (
@@ -87,35 +87,35 @@ function renderMethod (data: string, { args, method }: Decoded, t: TFunction): R
         </tr>
       )}
     </>
-  )
+  );
 }
 
 function mortalityAsString (era: ExtrinsicEra, hexBlockNumber: string, t: TFunction): string {
   if (era.isImmortalEra) {
-    return t<string>('immortal')
+    return t<string>('immortal');
   }
 
-  const blockNumber = bnToBn(hexBlockNumber)
-  const mortal = era.asMortalEra
+  const blockNumber = bnToBn(hexBlockNumber);
+  const mortal = era.asMortalEra;
 
   return t<string>('mortal, valid from {{birth}} to {{death}}', {
     replace: {
       birth: formatNumber(mortal.birth(blockNumber)),
       death: formatNumber(mortal.death(blockNumber))
     }
-  })
+  });
 }
 
 function Extrinsic ({ className, payload: { era, nonce, tip }, request: { blockNumber, genesisHash, method, specVersion: hexSpec }, url }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation()
-  const chain = useMetadata(genesisHash)
-  const specVersion = useRef(bnToBn(hexSpec)).current
+  const { t } = useTranslation();
+  const chain = useMetadata(genesisHash);
+  const specVersion = useRef(bnToBn(hexSpec)).current;
   const decoded = useMemo(
     () => chain && chain.hasMetadata
       ? decodeMethod(method, chain, specVersion)
       : { args: null, method: null },
     [method, chain, specVersion]
-  )
+  );
 
   return (
     <Table
@@ -150,7 +150,7 @@ function Extrinsic ({ className, payload: { era, nonce, tip }, request: { blockN
         <td className='data'>{mortalityAsString(era, blockNumber, t)}</td>
       </tr>
     </Table>
-  )
+  );
 }
 
-export default React.memo(Extrinsic)
+export default React.memo(Extrinsic);

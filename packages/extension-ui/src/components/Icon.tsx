@@ -1,8 +1,8 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 interface Props {
   className?: string;
@@ -18,7 +18,7 @@ function Icon ({ className = '', icon, onClick }: Props): React.ReactElement<Pro
     >
       {icon}
     </div>
-  )
+  );
 }
 
 export default styled(Icon)(({ onClick }: Props) => `
@@ -27,4 +27,4 @@ export default styled(Icon)(({ onClick }: Props) => `
   box-sizing: border-box;
   cursor: ${onClick ? 'pointer' : 'inherit'};
   text-align: center;
-`)
+`);

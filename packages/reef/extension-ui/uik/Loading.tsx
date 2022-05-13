@@ -1,6 +1,7 @@
-import React from 'react'
+import React from 'react';
+
 interface Loading{
-  className?:string;
+  className?: string;
   color?: 'white'|'black';
   size?: 'small'|string;
   text?: string;
@@ -25,4 +26,4 @@ export const Loading = ({ className, color, size, text }: Loading): JSX.Element 
 
     { text ? <div className='uik-loading__text'>{text}</div> : '' }
   </div>
-)
+);

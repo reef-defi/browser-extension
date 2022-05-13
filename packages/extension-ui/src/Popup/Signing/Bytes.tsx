@@ -1,11 +1,11 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { isAscii, u8aToString, u8aUnwrapBytes } from '@reef-defi/util'
-import React, { useMemo } from 'react'
-import styled from 'styled-components'
+import { isAscii, u8aToString, u8aUnwrapBytes } from '@reef-defi/util';
+import React, { useMemo } from 'react';
+import styled from 'styled-components';
 
-import useTranslation from '../../hooks/useTranslation'
+import useTranslation from '../../hooks/useTranslation';
 
 interface Props {
   className?: string;
@@ -14,14 +14,14 @@ interface Props {
 }
 
 function Bytes ({ bytes, className, url }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const text = useMemo(
     () => isAscii(bytes)
       ? u8aToString(u8aUnwrapBytes(bytes))
       : bytes,
     [bytes]
-  )
+  );
 
   return (
     <table className={className}>
@@ -36,7 +36,7 @@ function Bytes ({ bytes, className, url }: Props): React.ReactElement<Props> {
         </tr>
       </tbody>
     </table>
-  )
+  );
 }
 
 export default styled(Bytes)`
@@ -67,4 +67,4 @@ export default styled(Bytes)`
     vertical-align: middle;
     white-space: nowrap;
   }
-`
+`;

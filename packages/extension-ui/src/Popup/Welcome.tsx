@@ -1,30 +1,30 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../types'
+import type { ThemeProps } from '../types';
 
-import React, { useCallback, useContext } from 'react'
-import styled from 'styled-components'
+import React, { useCallback, useContext } from 'react';
+import styled from 'styled-components';
 
-import { ActionContext, Box, Button, ButtonArea, List, VerticalSpace } from '../components'
-import useTranslation from '../hooks/useTranslation'
-import { Header } from '../partials'
+import { ActionContext, Box, Button, ButtonArea, List, VerticalSpace } from '../components';
+import useTranslation from '../hooks/useTranslation';
+import { Header } from '../partials';
 
 interface Props extends ThemeProps {
   className?: string;
 }
 
 const Welcome = function ({ className }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation()
-  const onAction = useContext(ActionContext)
+  const { t } = useTranslation();
+  const onAction = useContext(ActionContext);
 
   const _onClick = useCallback(
     (): void => {
-      window.localStorage.setItem('welcome_read', 'ok')
-      onAction()
+      window.localStorage.setItem('welcome_read', 'ok');
+      onAction();
     },
     [onAction]
-  )
+  );
 
   return (
     <>
@@ -45,8 +45,8 @@ const Welcome = function ({ className }: Props): React.ReactElement<Props> {
         <Button onClick={_onClick}>{t<string>('Understood, let me continue')}</Button>
       </ButtonArea>
     </>
-  )
-}
+  );
+};
 
 export default styled(Welcome)(({ theme }: Props) => `
   p {
@@ -54,4 +54,4 @@ export default styled(Welcome)(({ theme }: Props) => `
     margin-bottom: 6px;
     margin-top: 0;
   }
-`)
+`);

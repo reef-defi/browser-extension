@@ -1,29 +1,29 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState } from 'react';
 
-import { ToastContext } from '..'
-import Toast from './Toast'
+import { ToastContext } from '..';
+import Toast from './Toast';
 
 interface ToastProviderProps {
   children?: React.ReactNode;
 }
 
-const TOAST_TIMEOUT = 1500
+const TOAST_TIMEOUT = 1500;
 
 const ToastProvider = ({ children }: ToastProviderProps): React.ReactElement<ToastProviderProps> => {
-  const [content, setContent] = useState('')
-  const [visible, setVisible] = useState(false)
+  const [content, setContent] = useState('');
+  const [visible, setVisible] = useState(false);
 
   const show = useCallback((message: string): () => void => {
-    const timerId = setTimeout(() => setVisible(false), TOAST_TIMEOUT)
+    const timerId = setTimeout(() => setVisible(false), TOAST_TIMEOUT);
 
-    setContent(message)
-    setVisible(true)
+    setContent(message);
+    setVisible(true);
 
-    return (): void => clearTimeout(timerId)
-  }, [])
+    return (): void => clearTimeout(timerId);
+  }, []);
 
   return (
     <ToastContext.Provider value={{ show }}>
@@ -33,9 +33,9 @@ const ToastProvider = ({ children }: ToastProviderProps): React.ReactElement<Toa
         visible={visible}
       />
     </ToastContext.Provider>
-  )
-}
+  );
+};
 
-export default ToastProvider
+export default ToastProvider;
 
-ToastProvider.displayName = 'Toast'
+ToastProvider.displayName = 'Toast';

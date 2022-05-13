@@ -1,11 +1,11 @@
 // Copyright 2019-2021 @polkadot/extension authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { AccountWithChildren } from '@reef-defi/extension-base/background/types'
+import type { AccountWithChildren } from '@reef-defi/extension-base/background/types';
 
-import React from 'react'
+import React from 'react';
 
-import Account from './Account'
+import Account from './Account';
 
 interface Props extends AccountWithChildren {
   parentName?: string;
@@ -27,5 +27,5 @@ export default function AccountsTree ({ parentName, suri, ...account }: Props): 
         />
       ))}
     </>
-  )
+  );
 }

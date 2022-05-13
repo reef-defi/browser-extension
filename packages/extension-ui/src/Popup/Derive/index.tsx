@@ -1,14 +1,14 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useCallback, useContext, useMemo, useState } from 'react'
-import { useParams } from 'react-router'
+import React, { useCallback, useContext, useMemo, useState } from 'react';
+import { useParams } from 'react-router';
 
-import { AccountContext, AccountNamePasswordCreation, ActionContext, Address } from '../../components'
-import useTranslation from '../../hooks/useTranslation'
-import { deriveAccount } from '../../messaging'
-import { HeaderWithSteps } from '../../partials'
-import SelectParent from './SelectParent'
+import { AccountContext, AccountNamePasswordCreation, ActionContext, Address } from '../../components';
+import useTranslation from '../../hooks/useTranslation';
+import { deriveAccount } from '../../messaging';
+import { HeaderWithSteps } from '../../partials';
+import SelectParent from './SelectParent';
 
 interface Props {
   isLocked?: boolean;
@@ -28,42 +28,42 @@ interface ConfirmState {
 }
 
 function Derive ({ isLocked }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation()
-  const onAction = useContext(ActionContext)
-  const { accounts } = useContext(AccountContext)
-  const { address: parentAddress } = useParams<AddressState>()
-  const [isBusy, setIsBusy] = useState(false)
-  const [account, setAccount] = useState<null | PathState>(null)
-  const [name, setName] = useState<string | null>(null)
-  const [parentPassword, setParentPassword] = useState<string | null>(null)
+  const { t } = useTranslation();
+  const onAction = useContext(ActionContext);
+  const { accounts } = useContext(AccountContext);
+  const { address: parentAddress } = useParams<AddressState>();
+  const [isBusy, setIsBusy] = useState(false);
+  const [account, setAccount] = useState<null | PathState>(null);
+  const [name, setName] = useState<string | null>(null);
+  const [parentPassword, setParentPassword] = useState<string | null>(null);
 
   const parentGenesis = useMemo(
     () => accounts.find((a) => a.address === parentAddress)?.genesisHash || null,
     [accounts, parentAddress]
-  )
+  );
 
   const _onCreate = useCallback((name: string, password: string) => {
     if (!account || !name || !password || !parentPassword) {
-      return
+      return;
     }
 
-    setIsBusy(true)
+    setIsBusy(true);
     deriveAccount(parentAddress, account.suri, parentPassword, name, password, parentGenesis)
       .then(() => onAction('/'))
       .catch((error): void => {
-        setIsBusy(false)
-        console.error(error)
-      })
-  }, [account, onAction, parentAddress, parentGenesis, parentPassword])
+        setIsBusy(false);
+        console.error(error);
+      });
+  }, [account, onAction, parentAddress, parentGenesis, parentPassword]);
 
   const _onDerivationConfirmed = useCallback(({ account, parentPassword }: ConfirmState) => {
-    setAccount(account)
-    setParentPassword(parentPassword)
-  }, [])
+    setAccount(account);
+    setParentPassword(parentPassword);
+  }, []);
 
   const _onBackClick = useCallback(() => {
-    setAccount(null)
-  }, [])
+    setAccount(null);
+  }, []);
 
   return (
     <>
@@ -100,7 +100,7 @@ function Derive ({ isLocked }: Props): React.ReactElement<Props> {
         </>
       )}
     </>
-  )
+  );
 }
 
-export default React.memo(Derive)
+export default React.memo(Derive);

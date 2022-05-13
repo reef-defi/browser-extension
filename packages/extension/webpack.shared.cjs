@@ -1,14 +1,14 @@
 // Copyright 2019-2021 @polkadot/extension authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-const path = require('path')
-const webpack = require('webpack')
+const path = require('path');
+const webpack = require('webpack');
 
-const CopyPlugin = require('copy-webpack-plugin')
-const ManifestPlugin = require('webpack-extension-manifest-plugin')
+const CopyPlugin = require('copy-webpack-plugin');
+const ManifestPlugin = require('webpack-extension-manifest-plugin');
 
-const pkgJson = require('./package.json')
-const manifest = require('./manifest.json')
+const pkgJson = require('./package.json');
+const manifest = require('./manifest.json');
 
 const packages = [
   'extension',
@@ -17,7 +17,7 @@ const packages = [
   'extension-dapp',
   'extension-inject',
   'extension-ui'
-]
+];
 
 module.exports = (entry, alias = {}) => ({
   context: __dirname,
@@ -105,4 +105,4 @@ module.exports = (entry, alias = {}) => ({
     }
   },
   watch: false
-})
+});

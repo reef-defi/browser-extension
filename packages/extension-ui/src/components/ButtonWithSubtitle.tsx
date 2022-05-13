@@ -1,10 +1,10 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
-import { Button } from '.'
+import { Button } from '.';
 
 interface ButtonWithSubtitleProps {
   title: string;
@@ -20,7 +20,7 @@ export default function ButtonWithSubtitle ({ children, subTitle, title, to }: B
       <span>{subTitle}</span>
       {children}
     </StyledButton>
-  )
+  );
 }
 
 const StyledButton = styled(Button)`
@@ -40,4 +40,4 @@ const StyledButton = styled(Button)`
     font-size: 12px;
     line-height: 16px;
   }
-`
+`;

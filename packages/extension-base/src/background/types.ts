@@ -3,24 +3,18 @@
 
 /* eslint-disable no-use-before-define */
 
-import type {
-  InjectedAccount,
-  InjectedMetadataKnown,
-  MetadataDef,
-  ProviderList,
-  ProviderMeta
-} from '@reef-defi/extension-inject/types'
-import type { KeyringPair, KeyringPair$Json, KeyringPair$Meta } from '@polkadot/keyring/types'
-import type { JsonRpcResponse } from '@polkadot/rpc-provider/types'
-import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types'
-import type { KeyringPairs$Json } from '@polkadot/ui-keyring/types'
-import type { HexString } from '@polkadot/util/types'
-import type { KeypairType } from '@polkadot/util-crypto/types'
+import type { InjectedAccount, InjectedMetadataKnown, MetadataDef, ProviderList, ProviderMeta } from '@reef-defi/extension-inject/types';
+import type { KeyringPair, KeyringPair$Json, KeyringPair$Meta } from '@polkadot/keyring/types';
+import type { JsonRpcResponse } from '@polkadot/rpc-provider/types';
+import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
+import type { KeyringPairs$Json } from '@polkadot/ui-keyring/types';
+import type { HexString } from '@polkadot/util/types';
+import type { KeypairType } from '@polkadot/util-crypto/types';
 
-import { TypeRegistry } from '@polkadot/types'
+import { TypeRegistry } from '@polkadot/types';
 
-import { ALLOWED_PATH } from '../defaults'
-import { AuthUrls } from './handlers/State'
+import { ALLOWED_PATH } from '../defaults';
+import { AuthUrls } from './handlers/State';
 
 type KeysWithDefinedValues<T> = {
   [K in keyof T]: T[K] extends undefined ? never : K

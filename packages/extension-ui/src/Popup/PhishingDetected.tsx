@@ -1,15 +1,15 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { ThemeProps } from '../types'
+import type { ThemeProps } from '../types';
 
-import React from 'react'
-import { Trans } from 'react-i18next'
-import { useParams } from 'react-router'
-import styled from 'styled-components'
+import React from 'react';
+import { Trans } from 'react-i18next';
+import { useParams } from 'react-router';
+import styled from 'styled-components';
 
-import useTranslation from '../hooks/useTranslation'
-import { Header } from '../partials'
+import useTranslation from '../hooks/useTranslation';
+import { Header } from '../partials';
 
 interface Props extends ThemeProps {
   className?: string;
@@ -20,9 +20,9 @@ interface WebsiteState {
 }
 
 function PhishingDetected ({ className }: Props): React.ReactElement<Props> {
-  const { t } = useTranslation()
-  const { website } = useParams<WebsiteState>()
-  const decodedWebsite = decodeURIComponent(website)
+  const { t } = useTranslation();
+  const { website } = useParams<WebsiteState>();
+  const decodedWebsite = decodeURIComponent(website);
 
   return (
     <>
@@ -41,7 +41,7 @@ function PhishingDetected ({ className }: Props): React.ReactElement<Props> {
         </p>
       </div>
     </>
-  )
+  );
 }
 
 export default styled(PhishingDetected)(({ theme }: Props) => `
@@ -59,4 +59,4 @@ export default styled(PhishingDetected)(({ theme }: Props) => `
       text-align: center;
     }
   }
-`)
+`);

@@ -1,25 +1,25 @@
-import { TokenWithAmount, utils as reefUtils } from '@reef-defi/react-lib'
-import React from 'react'
+import { TokenWithAmount, utils as reefUtils } from '@reef-defi/react-lib';
+import React from 'react';
 
-import { Card, UikText } from './../../uik'
+import { Card, UikText } from './../../uik';
 
-const { isDataSet } = reefUtils
+const { isDataSet } = reefUtils;
 
-const { showBalance, toCurrencyFormat } = reefUtils
+const { showBalance, toCurrencyFormat } = reefUtils;
 // const { Loading } = Components.Loading;
 
 const getBalance = (token: TokenWithAmount) => {
-  let balance: string|number = showBalance(token)
+  let balance: string|number = showBalance(token);
 
-  balance = parseFloat(balance)
-  if (!balance || isNaN(balance)) balance = 0
+  balance = parseFloat(balance);
+  if (!balance || isNaN(balance)) balance = 0;
 
-  return balance
-}
+  return balance;
+};
 
 const capitalize = (string: string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
-}
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+};
 
 interface TokenPill {
   token: TokenWithAmount;
@@ -27,22 +27,22 @@ interface TokenPill {
 
 function getHashSumLastNr (address: string): number {
   const summ = address.split('').reduce((sum, ch) => {
-    const nr = parseInt(ch, 10)
+    const nr = parseInt(ch, 10);
 
     if (!Number.isNaN(nr)) {
-      return sum + nr
+      return sum + nr;
     }
 
-    return sum
-  }, 0).toString(10)
+    return sum;
+  }, 0).toString(10);
 
-  return parseInt(summ.substring(summ.length - 1), 10)
+  return parseInt(summ.substring(summ.length - 1), 10);
 }
 
 function getIconUrl (tokenAddress: string): string {
-  const lastNr = getHashSumLastNr(tokenAddress)
+  const lastNr = getHashSumLastNr(tokenAddress);
 
-  return `/img/token-icons/token-icon-${lastNr}.png`
+  return `/img/token-icons/token-icon-${lastNr}.png`;
 }
 
 export const TokenPill = ({ token }: TokenPill): JSX.Element => (
@@ -81,4 +81,4 @@ export const TokenPill = ({ token }: TokenPill): JSX.Element => (
       </div>
     </Card>
   </div>
-)
+);

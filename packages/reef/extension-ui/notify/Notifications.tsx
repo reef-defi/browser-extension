@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-import Alert from './Alert'
+import Alert from './Alert';
 
 export interface Notification {
   id: number,
@@ -19,9 +19,9 @@ export interface Props {
 const Notifications = ({ notifications, onClose }: Props): JSX.Element => {
   const closeNotification = (id: number) => {
     if (onClose) {
-      onClose(id)
+      onClose(id);
     }
-  }
+  };
 
   return (
     <div className='uik-notifications'>
@@ -41,7 +41,7 @@ const Notifications = ({ notifications, onClose }: Props): JSX.Element => {
         ))
       }
     </div>
-  )
-}
+  );
+};
 
-export default Notifications
+export default Notifications;

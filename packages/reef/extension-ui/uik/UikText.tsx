@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 interface UikText {
   children?: any; className?: string; text?: any; type?: any;
@@ -15,4 +15,4 @@ export const UikText = ({ children, className, text, type }: UikText): JSX.Eleme
       ${className || ''}
     `}
   >{children}{text}</div>
-)
+);

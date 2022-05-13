@@ -5,6 +5,6 @@ const extension = typeof chrome !== 'undefined'
   ? chrome
   : typeof browser !== 'undefined'
     ? browser
-    : null
+    : null;
 
-export default extension as typeof chrome
+export default extension as typeof chrome;
