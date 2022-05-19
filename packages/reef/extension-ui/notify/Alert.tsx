@@ -30,8 +30,8 @@ const Alert = ({ aliveFor,
   type }: Props): JSX.Element => {
   const [closing, setClosing] = useState(false);
 
-  let hovered = false;
-  let delayed = false;
+  const hovered = useRef(false);
+  const delayed = useRef(false);
 
   const close = () => {
     if (onClose && !closing) {
@@ -56,8 +56,8 @@ const Alert = ({ aliveFor,
 
     if (onClose && aliveFor) {
       const timer = setTimeout(() => {
-        if (hovered) {
-          delayed = true;
+        if (hovered.current) {
+          delayed.current = true;
         } else {
           close();
         }
@@ -68,7 +68,7 @@ const Alert = ({ aliveFor,
 
     // @ts-ignore-no-empty-function
     return function () {};
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div
@@ -79,10 +79,10 @@ const Alert = ({ aliveFor,
         ${!!onClose && !!aliveFor ? 'uik-alert--autoclose' : ''}
         ${className || ''}
       `}
-      onMouseEnter={() => { hovered = true; }}
+      onMouseEnter={() => { hovered.current = true; }}
       onMouseLeave={() => {
-        hovered = false;
-        if (delayed) close();
+        hovered.current = false;
+        if (delayed.current) close();
       }}
       style={
         (
