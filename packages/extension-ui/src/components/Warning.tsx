@@ -3,6 +3,7 @@
 
 import type { ThemeProps } from '../types';
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
@@ -20,7 +21,7 @@ function Warning ({ children, className = '', isBelowInput, isDanger }: Props): 
     <div className={`${className} ${isDanger ? 'danger' : ''} ${isBelowInput ? 'belowInput' : ''}`}>
       <FontAwesomeIcon
         className='warningImage'
-        icon={faExclamationTriangle}
+        icon={faExclamationTriangle as IconProp}
       />
       <div className='warning-message'>{children}</div>
     </div>

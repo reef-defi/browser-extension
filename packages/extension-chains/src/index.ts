@@ -40,7 +40,8 @@ export function metadataExpand (definition: MetadataDef, isPartial = false): Cha
   const hasMetadata = !!metaCalls && !isPartial;
 
   if (hasMetadata) {
-    registry.setMetadata(new Metadata(registry, base64Decode(metaCalls)), undefined, userExtensions);
+    // @ts-ignore
+    registry.setMetadata(new Metadata(registry, base64Decode(metaCalls || '')), undefined, userExtensions);
   }
 
   const isUnknown = genesisHash === '0x';

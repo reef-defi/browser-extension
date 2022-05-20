@@ -82,6 +82,10 @@ export function handleResponse<TMessageType extends MessageTypes> (data: Transpo
     (handler.subscriber as Function)(data.subscription);
   } else if (data.error) {
     handler.reject(new Error(data.error));
+
+    if (data.error.indexOf('Unable to retrieve keypair') > -1) {
+      alert('Please refresh the page and try again. No keypair info.');
+    }
   } else {
     handler.resolve(data.response);
   }

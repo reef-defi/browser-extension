@@ -1,16 +1,16 @@
 {
-  "author": "Reef Finance",
+  "author": "Reef Chain",
   "bugs": "https://github.com/reef-defi/browser-extension/issues",
   "homepage": "https://github.com/reef-defi/browser-extension#readme",
   "license": "Apache-2",
-  "packageManager": "yarn@3.0.1",
+  "packageManager": "yarn@3.2.0",
   "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/reef-defi/browser-extension.git"
   },
   "sideEffects": false,
-  "version": "0.41.5",
+  "version": "1.0.0",
   "workspaces": [
     "packages/*"
   ],
@@ -36,18 +36,25 @@
     "@babel/core": "^7.15.8",
     "@reef-defi/dev": "^0.63.19",
     "@types/jest": "^27.0.2",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.1.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.0",
     "i18next-scanner": "^3.1.0",
     "sinon-chrome": "^3.0.1"
   },
   "resolutions": {
-    "@polkadot/api": "^6.7.1",
-    "@polkadot/types": "^6.7.1",
+    "@polkadot/api": "~6.4.2",
+    "@polkadot/types": "~6.4.2",
     "@reef-defi/keyring": "^7.8.2",
     "@reef-defi/networks": "^7.8.2",
     "@reef-defi/util": "^7.8.2",
     "@reef-defi/util-crypto": "^7.8.2",
     "@reef-defi/x-fetch": "^7.8.2",
     "babel-core": "^7.0.0-bridge.0",
+    "eslint-plugin-import": "2.26.0",
     "safe-buffer": "^5.2.1",
     "typescript": "^4.4.4"
   }

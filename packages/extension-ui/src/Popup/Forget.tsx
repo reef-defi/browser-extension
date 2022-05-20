@@ -7,10 +7,11 @@ import React, { useCallback, useContext, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import styled from 'styled-components';
 
-import { ActionBar, ActionContext, ActionText, Address, Button, Warning } from '../components';
+import { ActionBar, ActionContext, ActionText, Address, Warning } from '../components';
 import useTranslation from '../hooks/useTranslation';
 import { forgetAccount } from '../messaging';
 import { Header } from '../partials';
+import { CTA } from './../../../reef/extension-ui/uik';
 
 interface Props extends RouteComponentProps<{ address: string }>, ThemeProps {
   className?: string;
@@ -49,18 +50,22 @@ function Forget ({ className, match: { params: { address } } }: Props): React.Re
         text={t<string>('Forget account')}
       />
       <div className={className}>
-        <Address address={address}>
+        <Address
+          address={address}
+          exporting
+          presentation
+        >
           <Warning className='movedWarning'>
             {t<string>('You are about to remove the account. This means that you will not be able to access it via this extension anymore. If you wish to recover it, you would need to use the seed.')}
           </Warning>
           <div className='actionArea'>
-            <Button
-              isBusy={isBusy}
-              isDanger
+            <CTA
+              danger
+              loading={isBusy}
               onClick={_onClick}
             >
               {t<string>('I want to forget this account')}
-            </Button>
+            </CTA>
             <ActionBar className='withMarginTop'>
               <ActionText
                 className='center'

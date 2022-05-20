@@ -76,8 +76,10 @@ export function web3Enable (originName: string, compatInits: (() => Promise<bool
     (): Promise<InjectedExtension[]> =>
       initCompat.then(() =>
         getWindowExtensions(originName)
-          .then((values): InjectedExtension[] =>
-            values
+          .then((values): InjectedExtension[] => {
+            console.log('web3Enable EXTENSIONS=', values);
+
+            return values
               .filter((value): value is [InjectedExtensionInfo, Injected] => !!value[1])
               .map(([info, ext]): InjectedExtension => {
                 // if we don't have an accounts subscriber, add a single-shot version
@@ -92,8 +94,8 @@ export function web3Enable (originName: string, compatInits: (() => Promise<bool
                 }
 
                 return { ...info, ...ext };
-              })
-          )
+              });
+          })
           .catch((): InjectedExtension[] => [])
           .then((values): InjectedExtension[] => {
             const names = values.map(({ name, version }): string => `${name}/${version}`);
@@ -134,10 +136,6 @@ export async function web3Accounts ({ accountType, ss58Format }: Web3AccountsOpt
   retrieved.forEach((result): void => {
     accounts.push(...result);
   });
-
-  const addresses = accounts.map(({ address }) => address);
-
-  console.log(`web3Accounts: Found ${accounts.length} address${accounts.length !== 1 ? 'es' : ''}: ${addresses.join(', ')}`);
 
   return accounts;
 }

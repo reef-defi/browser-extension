@@ -1,6 +1,7 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
@@ -160,7 +161,7 @@ function ImportLedger ({ className }: Props): React.ReactElement {
               isBusy={ledgerLoading || isBusy}
               onClick={refresh}
             >
-              <FontAwesomeIcon icon={faSync} />
+              <FontAwesomeIcon icon={faSync as IconProp} />
               {t<string>('Refresh')}
             </Button>
           )

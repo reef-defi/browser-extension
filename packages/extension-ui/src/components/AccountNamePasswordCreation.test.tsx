@@ -196,6 +196,6 @@ describe('AccountNamePasswordCreation busy button', () => {
   });
 
   it('button is busy', () => {
-    expect(wrapper.find(NextStepButton).prop('isBusy')).toBe(true);
+    expect(wrapper.find('.next-step-btn.uik-cta--loading').length).toEqual(1);
   });
 });

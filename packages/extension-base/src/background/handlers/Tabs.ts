@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { InjectedAccount, InjectedMetadataKnown, MetadataDef, ProviderMeta } from '@reef-defi/extension-inject/types';
-import type { KeyringPair } from '@reef-defi/keyring/types';
+import type { KeyringPair } from '@polkadot/keyring/types';
 import type { JsonRpcResponse } from '@polkadot/rpc-provider/types';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 import type { SubjectInfo } from '@polkadot/ui-keyring/observable/types';
@@ -10,11 +10,11 @@ import type { MessageTypes, RequestAccountList, RequestAuthorizeTab, RequestRpcS
 
 import { PHISHING_PAGE_REDIRECT } from '@reef-defi/extension-base/defaults';
 import { canDerive } from '@reef-defi/extension-base/utils';
-import { assert, isNumber } from '@reef-defi/util';
 
 import { checkIfDenied } from '@polkadot/phishing';
 import keyring from '@polkadot/ui-keyring';
 import { accounts as accountsObservable } from '@polkadot/ui-keyring/observable/accounts';
+import { assert, isNumber } from '@polkadot/util';
 
 import RequestBytesSign from '../RequestBytesSign';
 import RequestExtrinsicSign from '../RequestExtrinsicSign';
@@ -40,6 +40,60 @@ export default class Tabs {
 
   constructor (state: State) {
     this.#state = state;
+  }
+
+  public async handle<TMessageType extends MessageTypes> (id: string, type: TMessageType, request: RequestTypes[TMessageType], url: string, port: chrome.runtime.Port): Promise<ResponseTypes[keyof ResponseTypes]> {
+    if (type === 'pub(phishing.redirectIfDenied)') {
+      return this.redirectIfPhishing(url);
+    }
+
+    if (type !== 'pub(authorize.tab)') {
+      this.#state.ensureUrlAuthorized(url);
+    }
+
+    switch (type) {
+      case 'pub(authorize.tab)':
+        return this.authorize(url, request as RequestAuthorizeTab);
+
+      case 'pub(accounts.list)':
+        return this.accountsList(url, request as RequestAccountList);
+
+      case 'pub(accounts.subscribe)':
+        return this.accountsSubscribe(url, id, port);
+
+      case 'pub(bytes.sign)':
+        return this.bytesSign(url, request as SignerPayloadRaw);
+
+      case 'pub(extrinsic.sign)':
+        return this.extrinsicSign(url, request as SignerPayloadJSON);
+
+      case 'pub(metadata.list)':
+        return this.metadataList(url);
+
+      case 'pub(metadata.provide)':
+        return this.metadataProvide(url, request as MetadataDef);
+
+      case 'pub(rpc.listProviders)':
+        return this.rpcListProviders();
+
+      case 'pub(rpc.send)':
+        return this.rpcSend(request as RequestRpcSend, port);
+
+      case 'pub(rpc.startProvider)':
+        return this.rpcStartProvider(request as string, port);
+
+      case 'pub(rpc.subscribe)':
+        return this.rpcSubscribe(request as RequestRpcSubscribe, id, port);
+
+      case 'pub(rpc.subscribeConnected)':
+        return this.rpcSubscribeConnected(request as null, id, port);
+
+      case 'pub(rpc.unsubscribe)':
+        return this.rpcUnsubscribe(request as RequestRpcUnsubscribe, port);
+
+      default:
+        throw new Error(`Unable to handle message of type ${type}`);
+    }
   }
 
   private authorize (url: string, request: RequestAuthorizeTab): Promise<boolean> {
@@ -168,59 +222,5 @@ export default class Tabs {
     }
 
     return false;
-  }
-
-  public async handle<TMessageType extends MessageTypes> (id: string, type: TMessageType, request: RequestTypes[TMessageType], url: string, port: chrome.runtime.Port): Promise<ResponseTypes[keyof ResponseTypes]> {
-    if (type === 'pub(phishing.redirectIfDenied)') {
-      return this.redirectIfPhishing(url);
-    }
-
-    if (type !== 'pub(authorize.tab)') {
-      this.#state.ensureUrlAuthorized(url);
-    }
-
-    switch (type) {
-      case 'pub(authorize.tab)':
-        return this.authorize(url, request as RequestAuthorizeTab);
-
-      case 'pub(accounts.list)':
-        return this.accountsList(url, request as RequestAccountList);
-
-      case 'pub(accounts.subscribe)':
-        return this.accountsSubscribe(url, id, port);
-
-      case 'pub(bytes.sign)':
-        return this.bytesSign(url, request as SignerPayloadRaw);
-
-      case 'pub(extrinsic.sign)':
-        return this.extrinsicSign(url, request as SignerPayloadJSON);
-
-      case 'pub(metadata.list)':
-        return this.metadataList(url);
-
-      case 'pub(metadata.provide)':
-        return this.metadataProvide(url, request as MetadataDef);
-
-      case 'pub(rpc.listProviders)':
-        return this.rpcListProviders();
-
-      case 'pub(rpc.send)':
-        return this.rpcSend(request as RequestRpcSend, port);
-
-      case 'pub(rpc.startProvider)':
-        return this.rpcStartProvider(request as string, port);
-
-      case 'pub(rpc.subscribe)':
-        return this.rpcSubscribe(request as RequestRpcSubscribe, id, port);
-
-      case 'pub(rpc.subscribeConnected)':
-        return this.rpcSubscribeConnected(request as null, id, port);
-
-      case 'pub(rpc.unsubscribe)':
-        return this.rpcUnsubscribe(request as RequestRpcUnsubscribe, port);
-
-      default:
-        throw new Error(`Unable to handle message of type ${type}`);
-    }
   }
 }

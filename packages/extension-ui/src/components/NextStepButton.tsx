@@ -3,25 +3,29 @@
 
 import type { ThemeProps } from '../types';
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import styled from 'styled-components';
 
-import Button from './Button';
+import { CTA } from './../../../reef/extension-ui/uik';
 
-type Props = React.ComponentProps<typeof Button>;
+type Props = React.ComponentProps<typeof CTA>;
 
 function NextStepButton ({ children, ...props }: Props): React.ReactElement<Props> {
   return (
-    <Button {...props}>
+    <CTA
+      {...props}
+      className='next-step-btn'
+    >
       {children}
       <FontAwesomeIcon
         className='arrowRight'
-        icon={faArrowRight}
+        icon={faArrowRight as IconProp}
         size='sm'
       />
-    </Button>
+    </CTA>
   );
 }
 

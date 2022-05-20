@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import './i18n/i18n';
+import '@reef-defi/react-lib/dist/index.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
@@ -13,7 +15,7 @@ export default function createView (Entry: React.ComponentType, rootId = 'root')
   const rootElement = document.getElementById(rootId);
 
   if (!rootElement) {
-    throw new Error(`Unable to find element with id '${rootId}'`);
+    throw new Error(`Unable to find element with id  '${rootId}'`);
   }
 
   ReactDOM.render(

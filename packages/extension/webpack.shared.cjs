@@ -36,6 +36,10 @@ module.exports = (entry, alias = {}) => ({
         ]
       },
       {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader']
+      },
+      {
         test: [/\.svg$/, /\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.woff2?$/],
         use: [
           {

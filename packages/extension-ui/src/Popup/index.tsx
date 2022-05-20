@@ -4,13 +4,22 @@
 import type { AccountJson, AccountsContext, AuthorizeRequest, MetadataRequest, SigningRequest } from '@reef-defi/extension-base/background/types';
 import type { SettingsStruct } from '@polkadot/ui-settings/types';
 
+import { Provider } from '@reef-defi/evm-provider';
 import { PHISHING_PAGE_REDIRECT } from '@reef-defi/extension-base/defaults';
 import { canDerive } from '@reef-defi/extension-base/utils';
+import { appState, hooks } from '@reef-defi/react-lib';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router';
 
 import uiSettings from '@polkadot/ui-settings';
 
+import { Bind } from '../../../reef/extension-ui/components/Bind';
+import { Dashboard } from '../../../reef/extension-ui/components/dashboard/Dashboard';
+import { HeaderComponent } from '../../../reef/extension-ui/components/HeaderComponent';
+import { Swap } from '../../../reef/extension-ui/components/Swap';
+import { Transfer } from '../../../reef/extension-ui/components/Transfer';
+import { useReefSigners } from '../../../reef/extension-ui/hooks/useReefSigners';
+import { innitialNetwork } from '../../../reef/extension-ui/state/environment';
 import { ErrorBoundary, Loading } from '../components';
 import { AccountContext, ActionContext, AuthorizeReqContext, MediaContext, MetadataReqContext, SettingsContext, SigningReqContext } from '../components/contexts';
 import ToastProvider from '../components/Toast/ToastProvider';
@@ -52,7 +61,7 @@ async function requestMediaAccess (cameraOn: boolean): Promise<boolean> {
   return false;
 }
 
-function initAccountContext (accounts: AccountJson[]): AccountsContext {
+function initAccountContext (accounts: AccountJson[], selectedAccount: AccountJson|null): AccountsContext {
   const hierarchy = buildHierarchy(accounts);
   const master = hierarchy.find(({ isExternal, type }) => !isExternal && canDerive(type));
 
@@ -65,6 +74,10 @@ function initAccountContext (accounts: AccountJson[]): AccountsContext {
 
 export default function Popup (): React.ReactElement {
   const [accounts, setAccounts] = useState<null | AccountJson[]>(null);
+  const provider: Provider|undefined = hooks.useObservableState(appState.currentProvider$);
+  const signers = useReefSigners(accounts, provider);
+
+  hooks.useInitReefState('Reef Chain Extension', { network: innitialNetwork, signers });
   const [accountCtx, setAccountCtx] = useState<AccountsContext>({ accounts: [], hierarchy: [] });
   const [authRequests, setAuthRequests] = useState<null | AuthorizeRequest[]>(null);
   const [cameraOn, setCameraOn] = useState(startSettings.camera === 'on');
@@ -103,7 +116,7 @@ export default function Popup (): React.ReactElement {
   }, []);
 
   useEffect((): void => {
-    setAccountCtx(initAccountContext(accounts || []));
+    setAccountCtx(initAccountContext(accounts || [], null));
   }, [accounts]);
 
   useEffect((): void => {
@@ -136,6 +149,7 @@ export default function Popup (): React.ReactElement {
                 <MetadataReqContext.Provider value={metaRequests}>
                   <SigningReqContext.Provider value={signRequests}>
                     <ToastProvider>
+                      <HeaderComponent></HeaderComponent>
                       <Switch>
                         <Route path='/auth-list'>{wrapWithErrorBoundary(<AuthList />, 'auth-list')}</Route>
                         <Route path='/account/create'>{wrapWithErrorBoundary(<CreateAccount />, 'account-creation')}</Route>
@@ -148,6 +162,11 @@ export default function Popup (): React.ReactElement {
                         <Route path='/account/restore-json'>{wrapWithErrorBoundary(<RestoreJson />, 'restore-json')}</Route>
                         <Route path='/account/derive/:address/locked'>{wrapWithErrorBoundary(<Derive isLocked />, 'derived-address-locked')}</Route>
                         <Route path='/account/derive/:address'>{wrapWithErrorBoundary(<Derive />, 'derive-address')}</Route>
+                        <Route path='/transfer'>{wrapWithErrorBoundary(<Transfer />, 'transfer')}</Route>
+                        <Route path='/accounts'>{wrapWithErrorBoundary(<Accounts className='content-comp' />, 'accounts')}</Route>
+                        <Route path='/tokens'>{wrapWithErrorBoundary(<Dashboard />, 'tokens')}</Route>
+                        <Route path='/swap'>{wrapWithErrorBoundary(<Swap />, 'swap')}</Route>
+                        <Route path='/bind'>{wrapWithErrorBoundary(<Bind />, 'bind')}</Route>
                         <Route path={`${PHISHING_PAGE_REDIRECT}/:website`}>{wrapWithErrorBoundary(<PhishingDetected />, 'phishing-page-redirect')}</Route>
                         <Route
                           exact

@@ -23,8 +23,7 @@ export default function handler<TMessageType extends MessageTypes> ({ id, messag
   const source = `${from}: ${id}: ${message}`;
 
   console.log(` [in] ${source}`); // :: ${JSON.stringify(request)}`);
-
-  const promise = isExtension
+  const promise = isExtension && message !== 'pub(extrinsic.sign)' && message !== 'pub(bytes.sign)'
     ? extension.handle(id, message, request, port)
     : tabs.handle(id, message, request, from, port);
 

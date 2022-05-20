@@ -3,6 +3,7 @@
 
 import type { Theme, ThemeProps } from '../types';
 
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faExpand, faTasks } from '@fortawesome/free-solid-svg-icons';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
@@ -15,11 +16,6 @@ import useTranslation from '../hooks/useTranslation';
 import { setNotification, windowOpen } from '../messaging';
 import getLanguageOptions from '../util/getLanguageOptions';
 
-interface Option {
-  text: string;
-  value: string;
-}
-
 interface Props extends ThemeProps {
   className?: string;
   reference: React.MutableRefObject<null>;
@@ -28,14 +24,10 @@ interface Props extends ThemeProps {
 const notificationOptions = ['Extension', 'PopUp', 'Window']
   .map((item) => ({ text: item, value: item.toLowerCase() }));
 
-const prefixOptions = settings.availablePrefixes
-  .filter(({ value }) => value !== -1)
-  .map(({ text, value }): Option => ({ text, value: `${value}` }));
-
 function MenuSettings ({ className, reference }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const [camera, setCamera] = useState(settings.camera === 'on');
-  const [prefix, setPrefix] = useState(`${settings.prefix === -1 ? 42 : settings.prefix}`);
+  // const [prefix, setPrefix] = useState(`${settings.prefix === -1 ? 42 : settings.prefix}`);
   const [notification, updateNotification] = useState(settings.notification);
   const themeContext = useContext(ThemeContext as React.Context<Theme>);
   const setTheme = useContext(ThemeSwitchContext);
@@ -47,13 +39,13 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
     settings.set({ camera: camera ? 'on' : 'off' });
   }, [camera]);
 
-  const _onChangePrefix = useCallback(
+  /* const _onChangePrefix = useCallback(
     (value: string): void => {
       setPrefix(value);
       settings.set({ prefix: parseInt(value, 10) });
     },
     []
-  );
+  ); */
 
   const _onChangeNotification = useCallback(
     (value: string): void => {
@@ -106,18 +98,6 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
       </MenuItem>
       <MenuItem
         className='setting'
-        title={t<string>('Display address format for')}
-      >
-        <Dropdown
-          className='dropdown'
-          label=''
-          onChange={_onChangePrefix}
-          options={prefixOptions}
-          value={`${prefix}`}
-        />
-      </MenuItem>
-      <MenuItem
-        className='setting'
         title={t<string>('Language')}
       >
         <Dropdown
@@ -155,7 +135,7 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
       <MenuItem className='setting'>
         <ActionText
           className='manageWebsiteAccess'
-          icon={faTasks}
+          icon={faTasks as IconDefinition}
           onClick={_goToAuthList}
           text={t<string>('Manage Website Access')}
         />
@@ -164,7 +144,7 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
         <MenuItem className='setting'>
           <ActionText
             className='openWindow'
-            icon={faExpand}
+            icon={faExpand as IconDefinition}
             onClick={_onWindowOpen}
             text={t<string>('Open extension in new window')}
           />

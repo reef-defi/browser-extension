@@ -124,7 +124,9 @@ export default function SelectParent ({ className, isLocked, onDerivationConfirm
           ? (
             <Address
               address={parentAddress}
+              exporting
               genesisHash={parentGenesis}
+              presentation
             />
           )
           : (
@@ -182,8 +184,8 @@ export default function SelectParent ({ className, isLocked, onDerivationConfirm
       <ButtonArea>
         <NextStepButton
           data-button-action='create derived account'
-          isBusy={isBusy}
-          isDisabled={!isProperParentPassword || !!pathError}
+          disabled={!isProperParentPassword || !!pathError}
+          loading={isBusy}
           onClick={_onSubmit}
         >
           {t<string>('Create a derived account')}

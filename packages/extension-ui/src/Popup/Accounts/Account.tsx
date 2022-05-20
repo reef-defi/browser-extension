@@ -39,7 +39,11 @@ function Account ({ address, className, genesisHash, isExternal, isHardware, isH
   );
 
   const _toggleEdit = useCallback(
-    (): void => setEditing(({ toggleActions }) => ({ isEditing: !isEditing, toggleActions: ++toggleActions })),
+    (ev?: Event): void => {
+      ev?.preventDefault();
+      console.log('edit=', ev);
+      setEditing(({ toggleActions }) => ({ isEditing: !isEditing, toggleActions: ++toggleActions }));
+    },
     [isEditing]
   );
 
@@ -105,7 +109,7 @@ function Account ({ address, className, genesisHash, isExternal, isHardware, isH
   ), [_onChangeGenesis, _toggleEdit, address, genesisHash, genesisOptions, isExternal, isHardware, t, type]);
 
   return (
-    <div className={className}>
+    <div className={`${className || ''} account-card`}>
       <Address
         actions={_actions}
         address={address}
@@ -121,7 +125,7 @@ function Account ({ address, className, genesisHash, isExternal, isHardware, isH
         {isEditing && (
           <Name
             address={address}
-            className={`editName ${parentName ? 'withParent' : ''}`}
+            className={`account-card__rename editName ${parentName ? 'withParent' : ''}`}
             isFocused
             label={' '}
             onBlur={_saveChanges}

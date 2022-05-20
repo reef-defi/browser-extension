@@ -1,0 +1,311 @@
+.navigation {
+  padding: 0 10px 0 20px !important;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 57px;
+  min-height: 57px;
+  max-height: 57px;
+  background-color: #f3f0f9;
+  box-shadow: 0 5px 10px -5px rgba(0,0,0,.1);
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+}
+
+.navigation .jarRFH,
+.navigation .hUmkYm {
+  max-height: unset !important;
+  top: 30px;
+}
+
+.navigation_menu-items {
+  display: flex;
+  margin: 0;
+  align-items: center;
+  list-style: none;
+  font-size: small;
+}
+.navigation_menu-items_menu-item{
+  margin-right: 2.5em;
+  color: #8d8995;
+  font-weight: 700;
+}
+
+.navigation_menu-items_menu-item_link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nav-account {
+  background: linear-gradient( 0deg, rgb(250 248 255) 0%, rgb(217 211 235) 100%);
+  height: 2.5em;
+  background-color: #f3f0f8;
+  box-shadow: 0.2em 0.2em 1.5em #a497d3;
+  padding:0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.navigation + * {
+  margin-top: 20px;
+}
+
+.navigation__links {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  margin: 0 10px;
+}
+
+.navigation__link {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;
+  color: #898e9c;
+  text-decoration: none;
+  height: 39px;
+  width: 41px;
+  min-width: 41px;
+  max-width: 41px;
+  box-shadow: inset 0 5px 10px -3px rgba(0,0,0,.1),
+    0 5px 10px -3px rgba(0,0,0,.1),
+    inset 0 -5px 15px -5px white,
+    0 -5px 15px 5px rgba(255,255,255,.75);
+  border-radius: 10px;
+  position: relative;
+  z-index: 1;
+  transition: all 0.125s;
+}
+
+.navigation__link + .navigation__link {
+  margin-left: 8px;
+}
+
+.navigation__link-icon {
+  font-size: 17px;
+  transition: transform 0.125s;
+}
+
+.navigation__link-icon--plane {
+  transform: translateX(-2px);
+  font-size: 16px;
+}
+
+.navigation__link:hover,
+.navigation__link:active {
+  color: #a93185;
+  background-color: white;
+  box-shadow: 0 5px 10px -5px rgba(0,0,0,.2);
+}
+
+.navigation__link:active .navigation__link-icon {
+  transform: scale(1.2);
+}
+
+.navigation__link:active .navigation__link-icon--plane {
+  transform: translateX(-2px) scale(1.2);
+}
+
+.reef-logo {
+  width: 62px;
+}
+
+.no-break-text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.navigation__account {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 99px;
+  height: 45px;
+  box-shadow: inset 0 5px 10px -3px rgba(0,0,0,.1),
+    0 5px 10px -3px rgba(0,0,0,.1),
+    inset 0 -5px 15px -5px white,
+    0 -5px 15px 5px rgba(255,255,255,.75);
+  border: none;
+  outline: none;
+  background-color: transparent;
+  padding: 0 0 0 15px;
+  max-width: 270px;
+  transition: all 0.125s;
+}
+
+.navigation__settings-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  box-shadow: inset 0 5px 10px -3px rgba(0,0,0,.1),
+    0 5px 10px -3px rgba(0,0,0,.1),
+    inset 0 -5px 15px -5px white,
+    0 -5px 15px 5px rgba(255,255,255,.75);
+  border-radius: 50%;
+  width: 34px;
+  min-width: 34px;
+  height: 34px;
+  margin-left: 5px;
+  font-size: 18px;
+  color: #898e9c;
+  transition: all 0.125s;
+}
+
+.navigation__settings-btn:hover,
+.navigation__settings-btn--active {
+  color: #a93185;
+  background-color: white;
+  box-shadow: 0 5px 10px -5px rgba(0,0,0,.2);
+}
+
+.navigation__account-info {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-left: 1px;
+}
+
+.navigation__account-name {
+  font-size: 0.813rem;
+  line-height: 1.2;
+  font-weight: 600;
+  color: #19233c;
+  padding-top: 2px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100px;
+}
+
+.navigation__account-address {
+  font-size: 0.75rem;
+  line-height: 1.2;
+  font-weight: 500;
+  color: #898e9c;
+}
+
+.navigation__account-tokens {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  height: 35px;
+  margin: 0 5px 0 13px;
+  padding: 0 12px 0 14px;
+  border-radius: 99px;
+  background-color: rgba(255,255,255,0.65);
+  box-shadow: 0 1px 6px -3px rgba(0,0,0,0.5),
+    inset 0 2px 5px white;
+}
+
+.navigation__account-tokens-amount {
+  font-size: 0.875rem;
+  line-height: 1.1;
+  font-weight: 900;
+  color: #a93185;
+  background: linear-gradient(to right, #a93185, #5531a9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transform: translateY(1px);
+}
+
+.navigation__account-tokens img {
+  width: 19px;
+  margin: 0 7px 0 -5px;
+}
+
+.navigation__account:hover,
+.navigation__account:active,
+.navigation__account--active {
+  color: #a93185;
+  background-color: white;
+  box-shadow: 0 5px 10px -5px rgba(0,0,0,.2);
+}
+
+.navigation--dark {
+  box-shadow: 0 5px 10px -5px #1a1b20;
+  background-color: #2c2d33;
+}
+
+.navigation--dark .reef-logo {
+  filter: brightness(1.5);
+}
+
+.navigation--dark .navigation__link {
+  color: rgba(255,255,255,.5);
+  box-shadow: none;
+  background-color: #373840;
+}
+
+.navigation--dark .navigation__link:hover,
+.navigation--dark .navigation__link:active {
+  color: rgba(255,255,255,.75);
+  box-shadow: none;
+  background-color: #42444d;
+}
+
+.navigation--dark .navigation__link:hover .navigation__link-icon,
+.navigation--dark .navigation__link:active .navigation__link-icon {
+  color: white;
+}
+
+.navigation--dark .navigation__account {
+  box-shadow: none;
+  background-color: #373840;
+}
+
+.navigation--dark .navigation__account:hover,
+.navigation--dark .navigation__account:active,
+.navigation--dark .navigation__account--active {
+  color: rgba(255,255,255,.75);
+  box-shadow: none;
+  background-color: #42444d;
+}
+
+.navigation--dark .navigation__account-name {
+  color: white;
+  font-weight: 500;
+}
+
+.navigation--dark .navigation__account-address {
+  color: rgba(255,255,255,.5);
+}
+
+.navigation--dark .navigation__account-tokens {
+  box-shadow: none;
+  background-color: #42444d;
+}
+
+.navigation--dark .navigation__account-tokens-amount {
+  color: #ff62ff;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  background: transparent;
+  font-weight: 500;
+}
+
+.navigation--dark .navigation__settings-btn {
+  color: rgba(255,255,255,.5);
+  box-shadow: none;
+  background-color: #373840;
+}
+
+.navigation--dark .navigation__settings-btn:hover,
+.navigation--dark .navigation__settings-btn--active {
+  color: rgba(255,255,255,.75);
+  box-shadow: none;
+  background-color: #42444d;
+}

@@ -8,6 +8,7 @@ import uiSettings from '@polkadot/ui-settings';
 
 import Backend from './Backend';
 
+// @ts-ignore
 i18next
   .use(initReactI18next)
   .use(Backend)

@@ -20,11 +20,15 @@ void chrome.browserAction.setBadgeBackgroundColor({ color: '#d90000' });
 
 // listen to all messages and handle appropriately
 chrome.runtime.onConnect.addListener((port): void => {
+  console.log('msg connect listener before handler=', port);
   // shouldn't happen, however... only listen to what we know about
   assert([PORT_CONTENT, PORT_EXTENSION].includes(port.name), `Unknown connection from ${port.name}`);
 
   // message and disconnect handlers
-  port.onMessage.addListener((data: TransportRequestMessage<keyof RequestSignatures>) => handlers(data, port));
+  port.onMessage.addListener((data: TransportRequestMessage<keyof RequestSignatures>) => {
+    console.log('onMessage before handler =', data, ' port=', port);
+    handlers(data, port);
+  });
   port.onDisconnect.addListener(() => console.log(`Disconnected from ${port.name}`));
 });
 
@@ -35,7 +39,7 @@ cryptoWaitReady()
 
     // load all the keyring data
     keyring.loadAll({ store: new AccountsStore(), type: 'sr25519' });
-
+    console.log('KEYRING LOADED ALL=', keyring.getAccounts().length);
     console.log('initialization completed');
   })
   .catch((error): void => {

@@ -4,6 +4,7 @@
 import type { HexString } from '@reef-defi/util/types';
 import type { ExtrinsicPayload } from '@polkadot/types/interfaces';
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -77,7 +78,7 @@ function LedgerSign ({ accountIndex, addressOffset, className, error, genesisHas
             isBusy={isBusy || ledgerLoading}
             onClick={_onRefresh}
           >
-            <FontAwesomeIcon icon={faSync} />
+            <FontAwesomeIcon icon={faSync as IconProp} />
             {t<string>('Refresh')}
           </Button>
         )

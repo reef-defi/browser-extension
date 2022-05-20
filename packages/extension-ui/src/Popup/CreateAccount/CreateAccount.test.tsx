@@ -9,7 +9,7 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { ThemeProvider } from 'styled-components';
 
-import { ActionContext, ActionText, Button, themes } from '../../components';
+import { ActionContext, ActionText, themes } from '../../components';
 import * as messaging from '../../messaging';
 import { Header } from '../../partials';
 import { flushAllPromises } from '../../testHelpers';
@@ -64,7 +64,7 @@ describe('Create Account', () => {
     });
 
     it('next step button is disabled when checkbox is not checked', () => {
-      expect(wrapper.find(Button).prop('isDisabled')).toBe(true);
+      expect(wrapper.find('.next-step-btn').first().prop('disabled')).toBe(true);
     });
 
     it('action text is "Cancel"', () => {
@@ -77,9 +77,10 @@ describe('Create Account', () => {
     });
 
     it('checking the checkbox enables the Next button', () => {
+      expect(wrapper.find('.next-step-btn').first().prop('disabled')).toBe(true);
       check(wrapper.find('input[type="checkbox"]'));
 
-      expect(wrapper.find(Button).prop('isDisabled')).toBe(false);
+      expect(wrapper.find('.next-step-btn').first().prop('disabled')).toBe(false);
     });
 
     it('clicking on Next activates phase 2', () => {

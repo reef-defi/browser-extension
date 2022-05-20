@@ -5,6 +5,7 @@ import type { MetadataDef, ProviderMeta } from '@reef-defi/extension-inject/type
 import type { JsonRpcResponse, ProviderInterface, ProviderInterfaceCallback } from '@polkadot/rpc-provider/types';
 import type { AccountJson, AuthorizeRequest, MetadataRequest, RequestAuthorizeTab, RequestRpcSend, RequestRpcSubscribe, RequestRpcUnsubscribe, RequestSign, ResponseRpcListProviders, ResponseSigning, SigningRequest } from '../types';
 
+import { PORT_EXTENSION } from '@reef-defi/extension-base/defaults';
 import { addMetadata, knownMetadata } from '@reef-defi/extension-chains';
 import chrome from '@reef-defi/extension-inject/chrome';
 import { assert } from '@reef-defi/util';
@@ -26,8 +27,6 @@ interface AuthRequest extends Resolver<boolean> {
   url: string;
 }
 
-export type AuthUrls = Record<string, AuthUrlInfo>;
-
 export interface AuthUrlInfo {
   count: number;
   id: string;
@@ -35,6 +34,8 @@ export interface AuthUrlInfo {
   origin: string;
   url: string;
 }
+
+export type AuthUrls = Record<string, AuthUrlInfo>;
 
 interface MetaRequest extends Resolver<boolean> {
   id: string;
@@ -91,31 +92,20 @@ function getId (): string {
 }
 
 export default class State {
+  public readonly authSubject: BehaviorSubject<AuthorizeRequest[]> = new BehaviorSubject<AuthorizeRequest[]>([]);
+  public readonly metaSubject: BehaviorSubject<MetadataRequest[]> = new BehaviorSubject<MetadataRequest[]>([]);
+  public readonly signSubject: BehaviorSubject<SigningRequest[]> = new BehaviorSubject<SigningRequest[]>([]);
   readonly #authUrls: AuthUrls = {};
-
   readonly #authRequests: Record<string, AuthRequest> = {};
-
   readonly #metaStore = new MetadataStore();
-
   // Map of providers currently injected in tabs
   readonly #injectedProviders = new Map<chrome.runtime.Port, ProviderInterface>();
-
   readonly #metaRequests: Record<string, MetaRequest> = {};
-
   #notification = settings.notification;
-
   // Map of all providers exposed by the extension, they are retrievable by key
   readonly #providers: Providers;
-
   readonly #signRequests: Record<string, SignRequest> = {};
-
   #windows: number[] = [];
-
-  public readonly authSubject: BehaviorSubject<AuthorizeRequest[]> = new BehaviorSubject<AuthorizeRequest[]>([]);
-
-  public readonly metaSubject: BehaviorSubject<MetadataRequest[]> = new BehaviorSubject<MetadataRequest[]>([]);
-
-  public readonly signSubject: BehaviorSubject<SigningRequest[]> = new BehaviorSubject<SigningRequest[]>([]);
 
   constructor (providers: Providers = {}) {
     this.#providers = providers;
@@ -169,125 +159,6 @@ export default class State {
     return this.#authUrls;
   }
 
-  private popupClose (): void {
-    this.#windows.forEach((id: number): void =>
-      // eslint-disable-next-line no-void
-      void chrome.windows.remove(id)
-    );
-    this.#windows = [];
-  }
-
-  private popupOpen (): void {
-    this.#notification !== 'extension' &&
-      chrome.windows.create(
-        this.#notification === 'window'
-          ? NORMAL_WINDOW_OPTS
-          : POPUP_WINDOW_OPTS,
-        (window): void => {
-          if (window) {
-            this.#windows.push(window.id || 0);
-          }
-        });
-  }
-
-  private authComplete = (id: string, resolve: (result: boolean) => void, reject: (error: Error) => void): Resolver<boolean> => {
-    const complete = (result: boolean | Error) => {
-      const isAllowed = result === true;
-      const { idStr, request: { origin }, url } = this.#authRequests[id];
-
-      this.#authUrls[this.stripUrl(url)] = {
-        count: 0,
-        id: idStr,
-        isAllowed,
-        origin,
-        url
-      };
-
-      this.saveCurrentAuthList();
-      delete this.#authRequests[id];
-      this.updateIconAuth(true);
-    };
-
-    return {
-      reject: (error: Error): void => {
-        complete(error);
-        reject(error);
-      },
-      resolve: (result: boolean): void => {
-        complete(result);
-        resolve(result);
-      }
-    };
-  };
-
-  private saveCurrentAuthList () {
-    localStorage.setItem(AUTH_URLS_KEY, JSON.stringify(this.#authUrls));
-  }
-
-  private metaComplete = (id: string, resolve: (result: boolean) => void, reject: (error: Error) => void): Resolver<boolean> => {
-    const complete = (): void => {
-      delete this.#metaRequests[id];
-      this.updateIconMeta(true);
-    };
-
-    return {
-      reject: (error: Error): void => {
-        complete();
-        reject(error);
-      },
-      resolve: (result: boolean): void => {
-        complete();
-        resolve(result);
-      }
-    };
-  };
-
-  private signComplete = (id: string, resolve: (result: ResponseSigning) => void, reject: (error: Error) => void): Resolver<ResponseSigning> => {
-    const complete = (): void => {
-      delete this.#signRequests[id];
-      this.updateIconSign(true);
-    };
-
-    return {
-      reject: (error: Error): void => {
-        complete();
-        reject(error);
-      },
-      resolve: (result: ResponseSigning): void => {
-        complete();
-        resolve(result);
-      }
-    };
-  };
-
-  private stripUrl (url: string): string {
-    assert(url && (url.startsWith('http:') || url.startsWith('https:') || url.startsWith('ipfs:') || url.startsWith('ipns:')), `Invalid url ${url}, expected to start with http: or https: or ipfs: or ipns:`);
-
-    const parts = url.split('/');
-
-    return parts[2];
-  }
-
-  private updateIcon (shouldClose?: boolean): void {
-    const authCount = this.numAuthRequests;
-    const metaCount = this.numMetaRequests;
-    const signCount = this.numSignRequests;
-    const text = (
-      authCount
-        ? 'Auth'
-        : metaCount
-          ? 'Meta'
-          : (signCount ? `${signCount}` : '')
-    );
-
-    // eslint-disable-next-line no-void
-    void chrome.browserAction.setBadgeText({ text });
-
-    if (shouldClose && text === '') {
-      this.popupClose();
-    }
-  }
-
   public toggleAuthorization (url: string): AuthUrls {
     const entry = this.#authUrls[url];
 
@@ -297,21 +168,6 @@ export default class State {
     this.saveCurrentAuthList();
 
     return this.#authUrls;
-  }
-
-  private updateIconAuth (shouldClose?: boolean): void {
-    this.authSubject.next(this.allAuthRequests);
-    this.updateIcon(shouldClose);
-  }
-
-  private updateIconMeta (shouldClose?: boolean): void {
-    this.metaSubject.next(this.allMetaRequests);
-    this.updateIcon(shouldClose);
-  }
-
-  private updateIconSign (shouldClose?: boolean): void {
-    this.signSubject.next(this.allSignRequests);
-    this.updateIcon(shouldClose);
   }
 
   public async authorizeUrl (url: string, request: RequestAuthorizeTab): Promise<boolean> {
@@ -347,6 +203,10 @@ export default class State {
   }
 
   public ensureUrlAuthorized (url: string): boolean {
+    if (url === PORT_EXTENSION) {
+      return true;
+    }
+
     const entry = this.#authUrls[this.stripUrl(url)];
 
     assert(entry, `The source ${url} has not been enabled yet`);
@@ -476,7 +336,144 @@ export default class State {
       };
 
       this.updateIconSign();
-      this.popupOpen();
+
+      if (url !== PORT_EXTENSION) {
+        this.popupOpen();
+      }
     });
+  }
+
+  private popupClose (): void {
+    this.#windows.forEach((id: number): void =>
+      // eslint-disable-next-line no-void
+      void chrome.windows.remove(id)
+    );
+    this.#windows = [];
+  }
+
+  private popupOpen (): void {
+    this.#notification !== 'extension' &&
+      chrome.windows.create(
+        this.#notification === 'window'
+          ? NORMAL_WINDOW_OPTS
+          : POPUP_WINDOW_OPTS,
+        (window): void => {
+          if (window) {
+            this.#windows.push(window.id || 0);
+          }
+        });
+  }
+
+  private authComplete = (id: string, resolve: (result: boolean) => void, reject: (error: Error) => void): Resolver<boolean> => {
+    const complete = (result: boolean | Error) => {
+      const isAllowed = result === true;
+      const { idStr, request: { origin }, url } = this.#authRequests[id];
+
+      this.#authUrls[this.stripUrl(url)] = {
+        count: 0,
+        id: idStr,
+        isAllowed,
+        origin,
+        url
+      };
+
+      this.saveCurrentAuthList();
+      delete this.#authRequests[id];
+      this.updateIconAuth(true);
+    };
+
+    return {
+      reject: (error: Error): void => {
+        complete(error);
+        reject(error);
+      },
+      resolve: (result: boolean): void => {
+        complete(result);
+        resolve(result);
+      }
+    };
+  };
+
+  private saveCurrentAuthList () {
+    localStorage.setItem(AUTH_URLS_KEY, JSON.stringify(this.#authUrls));
+  }
+
+  private metaComplete = (id: string, resolve: (result: boolean) => void, reject: (error: Error) => void): Resolver<boolean> => {
+    const complete = (): void => {
+      delete this.#metaRequests[id];
+      this.updateIconMeta(true);
+    };
+
+    return {
+      reject: (error: Error): void => {
+        complete();
+        reject(error);
+      },
+      resolve: (result: boolean): void => {
+        complete();
+        resolve(result);
+      }
+    };
+  };
+
+  private signComplete = (id: string, resolve: (result: ResponseSigning) => void, reject: (error: Error) => void): Resolver<ResponseSigning> => {
+    const complete = (): void => {
+      delete this.#signRequests[id];
+      this.updateIconSign(true);
+    };
+
+    return {
+      reject: (error: Error): void => {
+        complete();
+        reject(error);
+      },
+      resolve: (result: ResponseSigning): void => {
+        complete();
+        resolve(result);
+      }
+    };
+  };
+
+  private stripUrl (url: string): string {
+    assert(url && (url.startsWith('http:') || url.startsWith('https:') || url.startsWith('ipfs:') || url.startsWith('ipns:')), `Invalid url ${url}, expected to start with http: or https: or ipfs: or ipns:`);
+
+    const parts = url.split('/');
+
+    return parts[2];
+  }
+
+  private updateIcon (shouldClose?: boolean): void {
+    const authCount = this.numAuthRequests;
+    const metaCount = this.numMetaRequests;
+    const signCount = this.numSignRequests;
+    const text = (
+      authCount
+        ? 'Auth'
+        : metaCount
+          ? 'Meta'
+          : (signCount ? `${signCount}` : '')
+    );
+
+    // eslint-disable-next-line no-void
+    void chrome.browserAction.setBadgeText({ text });
+
+    if (shouldClose && text === '') {
+      this.popupClose();
+    }
+  }
+
+  private updateIconAuth (shouldClose?: boolean): void {
+    this.authSubject.next(this.allAuthRequests);
+    this.updateIcon(shouldClose);
+  }
+
+  private updateIconMeta (shouldClose?: boolean): void {
+    this.metaSubject.next(this.allMetaRequests);
+    this.updateIcon(shouldClose);
+  }
+
+  private updateIconSign (shouldClose?: boolean): void {
+    this.signSubject.next(this.allSignRequests);
+    this.updateIcon(shouldClose);
   }
 }

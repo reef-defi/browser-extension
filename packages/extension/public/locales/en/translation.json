@@ -160,5 +160,11 @@
   "password for encrypting all accounts": "",
   "I want to export all my accounts": "",
   "Notifications": "",
-  "Search by name or network...": ""
+  "Search by name or network...": "",
+  "Hardware Wallet Account": "",
+  "External Account": "",
+  "Copy Address": "",
+  "Account Visibility": "",
+  "Copy Reef Account Address": "",
+  "Copy Ethereum VM Address": ""
 }

@@ -12,7 +12,7 @@ import { act } from 'react-dom/test-utils';
 import { MemoryRouter, Route } from 'react-router';
 import { ThemeProvider } from 'styled-components';
 
-import { Button, themes } from '../components';
+import { themes } from '../components';
 import * as messaging from '../messaging';
 import { flushAllPromises } from '../testHelpers';
 import Export from './Export';
@@ -25,7 +25,7 @@ describe('Export component', () => {
   const VALID_ADDRESS = 'HjoBp62cvsWDA3vtNMWxz6c9q13ReEHi9UGHK7JbZweH5g5';
 
   const enterPassword = (password = 'any password'): void => {
-    wrapper.find('[data-export-password] input').simulate('change', { target: { value: password } });
+    wrapper.find('.account-card__exporting input').simulate('change', { target: { value: password } });
   };
 
   beforeEach(() => {
@@ -50,7 +50,7 @@ describe('Export component', () => {
   });
 
   it('button is disabled before any password is typed', () => {
-    expect(wrapper.find(Button).prop('isDisabled')).toBe(true);
+    expect(wrapper.find('.export-button').first().getElement().props.disabled).toBe(true);
   });
 
   it('shows an error if the password is wrong', async () => {
@@ -61,13 +61,13 @@ describe('Export component', () => {
       throw new Error('Unable to decode using the supplied passphrase');
     });
     enterPassword();
-    wrapper.find('[data-export-button] button').simulate('click');
+    wrapper.find('.export-button').first().simulate('click');
     await act(flushAllPromises);
     wrapper.update();
 
     // the first message is "You are exporting your account. Keep it safe and don't share it with anyone."
     expect(wrapper.find('.warning-message').at(1).text()).toBe('Unable to decode using the supplied passphrase');
-    expect(wrapper.find(Button).prop('isDisabled')).toBe(true);
+    expect(wrapper.find('.export-button').first().getElement().props.disabled).toBe(true);
     expect(wrapper.find('InputWithLabel').first().prop('isError')).toBe(true);
   });
 
@@ -79,14 +79,14 @@ describe('Export component', () => {
       throw new Error('Unable to decode using the supplied passphrase');
     });
     enterPassword();
-    wrapper.find('[data-export-button] button').simulate('click');
+    wrapper.find('.export-button').first().simulate('click');
     await act(flushAllPromises);
     wrapper.update();
     enterPassword();
 
     // the first message is "You are exporting your account. Keep it safe and don't share it with anyone."
     expect(wrapper.find('.warning-message')).toHaveLength(1);
-    expect(wrapper.find(Button).prop('isDisabled')).toBe(false);
+    expect(wrapper.find('.export-button').first().getElement().props.disabled).toBe(false);
     expect(wrapper.find('InputWithLabel').first().prop('isError')).toBe(false);
   });
 
@@ -94,6 +94,6 @@ describe('Export component', () => {
     enterPassword();
     await act(flushAllPromises);
 
-    expect(wrapper.find(Button).prop('isDisabled')).toBe(false);
+    expect(wrapper.find('.export-button').first().getElement().props.disabled).toBe(false);
   });
 });

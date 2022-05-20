@@ -16,8 +16,8 @@ export default class RequestExtrinsicSign implements RequestSign {
   }
 
   sign (registry: TypeRegistry, pair: KeyringPair): { signature: HexString } {
-    return registry
+    return (registry
       .createType('ExtrinsicPayload', this.payload, { version: this.payload.version })
-      .sign(pair);
+      .sign(pair) as { signature: HexString });
   }
 }

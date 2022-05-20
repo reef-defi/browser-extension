@@ -9,7 +9,6 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router';
 
-import { Button } from '../components';
 import * as messaging from '../messaging';
 import { flushAllPromises } from '../testHelpers';
 import ImportQr from './ImportQr';
@@ -76,27 +75,27 @@ describe('ImportQr component', () => {
 
   describe('Address component', () => {
     it('shows account as external', () => {
-      expect(wrapper.find('Name').find('FontAwesomeIcon [data-icon="qrcode"]').exists()).toBe(true);
+      expect(wrapper.find('.account-card__name .externalIcon').exists()).toBe(true);
     });
 
     it('shows the correct name', () => {
-      expect(wrapper.find('Name span').text()).toEqual(mockedAccount.name);
+      expect(wrapper.find('.account-card__name span').text()).toEqual(mockedAccount.name);
     });
 
     it('shows the correct address', () => {
-      expect(wrapper.find('[data-field="address"]').text()).toEqual(mockedAccount.content);
+      expect(wrapper.find('.account-card__address').text().endsWith(mockedAccount.content.substring(mockedAccount.content.length - 4))).toEqual(true);
     });
   });
 
   it('has the button enabled', () => {
-    expect(wrapper.find(Button).prop('isDisabled')).toBe(false);
+    expect(wrapper.find('.next-step-btn').first().getElement().props.disabled).toBe(false);
   });
 
   it('displays and error and the button is disabled with a short name', async () => {
     await typeName(wrapper, 'a');
 
     expect(wrapper.find('.warning-message').first().text()).toBe('Account name is too short');
-    expect(wrapper.find(Button).prop('isDisabled')).toBe(true);
+    expect(wrapper.find('.next-step-btn').first().getElement().props.disabled).toBe(true);
   });
 
   it('has no error message and button enabled with a long name', async () => {
@@ -104,10 +103,9 @@ describe('ImportQr component', () => {
 
     await typeName(wrapper, 'a');
     await typeName(wrapper, longName);
-
     expect(wrapper.find('.warning-message')).toHaveLength(0);
-    expect(wrapper.find(Button).prop('isDisabled')).toBe(false);
-    expect(wrapper.find('Name span').text()).toEqual(longName);
+    expect(wrapper.find('.next-step-btn').first().getElement().props.disabled).toBe(false);
+    expect(wrapper.find('.account-card__name span').first().text()).toEqual(longName);
   });
 
   it('shows the external name in the input field', () => {
@@ -116,7 +114,7 @@ describe('ImportQr component', () => {
 
   it('creates the external account', async () => {
     jest.spyOn(messaging, 'createAccountExternal').mockResolvedValue(false);
-    wrapper.find(Button).simulate('click');
+    wrapper.find('.next-step-btn').first().simulate('click');
     await act(flushAllPromises);
 
     expect(messaging.createAccountExternal).toHaveBeenCalledWith(mockedAccount.name, mockedAccount.content, mockedAccount.genesisHash);

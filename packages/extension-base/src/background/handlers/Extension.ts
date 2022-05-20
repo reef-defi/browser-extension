@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { MetadataDef } from '@reef-defi/extension-inject/types';
-import type { KeyringPair, KeyringPair$Json, KeyringPair$Meta } from '@reef-defi/keyring/types';
-import type { KeypairType } from '@reef-defi/util-crypto/types';
+import type { KeyringPair, KeyringPair$Json, KeyringPair$Meta } from '@polkadot/keyring/types';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
 import type { SubjectInfo } from '@polkadot/ui-keyring/observable/types';
+import type { KeypairType } from '@polkadot/util-crypto/types';
 import type { AccountJson, AllowedPath, AuthorizeRequest, MessageTypes, MetadataRequest, RequestAccountBatchExport, RequestAccountChangePassword, RequestAccountCreateExternal, RequestAccountCreateHardware, RequestAccountCreateSuri, RequestAccountEdit, RequestAccountExport, RequestAccountForget, RequestAccountShow, RequestAccountTie, RequestAccountValidate, RequestAuthorizeApprove, RequestAuthorizeReject, RequestBatchRestore, RequestDeriveCreate, RequestDeriveValidate, RequestJsonRestore, RequestMetadataApprove, RequestMetadataReject, RequestSeedCreate, RequestSeedValidate, RequestSigningApprovePassword, RequestSigningApproveSignature, RequestSigningCancel, RequestSigningIsLocked, RequestTypes, ResponseAccountExport, ResponseAccountsExport, ResponseAuthorizeList, ResponseDeriveValidate, ResponseJsonGetAccountInfo, ResponseSeedCreate, ResponseSeedValidate, ResponseSigningIsLocked, ResponseType, SigningRequest } from '../types';
 
 import { ALLOWED_PATH, PASSWORD_EXPIRY_MS } from '@reef-defi/extension-base/defaults';
@@ -35,7 +35,7 @@ function getSuri (seed: string, type?: KeypairType): string {
     : seed;
 }
 
-function transformAccounts (accounts: SubjectInfo): AccountJson[] {
+export function transformAccounts (accounts: SubjectInfo): AccountJson[] {
   return Object.values(accounts).map(({ json: { address, meta }, type }): AccountJson => ({
     address,
     ...meta,
@@ -55,6 +55,122 @@ export default class Extension {
   constructor (state: State) {
     this.#cachedUnlocks = {};
     this.#state = state;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/require-await
+  public async handle<TMessageType extends MessageTypes> (id: string, type: TMessageType, request: RequestTypes[TMessageType], port: chrome.runtime.Port): Promise<ResponseType<TMessageType>> {
+    switch (type) {
+      case 'pri(authorize.approve)':
+        return this.authorizeApprove(request as RequestAuthorizeApprove);
+
+      case 'pri(authorize.list)':
+        return this.getAuthList();
+
+      case 'pri(authorize.reject)':
+        return this.authorizeReject(request as RequestAuthorizeReject);
+
+      case 'pri(authorize.toggle)':
+        return this.toggleAuthorization(request as string);
+
+      case 'pri(authorize.requests)':
+        return this.authorizeSubscribe(id, port);
+
+      case 'pri(accounts.create.external)':
+        return this.accountsCreateExternal(request as RequestAccountCreateExternal);
+
+      case 'pri(accounts.create.hardware)':
+        return this.accountsCreateHardware(request as RequestAccountCreateHardware);
+
+      case 'pri(accounts.create.suri)':
+        return this.accountsCreateSuri(request as RequestAccountCreateSuri);
+
+      case 'pri(accounts.changePassword)':
+        return this.accountsChangePassword(request as RequestAccountChangePassword);
+
+      case 'pri(accounts.edit)':
+        return this.accountsEdit(request as RequestAccountEdit);
+
+      case 'pri(accounts.export)':
+        return this.accountsExport(request as RequestAccountExport);
+
+      case 'pri(accounts.batchExport)':
+        return this.accountsBatchExport(request as RequestAccountBatchExport);
+
+      case 'pri(accounts.forget)':
+        return this.accountsForget(request as RequestAccountForget);
+
+      case 'pri(accounts.show)':
+        return this.accountsShow(request as RequestAccountShow);
+
+      case 'pri(accounts.subscribe)':
+        return this.accountsSubscribe(id, port);
+
+      case 'pri(accounts.tie)':
+        return this.accountsTie(request as RequestAccountTie);
+
+      case 'pri(accounts.validate)':
+        return this.accountsValidate(request as RequestAccountValidate);
+
+      case 'pri(metadata.approve)':
+        return this.metadataApprove(request as RequestMetadataApprove);
+
+      case 'pri(metadata.get)':
+        return this.metadataGet(request as string);
+
+      case 'pri(metadata.list)':
+        return this.metadataList();
+
+      case 'pri(metadata.reject)':
+        return this.metadataReject(request as RequestMetadataReject);
+
+      case 'pri(metadata.requests)':
+        return this.metadataSubscribe(id, port);
+
+      case 'pri(derivation.create)':
+        return this.derivationCreate(request as RequestDeriveCreate);
+
+      case 'pri(derivation.validate)':
+        return this.derivationValidate(request as RequestDeriveValidate);
+
+      case 'pri(json.restore)':
+        return this.jsonRestore(request as RequestJsonRestore);
+
+      case 'pri(json.batchRestore)':
+        return this.batchRestore(request as RequestBatchRestore);
+
+      case 'pri(json.account.info)':
+        return this.jsonGetAccountInfo(request as KeyringPair$Json);
+
+      case 'pri(seed.create)':
+        return this.seedCreate(request as RequestSeedCreate);
+
+      case 'pri(seed.validate)':
+        return this.seedValidate(request as RequestSeedValidate);
+
+      case 'pri(settings.notification)':
+        return this.#state.setNotification(request as string);
+
+      case 'pri(signing.approve.password)':
+        return this.signingApprovePassword(request as RequestSigningApprovePassword);
+
+      case 'pri(signing.approve.signature)':
+        return this.signingApproveSignature(request as RequestSigningApproveSignature);
+
+      case 'pri(signing.cancel)':
+        return this.signingCancel(request as RequestSigningCancel);
+
+      case 'pri(signing.isLocked)':
+        return this.signingIsLocked(request as RequestSigningIsLocked);
+
+      case 'pri(signing.requests)':
+        return this.signingSubscribe(id, port);
+
+      case 'pri(window.open)':
+        return this.windowOpen(request as AllowedPath);
+
+      default:
+        throw new Error(`Unable to handle message of type ${type}`);
+    }
   }
 
   private accountsCreateExternal ({ address, genesisHash, name }: RequestAccountCreateExternal): boolean {
@@ -458,8 +574,6 @@ export default class Extension {
       return false;
     }
 
-    console.log('open', url);
-
     // eslint-disable-next-line no-void
     void chrome.tabs.create({ url });
 
@@ -504,124 +618,9 @@ export default class Extension {
     return true;
   }
 
+  // Weird thought, the eslint override is not needed in Tabs
+
   private toggleAuthorization (url: string): ResponseAuthorizeList {
     return { list: this.#state.toggleAuthorization(url) };
-  }
-
-  // Weird thought, the eslint override is not needed in Tabs
-  // eslint-disable-next-line @typescript-eslint/require-await
-  public async handle<TMessageType extends MessageTypes> (id: string, type: TMessageType, request: RequestTypes[TMessageType], port: chrome.runtime.Port): Promise<ResponseType<TMessageType>> {
-    switch (type) {
-      case 'pri(authorize.approve)':
-        return this.authorizeApprove(request as RequestAuthorizeApprove);
-
-      case 'pri(authorize.list)':
-        return this.getAuthList();
-
-      case 'pri(authorize.reject)':
-        return this.authorizeReject(request as RequestAuthorizeReject);
-
-      case 'pri(authorize.toggle)':
-        return this.toggleAuthorization(request as string);
-
-      case 'pri(authorize.requests)':
-        return this.authorizeSubscribe(id, port);
-
-      case 'pri(accounts.create.external)':
-        return this.accountsCreateExternal(request as RequestAccountCreateExternal);
-
-      case 'pri(accounts.create.hardware)':
-        return this.accountsCreateHardware(request as RequestAccountCreateHardware);
-
-      case 'pri(accounts.create.suri)':
-        return this.accountsCreateSuri(request as RequestAccountCreateSuri);
-
-      case 'pri(accounts.changePassword)':
-        return this.accountsChangePassword(request as RequestAccountChangePassword);
-
-      case 'pri(accounts.edit)':
-        return this.accountsEdit(request as RequestAccountEdit);
-
-      case 'pri(accounts.export)':
-        return this.accountsExport(request as RequestAccountExport);
-
-      case 'pri(accounts.batchExport)':
-        return this.accountsBatchExport(request as RequestAccountBatchExport);
-
-      case 'pri(accounts.forget)':
-        return this.accountsForget(request as RequestAccountForget);
-
-      case 'pri(accounts.show)':
-        return this.accountsShow(request as RequestAccountShow);
-
-      case 'pri(accounts.subscribe)':
-        return this.accountsSubscribe(id, port);
-
-      case 'pri(accounts.tie)':
-        return this.accountsTie(request as RequestAccountTie);
-
-      case 'pri(accounts.validate)':
-        return this.accountsValidate(request as RequestAccountValidate);
-
-      case 'pri(metadata.approve)':
-        return this.metadataApprove(request as RequestMetadataApprove);
-
-      case 'pri(metadata.get)':
-        return this.metadataGet(request as string);
-
-      case 'pri(metadata.list)':
-        return this.metadataList();
-
-      case 'pri(metadata.reject)':
-        return this.metadataReject(request as RequestMetadataReject);
-
-      case 'pri(metadata.requests)':
-        return this.metadataSubscribe(id, port);
-
-      case 'pri(derivation.create)':
-        return this.derivationCreate(request as RequestDeriveCreate);
-
-      case 'pri(derivation.validate)':
-        return this.derivationValidate(request as RequestDeriveValidate);
-
-      case 'pri(json.restore)':
-        return this.jsonRestore(request as RequestJsonRestore);
-
-      case 'pri(json.batchRestore)':
-        return this.batchRestore(request as RequestBatchRestore);
-
-      case 'pri(json.account.info)':
-        return this.jsonGetAccountInfo(request as KeyringPair$Json);
-
-      case 'pri(seed.create)':
-        return this.seedCreate(request as RequestSeedCreate);
-
-      case 'pri(seed.validate)':
-        return this.seedValidate(request as RequestSeedValidate);
-
-      case 'pri(settings.notification)':
-        return this.#state.setNotification(request as string);
-
-      case 'pri(signing.approve.password)':
-        return this.signingApprovePassword(request as RequestSigningApprovePassword);
-
-      case 'pri(signing.approve.signature)':
-        return this.signingApproveSignature(request as RequestSigningApproveSignature);
-
-      case 'pri(signing.cancel)':
-        return this.signingCancel(request as RequestSigningCancel);
-
-      case 'pri(signing.isLocked)':
-        return this.signingIsLocked(request as RequestSigningIsLocked);
-
-      case 'pri(signing.requests)':
-        return this.signingSubscribe(id, port);
-
-      case 'pri(window.open)':
-        return this.windowOpen(request as AllowedPath);
-
-      default:
-        throw new Error(`Unable to handle message of type ${type}`);
-    }
   }
 }

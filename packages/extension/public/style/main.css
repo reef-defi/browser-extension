@@ -1,0 +1,44 @@
+@import url(variables.css);
+@import url(uik/index.css);
+@import url(navigation.css);
+@import url(reef-styles-extension.css);
+@import url(reef-styles.css);
+@import url(token-balances.css);
+@import url(token-card.css);
+@import url(dropdowns.css);
+@import url(accounts.css);
+
+* {
+  box-sizing: border-box;
+  font-family: var(--font-family) !important;
+}
+
+main {
+  overflow: auto;
+}
+
+body {
+  background-color: var(--bg);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-button {
+  display: none;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 99px;
+}
+
+*::-webkit-scrollbar-thumb:horizontal {
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+}
+
+*::-webkit-scrollbar-thumb:vertical {
+  background: linear-gradient(to bottom, var(--primary), var(--secondary));
+}

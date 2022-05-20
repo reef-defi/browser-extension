@@ -49,6 +49,22 @@ export default class PostMessageProvider implements InjectedProvider {
   }
 
   /**
+   * @summary `true` when this provider supports subscriptions
+   */
+  public get hasSubscriptions (): boolean {
+    // FIXME This should see if the extension's state's provider has subscriptions
+    return true;
+  }
+
+  /**
+   * @summary Whether the node is connected or not.
+   * @return {boolean} true if connected
+   */
+  public get isConnected (): boolean {
+    return this.#isConnected;
+  }
+
+  /**
    * @description Returns a clone of the object
    */
   public clone (): PostMessageProvider {
@@ -71,22 +87,6 @@ export default class PostMessageProvider implements InjectedProvider {
   public async disconnect (): Promise<void> {
     // FIXME This should see if the extension's state's provider can disconnect
     console.error('PostMessageProvider.disconnect() is not implemented.');
-  }
-
-  /**
-   * @summary `true` when this provider supports subscriptions
-   */
-  public get hasSubscriptions (): boolean {
-    // FIXME This should see if the extension's state's provider has subscriptions
-    return true;
-  }
-
-  /**
-   * @summary Whether the node is connected or not.
-   * @return {boolean} true if connected
-   */
-  public get isConnected (): boolean {
-    return this.#isConnected;
   }
 
   public listProviders (): Promise<ProviderList> {

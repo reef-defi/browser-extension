@@ -96,8 +96,10 @@ function CreateAccount ({ className }: Props): React.ReactElement {
         <div>
           <Address
             address={address}
+            exporting
             genesisHash={genesisHash}
             name={name}
+            presentation
           />
         </div>
         {seed && (

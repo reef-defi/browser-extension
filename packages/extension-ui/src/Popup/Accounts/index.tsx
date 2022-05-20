@@ -50,7 +50,6 @@ function Accounts ({ className }: Props): React.ReactElement {
               onFilter={_onFilter}
               showAdd
               showSearch
-              showSettings
               text={t<string>('Accounts')}
             />
             <div className={className}>

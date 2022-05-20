@@ -3,6 +3,7 @@
 
 import type { ThemeProps } from '../types';
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
@@ -23,7 +24,7 @@ function BackButton ({ className, onClick }: Props): React.ReactElement<Props> {
     >
       <FontAwesomeIcon
         className='arrowLeft'
-        icon={faArrowLeft}
+        icon={faArrowLeft as IconProp}
         size='sm'
       />
     </Button>

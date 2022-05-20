@@ -3,32 +3,35 @@
 
 import type { AccountJson, AccountWithChildren } from '@reef-defi/extension-base/background/types';
 import type { Chain } from '@reef-defi/extension-chains/types';
-import type { KeypairType } from '@reef-defi/util-crypto/types';
 import type { IconTheme } from '@polkadot/react-identicon/types';
 import type { SettingsStruct } from '@polkadot/ui-settings/types';
+import type { KeypairType } from '@polkadot/util-crypto/types';
 import type { ThemeProps } from '../types';
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faUsb } from '@fortawesome/free-brands-svg-icons';
 import { faCopy, faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
-import { faCodeBranch, faQrcode } from '@fortawesome/free-solid-svg-icons';
+import { faCodeBranch, faEllipsisV, faQrcode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { decodeAddress, encodeAddress } from '@reef-defi/util-crypto';
+import { Provider } from '@reef-defi/evm-provider';
+import { appState, hooks, ReefSigner, utils } from '@reef-defi/react-lib';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import styled from 'styled-components';
 
-import details from '../assets/details.svg';
+import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
+
 import useMetadata from '../hooks/useMetadata';
 import useOutsideClick from '../hooks/useOutsideClick';
-import useToast from '../hooks/useToast';
 import useTranslation from '../hooks/useTranslation';
 import { showAccount } from '../messaging';
 import { DEFAULT_TYPE } from '../util/defaultType';
 import getParentNameSuri from '../util/getParentNameSuri';
-import { AccountContext, SettingsContext } from './contexts';
+import notify from './../../../reef/extension-ui/notify';
+import { Button, Loading } from './../../../reef/extension-ui/uik';
+import { AccountContext, ActionContext, SettingsContext, SigningReqContext } from './contexts';
 import Identicon from './Identicon';
 import Menu from './Menu';
-import Svg from './Svg';
 
 export interface Props {
   actions?: React.ReactNode;
@@ -44,6 +47,9 @@ export interface Props {
   suri?: string;
   toggleActions?: number;
   type?: KeypairType;
+  exporting?: any;
+  presentation?: boolean;
+  signerProp?: ReefSigner;
 }
 
 interface Recoded {
@@ -94,17 +100,29 @@ function recodeAddress (address: string, accounts: AccountWithChildren[], chain:
 const ACCOUNTS_SCREEN_HEIGHT = 550;
 const defaultRecoded = { account: null, formatted: null, prefix: 42, type: DEFAULT_TYPE };
 
-function Address ({ actions, address, children, className, genesisHash, isExternal, isHardware, isHidden, name, parentName, suri, toggleActions, type: givenType }: Props): React.ReactElement<Props> {
+function Address ({ actions, address, children, className, exporting, genesisHash, isExternal, isHardware, isHidden, name, parentName, presentation, signerProp, suri, toggleActions, type: givenType }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
+  const onAction = useContext(ActionContext);
   const { accounts } = useContext(AccountContext);
+  const selectedAccount: ReefSigner|undefined = hooks.useObservableState(appState.selectedSigner$);
+  const signers: ReefSigner[]|undefined = hooks.useObservableState(appState.signers$);
   const settings = useContext(SettingsContext);
   const [{ account, formatted, genesisHash: recodedGenesis, prefix, type }, setRecoded] = useState<Recoded>(defaultRecoded);
   const chain = useMetadata(genesisHash || recodedGenesis, true);
-
+  const provider: Provider|undefined = hooks.useObservableState(appState.currentProvider$);
+  const signRequests = useContext(SigningReqContext);
   const [showActionsMenu, setShowActionsMenu] = useState(false);
   const [moveMenuUp, setIsMovedMenu] = useState(false);
   const actionsRef = useRef<HTMLDivElement>(null);
-  const { show } = useToast();
+  const [signer, setSigner] = useState<ReefSigner|undefined>(signerProp);
+
+  useEffect(() => {
+    const foundSigner = signers?.find((s) => s.address === account?.address);
+
+    if (foundSigner) {
+      setSigner(foundSigner);
+    }
+  }, [signers, account]);
 
   useOutsideClick(actionsRef, () => (showActionsMenu && setShowActionsMenu(!showActionsMenu)));
 
@@ -117,16 +135,16 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
 
     const accountByAddress = findAccountByAddress(accounts, address);
 
-    console.log(
-      address,
-      (
-        chain?.definition.chainType === 'ethereum' ||
-        accountByAddress?.type === 'ethereum' ||
-        (!accountByAddress && givenType === 'ethereum')
-      )
-        ? { account: accountByAddress, formatted: address, type: 'ethereum' }
-        : recodeAddress(address, accounts, chain, settings)
-    );
+    // addressconsole.log(
+    //   address,
+    //   (
+    //     chain?.definition.chainType === 'ethereum' ||
+    //     accountByAddress?.type === 'ethereum' ||
+    //     (!accountByAddress && givenType === 'ethereum')
+    //   )
+    //     ? { account: accountByAddress, formatted: address, type: 'ethereum' }
+    //     : recodeAddress(address, accounts, chain, settings)
+    // );
 
     setRecoded(
       (
@@ -165,19 +183,18 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
     [showActionsMenu]
   );
 
-  const _onCopy = useCallback(
-    () => show(t('Copied')),
-    [show, t]
-  );
-
   const _toggleVisibility = useCallback(
     () => address && showAccount(address, isHidden || false).catch(console.error),
     [address, isHidden]
   );
 
-  const Name = () => {
+  const openEvmBindView = useCallback(
+    (bindAddress: string) => onAction(`/bind?bindAddress=${bindAddress}`),
+    [onAction]
+  );
+
+  const External = () => {
     const accountName = name || account?.name;
-    const displayName = accountName || t('<unknown>');
 
     return (
       <>
@@ -186,130 +203,237 @@ function Address ({ actions, address, children, className, genesisHash, isExtern
             ? (
               <FontAwesomeIcon
                 className='hardwareIcon'
-                icon={faUsb}
-                rotation={270}
-                title={t('hardware wallet account')}
+                icon={faUsb as IconProp}
+                title={t('Hardware Wallet Account')}
               />
             )
             : (
               <FontAwesomeIcon
                 className='externalIcon'
-                icon={faQrcode}
-                title={t('external account')}
+                icon={faQrcode as IconProp}
+                title={t('External Account')}
               />
             )
         )}
-        <span title={displayName}>{displayName}</span>
       </>);
+  };
+
+  const Bind = () => {
+    return (
+      <>
+        {!(!!signRequests && !!signRequests.length) && signer && !signer?.isEvmClaimed && provider && <Button
+          className='account-card__bind-btn'
+          fill
+          onClick={() => openEvmBindView(signer?.address)}
+          size='small'
+          type='button'
+        ><span>Bind EVM</span></Button>}
+      </>);
+  };
+
+  const Balance = () => {
+    return (
+      <>
+        <div>{ utils.toReefBalanceDisplay(signer?.balance).replace('-', '0.00').replace(' REEF', '') }</div>
+      </>
+    );
+  };
+
+  const isSelected = () => {
+    const selected = selectedAccount?.address === account?.address;
+
+    return !(!!signRequests && !!signRequests.length) && selectedAccount && selected;
+  };
+
+  const SelectButton = () => {
+    const selected = selectedAccount?.address === account?.address;
+
+    const selectAccount = (account: AccountJson | null): void => {
+      appState.selectAddressSubj.next(account?.address);
+    };
+
+    return (
+      <>
+        {!(!!signRequests && !!signRequests.length) && selectedAccount && (selected
+          ? <Button
+            className='account-card__select-btn account-card__select-btn--selected'
+            fill
+            size='small'
+            type='button'
+          >Selected</Button>
+          : <Button
+            className='account-card__select-btn'
+            onClick={() => selectAccount(account)}
+            size='small'
+            type='button'
+          >Select</Button>
+        )}
+      </>
+    );
   };
 
   const parentNameSuri = getParentNameSuri(parentName, suri);
 
   return (
-    <div className={className}>
-      <div className='infoRow'>
-        <Identicon
-          className='identityIcon'
-          iconTheme={theme}
-          isExternal={isExternal}
-          onCopy={_onCopy}
-          prefix={prefix}
-          value={formatted || address}
-        />
-        <div className='info'>
+    <div className={`
+      account-card__wrapper
+      ${isSelected() && !presentation ? 'account-card__wrapper--selected' : ''}
+      ${exporting ? 'account-card__wrapper--exporting' : ''}
+    `}
+    >
+      <div className='account-card__main'>
+        <div className='account-card__identicon'>
+          {signer && <Identicon
+            className='identityIcon'
+            iconTheme={theme}
+            isExternal={isExternal}
+            onCopy={() => notify.info({
+              aliveFor: 2,
+              message: 'Copied to clipboard'
+            })}
+            prefix={prefix}
+            value={formatted || address}
+          />}
+          {!signer && <div className={'account-card__identicon--loading'}><Loading /></div>}
+        </div>
+
+        <div className='account-card__info'>
           {parentName
             ? (
               <>
-                <div className='banner'>
+                <div className='account-card__parent'>
                   <FontAwesomeIcon
                     className='deriveIcon'
-                    icon={faCodeBranch}
+                    icon={faCodeBranch as IconProp}
                   />
-                  <div
-                    className='parentName'
+                  <span
+                    className='account-card__parent-name'
                     data-field='parent'
                     title = {parentNameSuri}
                   >
                     {parentNameSuri}
-                  </div>
-                </div>
-                <div className='name displaced'>
-                  <Name />
+                  </span>
                 </div>
               </>
             )
-            : (
-              <div
-                className='name'
-                data-field='name'
-              >
-                <Name />
-              </div>
-            )
+            : ''
           }
-          {chain?.genesisHash && (
+          <div className='account-card__name'>
+            { !children || exporting
+              ? <div>
+                <External />
+                <span>{ name || account?.name || '<No Name>' }</span>
+              </div>
+              : children }
+          </div>
+
+          {signer && <div className='account-card__balance'>
+            {
+              !presentation &&
+              <FontAwesomeIcon
+                className={`account-card__visibility ${isHidden ? 'account-card__visibility--hidden' : 'account-card__visibility--visible'}`}
+                icon={(isHidden ? faEyeSlash : faEye) as IconProp}
+                onClick={_toggleVisibility}
+                size='sm'
+                title={t('Account Visibility')}
+              />
+            }
+            <img
+              alt='balance'
+              src='https://s2.coinmarketcap.com/static/img/coins/64x64/6951.png'
+            />
+            <div>{<Balance />}</div>
+          </div>}
+
+          <div className='account-card__meta'>
             <div
-              className='banner chain'
-              data-field='chain'
-              style={
-                chain.definition.color
-                  ? { backgroundColor: chain.definition.color }
-                  : undefined
-              }
-            >
-              {chain.name.replace(' Relay Chain', '')}
-            </div>
-          )}
-          <div className='addressDisplay'>
-            <div
-              className='fullAddress'
-              data-field='address'
-            >
-              {formatted || address || t('<unknown>')}
-            </div>
+              className='account-card__address'
+              title={formatted || address || ''}
+            >Native address: {utils.toAddressShortDisplay(formatted || address || '')}</div>
             <CopyToClipboard text={(formatted && formatted) || ''}>
               <FontAwesomeIcon
                 className='copyIcon'
-                icon={faCopy}
-                onClick={_onCopy}
+                icon={faCopy as IconProp}
+                onClick={() => notify.info({
+                  aliveFor: 2,
+                  message: 'Copied Reef Account Address to clipboard.'
+                })}
                 size='sm'
-                title={t('copy address')}
+                title={t('Copy Reef Account Address')}
               />
             </CopyToClipboard>
-            {actions && (
-              <FontAwesomeIcon
-                className={isHidden ? 'hiddenIcon' : 'visibleIcon'}
-                icon={isHidden ? faEyeSlash : faEye}
-                onClick={_toggleVisibility}
-                size='sm'
-                title={t('account visibility')}
-              />
-            )}
           </div>
+
+          {
+            signer?.evmAddress
+              ? <>
+                <div className='account-card__meta'>
+                  <div
+                    className='account-card__address'
+                    title={signer?.evmAddress || ''}
+                  >EVM Address: {utils.toAddressShortDisplay(signer?.evmAddress || '')}</div>
+                  <CopyToClipboard text={(signer?.evmAddress) ? `${signer.evmAddress}(ONLY for Reef chain!)` : ''}>
+                    <FontAwesomeIcon
+                      className='copyIcon'
+                      icon={faCopy as IconProp}
+                      onClick={() => notify.danger({
+                        children: <Button
+                          text='I understand'
+                          type='button'
+                        />,
+                        keepAlive: true,
+                        message: 'Copied to clipboard.\nDO NOT use this Reef EVM address on any other chain. ONLY use it on Reef chain.'
+                      })}
+                      size='sm'
+                      title={t('Copy Ethereum VM Address')}
+                    />
+                  </CopyToClipboard>
+                </div>
+              </>
+              : ''
+          }
         </div>
-        {actions && (
-          <>
-            <div
-              className='settings'
-              onClick={_onClick}
-            >
-              <Svg
-                className={`detailsIcon ${showActionsMenu ? 'active' : ''}`}
-                src={details}
-              />
-            </div>
-            {showActionsMenu && (
-              <Menu
-                className={`movableMenu ${moveMenuUp ? 'isMoved' : ''}`}
-                reference={actionsRef}
-              >
-                {actions}
-              </Menu>
-            )}
-          </>
-        )}
       </div>
-      {children}
+
+      {
+        !exporting
+          ? (
+            <div className='account-card__aside'>
+              { !signer?.isEvmClaimed ? <Bind /> : '' }
+              { !isSelected() && !presentation ? <SelectButton /> : '' }
+
+              <div className='account-card__actions'>
+                {actions && (
+                  <>
+                    <button
+                      className='account-card__actions-btn'
+                      onClick={_onClick}
+                    >
+                      <FontAwesomeIcon icon={faEllipsisV as IconProp} />
+                    </button>
+                    {showActionsMenu && (
+                      <Menu
+                        className={`movableMenu ${moveMenuUp ? 'isMoved' : ''}`}
+                        reference={actionsRef}
+                      >
+                        {actions}
+                      </Menu>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+          )
+          : ''
+      }
+
+      {
+        exporting ? (<div className='account-card__exporting'>{children}</div>) : ''
+      }
+
+      {isSelected() && !presentation && (
+        <div className='account-card__chain'>Selected</div>
+      )}
     </div>
   );
 }
@@ -409,8 +533,10 @@ export default styled(Address)(({ theme }: ThemeProps) => `
     margin: 2px 0;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 300px;
+    width: 345px;
     white-space: nowrap;
+    display: flex;
+    justify-content: space-between;
 
     &.displaced {
       padding-top: 10px;
