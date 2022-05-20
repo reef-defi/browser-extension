@@ -3,6 +3,7 @@
 
 import type { ThemeProps } from '../../types';
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -64,7 +65,7 @@ function DerivationPath ({ className, defaultPath, isError, onChange, withSoftPa
         >
           <FontAwesomeIcon
             className='lockIcon'
-            icon={isDisabled ? faLock : faLockOpen}
+            icon={(isDisabled ? faLock : faLockOpen) as IconProp}
           />
         </Button>
       </div>

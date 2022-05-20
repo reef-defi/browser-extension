@@ -3,6 +3,7 @@
 
 import type { ThemeProps } from '../types';
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
@@ -21,7 +22,7 @@ function NextStepButton ({ children, ...props }: Props): React.ReactElement<Prop
       {children}
       <FontAwesomeIcon
         className='arrowRight'
-        icon={faArrowRight}
+        icon={faArrowRight as IconProp}
         size='sm'
       />
     </CTA>

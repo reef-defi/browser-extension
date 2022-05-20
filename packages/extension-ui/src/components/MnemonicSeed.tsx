@@ -3,6 +3,7 @@
 
 import type { ThemeProps } from '../types';
 
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import React, { MouseEventHandler } from 'react';
 import styled from 'styled-components';
@@ -32,7 +33,7 @@ function MnemonicSeed ({ className, onCopy, seed }: Props): React.ReactElement<P
         <ActionText
           className='copyBtn'
           data-seed-action='copy'
-          icon={faCopy}
+          icon={faCopy as IconDefinition}
           onClick={onCopy}
           text={t<string>('Copy to clipboard')}
         />

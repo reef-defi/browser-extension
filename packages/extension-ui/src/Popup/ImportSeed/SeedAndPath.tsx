@@ -5,6 +5,7 @@ import type { KeypairType } from '@reef-defi/util-crypto/types';
 import type { ThemeProps } from '../../types';
 import type { AccountInfo } from '.';
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { validateSeed } from '@reef-defi/extension-ui/messaging';
@@ -98,7 +99,7 @@ function SeedAndPath ({ className, onAccountChange, onNextStep, type }: Props): 
           className='advancedToggle'
           onClick={_onToggleAdvanced}
         >
-          <FontAwesomeIcon icon={advanced ? faCaretDown : faCaretRight} />
+          <FontAwesomeIcon icon={(advanced ? faCaretDown : faCaretRight) as IconProp} />
           <span>{t<string>('advanced')}</span>
         </div>
         { advanced && (

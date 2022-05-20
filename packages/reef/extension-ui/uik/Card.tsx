@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface Card {
-  children: any; className: string; head: any; largePadding: any;
+  children?: any; className?: string; head?: any; largePadding?: any;
 }
 
 export const Card = ({ children, className, head, largePadding }: Card): JSX.Element => (

@@ -15,6 +15,7 @@ interface Button {
   size?: any;
   success?: any;
   text?: any;
+  type: string;
 }
 
 export const Button = ({ children,

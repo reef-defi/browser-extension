@@ -1,6 +1,7 @@
 // Copyright 2017-2021 @polkadot/react-components authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useCallback, useRef } from 'react';
@@ -45,7 +46,7 @@ function InputFilter ({ className, onChange, placeholder, value, withReset = fal
       {withReset && !!value && (
         <FontAwesomeIcon
           className='resetIcon'
-          icon={faTimes}
+          icon={faTimes as IconProp}
           onClick={onResetFilter}
         />
       )}

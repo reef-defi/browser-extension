@@ -3,7 +3,7 @@ import React, { MouseEventHandler } from 'react';
 import { FishAnimation } from './index';
 
 interface CTA {
-  children?: any[];
+  children?: any[]|string;
   className?: string;
   danger?: boolean;
   disabled?: boolean;

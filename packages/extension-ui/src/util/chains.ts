@@ -3,8 +3,6 @@
 
 import type { MetadataDefBase } from '@reef-defi/extension-inject/types';
 
-import { selectableNetworks } from '@reef-defi/networks';
-
 const hashes: MetadataDefBase[] = []; /* selectableNetworks
   .filter(({ genesisHash, displayName }) => {
     return !!genesisHash.length

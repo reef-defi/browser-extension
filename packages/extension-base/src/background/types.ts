@@ -51,6 +51,7 @@ export type AccountsContext = {
   accounts: AccountJson[];
   hierarchy: AccountWithChildren[];
   master?: AccountJson;
+  selectedAccount?: AccountJson|null;
 }
 
 export interface AuthorizeRequest {

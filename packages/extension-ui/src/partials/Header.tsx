@@ -3,6 +3,7 @@
 
 import type { ThemeProps } from '../types';
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faArrowLeft, faCog, faPlusCircle, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useCallback, useRef, useState } from 'react';
@@ -83,7 +84,7 @@ function Header ({ children, className = '', onFilter, showAdd, showBackArrow, s
               >
                 <FontAwesomeIcon
                   className='arrowLeftIcon'
-                  icon={faArrowLeft}
+                  icon={faArrowLeft as IconProp}
                 />
               </Link>
             )
@@ -109,7 +110,7 @@ function Header ({ children, className = '', onFilter, showAdd, showBackArrow, s
             )}
             <FontAwesomeIcon
               className={`searchIcon ${isSearchOpen ? 'selected' : ''}`}
-              icon={faSearch}
+              icon={faSearch as IconProp}
               onClick={_toggleSearch}
               size='lg'
             />
@@ -123,7 +124,7 @@ function Header ({ children, className = '', onFilter, showAdd, showBackArrow, s
             >
               <FontAwesomeIcon
                 className={`plusIcon ${isAddOpen ? 'selected' : ''}`}
-                icon={faPlusCircle}
+                icon={faPlusCircle as IconProp}
                 size='lg'
               />
             </div>
@@ -136,7 +137,7 @@ function Header ({ children, className = '', onFilter, showAdd, showBackArrow, s
             >
               <FontAwesomeIcon
                 className={`cogIcon ${isSettingsOpen ? 'selected' : ''}`}
-                icon={faCog}
+                icon={faCog as IconProp}
                 size='lg'
               />
             </div>
@@ -190,7 +191,7 @@ export default React.memo(styled(Header)(({ theme }: Props) => `
     }
 
     .popupMenus, .searchBarWrapper {
-      align-self: center;     
+      align-self: center;
     }
 
     .searchBarWrapper {
@@ -201,21 +202,21 @@ export default React.memo(styled(Header)(({ theme }: Props) => `
 
       .searchIcon {
         margin-right: 8px;
-        
+
         &:hover {
           cursor: pointer;
         }
       }
     }
-  
+
     .popupToggle {
       display: inline-block;
       vertical-align: middle;
-  
+
       &:last-child {
         margin-right: 24px;
       }
-   
+
       &:hover {
         cursor: pointer;
       }
@@ -224,7 +225,7 @@ export default React.memo(styled(Header)(({ theme }: Props) => `
     .inputFilter {
       width: 100%
     }
-  
+
     .popupToggle+.popupToggle {
       margin-left: 8px;
     }

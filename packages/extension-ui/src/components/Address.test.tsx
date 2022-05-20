@@ -8,7 +8,6 @@ import type { ReactWrapper } from 'enzyme';
 import type { IconTheme } from '@polkadot/react-identicon/types';
 import type { Props as AddressComponentProps } from './Address';
 
-import { ReefSigner } from '@reef-defi/react-lib';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { configure, mount } from 'enzyme';
 import { BigNumber } from 'ethers';
@@ -89,7 +88,6 @@ const mountComponent = async (addressComponentProps: AddressComponentProps, cont
   const actionStub = jest.fn();
   const { actions = actionStub } = addressComponentProps;
 
-  const sig = {} as ReefSigner;
   const wrapper = mount(
     <AccountContext.Provider
       value={{
@@ -98,6 +96,7 @@ const mountComponent = async (addressComponentProps: AddressComponentProps, cont
       }}
     >
       <Address
+        // @ts-ignore
         actions={actions}
         {...addressComponentProps}
       />
@@ -203,7 +202,7 @@ const genericTestSuite = (account: AccountTestJson, withAccountsInContext = true
 };
 
 const genesisHashTestSuite = (account: AccountTestGenesisJson, withAccountsInContext = true) => {
-  const { expectedEncodedAddress, expectedIconTheme, expectedNetworkLabel } = account;
+  const { expectedEncodedAddress, expectedNetworkLabel } = account;
 
   describe(`Account ${withAccountsInContext ? 'in context from address' : 'from props'} with ${expectedNetworkLabel} genesiHash`, () => {
     let wrapper: ReactWrapper;

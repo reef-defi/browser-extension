@@ -3,6 +3,7 @@
 
 import type { ThemeProps } from '../types';
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faUsb } from '@fortawesome/free-brands-svg-icons';
 import { faCodeBranch, faFileExport, faFileUpload, faKey, faPlusCircle, faQrcode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -46,7 +47,7 @@ function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
     >
       <MenuItem className='menuItem'>
         <Link to={'/account/create'}>
-          <FontAwesomeIcon icon={faPlusCircle} />
+          <FontAwesomeIcon icon={faPlusCircle as IconProp} />
           <span>{ t('Create new account')}</span>
         </Link>
       </MenuItem>
@@ -55,7 +56,7 @@ function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
         <>
           <MenuItem className='menuItem'>
             <Link to={`/account/derive/${master.address}`}>
-              <FontAwesomeIcon icon={faCodeBranch} />
+              <FontAwesomeIcon icon={faCodeBranch as IconProp} />
               <span>{t('Derive from an account')}</span>
             </Link>
           </MenuItem>
@@ -64,13 +65,13 @@ function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
       )}
       <MenuItem className='menuItem'>
         <Link to={'/account/export-all'}>
-          <FontAwesomeIcon icon={faFileExport} />
+          <FontAwesomeIcon icon={faFileExport as IconProp} />
           <span>{t<string>('Export all accounts')}</span>
         </Link>
       </MenuItem>
       <MenuItem className='menuItem'>
         <Link to='/account/import-seed'>
-          <FontAwesomeIcon icon={faKey} />
+          <FontAwesomeIcon icon={faKey as IconProp} />
           <span>{t<string>('Import account from pre-existing seed')}</span>
         </Link>
       </MenuItem>
@@ -79,7 +80,7 @@ function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
           onClick={isPopup ? _openJson : undefined}
           to={isPopup ? undefined : jsonPath}
         >
-          <FontAwesomeIcon icon={faFileUpload} />
+          <FontAwesomeIcon icon={faFileUpload as IconProp} />
           <span>{t<string>('Restore account from backup JSON file')}</span>
         </Link>
       </MenuItem>
@@ -93,7 +94,7 @@ function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
           }
           to='/account/import-qr'
         >
-          <FontAwesomeIcon icon={faQrcode} />
+          <FontAwesomeIcon icon={faQrcode as IconProp} />
           <span>{t<string>('Attach external QR-signer account')}</span>
         </Link>
       </MenuItem>
@@ -106,7 +107,7 @@ function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
               to={ledgerPath}
             >
               <FontAwesomeIcon
-                icon={faUsb}
+                icon={faUsb as IconProp}
                 rotation={270}
               />
               <span>{ t<string>('Attach ledger account')}</span>
@@ -115,7 +116,7 @@ function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
           : (
             <Link onClick={_onOpenLedgerConnect}>
               <FontAwesomeIcon
-                icon={faUsb}
+                icon={faUsb as IconProp}
                 rotation={270}
               />
               <span>{ t<string>('Connect Ledger device')}</span>

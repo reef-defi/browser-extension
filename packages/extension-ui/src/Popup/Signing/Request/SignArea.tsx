@@ -5,7 +5,7 @@ import { PASSWORD_EXPIRY_MIN } from '@reef-defi/extension-base/defaults';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { ActionBar, ActionContext, Button, ButtonArea, Checkbox, Link } from '../../../components';
+import { ActionBar, ActionContext, ButtonArea, Checkbox, Link } from '../../../components';
 import useTranslation from '../../../hooks/useTranslation';
 import { approveSignPassword, cancelSignRequest, isSignLocked } from '../../../messaging';
 import Unlock from '../Unlock';

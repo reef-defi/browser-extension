@@ -8,13 +8,13 @@ import type { SettingsStruct } from '@polkadot/ui-settings/types';
 import type { KeypairType } from '@polkadot/util-crypto/types';
 import type { ThemeProps } from '../types';
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faUsb } from '@fortawesome/free-brands-svg-icons';
 import { faCopy, faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { faCodeBranch, faEllipsisV, faQrcode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Provider } from '@reef-defi/evm-provider';
 import { appState, hooks, ReefSigner, utils } from '@reef-defi/react-lib';
-import { BigNumber } from 'ethers';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import styled from 'styled-components';
@@ -23,7 +23,6 @@ import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
 
 import useMetadata from '../hooks/useMetadata';
 import useOutsideClick from '../hooks/useOutsideClick';
-import useToast from '../hooks/useToast';
 import useTranslation from '../hooks/useTranslation';
 import { showAccount } from '../messaging';
 import { DEFAULT_TYPE } from '../util/defaultType';
@@ -115,7 +114,6 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   const [showActionsMenu, setShowActionsMenu] = useState(false);
   const [moveMenuUp, setIsMovedMenu] = useState(false);
   const actionsRef = useRef<HTMLDivElement>(null);
-  const { show } = useToast();
   const [signer, setSigner] = useState<ReefSigner|undefined>(signerProp);
 
   useEffect(() => {
@@ -191,7 +189,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   );
 
   const openEvmBindView = useCallback(
-    (bindAddress) => onAction(`/bind?bindAddress=${bindAddress}`),
+    (bindAddress: string) => onAction(`/bind?bindAddress=${bindAddress}`),
     [onAction]
   );
 
@@ -205,14 +203,14 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             ? (
               <FontAwesomeIcon
                 className='hardwareIcon'
-                icon={faUsb}
+                icon={faUsb as IconProp}
                 title={t('Hardware Wallet Account')}
               />
             )
             : (
               <FontAwesomeIcon
                 className='externalIcon'
-                icon={faQrcode}
+                icon={faQrcode as IconProp}
                 title={t('External Account')}
               />
             )
@@ -228,6 +226,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           fill
           onClick={() => openEvmBindView(signer?.address)}
           size='small'
+          type='button'
         ><span>Bind EVM</span></Button>}
       </>);
   };
@@ -260,6 +259,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             className='account-card__select-btn account-card__select-btn--selected'
             fill
             size='small'
+            type='button'
           >Selected</Button>
           : <Button
             className='account-card__select-btn'
@@ -304,7 +304,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                 <div className='account-card__parent'>
                   <FontAwesomeIcon
                     className='deriveIcon'
-                    icon={faCodeBranch}
+                    icon={faCodeBranch as IconProp}
                   />
                   <span
                     className='account-card__parent-name'
@@ -332,13 +332,16 @@ function Address ({ actions, address, children, className, exporting, genesisHas
               !presentation &&
               <FontAwesomeIcon
                 className={`account-card__visibility ${isHidden ? 'account-card__visibility--hidden' : 'account-card__visibility--visible'}`}
-                icon={isHidden ? faEyeSlash : faEye}
+                icon={(isHidden ? faEyeSlash : faEye) as IconProp}
                 onClick={_toggleVisibility}
                 size='sm'
                 title={t('Account Visibility')}
               />
             }
-            <img src='https://s2.coinmarketcap.com/static/img/coins/64x64/6951.png' />
+            <img
+              alt='balance'
+              src='https://s2.coinmarketcap.com/static/img/coins/64x64/6951.png'
+            />
             <div>{<Balance />}</div>
           </div>}
 
@@ -350,7 +353,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             <CopyToClipboard text={(formatted && formatted) || ''}>
               <FontAwesomeIcon
                 className='copyIcon'
-                icon={faCopy}
+                icon={faCopy as IconProp}
                 onClick={() => notify.info({
                   aliveFor: 2,
                   message: 'Copied Reef Account Address to clipboard.'
@@ -372,9 +375,12 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                   <CopyToClipboard text={(signer?.evmAddress) ? `${signer.evmAddress}(ONLY for Reef chain!)` : ''}>
                     <FontAwesomeIcon
                       className='copyIcon'
-                      icon={faCopy}
+                      icon={faCopy as IconProp}
                       onClick={() => notify.danger({
-                        children: <Button text='I understand' />,
+                        children: <Button
+                          text='I understand'
+                          type='button'
+                        />,
                         keepAlive: true,
                         message: 'Copied to clipboard.\nDO NOT use this Reef EVM address on any other chain. ONLY use it on Reef chain.'
                       })}
@@ -403,7 +409,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                       className='account-card__actions-btn'
                       onClick={_onClick}
                     >
-                      <FontAwesomeIcon icon={faEllipsisV} />
+                      <FontAwesomeIcon icon={faEllipsisV as IconProp} />
                     </button>
                     {showActionsMenu && (
                       <Menu

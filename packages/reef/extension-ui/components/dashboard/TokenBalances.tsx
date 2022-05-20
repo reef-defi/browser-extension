@@ -1,18 +1,16 @@
-import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
-import { Components, TokenWithAmount, utils } from '@reef-defi/react-lib';
+import { TokenWithAmount, utils } from '@reef-defi/react-lib';
 import React from 'react';
 
-import { Button, Loading, UikText } from './../../uik';
+import { Loading, UikText } from './../../uik';
 import { TokenPill } from './TokenPill';
 
 const { DataProgress, getData, isDataSet } = utils;
 
 interface TokenBalances {
   tokens: utils.DataWithProgress<TokenWithAmount[]>;
-  isRefreshing: boolean;
 }
 
-export const TokenBalances = ({ isRefreshing, tokens }: TokenBalances): JSX.Element => (
+export const TokenBalances = ({ tokens }: TokenBalances): JSX.Element => (
   <div className='token-balances'>
     <div className='token-balances__head'>
       <UikText
