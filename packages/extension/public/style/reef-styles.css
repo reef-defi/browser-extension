@@ -546,7 +546,6 @@ svg.fill-white {
 }
 
 button.btn-select {
-  background: transparent !important;
   border-color: #bfbfbf !important;
   color: #212529 !important;
 }
