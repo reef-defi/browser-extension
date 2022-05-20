@@ -6,7 +6,7 @@ import { Loading } from '../uik';
 import { SigningOrChildren } from './SigningOrChildren';
 
 export const Transfer = (): JSX.Element => {
-  const provider: Provider | undefined = hooks.useObservableState(appState.providerSubj);
+  const provider: Provider | undefined = hooks.useObservableState(appState.currentProvider$);
   const accounts: ReefSigner[] | undefined = hooks.useObservableState(appState.signers$);
   const selectedSigner: ReefSigner | undefined = hooks.useObservableState(appState.selectedSigner$);
   const signerTokenBalances: TokenWithAmount[] | undefined = hooks.useObservableState(appState.tokenPrices$);

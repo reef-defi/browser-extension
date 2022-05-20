@@ -109,7 +109,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   const settings = useContext(SettingsContext);
   const [{ account, formatted, genesisHash: recodedGenesis, prefix, type }, setRecoded] = useState<Recoded>(defaultRecoded);
   const chain = useMetadata(genesisHash || recodedGenesis, true);
-  const provider: Provider|undefined = hooks.useObservableState(appState.providerSubj);
+  const provider: Provider|undefined = hooks.useObservableState(appState.currentProvider$);
   const signRequests = useContext(SigningReqContext);
   const [showActionsMenu, setShowActionsMenu] = useState(false);
   const [moveMenuUp, setIsMovedMenu] = useState(false);

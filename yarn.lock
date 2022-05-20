@@ -4362,7 +4362,7 @@ __metadata:
     "@reef-defi/hw-ledger": ^7.8.2
     "@reef-defi/keyring": ^7.8.2
     "@reef-defi/networks": ^7.8.2
-    "@reef-defi/react-lib": 1.0.44
+    "@reef-defi/react-lib": 1.0.47
     "@reef-defi/util": ^7.8.2
     "@reef-defi/util-crypto": ^7.8.2
     "@types/bn.js": ^4.11.6
@@ -4476,9 +4476,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reef-defi/react-lib@npm:1.0.44":
-  version: 1.0.44
-  resolution: "@reef-defi/react-lib@npm:1.0.44"
+"@reef-defi/react-lib@npm:1.0.47":
+  version: 1.0.47
+  resolution: "@reef-defi/react-lib@npm:1.0.47"
   dependencies:
     "@apollo/client": ^3.6.2
     "@polkadot/extension-dapp": ^0.40.4
@@ -4503,7 +4503,7 @@ __metadata:
     zen-observable-ts: ^1.1.0
   peerDependencies:
     react: ^17.0.2
-  checksum: 499c324e0310a82d90031d4817f0169bdaeacf268c63833a10c9a6bd4fecbf15386adf9121a70f5a27a2a73ded0b87e459a691abd35f79f3ea83280edae90f76
+  checksum: fc218001904dd9d26306d8b154dc5f9acb05b1e9eecc4125399c977e0f535faa2238b1d67c692bd73968e4647a9ce32d8543ae851ca8f5b9e01ae4b0fd397697
   languageName: node
   linkType: hard
 

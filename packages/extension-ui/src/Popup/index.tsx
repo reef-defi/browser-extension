@@ -74,7 +74,7 @@ function initAccountContext (accounts: AccountJson[], selectedAccount: AccountJs
 
 export default function Popup (): React.ReactElement {
   const [accounts, setAccounts] = useState<null | AccountJson[]>(null);
-  const provider: Provider|undefined = hooks.useObservableState(appState.providerSubj);
+  const provider: Provider|undefined = hooks.useObservableState(appState.currentProvider$);
   const signers = useReefSigners(accounts, provider);
 
   hooks.useInitReefState('Reef Chain Extension', { network: innitialNetwork, signers });

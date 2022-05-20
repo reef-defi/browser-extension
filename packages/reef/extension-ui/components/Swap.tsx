@@ -9,7 +9,7 @@ const NO_TKN = createEmptyTokenWithAmount();
 
 export const Swap = (): JSX.Element => {
   const signer: ReefSigner | undefined = hooks.useObservableState(appState.selectedSigner$);
-  const network: Network | undefined = hooks.useObservableState(appState.selectedNetworkSubj);
+  const network: Network | undefined = hooks.useObservableState(appState.currentNetwork$);
   const availableTokens: Token[] | undefined = hooks.useObservableState(appState.allAvailableSignerTokens$);
   const theme = localStorage.getItem('theme');
 
