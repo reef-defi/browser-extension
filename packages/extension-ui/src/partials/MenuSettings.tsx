@@ -3,7 +3,6 @@
 
 import type { Theme, ThemeProps } from '../types';
 
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faExpand, faTasks } from '@fortawesome/free-solid-svg-icons';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
@@ -135,7 +134,7 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
       <MenuItem className='setting'>
         <ActionText
           className='manageWebsiteAccess'
-          icon={faTasks as IconDefinition}
+          icon={faTasks }
           onClick={_goToAuthList}
           text={t<string>('Manage Website Access')}
         />
@@ -144,7 +143,7 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
         <MenuItem className='setting'>
           <ActionText
             className='openWindow'
-            icon={faExpand as IconDefinition}
+            icon={faExpand }
             onClick={_onWindowOpen}
             text={t<string>('Open extension in new window')}
           />
