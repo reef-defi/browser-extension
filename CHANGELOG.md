@@ -1,10 +1,10 @@
 # CHANGELOG
 
-## 0.42.0 Apr 11, 2022
-- account Reef EVM binding
-- tokens dashboard for address
-- send
-- swap
+## 1.0.0 May 20, 2022
+- Account Reef EVM binding
+- Tokens dashboard
+- Send
+- Swap
 
 ## 0.41.1 Nov 11, 2021
 - forked to `@reef-defi/extension`
