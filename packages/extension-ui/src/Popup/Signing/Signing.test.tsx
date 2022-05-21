@@ -257,9 +257,9 @@ describe('Signing requests', () => {
       ];
       const outputStringArr = wrapper.find(Extrinsic).find('td.data').map((el): string => el.text());
 
-      compareStringArr.forEach((val, index)=>{
+      compareStringArr.forEach((val, index) => {
         expect(outputStringArr[index]).toEqual(compareStringArr[index]);
-      })
+      });
     });
 
     it('correctly displays request 2', async () => {
