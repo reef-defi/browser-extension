@@ -243,37 +243,46 @@ describe('Signing requests', () => {
   describe('Request rendering', () => {
     it('correctly displays request 1', () => {
       expect(wrapper.find(Address).find('.account-card__address').prop('title')).toBe(signRequests[0].account.address);
-      expect(wrapper.find(Extrinsic).find('td.data').map((el): string => el.text())).toEqual([
+      const compareStringArr = [
         'https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fwestend-rpc.polkadot.io#/accounts',
         'Westend',
         '45',
         '3',
-        'balances.transferKeepAlive(dest, value)[\n' +
-        '  "5GYQRJj3NUznYDzCduENRcocMsyxmb6tjb5xW87ZMErBe9R7",\n' +
-        '  "123.0000 WND"\n' +
-        ']',
+        `balances.transferKeepAlive(dest, value){
+  "dest": "5GYQRJj3NUznYDzCduENRcocMsyxmb6tjb5xW87ZMErBe9R7",
+  "value": "123.0000 WND"
+}`,
         'Same as the [`transfer`] call, but with a check that the transfer will not kill the origin account.',
         'mortal, valid from {{birth}} to {{death}}'
-      ]);
+      ];
+      const outputStringArr = wrapper.find(Extrinsic).find('td.data').map((el): string => el.text());
+
+      compareStringArr.forEach((val, index)=>{
+        expect(outputStringArr[index]).toEqual(compareStringArr[index]);
+      })
     });
 
     it('correctly displays request 2', async () => {
       wrapper.find('FontAwesomeIcon.arrowRight').simulate('click');
       await act(flushAllPromises);
       expect(wrapper.find(Address).find('.account-card__address').prop('title')).toBe(signRequests[1].account.address);
-
-      expect(wrapper.find(Extrinsic).find('td.data').map((el): string => el.text())).toEqual([
+      const compareStringArr = [
         'https://polkadot.js.org/apps',
         'Westend',
         '45',
         '3',
-        'balances.transfer(dest, value)[\n' +
-        '  "5Ggap6soAPaP5UeNaiJsgqQwdVhhNnm6ez7Ba1w9jJ62LM2Q",\n' +
-        '  "200.0000 mWND"\n' +
-        ']',
+        'balances.transfer(dest, value){\n' +
+        '  "dest": "5Ggap6soAPaP5UeNaiJsgqQwdVhhNnm6ez7Ba1w9jJ62LM2Q",\n' +
+        '  "value": "200.0000 mWND"\n' +
+        '}',
         'Transfer some liquid free balance to another account.',
         'mortal, valid from {{birth}} to {{death}}'
-      ]);
+      ];
+      const outputStringArr = wrapper.find(Extrinsic).find('td.data').map((el): string => el.text());
+
+      compareStringArr.forEach((val, index) => {
+        expect(outputStringArr[index]).toEqual(compareStringArr[index]);
+      });
     });
   });
 
