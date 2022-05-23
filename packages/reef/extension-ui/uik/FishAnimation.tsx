@@ -4,6 +4,7 @@ interface FishAnimation {
   className?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const FishAnimation = ({ className }: FishAnimation): JSX.Element => (
   <div className='fish-animation'>
     <svg

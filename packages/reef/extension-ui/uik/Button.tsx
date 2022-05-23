@@ -29,6 +29,7 @@ export const Button = ({ children,
   onClick,
   size,
   success,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   text }: Button): JSX.Element => (
   <button
     className={`

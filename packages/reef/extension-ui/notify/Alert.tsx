@@ -66,7 +66,7 @@ const Alert = ({ aliveFor,
       return () => clearTimeout(timer);
     }
 
-    // @ts-ignore-no-empty-function
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     return function () {};
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

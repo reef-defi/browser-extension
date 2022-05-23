@@ -61,6 +61,7 @@ async function requestMediaAccess (cameraOn: boolean): Promise<boolean> {
   return false;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function initAccountContext (accounts: AccountJson[], selectedAccount: AccountJson|null): AccountsContext {
   const hierarchy = buildHierarchy(accounts);
   const master = hierarchy.find(({ isExternal, type }) => !isExternal && canDerive(type));
