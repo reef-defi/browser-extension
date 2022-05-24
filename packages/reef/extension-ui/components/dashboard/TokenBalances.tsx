@@ -10,6 +10,7 @@ interface TokenBalances {
   tokens: utils.DataWithProgress<TokenWithAmount[]>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const TokenBalances = ({ tokens }: TokenBalances): JSX.Element => (
   <div className='token-balances'>
     <div className='token-balances__head'>

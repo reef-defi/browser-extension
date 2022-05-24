@@ -100,6 +100,7 @@ function recodeAddress (address: string, accounts: AccountWithChildren[], chain:
 const ACCOUNTS_SCREEN_HEIGHT = 550;
 const defaultRecoded = { account: null, formatted: null, prefix: 42, type: DEFAULT_TYPE };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Address ({ actions, address, children, className, exporting, genesisHash, isExternal, isHardware, isHidden, name, parentName, presentation, signerProp, suri, toggleActions, type: givenType }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const onAction = useContext(ActionContext);
@@ -221,13 +222,17 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   const Bind = () => {
     return (
       <>
-        {!(!!signRequests && !!signRequests.length) && signer && !signer?.isEvmClaimed && provider && <Button
-          className='account-card__bind-btn'
-          fill
-          onClick={() => openEvmBindView(signer?.address)}
-          size='small'
-          type='button'
-        ><span>Bind EVM</span></Button>}
+        {!(!!signRequests && !!signRequests.length) && signer && !signer?.isEvmClaimed && provider &&
+          <Button
+            className='account-card__bind-btn'
+            fill
+            onClick={() => openEvmBindView(signer?.address)}
+            size='small'
+            type='button'
+          >
+            <span>Bind EVM</span>
+          </Button>
+        }
       </>);
   };
 
@@ -260,14 +265,17 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             fill
             size='small'
             type='button'
-          >Selected</Button>
+          >Selected
+          </Button>
           : <Button
             className='account-card__select-btn'
             onClick={() => selectAccount(account)}
             size='small'
             type='button'
-          >Select</Button>
-        )}
+          >Select
+          </Button>
+        )
+        }
       </>
     );
   };
@@ -283,17 +291,21 @@ function Address ({ actions, address, children, className, exporting, genesisHas
     >
       <div className='account-card__main'>
         <div className='account-card__identicon'>
-          {signer && <Identicon
+          {signer &&
+          <Identicon
             className='identityIcon'
             iconTheme={theme}
             isExternal={isExternal}
-            onCopy={() => notify.info({
-              aliveFor: 2,
-              message: 'Copied to clipboard'
-            })}
+            onCopy={
+              () => notify.info({
+                aliveFor: 2,
+                message: 'Copied to clipboard'
+              })
+            }
             prefix={prefix}
             value={formatted || address}
-          />}
+          />
+          }
           {!signer && <div className={'account-card__identicon--loading'}><Loading /></div>}
         </div>
 
@@ -377,7 +389,8 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                       className='copyIcon'
                       icon={faCopy as IconProp}
                       onClick={() => notify.danger({
-                        children: <Button
+                        children:
+                        <Button
                           text='I understand'
                           type='button'
                         />,
@@ -385,7 +398,8 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                         message: 'Copied to clipboard.\nDO NOT use this Reef EVM address on any other chain. ONLY use it on Reef chain.'
                       })}
                       size='sm'
-                      title={t('Copy Ethereum VM Address')}
+                      title={t('Copy Ethereum VM Address')
+                      }
                     />
                   </CopyToClipboard>
                 </div>

@@ -20,6 +20,7 @@ export const CTA = ({ children,
   loading,
   onClick,
   size,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   text }: CTA): JSX.Element => (
   <button
     className={`

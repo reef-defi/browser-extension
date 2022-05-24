@@ -6,6 +6,8 @@ interface Loading{
   size?: 'small'|string;
   text?: string;
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const Loading = ({ className, color, size, text }: Loading): JSX.Element => (
   <div className={`
       uik-loading

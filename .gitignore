@@ -20,7 +20,8 @@ package-lock.json
 _book
 docs/html
 .idea
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
 /.yalc/
-/packages/extension-ui/yalc.lock
-/yalc.lock
-.yarn/cache
+yalc.lock

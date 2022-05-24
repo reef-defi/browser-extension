@@ -45,6 +45,7 @@ function getIconUrl (tokenAddress: string): string {
   return `/img/token-icons/token-icon-${lastNr}.png`;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const TokenPill = ({ token }: TokenPill): JSX.Element => (
   <div
     className='token-card'

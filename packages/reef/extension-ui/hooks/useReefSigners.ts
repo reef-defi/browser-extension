@@ -13,7 +13,7 @@ export const useReefSigners = (accounts: AccountJson[] | null, provider: Provide
   const [signers, setSigners] = useState<ReefSigner[]>([]);
 
   useEffect((): void => {
-    const initAsync = async (): Promise<void> => {
+    const initAsync = async () => {
       if (!accounts || !accounts?.length || !provider) {
         setSigners([]);
 
@@ -25,7 +25,7 @@ export const useReefSigners = (accounts: AccountJson[] | null, provider: Provide
       setSigners(sgnrs.filter((s) => !!s));
     };
 
-    initAsync();
+    void initAsync();
   }, [accounts, provider]);
 
   return signers;

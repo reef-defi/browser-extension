@@ -3,6 +3,7 @@
   "exclude": ["build/**/*", "**/build/*", "**/build/**/*"],
   "compilerOptions": {
     "baseUrl": ".",
+    "jsx": "react",
     "paths": {
       "@reef-defi/extension": ["packages/extension/src"],
       "@reef-defi/extension/*": ["packages/extension/src/*"],
@@ -10,7 +11,9 @@
       "@reef-defi/extension-base/*": ["packages/extension-base/src/*"],
       "@reef-defi/extension-chains": ["packages/extension-chains/src"],
       "@reef-defi/extension-chains/*": ["packages/extension-chains/src/*"],
-      "@reef-defi/extension-compat-metamask": ["packages/extension-compat-metamask/src"],
+      "@reef-defi/extension-compat-metamask": [
+        "packages/extension-compat-metamask/src"
+      ],
       "@reef-defi/extension-dapp": ["packages/extension-dapp/src"],
       "@reef-defi/extension-dapp/*": ["packages/extension-dapp/src/*"],
       "@reef-defi/extension-inject": ["packages/extension-inject/src"],
