@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.0.0 May 20, 2022
+## 1.0.1 May 20, 2022
 - Account Reef EVM binding
 - Tokens dashboard
 - Send
