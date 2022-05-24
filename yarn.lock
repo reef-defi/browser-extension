@@ -4090,9 +4090,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reef-defi/dev@npm:^0.63.19":
-  version: 0.63.19
-  resolution: "@reef-defi/dev@npm:0.63.19"
+"@reef-defi/dev@npm:^0.63.20":
+  version: 0.63.20
+  resolution: "@reef-defi/dev@npm:0.63.20"
   dependencies:
     "@babel/cli": ^7.15.7
     "@babel/core": ^7.15.8
@@ -4180,7 +4180,7 @@ __metadata:
     polkadot-exec-rollup: scripts/polkadot-exec-rollup.cjs
     polkadot-exec-tsc: scripts/polkadot-exec-tsc.cjs
     polkadot-exec-webpack: scripts/polkadot-exec-webpack.cjs
-  checksum: 38530f27c47c90b9c39c62a3ae32d3258b6259fba1e2458ece530d6dca044edf6ff3f7e5d1eb2ce00b8950bf44913b6722c5390f9fcce2b16d49ea9990ab54c7
+  checksum: bdb01bccc7df5936e15f64baf565ddac454ed75b69a513197500e7365b864c589bd31ac6c631d5c35156fefe3cf6447d214fa53d867c501ff1245093ef7c7969
   languageName: node
   linkType: hard
 
@@ -4363,7 +4363,7 @@ __metadata:
   resolution: "@reef-defi/extension@workspace:packages/extension"
   dependencies:
     "@babel/runtime": ^7.16.0
-    "@reef-defi/dev": ^0.63.19
+    "@reef-defi/dev": ^0.63.20
     "@reef-defi/extension-base": ^1.0.1
     "@reef-defi/extension-inject": ^1.0.1
     "@reef-defi/extension-ui": ^1.0.1
@@ -18595,7 +18595,7 @@ __metadata:
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
     "@babel/core": ^7.15.8
-    "@reef-defi/dev": ^0.63.19
+    "@reef-defi/dev": ^0.63.20
     "@types/jest": ^27.0.2
     "@typescript-eslint/eslint-plugin": ^5.0.0
     i18next-scanner: ^3.1.0

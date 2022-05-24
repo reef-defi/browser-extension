@@ -22,7 +22,7 @@
     "@reef-defi/extension-ui": "^1.0.1"
   },
   "devDependencies": {
-    "@reef-defi/dev": "^0.63.19",
+    "@reef-defi/dev": "^0.63.20",
     "babel-loader": "^8.2.3",
     "browser-resolve": "^2.0.0",
     "buffer": "^6.0.3",
