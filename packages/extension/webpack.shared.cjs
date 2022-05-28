@@ -60,6 +60,31 @@ module.exports = (entry, alias = {}) => ({
     globalObject: '(typeof self !== \'undefined\' ? self : this)',
     path: path.join(__dirname, 'build')
   },
+  optimization: {
+    splitChunks:{
+      chunks: 'all',
+      minSize:1000000,
+      maxSize:4000000,
+    }
+  },
+  /*optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },*/
+  /*optimization: {
+    runtimeChunk: 'single',
+      splitChunks: {
+      cacheGroups: {
+        extension: {
+          test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            enforce: true,
+            chunks: 'all'
+        }
+      }
+    }
+  },*/
   performance: {
     hints: false
   },
