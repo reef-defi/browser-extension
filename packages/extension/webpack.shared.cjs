@@ -54,25 +54,25 @@ module.exports = (entry, alias = {}) => ({
       }
     ]
   },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      maxSize: 4000000,
+      minSize: 1000000
+    }
+  },
   output: {
     chunkFilename: '[name].js',
     filename: '[name].js',
     globalObject: '(typeof self !== \'undefined\' ? self : this)',
     path: path.join(__dirname, 'build')
   },
-  optimization: {
-    splitChunks:{
-      chunks: 'all',
-      minSize:1000000,
-      maxSize:4000000,
-    }
-  },
-  /*optimization: {
+  /* optimization: {
     splitChunks: {
       chunks: 'all',
     },
-  },*/
-  /*optimization: {
+  }, */
+  /* optimization: {
     runtimeChunk: 'single',
       splitChunks: {
       cacheGroups: {
@@ -84,7 +84,7 @@ module.exports = (entry, alias = {}) => ({
         }
       }
     }
-  },*/
+  }, */
   performance: {
     hints: false
   },
