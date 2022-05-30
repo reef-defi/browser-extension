@@ -19,7 +19,7 @@ const packages = [
   'extension-ui'
 ];
 
-module.exports = (entry, alias = {}, optimization={}) => ({
+module.exports = (entry, alias = {}, optimization = {}) => ({
   context: __dirname,
   devtool: false,
   entry,
