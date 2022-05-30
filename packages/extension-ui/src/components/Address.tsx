@@ -306,7 +306,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             value={formatted || address}
           />
           }
-          {!signer && <div className={'account-card__identicon--loading'}><Loading /></div>}
+          {!(!!signRequests && !!signRequests.length) && !signer && <div className={'account-card__identicon--loading'}><Loading /></div>}
         </div>
 
         <div className='account-card__info'>
