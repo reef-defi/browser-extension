@@ -9,5 +9,12 @@ module.exports = createConfig(
   },
   {
     '@polkadot/wasm-crypto-wasm/data.js': require.resolve('@polkadot/wasm-crypto-wasm/empty')
+  },
+  {
+    splitChunks: {
+      chunks: 'all',
+      maxSize: 4000000,
+      minSize: 1000000
+    }
   }
 );
