@@ -14,7 +14,7 @@ module.exports = createConfig(
     splitChunks: {
       chunks: 'all',
       maxSize: 4000000,
-      minSize: 1000000,
-    },
+      minSize: 1000000
+    }
   }
 );
