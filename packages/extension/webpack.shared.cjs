@@ -19,7 +19,7 @@ const packages = [
   'extension-ui'
 ];
 
-module.exports = (entry, alias = {}) => ({
+module.exports = (entry, alias = {}, optimization={}) => ({
   context: __dirname,
   devtool: false,
   entry,
@@ -54,13 +54,7 @@ module.exports = (entry, alias = {}) => ({
       }
     ]
   },
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-      maxSize: 4000000,
-      minSize: 1000000
-    }
-  },
+  optimization,
   output: {
     chunkFilename: '[name].js',
     filename: '[name].js',
