@@ -377,7 +377,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           </div>
 
           {
-            signer?.evmAddress
+            signer?.evmAddress && signer?.isEvmClaimed
               ? <>
                 <div className='account-card__meta'>
                   <div

@@ -14,6 +14,7 @@ import useIsPopup from '../hooks/useIsPopup';
 import useTranslation from '../hooks/useTranslation';
 import { setNotification, windowOpen } from '../messaging';
 import getLanguageOptions from '../util/getLanguageOptions';
+import { availableNetworks, Network, appState } from '@reef-defi/react-lib';
 
 interface Props extends ThemeProps {
   className?: string;
@@ -23,11 +24,15 @@ interface Props extends ThemeProps {
 const notificationOptions = ['Extension', 'PopUp', 'Window']
   .map((item) => ({ text: item, value: item.toLowerCase() }));
 
+const networkOptions = [availableNetworks.mainnet, availableNetworks.testnet]
+  .map(network => ({text: network.name, value: network.rpcUrl}));
+
 function MenuSettings ({ className, reference }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const [camera, setCamera] = useState(settings.camera === 'on');
   // const [prefix, setPrefix] = useState(`${settings.prefix === -1 ? 42 : settings.prefix}`);
   const [notification, updateNotification] = useState(settings.notification);
+  const [network, setNetwork] = useState(settings.apiUrl);
   const themeContext = useContext(ThemeContext as React.Context<Theme>);
   const setTheme = useContext(ThemeSwitchContext);
   const isPopup = useIsPopup();
@@ -79,6 +84,17 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
     }, [onAction]
   );
 
+  const _onNetworkChange = useCallback(
+    (value: string) => {
+      const selectedNetwork: Network | undefined = Object.values(availableNetworks)
+        .find((network: Network) => network.rpcUrl === value);
+      if (selectedNetwork) {
+        appState.setCurrentNetwork(selectedNetwork);
+        setNetwork(selectedNetwork.rpcUrl);
+      }
+    }, []
+  );
+
   return (
     <Menu
       className={className}
@@ -117,6 +133,18 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
           onChange={_onChangeNotification}
           options={notificationOptions}
           value={notification}
+        />
+      </MenuItem>
+      <MenuItem
+        className='setting'
+        title={t<string>('Network')}
+      >
+        <Dropdown
+          className='dropdown'
+          label=''
+          onChange={_onNetworkChange}
+          options={networkOptions}
+          value={network}
         />
       </MenuItem>
       <MenuItem
