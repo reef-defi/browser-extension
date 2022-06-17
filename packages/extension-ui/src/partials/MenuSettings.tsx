@@ -14,7 +14,7 @@ import useIsPopup from '../hooks/useIsPopup';
 import useTranslation from '../hooks/useTranslation';
 import { setNotification, windowOpen } from '../messaging';
 import getLanguageOptions from '../util/getLanguageOptions';
-import { availableNetworks, Network, appState } from '@reef-defi/react-lib';
+import {availableNetworks, Network, appState, hooks} from '@reef-defi/react-lib';
 
 interface Props extends ThemeProps {
   className?: string;
@@ -25,14 +25,14 @@ const notificationOptions = ['Extension', 'PopUp', 'Window']
   .map((item) => ({ text: item, value: item.toLowerCase() }));
 
 const networkOptions = [availableNetworks.mainnet, availableNetworks.testnet]
-  .map(network => ({text: network.name, value: network.rpcUrl}));
+  .map((network) => ({ text: network.name, value: network.rpcUrl }));
 
 function MenuSettings ({ className, reference }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const [camera, setCamera] = useState(settings.camera === 'on');
   // const [prefix, setPrefix] = useState(`${settings.prefix === -1 ? 42 : settings.prefix}`);
   const [notification, updateNotification] = useState(settings.notification);
-  const [network, setNetwork] = useState(settings.apiUrl);
+  const network = hooks.useObservableState(appState.currentNetwork$);
   const themeContext = useContext(ThemeContext as React.Context<Theme>);
   const setTheme = useContext(ThemeSwitchContext);
   const isPopup = useIsPopup();
@@ -144,7 +144,7 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
           label=''
           onChange={_onNetworkChange}
           options={networkOptions}
-          value={network}
+          value={network?.rpcUrl}
         />
       </MenuItem>
       <MenuItem
