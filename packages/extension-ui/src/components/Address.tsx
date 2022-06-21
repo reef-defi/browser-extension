@@ -254,7 +254,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
     const selected = selectedAccount?.address === account?.address;
 
     const selectAccount = (account: AccountJson | null): void => {
-      appState.selectAddressSubj.next(account?.address);
+      appState.setCurrentAddress(account?.address);
     };
 
     return (
