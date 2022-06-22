@@ -1,31 +1,19 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type {Theme, ThemeProps} from '../types';
+import type { Theme, ThemeProps } from '../types';
 
-import {faExpand, faTasks} from '@fortawesome/free-solid-svg-icons';
-import {appState, availableNetworks, hooks, Network} from '@reef-defi/react-lib';
-import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react';
-import styled, {ThemeContext} from 'styled-components';
+import { faExpand, faTasks } from '@fortawesome/free-solid-svg-icons';
+import { appState, availableNetworks, hooks, Network } from '@reef-defi/react-lib';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 
 import settings from '@polkadot/ui-settings';
 
-import {
-  ActionContext,
-  ActionText,
-  Checkbox,
-  Dropdown,
-  Menu,
-  MenuDivider,
-  MenuItem,
-  Svg,
-  Switch,
-  themes,
-  ThemeSwitchContext
-} from '../components';
+import { ActionContext, ActionText, Checkbox, Dropdown, Menu, MenuDivider, MenuItem, Svg, Switch, themes, ThemeSwitchContext } from '../components';
 import useIsPopup from '../hooks/useIsPopup';
 import useTranslation from '../hooks/useTranslation';
-import {setNotification, windowOpen} from '../messaging';
+import { setNotification, windowOpen } from '../messaging';
 import getLanguageOptions from '../util/getLanguageOptions';
 
 interface Props extends ThemeProps {
