@@ -37,8 +37,8 @@ const onTxUpdate = (state: TxStatusUpdate) => {
 };
 
 export const Bind = (): JSX.Element => {
-  const accounts: ReefSigner[] | undefined = hooks.useObservableState(appState.signers$);
-  const selectedSigner: ReefSigner | undefined = hooks.useObservableState(appState.selectedSigner$);
+  const accounts: ReefSigner[] | undefined | null = hooks.useObservableState(appState.signers$);
+  const selectedSigner: ReefSigner | undefined | null = hooks.useObservableState(appState.selectedSigner$);
   const [bindSigner, setBindSigner] = useState<ReefSigner>();
   const theme = localStorage.getItem('theme');
 
@@ -56,7 +56,7 @@ export const Bind = (): JSX.Element => {
       paramAccount = accounts?.find((acc) => acc.address === bindAddress);
     }
 
-    setBindSigner(paramAccount || selectedSigner);
+    setBindSigner(paramAccount || selectedSigner || undefined);
   }, [accounts, selectedSigner]);
 
   return (

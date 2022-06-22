@@ -15,7 +15,7 @@ interface NavHeaderComp {
 
 function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
   const onAction = useContext(ActionContext);
-  const selectedAccount: ReefSigner|undefined = hooks.useObservableState(appState.selectedSigner$);
+  const selectedAccount: ReefSigner|undefined | null = hooks.useObservableState(appState.selectedSigner$);
   const openRoute = useCallback(
     (path: string) => onAction(path),
     [onAction]
