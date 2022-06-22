@@ -5,7 +5,6 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { getAllMetatdata } from '../messaging';
 import chains from '../util/chains';
-import useTranslation from './useTranslation';
 
 interface Option {
   text: string;
@@ -15,7 +14,7 @@ interface Option {
 const RELAY_CHAIN = 'Relay Chain';
 
 export default function (): Option[] {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const [metadataChains, setMetadatachains] = useState<Option[]>([]);
 
   useEffect(() => {
@@ -48,7 +47,7 @@ export default function (): Option[] {
           }
         ))
       .sort((a, b) => a.text.localeCompare(b.text))
-  ], [metadataChains, t]);
+  ], [metadataChains]);
 
   return hashes;
 }

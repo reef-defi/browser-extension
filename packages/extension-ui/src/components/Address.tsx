@@ -105,8 +105,8 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   const { t } = useTranslation();
   const onAction = useContext(ActionContext);
   const { accounts } = useContext(AccountContext);
-  const selectedAccount: ReefSigner|undefined = hooks.useObservableState(appState.selectedSigner$);
-  const signers: ReefSigner[]|undefined = hooks.useObservableState(appState.signers$);
+  const selectedAccount: ReefSigner|undefined|null = hooks.useObservableState(appState.selectedSigner$);
+  const signers: ReefSigner[]|undefined|null = hooks.useObservableState(appState.signers$);
   const settings = useContext(SettingsContext);
   const [{ account, formatted, genesisHash: recodedGenesis, prefix, type }, setRecoded] = useState<Recoded>(defaultRecoded);
   const chain = useMetadata(genesisHash || recodedGenesis, true);
