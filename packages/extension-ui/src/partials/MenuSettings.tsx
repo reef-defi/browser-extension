@@ -4,6 +4,7 @@
 import type { Theme, ThemeProps } from '../types';
 
 import { faExpand, faTasks } from '@fortawesome/free-solid-svg-icons';
+import { appState, availableNetworks, Network } from '@reef-defi/react-lib';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
@@ -14,7 +15,6 @@ import useIsPopup from '../hooks/useIsPopup';
 import useTranslation from '../hooks/useTranslation';
 import { setNotification, windowOpen } from '../messaging';
 import getLanguageOptions from '../util/getLanguageOptions';
-import { availableNetworks, Network, appState } from '@reef-defi/react-lib';
 
 interface Props extends ThemeProps {
   className?: string;
@@ -25,7 +25,7 @@ const notificationOptions = ['Extension', 'PopUp', 'Window']
   .map((item) => ({ text: item, value: item.toLowerCase() }));
 
 const networkOptions = [availableNetworks.mainnet, availableNetworks.testnet]
-  .map(network => ({text: network.name, value: network.rpcUrl}));
+  .map((network) => ({ text: network.name, value: network.rpcUrl }));
 
 function MenuSettings ({ className, reference }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
@@ -88,6 +88,7 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
     (value: string) => {
       const selectedNetwork: Network | undefined = Object.values(availableNetworks)
         .find((network: Network) => network.rpcUrl === value);
+
       if (selectedNetwork) {
         appState.setCurrentNetwork(selectedNetwork);
         setNetwork(selectedNetwork.rpcUrl);
