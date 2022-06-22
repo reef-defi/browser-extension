@@ -15,7 +15,7 @@ interface NavHeaderComp {
 function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
   const onAction = useContext(ActionContext);
   const network: Network | undefined = hooks.useObservableState(appState.currentNetwork$);
-  const mainnetSelected = network == null || network?.name === availableNetworks.mainnet.name;
+  const mainnetSelected = network == null || network?.rpcUrl === availableNetworks.mainnet.rpcUrl;
   const selectedAccount: ReefSigner|undefined | null = hooks.useObservableState(appState.selectedSigner$);
   const openRoute = useCallback(
     (path: string) => onAction(path),
