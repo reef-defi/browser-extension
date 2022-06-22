@@ -4,7 +4,7 @@
 import type { Theme, ThemeProps } from '../types';
 
 import { faExpand, faTasks } from '@fortawesome/free-solid-svg-icons';
-import { appState, availableNetworks, Network } from '@reef-defi/react-lib';
+import { appState, availableNetworks, hooks, Network } from '@reef-defi/react-lib';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
@@ -32,7 +32,7 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
   const [camera, setCamera] = useState(settings.camera === 'on');
   // const [prefix, setPrefix] = useState(`${settings.prefix === -1 ? 42 : settings.prefix}`);
   const [notification, updateNotification] = useState(settings.notification);
-  const [network, setNetwork] = useState(settings.apiUrl);
+  const network = hooks.useObservableState(appState.currentNetwork$);
   const themeContext = useContext(ThemeContext as React.Context<Theme>);
   const setTheme = useContext(ThemeSwitchContext);
   const isPopup = useIsPopup();
@@ -91,7 +91,6 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
 
       if (selectedNetwork) {
         appState.setCurrentNetwork(selectedNetwork);
-        setNetwork(selectedNetwork.rpcUrl);
       }
     }, []
   );
@@ -145,7 +144,7 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
           label=''
           onChange={_onNetworkChange}
           options={networkOptions}
-          value={network}
+          value={network?.rpcUrl}
         />
       </MenuItem>
       <MenuItem

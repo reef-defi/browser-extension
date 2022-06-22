@@ -44,7 +44,7 @@ describe('Account component', () => {
     expect(wrapper.find('a.menuItem').at(1).text()).toBe('Derive New Account');
     expect(wrapper.find('a.menuItem').at(2).text()).toBe('Export Account');
     expect(wrapper.find('a.menuItem').at(3).text()).toBe('Forget Account');
-    expect(wrapper.find('.genesisSelection').exists()).toBe(true);
+    expect(wrapper.find('.genesisSelection').exists()).toBe(false);
   });
 
   it('does not show Export option if account is external', async () => {
@@ -55,7 +55,7 @@ describe('Account component', () => {
     expect(wrapper.find('a.menuItem').length).toBe(2);
     expect(wrapper.find('a.menuItem').at(0).text()).toBe('Rename');
     expect(wrapper.find('a.menuItem').at(1).text()).toBe('Forget Account');
-    expect(wrapper.find('.genesisSelection').exists()).toBe(true);
+    expect(wrapper.find('.genesisSelection').exists()).toBe(false);
   });
 
   it('shows Derive option if account is of ethereum type', async () => {
@@ -68,7 +68,7 @@ describe('Account component', () => {
     expect(wrapper.find('a.menuItem').at(1).text()).toBe('Derive New Account');
     expect(wrapper.find('a.menuItem').at(2).text()).toBe('Export Account');
     expect(wrapper.find('a.menuItem').at(3).text()).toBe('Forget Account');
-    expect(wrapper.find('.genesisSelection').exists()).toBe(true);
+    expect(wrapper.find('.genesisSelection').exists()).toBe(false);
   });
 
   it('does not show genesis hash selection dropsown if account is hardware', async () => {
