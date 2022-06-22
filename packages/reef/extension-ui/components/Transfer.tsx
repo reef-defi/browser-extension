@@ -7,8 +7,8 @@ import { SigningOrChildren } from './SigningOrChildren';
 
 export const Transfer = (): JSX.Element => {
   const provider: Provider | undefined = hooks.useObservableState(appState.currentProvider$);
-  const accounts: ReefSigner[] | undefined = hooks.useObservableState(appState.signers$);
-  const selectedSigner: ReefSigner | undefined = hooks.useObservableState(appState.selectedSigner$);
+  const accounts: ReefSigner[] | undefined | null = hooks.useObservableState(appState.signers$);
+  const selectedSigner: ReefSigner | undefined | null = hooks.useObservableState(appState.selectedSigner$);
   const signerTokenBalances: TokenWithAmount[] | undefined = hooks.useObservableState(appState.tokenPrices$);
   const theme = localStorage.getItem('theme');
 
