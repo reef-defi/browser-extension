@@ -27,6 +27,10 @@ export default function (): Option[] {
   }, []);
 
   const hashes = useMemo(() => [
+    {
+      text: t('Allow use on any chain'),
+      value: ''
+    },
     // put the relay chains at the top
     ...chains.filter(({ chain }) => chain.includes(RELAY_CHAIN))
       .map(({ chain, genesisHash }) => ({

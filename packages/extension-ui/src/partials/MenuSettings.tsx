@@ -4,6 +4,7 @@
 import type { Theme, ThemeProps } from '../types';
 
 import { faExpand, faTasks } from '@fortawesome/free-solid-svg-icons';
+import { appState, availableNetworks, hooks, Network } from '@reef-defi/react-lib';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 
@@ -88,9 +89,9 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
     (value: string) => {
       const selectedNetwork: Network | undefined = Object.values(availableNetworks)
         .find((network: Network) => network.rpcUrl === value);
+
       if (selectedNetwork) {
         appState.setCurrentNetwork(selectedNetwork);
-        setNetwork(selectedNetwork.rpcUrl);
       }
     }, []
   );
