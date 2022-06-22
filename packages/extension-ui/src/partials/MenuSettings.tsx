@@ -15,6 +15,7 @@ import useIsPopup from '../hooks/useIsPopup';
 import useTranslation from '../hooks/useTranslation';
 import { setNotification, windowOpen } from '../messaging';
 import getLanguageOptions from '../util/getLanguageOptions';
+import {availableNetworks, Network, appState, hooks} from '@reef-defi/react-lib';
 
 interface Props extends ThemeProps {
   className?: string;
