@@ -19,7 +19,6 @@ import { HeaderComponent } from '../../../reef/extension-ui/components/HeaderCom
 import { Swap } from '../../../reef/extension-ui/components/Swap';
 import { Transfer } from '../../../reef/extension-ui/components/Transfer';
 import { useReefSigners } from '../../../reef/extension-ui/hooks/useReefSigners';
-import { innitialNetwork } from '../../../reef/extension-ui/state/environment';
 import { ErrorBoundary, Loading } from '../components';
 import { AccountContext, ActionContext, AuthorizeReqContext, MediaContext, MetadataReqContext, SettingsContext, SigningReqContext } from '../components/contexts';
 import ToastProvider from '../components/Toast/ToastProvider';
@@ -78,7 +77,7 @@ export default function Popup (): React.ReactElement {
   const provider: Provider|undefined = hooks.useObservableState(appState.currentProvider$);
   const signers = useReefSigners(accounts, provider);
 
-  hooks.useInitReefState('Reef Chain Extension', { network: innitialNetwork, signers });
+  hooks.useInitReefState('Reef Chain Extension', { signers });
   const [accountCtx, setAccountCtx] = useState<AccountsContext>({ accounts: [], hierarchy: [] });
   const [authRequests, setAuthRequests] = useState<null | AuthorizeRequest[]>(null);
   const [cameraOn, setCameraOn] = useState(startSettings.camera === 'on');
