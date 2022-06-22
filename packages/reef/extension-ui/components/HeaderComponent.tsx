@@ -4,9 +4,10 @@ import { ActionContext } from '@reef-defi/extension-ui/components';
 import { appState, availableNetworks, hooks, Network, ReefSigner, utils } from '@reef-defi/react-lib';
 import React, { useCallback, useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
+
 import useOutsideClick from './../../../extension-ui/src/hooks/useOutsideClick';
 import MenuSettings from './../../../extension-ui/src/partials/MenuSettings';
-import {ReefLogo, ReefTestnetLogo} from './Logos';
+import { ReefLogo, ReefTestnetLogo } from './Logos';
 
 interface NavHeaderComp {
   showSettings?: boolean;
