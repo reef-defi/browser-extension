@@ -41,6 +41,7 @@ import RestoreJson from './RestoreJson';
 import Signing from './Signing';
 import Welcome from './Welcome';
 import { ApolloProvider, ApolloClient } from '@apollo/client';
+import {ReefContext} from "../../../reef/extension-ui/components/ReefContext";
 
 const startSettings = uiSettings.get();
 
@@ -90,13 +91,6 @@ export default function Popup (): React.ReactElement {
 
   const currentSigner: ReefSigner | undefined | null = hooks.useObservableState(appState.selectedSigner$);
   const apollo: ApolloClient<any> | undefined = hooks.useObservableState(graphql.apolloClientInstance$);
-  const reefPrice = hooks.useObservableState(appState.reefPrice$);
-  const tokens = hooks.useAllTokens(currentSigner?.address, apollo);
-  const pools = hooks.useAllPools();
-  const tokenPrices = useMemo(
-    () => hooks.estimatePrice(tokens, pools, reefPrice || 0),
-    [tokens, pools, reefPrice]
-  );
 
   const _onAction = useCallback(
     (to?: string): void => {
@@ -160,40 +154,36 @@ export default function Popup (): React.ReactElement {
                 <MetadataReqContext.Provider value={metaRequests}>
                   <SigningReqContext.Provider value={signRequests}>
                     <ApolloProvider client={apollo}>
-                      <TokenContext.Provider value={tokens}>
-                        <PoolContext.Provider value={pools}>
-                          <TokenPricesContext.Provider value={tokenPrices}>
-                            <ToastProvider>
-                              <HeaderComponent></HeaderComponent>
-                              <Switch>
-                                <Route path='/auth-list'>{wrapWithErrorBoundary(<AuthList />, 'auth-list')}</Route>
-                                <Route path='/account/create'>{wrapWithErrorBoundary(<CreateAccount />, 'account-creation')}</Route>
-                                <Route path='/account/forget/:address'>{wrapWithErrorBoundary(<Forget />, 'forget-address')}</Route>
-                                <Route path='/account/export/:address'>{wrapWithErrorBoundary(<Export />, 'export-address')}</Route>
-                                <Route path='/account/export-all'>{wrapWithErrorBoundary(<ExportAll />, 'export-all-address')}</Route>
-                                <Route path='/account/import-ledger'>{wrapWithErrorBoundary(<ImportLedger />, 'import-ledger')}</Route>
-                                <Route path='/account/import-qr'>{wrapWithErrorBoundary(<ImportQr />, 'import-qr')}</Route>
-                                <Route path='/account/import-seed'>{wrapWithErrorBoundary(<ImportSeed />, 'import-seed')}</Route>
-                                <Route path='/account/restore-json'>{wrapWithErrorBoundary(<RestoreJson />, 'restore-json')}</Route>
-                                <Route path='/account/derive/:address/locked'>{wrapWithErrorBoundary(<Derive isLocked />, 'derived-address-locked')}</Route>
-                                <Route path='/account/derive/:address'>{wrapWithErrorBoundary(<Derive />, 'derive-address')}</Route>
-                                <Route path='/transfer'>{wrapWithErrorBoundary(<Transfer />, 'transfer')}</Route>
-                                <Route path='/accounts'>{wrapWithErrorBoundary(<Accounts className='content-comp' />, 'accounts')}</Route>
-                                <Route path='/tokens'>{wrapWithErrorBoundary(<Dashboard />, 'tokens')}</Route>
-                                <Route path='/swap'>{wrapWithErrorBoundary(<Swap />, 'swap')}</Route>
-                                <Route path='/bind'>{wrapWithErrorBoundary(<Bind />, 'bind')}</Route>
-                                <Route path={`${PHISHING_PAGE_REDIRECT}/:website`}>{wrapWithErrorBoundary(<PhishingDetected />, 'phishing-page-redirect')}</Route>
-                                <Route
-                                  exact
-                                  path='/'
-                                >
-                                  {Root}
-                                </Route>
-                              </Switch>
-                            </ToastProvider>
-                          </TokenPricesContext.Provider>
-                        </PoolContext.Provider>
-                      </TokenContext.Provider>
+                      <ReefContext apollo={apollo} signer={ currentSigner}>
+                        <ToastProvider>
+                          <HeaderComponent></HeaderComponent>
+                          <Switch>
+                            <Route path='/auth-list'>{wrapWithErrorBoundary(<AuthList />, 'auth-list')}</Route>
+                            <Route path='/account/create'>{wrapWithErrorBoundary(<CreateAccount />, 'account-creation')}</Route>
+                            <Route path='/account/forget/:address'>{wrapWithErrorBoundary(<Forget />, 'forget-address')}</Route>
+                            <Route path='/account/export/:address'>{wrapWithErrorBoundary(<Export />, 'export-address')}</Route>
+                            <Route path='/account/export-all'>{wrapWithErrorBoundary(<ExportAll />, 'export-all-address')}</Route>
+                            <Route path='/account/import-ledger'>{wrapWithErrorBoundary(<ImportLedger />, 'import-ledger')}</Route>
+                            <Route path='/account/import-qr'>{wrapWithErrorBoundary(<ImportQr />, 'import-qr')}</Route>
+                            <Route path='/account/import-seed'>{wrapWithErrorBoundary(<ImportSeed />, 'import-seed')}</Route>
+                            <Route path='/account/restore-json'>{wrapWithErrorBoundary(<RestoreJson />, 'restore-json')}</Route>
+                            <Route path='/account/derive/:address/locked'>{wrapWithErrorBoundary(<Derive isLocked />, 'derived-address-locked')}</Route>
+                            <Route path='/account/derive/:address'>{wrapWithErrorBoundary(<Derive />, 'derive-address')}</Route>
+                            <Route path='/transfer'>{wrapWithErrorBoundary(<Transfer />, 'transfer')}</Route>
+                            <Route path='/accounts'>{wrapWithErrorBoundary(<Accounts className='content-comp' />, 'accounts')}</Route>
+                            <Route path='/tokens'>{wrapWithErrorBoundary(<Dashboard />, 'tokens')}</Route>
+                            <Route path='/swap'>{wrapWithErrorBoundary(<Swap />, 'swap')}</Route>
+                            <Route path='/bind'>{wrapWithErrorBoundary(<Bind />, 'bind')}</Route>
+                            <Route path={`${PHISHING_PAGE_REDIRECT}/:website`}>{wrapWithErrorBoundary(<PhishingDetected />, 'phishing-page-redirect')}</Route>
+                            <Route
+                              exact
+                              path='/'
+                            >
+                              {Root}
+                            </Route>
+                          </Switch>
+                        </ToastProvider>
+                      </ReefContext>
                     </ApolloProvider>
                   </SigningReqContext.Provider>
                 </MetadataReqContext.Provider>
