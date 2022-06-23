@@ -16,4 +16,3 @@ export declare type Notify = 'success' | 'error' | 'warning' | 'info';
 export const notify = (message: string, type: Notify = 'success'): void => {
   toast[type](message);
 };
-

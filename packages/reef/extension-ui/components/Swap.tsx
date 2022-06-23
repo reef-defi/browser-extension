@@ -1,11 +1,11 @@
+import { appState, Components, hooks, Network, ReefSigner, reefTokenWithAmount, Settings, store, Token } from '@reef-defi/react-lib';
 import React, { useContext, useReducer } from 'react';
-import { appState, Components, hooks, Network, ReefSigner, Token, store, Settings, reefTokenWithAmount } from '@reef-defi/react-lib';
+import { useHistory, useParams } from 'react-router-dom';
 
+import { TokenContext, TokenPricesContext } from '../../../extension-ui/src/components/contexts';
 import { Loading } from '../uik';
 import { SigningOrChildren } from './SigningOrChildren';
-import { useHistory, useParams } from 'react-router-dom';
 import { addressReplacer, notify, SPECIFIED_SWAP_URL, UrlAddressParams } from './utils';
-import { TokenContext, TokenPricesContext } from '../../../extension-ui/src/components/contexts';
 
 const { SwapComponent } = Components;
 const REEF_ADDRESS = reefTokenWithAmount().address;

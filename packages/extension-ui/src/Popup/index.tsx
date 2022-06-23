@@ -4,11 +4,12 @@
 import type { AccountJson, AccountsContext, AuthorizeRequest, MetadataRequest, SigningRequest } from '@reef-defi/extension-base/background/types';
 import type { SettingsStruct } from '@polkadot/ui-settings/types';
 
+import { ApolloClient, ApolloProvider } from '@apollo/client';
 import { Provider } from '@reef-defi/evm-provider';
 import { PHISHING_PAGE_REDIRECT } from '@reef-defi/extension-base/defaults';
 import { canDerive } from '@reef-defi/extension-base/utils';
-import { appState, hooks, graphql, ReefSigner } from '@reef-defi/react-lib';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { appState, graphql, hooks, ReefSigner } from '@reef-defi/react-lib';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router';
 
 import uiSettings from '@polkadot/ui-settings';
@@ -16,11 +17,12 @@ import uiSettings from '@polkadot/ui-settings';
 import { Bind } from '../../../reef/extension-ui/components/Bind';
 import { Dashboard } from '../../../reef/extension-ui/components/dashboard/Dashboard';
 import { HeaderComponent } from '../../../reef/extension-ui/components/HeaderComponent';
+import { ReefContext } from '../../../reef/extension-ui/components/ReefContext';
 import { Swap } from '../../../reef/extension-ui/components/Swap';
 import { Transfer } from '../../../reef/extension-ui/components/Transfer';
 import { useReefSigners } from '../../../reef/extension-ui/hooks/useReefSigners';
 import { ErrorBoundary, Loading } from '../components';
-import { AccountContext, ActionContext, AuthorizeReqContext, MediaContext, MetadataReqContext, SettingsContext, SigningReqContext, TokenContext, TokenPricesContext, PoolContext } from '../components/contexts';
+import { AccountContext, ActionContext, AuthorizeReqContext, MediaContext, MetadataReqContext, SettingsContext, SigningReqContext } from '../components/contexts';
 import ToastProvider from '../components/Toast/ToastProvider';
 import { subscribeAccounts, subscribeAuthorizeRequests, subscribeMetadataRequests, subscribeSigningRequests } from '../messaging';
 import { buildHierarchy } from '../util/buildHierarchy';
@@ -40,8 +42,6 @@ import PhishingDetected from './PhishingDetected';
 import RestoreJson from './RestoreJson';
 import Signing from './Signing';
 import Welcome from './Welcome';
-import { ApolloProvider, ApolloClient } from '@apollo/client';
-import {ReefContext} from "../../../reef/extension-ui/components/ReefContext";
 
 const startSettings = uiSettings.get();
 
@@ -145,7 +145,7 @@ export default function Popup (): React.ReactElement {
     : wrapWithErrorBoundary(<Welcome />, 'welcome');
 
   return (
-    <Loading>{accounts && authRequests && metaRequests && signRequests && apollo && (
+    <Loading>{accounts && authRequests && metaRequests && signRequests && apollo && currentSigner && (
       <ActionContext.Provider value={_onAction}>
         <SettingsContext.Provider value={settingsCtx}>
           <AccountContext.Provider value={accountCtx}>
@@ -154,7 +154,9 @@ export default function Popup (): React.ReactElement {
                 <MetadataReqContext.Provider value={metaRequests}>
                   <SigningReqContext.Provider value={signRequests}>
                     <ApolloProvider client={apollo}>
-                      <ReefContext apollo={apollo} signer={ currentSigner}>
+                      <ReefContext
+                        apollo={apollo}
+                        signer={ currentSigner}>
                         <ToastProvider>
                           <HeaderComponent></HeaderComponent>
                           <Switch>
