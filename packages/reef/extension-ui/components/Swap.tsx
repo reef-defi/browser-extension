@@ -75,8 +75,6 @@ export const Swap = (): JSX.Element => {
     setToken2Amount
   };
 
-  console.log(tokens);
-
   return (
     <SigningOrChildren>
       {(!tokens || !signer || !network) && <Loading />}
