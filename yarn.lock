@@ -4061,7 +4061,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@popperjs/core@npm:^2.11.5":
+"@popperjs/core@npm:^2.11.5, @popperjs/core@npm:^2.9.2":
   version: 2.11.5
   resolution: "@popperjs/core@npm:2.11.5"
   checksum: fd7f9dca3fb716d7426332b6ee283f88d2724c0ab342fb678865a640bad403dfb9eeebd8204a406986162f7e2b33394f104320008b74d0e9066d7322f70ea35d
@@ -4333,10 +4333,11 @@ __metadata:
     "@reef-defi/hw-ledger": ^7.8.2
     "@reef-defi/keyring": ^7.8.2
     "@reef-defi/networks": ^7.8.2
-    "@reef-defi/react-lib": ^1.0.55
+    "@reef-defi/react-lib": ^1.0.57
     "@reef-defi/util": ^7.8.2
     "@reef-defi/util-crypto": ^7.8.2
     "@types/bn.js": ^4.11.6
+    "@types/bootstrap": ^5.1.12
     "@types/enzyme": ^3.10.10
     "@types/enzyme-adapter-react-16": ^1.0.6
     "@types/file-saver": ^2.0.3
@@ -4360,6 +4361,7 @@ __metadata:
     react-is: ^17.0.2
     react-router: ^5.2.1
     react-router-dom: ^5.3.0
+    react-toastify: ^8.2.0
     sinon-chrome: ^3.0.1
     styled-components: ^5.3.3
     subscriptions-transport-ws: ^0.11.0
@@ -4447,9 +4449,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reef-defi/react-lib@npm:^1.0.55":
-  version: 1.0.55
-  resolution: "@reef-defi/react-lib@npm:1.0.55"
+"@reef-defi/react-lib@npm:^1.0.57":
+  version: 1.0.57
+  resolution: "@reef-defi/react-lib@npm:1.0.57"
   dependencies:
     "@apollo/client": ^3.6.2
     "@polkadot/extension-dapp": ^0.40.4
@@ -4475,7 +4477,7 @@ __metadata:
     zen-observable-ts: ^1.1.0
   peerDependencies:
     react: ^17.0.2
-  checksum: 742f96945dbbd83e0d010567759c227f943b1a07598b2433aec0747b6fe149c2c1fc72826bf0fee9e15fecc2fc2f46d01d7db932efaf207e1c0025096009a836
+  checksum: 5213e69af2203937d8906b37befb1b68deb27c15ec83b812ffb99f16154a9587f4b1ce98e18f22502b83c63c59504b52f31b494cecf77c65acf63bea2b101442
   languageName: node
   linkType: hard
 
@@ -4826,6 +4828,15 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 1dc1cbbd7a1e8bf3614752e9602f558762a901031f499f3055828b5e3e2bba16e5b88c27b3c4152ad795248fbe4086c731a5c4b0f29bb243f1875beeeabee59c
+  languageName: node
+  linkType: hard
+
+"@types/bootstrap@npm:^5.1.12":
+  version: 5.1.12
+  resolution: "@types/bootstrap@npm:5.1.12"
+  dependencies:
+    "@popperjs/core": ^2.9.2
+  checksum: 87e7b093c2d4cf9fe8b24b5d045b75ebee6ae39b321c407361df985bfa6be9de4c1194042ba1c19d97c8d547d077ab3e80c421a2d64380c25b17618c9aad874e
   languageName: node
   linkType: hard
 
@@ -8426,6 +8437,13 @@ __metadata:
     process-nextick-args: ^2.0.0
     readable-stream: ^2.3.5
   checksum: 23b3741225a80c1760dff58aafb6a45383d5ee2d42de7124e4e674387cfad2404493d685b35ebfca9098f99c296e5c5719e748c9750c13838a2016ea2d2bb83a
+  languageName: node
+  linkType: hard
+
+"clsx@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "clsx@npm:1.1.1"
+  checksum: ff052650329773b9b245177305fc4c4dc3129f7b2be84af4f58dc5defa99538c61d4207be7419405a5f8f3d92007c954f4daba5a7b74e563d5de71c28c830063
   languageName: node
   linkType: hard
 
@@ -17919,6 +17937,18 @@ __metadata:
   peerDependencies:
     react: 17.0.2
   checksum: e6b5c6ed2a0bde2c34f1ab9523ff9bc4c141a271daf730d6b852374e83acc0155d58ab71a318251e953ebfa65b8bebb9c5dce3eba1ccfcbef7cc4e1e8261c401
+  languageName: node
+  linkType: hard
+
+"react-toastify@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "react-toastify@npm:8.2.0"
+  dependencies:
+    clsx: ^1.1.1
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 670f1176fb9fd247c7ce0cad22e72578cbfa356dd1920a810ec4aa19faa4dab16db9efbdaaf761bdd368c4fad5c3d7f15568d5328b7b3c8699539064e88fcd4b
   languageName: node
   linkType: hard
 
