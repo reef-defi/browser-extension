@@ -1,5 +1,5 @@
 import React, { useContext, useReducer } from 'react';
-import { appState, Components, hooks, Network, ReefSigner, Token, store, Settings } from '@reef-defi/react-lib';
+import { appState, Components, hooks, Network, ReefSigner, Token, store, Settings, reefTokenWithAmount } from '@reef-defi/react-lib';
 
 import { Loading } from '../uik';
 import { SigningOrChildren } from './SigningOrChildren';
@@ -8,6 +8,7 @@ import { addressReplacer, notify, SPECIFIED_SWAP_URL, UrlAddressParams } from '.
 import { TokenContext, TokenPricesContext } from '../../../extension-ui/src/components/contexts';
 
 const { SwapComponent } = Components;
+const REEF_ADDRESS = reefTokenWithAmount().address;
 
 export const Swap = (): JSX.Element => {
   const history = useHistory();
@@ -21,7 +22,7 @@ export const Swap = (): JSX.Element => {
 
   // hook manages all necessary swap updates
   hooks.useSwapState({
-    address1,
+    address1: address1 || REEF_ADDRESS,
     address2,
     dispatch,
     network,
