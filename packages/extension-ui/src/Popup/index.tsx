@@ -145,7 +145,7 @@ export default function Popup (): React.ReactElement {
     : wrapWithErrorBoundary(<Welcome />, 'welcome');
 
   return (
-    <Loading>{accounts && authRequests && metaRequests && signRequests && apollo && currentSigner && (
+    <Loading>{accounts && authRequests && metaRequests && signRequests && apollo && (
       <ActionContext.Provider value={_onAction}>
         <SettingsContext.Provider value={settingsCtx}>
           <AccountContext.Provider value={accountCtx}>
