@@ -384,7 +384,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                     className='account-card__address'
                     title={signer?.evmAddress || ''}
                   >EVM Address: {utils.toAddressShortDisplay(signer?.evmAddress || '')}</div>
-                  <CopyToClipboard text={(signer?.evmAddress) ? `${signer.evmAddress}(ONLY for Reef chain!)` : ''}>
+                  <CopyToClipboard text={(signer?.evmAddress) ? `${utils.addReefSpecificStringFromAddress(signer.evmAddress)}` : ''}>
                     <FontAwesomeIcon
                       className='copyIcon'
                       icon={faCopy as IconProp}
