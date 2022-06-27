@@ -10,6 +10,8 @@ const ManifestPlugin = require('webpack-extension-manifest-plugin');
 const pkgJson = require('./package.json');
 const manifest = require('./manifest.json');
 
+const fs = require('fs');
+
 const packages = [
   'extension',
   'extension-base',
@@ -19,7 +21,7 @@ const packages = [
   'extension-ui'
 ];
 
-module.exports = (entry, alias = {}, optimization = {}) => ({
+module.exports = (entry, alias = {}, optimization = {}, output = null) => ({
   context: __dirname,
   devtool: false,
   entry,
@@ -55,30 +57,12 @@ module.exports = (entry, alias = {}, optimization = {}) => ({
     ]
   },
   optimization,
-  output: {
+  output: output || {
     chunkFilename: '[name].js',
     filename: '[name].js',
     globalObject: '(typeof self !== \'undefined\' ? self : this)',
     path: path.join(__dirname, 'build')
   },
-  /* optimization: {
-    splitChunks: {
-      chunks: 'all',
-    },
-  }, */
-  /* optimization: {
-    runtimeChunk: 'single',
-      splitChunks: {
-      cacheGroups: {
-        extension: {
-          test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            enforce: true,
-            chunks: 'all'
-        }
-      }
-    }
-  }, */
   performance: {
     hints: false
   },
@@ -98,7 +82,30 @@ module.exports = (entry, alias = {}, optimization = {}) => ({
         PKG_VERSION: JSON.stringify(pkgJson.version)
       }
     }),
-    new CopyPlugin({ patterns: [{ from: 'public' }] }),
+    new CopyPlugin({ patterns: [{
+      from: 'public',
+        transform: {
+          transformer(content, path) {
+            if(path.endsWith('.html')){
+              console.log('CCC', content.toString())
+              if(content.indexOf('<!--EXTENSION_FILES-->')>-1){
+                let extDir = __dirname+'/build/ext';
+                console.log('extDir=',extDir)
+                fs.readdir(extDir, function(err, filenames) {
+
+                 // filenames.forEach(function(filename) {
+                    console.log('FFF',filenames?.filter(f=>f.endsWith('.js')))
+
+                 // });
+                });
+                return content//.replace('<!--EXTENSION_FILES-->', 'EXTTTT');
+              }
+            }
+            return content;
+          },
+        }
+
+      }] }),
     new ManifestPlugin({
       config: {
         base: manifest,
