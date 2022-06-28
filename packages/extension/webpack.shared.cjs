@@ -11,8 +11,6 @@ const WebpackShellPlugin = require('webpack-shell-plugin-next');
 const pkgJson = require('./package.json');
 const manifest = require('./manifest.json');
 
-const fs = require('fs');
-
 const packages = [
   'extension',
   'extension-base',
@@ -84,39 +82,10 @@ module.exports = (entry, alias = {}, optimization = {}, output = null) => ({
       }
     }),
     new CopyPlugin({ patterns: [{
-      from: 'public',
-        transform: {
-          transformer(content, path) {
-            if(path.endsWith('.html')){
-              console.log('CCC', content.toString())
-              if(content.indexOf('<!--EXTENSION_FILES-->')>-1){
-                let extDir = __dirname+'/build/ext';
-                console.log('extDir=',extDir,path )
-                fs.readdir(extDir, function(err, filenames) {
-
-                 // filenames.forEach(function(filename) {
-                  let fNames = filenames?.filter(f=>f.endsWith('.js'));
-                  if(fNames?.length){
-                    const scripts=fNames.reduce((state, fName)=>{
-                      return state+="<script src='./ext/${fName}'></script>"
-                    },'');
-
-                    console.log('FFF', scripts);
-                    content.toString().replace('<!--EXTENSION_FILES-->', scripts);
-                  }
-                 // });
-                });
-                return content;
-              }
-            }
-            return content;
-          },
-        }
-
+      from: 'public'
       }] }),
     new WebpackShellPlugin({
-      onBuildStart: ['echo "SSSSSSS"'],
-      onBuildEnd: ['node updateExtensionSrc.js']
+      onBuildEnd: 'node updateExtensionSrc.cjs'
     }),
     new ManifestPlugin({
       config: {
