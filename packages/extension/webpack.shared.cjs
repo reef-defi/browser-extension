@@ -6,6 +6,7 @@ const webpack = require('webpack');
 
 const CopyPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-extension-manifest-plugin');
+const WebpackShellPlugin = require('webpack-shell-plugin-next');
 
 const pkgJson = require('./package.json');
 const manifest = require('./manifest.json');
@@ -90,15 +91,22 @@ module.exports = (entry, alias = {}, optimization = {}, output = null) => ({
               console.log('CCC', content.toString())
               if(content.indexOf('<!--EXTENSION_FILES-->')>-1){
                 let extDir = __dirname+'/build/ext';
-                console.log('extDir=',extDir)
+                console.log('extDir=',extDir,path )
                 fs.readdir(extDir, function(err, filenames) {
 
                  // filenames.forEach(function(filename) {
-                    console.log('FFF',filenames?.filter(f=>f.endsWith('.js')))
+                  let fNames = filenames?.filter(f=>f.endsWith('.js'));
+                  if(fNames?.length){
+                    const scripts=fNames.reduce((state, fName)=>{
+                      return state+="<script src='./ext/${fName}'></script>"
+                    },'');
 
+                    console.log('FFF', scripts);
+                    content.toString().replace('<!--EXTENSION_FILES-->', scripts);
+                  }
                  // });
                 });
-                return content//.replace('<!--EXTENSION_FILES-->', 'EXTTTT');
+                return content;
               }
             }
             return content;
@@ -106,6 +114,10 @@ module.exports = (entry, alias = {}, optimization = {}, output = null) => ({
         }
 
       }] }),
+    new WebpackShellPlugin({
+      onBuildStart: ['echo "SSSSSSS"'],
+      onBuildEnd: ['node updateExtensionSrc.js']
+    }),
     new ManifestPlugin({
       config: {
         base: manifest,
