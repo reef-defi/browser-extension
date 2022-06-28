@@ -83,7 +83,7 @@ module.exports = (entry, alias = {}, optimization = {}, output = null) => ({
     }),
     new CopyPlugin({ patterns: [{
       from: 'public'
-      }] }),
+    }] }),
     new WebpackShellPlugin({
       onBuildEnd: 'node updateExtensionSrc.cjs'
     }),
