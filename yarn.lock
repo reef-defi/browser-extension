@@ -4395,6 +4395,7 @@ __metadata:
     webpack: ^5.60.0
     webpack-cli: ^4.9.1
     webpack-extension-manifest-plugin: ^0.8.0
+    webpack-shell-plugin-next: ^2.2.2
   languageName: unknown
   linkType: soft
 
@@ -21397,6 +21398,15 @@ __metadata:
     clone-deep: ^4.0.1
     wildcard: ^2.0.0
   checksum: 88786ab91013f1bd2a683834ff381be81c245a4b0f63304a5103e90f6653f44dab496a0768287f8531761f8ad957d1f9f3ccb2cb55df0de1bd9ee343e079da26
+  languageName: node
+  linkType: hard
+
+"webpack-shell-plugin-next@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "webpack-shell-plugin-next@npm:2.2.2"
+  peerDependencies:
+    webpack: ^5.18.0
+  checksum: 617bf2e0f73ab5c96c84f11a889f7bb47d53c7aa9b3310a201e96f169ee7efbfd1ceb86cce77d0c7dfee71930c7f94c08a75e069af044a155906c81eddf99125
   languageName: node
   linkType: hard
 

@@ -6,6 +6,7 @@ const webpack = require('webpack');
 
 const CopyPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-extension-manifest-plugin');
+const WebpackShellPlugin = require('webpack-shell-plugin-next');
 
 const pkgJson = require('./package.json');
 const manifest = require('./manifest.json');
@@ -19,7 +20,7 @@ const packages = [
   'extension-ui'
 ];
 
-module.exports = (entry, alias = {}, optimization = {}) => ({
+module.exports = (entry, alias = {}, optimization = {}, output = null) => ({
   context: __dirname,
   devtool: false,
   entry,
@@ -55,30 +56,12 @@ module.exports = (entry, alias = {}, optimization = {}) => ({
     ]
   },
   optimization,
-  output: {
+  output: output || {
     chunkFilename: '[name].js',
     filename: '[name].js',
     globalObject: '(typeof self !== \'undefined\' ? self : this)',
     path: path.join(__dirname, 'build')
   },
-  /* optimization: {
-    splitChunks: {
-      chunks: 'all',
-    },
-  }, */
-  /* optimization: {
-    runtimeChunk: 'single',
-      splitChunks: {
-      cacheGroups: {
-        extension: {
-          test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            enforce: true,
-            chunks: 'all'
-        }
-      }
-    }
-  }, */
   performance: {
     hints: false
   },
@@ -98,7 +81,12 @@ module.exports = (entry, alias = {}, optimization = {}) => ({
         PKG_VERSION: JSON.stringify(pkgJson.version)
       }
     }),
-    new CopyPlugin({ patterns: [{ from: 'public' }] }),
+    new CopyPlugin({ patterns: [{
+      from: 'public'
+      }] }),
+    new WebpackShellPlugin({
+      onBuildEnd: 'node updateExtensionSrc.cjs'
+    }),
     new ManifestPlugin({
       config: {
         base: manifest,
