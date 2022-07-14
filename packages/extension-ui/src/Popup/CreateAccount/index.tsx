@@ -61,14 +61,14 @@ function CreateAccount ({ className }: Props): React.ReactElement {
         setIsBusy(true);
 
         createAccountSuri(name, password, seed, type, genesisHash)
-          .then(() => onAction('/'))
+          .then(() => onAction(`/bind?bindAddress=${address}`))
           .catch((error: Error): void => {
             setIsBusy(false);
             console.error(error);
           });
       }
     },
-    [genesisHash, onAction, seed, type]
+    [genesisHash, onAction, seed, type, address]
   );
 
   const _onNextStep = useCallback(
