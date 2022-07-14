@@ -25,3 +25,4 @@ docs/html
 !.yarn/plugins
 /.yalc/
 yalc.lock
+/*.iml
