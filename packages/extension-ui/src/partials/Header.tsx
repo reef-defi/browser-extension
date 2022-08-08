@@ -25,11 +25,12 @@ interface Props extends ThemeProps {
   showBackArrow?: boolean;
   showSearch?: boolean;
   showSettings?: boolean;
+  showLogo?: boolean;
   smallMargin?: boolean;
   text?: React.ReactNode;
 }
 
-function Header ({ children, className = '', onFilter, showAdd, showBackArrow, showSearch, showSettings, smallMargin = false, text }: Props): React.ReactElement<Props> {
+function Header ({ children, className = '', onFilter, showAdd, showBackArrow, showLogo = false, showSearch, showSettings, smallMargin = false, text }: Props): React.ReactElement<Props> {
   const [isAddOpen, setShowAdd] = useState(false);
   const [isSettingsOpen, setShowSettings] = useState(false);
   const [isSearchOpen, setShowSearch] = useState(false);
@@ -76,25 +77,23 @@ function Header ({ children, className = '', onFilter, showAdd, showBackArrow, s
     <div className={`${className} ${smallMargin ? 'smallMargin' : ''}`}>
       <div className='container accounts__header'>
         <div className='branding'>
-          {showBackArrow
-            ? (
-              <Link
-                className='backlink'
-                to='/'
-              >
-                <FontAwesomeIcon
-                  className='arrowLeftIcon'
-                  icon={faArrowLeft as IconProp}
-                />
-              </Link>
-            )
-            : (
-              <img
-                className='logo'
-                src={logo}
+          {showBackArrow && (
+            <Link
+              className='backlink'
+              to='/'
+            >
+              <FontAwesomeIcon
+                className='arrowLeftIcon'
+                icon={faArrowLeft as IconProp}
               />
-            )
-          }
+            </Link>
+          )}
+          { showLogo && (
+            <img
+              className='logo'
+              src={logo}
+            />
+          )}
           <span className='logoText'>{text || 'reef-js'}</span>
         </div>
         {showSearch && (
