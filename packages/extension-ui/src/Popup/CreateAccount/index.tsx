@@ -89,6 +89,7 @@ function CreateAccount ({ className }: Props): React.ReactElement {
   return (
     <>
       <HeaderWithSteps
+        showLogo
         step={step}
         text={t<string>('Create an account')}
       />

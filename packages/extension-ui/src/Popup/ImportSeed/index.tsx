@@ -68,6 +68,7 @@ function ImportSeed (): React.ReactElement {
   return (
     <>
       <HeaderWithSteps
+        showLogo
         step={step1 ? 1 : 2}
         text={t<string>('Import account')}
       />

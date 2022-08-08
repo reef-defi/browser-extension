@@ -24,6 +24,7 @@ function HeaderWithSteps ({ className, step, text }: Props): React.ReactElement<
 
   return (
     <Header
+      showLogo
       className={className}
       text={text}
     >

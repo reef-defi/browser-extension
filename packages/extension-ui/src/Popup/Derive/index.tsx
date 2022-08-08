@@ -68,6 +68,7 @@ function Derive ({ isLocked }: Props): React.ReactElement<Props> {
   return (
     <>
       <HeaderWithSteps
+        showLogo
         step={account ? 2 : 1}
         text={t<string>('Add new account')}
       />

@@ -48,7 +48,6 @@ function Accounts ({ className }: Props): React.ReactElement {
           <>
             <Header
               onFilter={_onFilter}
-              showAdd
               showSearch
               text={t<string>('Accounts')}
             />
