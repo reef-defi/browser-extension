@@ -62,11 +62,17 @@ function getWindowExtensions (originName: string): Promise<[InjectedExtensionInf
   );
 }
 
+const onReefInjectedPromise: () => Promise<boolean> = () => new Promise((resolve) => {
+  document.addEventListener('reef-injected', () => resolve(true), false);
+});
+
 // enables all the providers found on the injected window interface
 export function web3Enable (originName: string, compatInits: (() => Promise<boolean>)[] = []): Promise<InjectedExtension[]> {
   if (!originName) {
     throw new Error('You must pass a name for your app to the web3Enable function');
   }
+
+  compatInits.push(onReefInjectedPromise);
 
   const initCompat = compatInits.length
     ? Promise.all(compatInits.map((c) => c().catch(() => false)))
