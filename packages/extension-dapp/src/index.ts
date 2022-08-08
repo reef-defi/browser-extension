@@ -62,8 +62,8 @@ function getWindowExtensions (originName: string): Promise<[InjectedExtensionInf
   );
 }
 
-const onReefInjectedPromise:()=>Promise<boolean> = ()=>new Promise(resolve => {
-  document.addEventListener('reef-injected', ()=>resolve(true), false);
+const onReefInjectedPromise: () => Promise<boolean> = () => new Promise((resolve) => {
+  document.addEventListener('reef-injected', () => resolve(true), false);
 });
 
 // enables all the providers found on the injected window interface

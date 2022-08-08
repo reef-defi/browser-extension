@@ -37,5 +37,6 @@ function inject () {
     version: process.env.PKG_VERSION as string
   });
   const event = new Event('reef-injected');
+
   document.dispatchEvent(event);
 }
