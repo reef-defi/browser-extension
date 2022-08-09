@@ -8,6 +8,8 @@ import { PORT_CONTENT } from '@reef-defi/extension-base/defaults';
 import { enable, handleResponse, redirectIfPhishing } from '@reef-defi/extension-base/page';
 import { injectExtension } from '@reef-defi/extension-inject';
 
+(window as any)._reefInjectionInit = true;
+
 // setup a response listener (events created by the loader for extension responses)
 window.addEventListener('message', ({ data, source }: Message): void => {
   // only allow messages from our window, by the loader
@@ -36,6 +38,7 @@ function inject () {
     name: 'reef',
     version: process.env.PKG_VERSION as string
   });
+  console.log('inject called');
   const event = new Event('reef-injected');
 
   document.dispatchEvent(event);

@@ -72,7 +72,9 @@ export function web3Enable (originName: string, compatInits: (() => Promise<bool
     throw new Error('You must pass a name for your app to the web3Enable function');
   }
 
-  compatInits.push(onReefInjectedPromise);
+  if ((window as any)._reefInjectionInit) {
+    compatInits.push(onReefInjectedPromise);
+  }
 
   const initCompat = compatInits.length
     ? Promise.all(compatInits.map((c) => c().catch(() => false)))
