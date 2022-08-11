@@ -1,3 +1,5 @@
+import { useTranslation } from '@reef-defi/extension-ui/components/translate';
+import { Header } from '@reef-defi/extension-ui/partials';
 import { appState, Components, hooks, ReefSigner } from '@reef-defi/react-lib';
 import { TxStatusUpdate } from '@reef-defi/react-lib/dist/utils';
 import React, { useEffect, useState } from 'react';
@@ -37,6 +39,7 @@ const onTxUpdate = (state: TxStatusUpdate) => {
 };
 
 export const Bind = (): JSX.Element => {
+  const { t } = useTranslation();
   const accounts: ReefSigner[] | undefined | null = hooks.useObservableState(appState.signers$);
   const selectedSigner: ReefSigner | undefined | null = hooks.useObservableState(appState.selectedSigner$);
   const [bindSigner, setBindSigner] = useState<ReefSigner>();
@@ -60,13 +63,19 @@ export const Bind = (): JSX.Element => {
   }, [accounts, selectedSigner]);
 
   return (
-    <SigningOrChildren>
-      {bindSigner && accounts && (<div className={theme === 'dark' ? 'theme-dark' : ''}>
-        <Components.EvmBindComponent
-          bindSigner={bindSigner}
-          onTxUpdate={onTxUpdate}
-          signers={accounts}
-        ></Components.EvmBindComponent></div>)}
-    </SigningOrChildren>
+    <>
+      <Header
+        showBackArrow
+        text={t<string>('Bind EVM')}
+      />
+      <SigningOrChildren>
+        {bindSigner && accounts && (<div className={theme === 'dark' ? 'theme-dark' : ''}>
+          <Components.EvmBindComponent
+            bindSigner={bindSigner}
+            onTxUpdate={onTxUpdate}
+            signers={accounts}
+          ></Components.EvmBindComponent></div>)}
+      </SigningOrChildren>
+    </>
   );
 };
