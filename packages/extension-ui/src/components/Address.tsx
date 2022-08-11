@@ -42,14 +42,14 @@ export interface Props {
   isExternal?: boolean | null;
   isHardware?: boolean | null;
   isHidden?: boolean;
-  hideBalance?: boolean | null;
+  hideBalance?: any;
   name?: string | null;
   parentName?: string | null;
   suri?: string;
   toggleActions?: number;
   type?: KeypairType;
   exporting?: any;
-  presentation?: boolean;
+  presentation?: any;
   signerProp?: ReefSigner;
 }
 
@@ -117,6 +117,10 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   const [moveMenuUp, setIsMovedMenu] = useState(false);
   const actionsRef = useRef<HTMLDivElement>(null);
   const [signer, setSigner] = useState<ReefSigner|undefined>(signerProp);
+  const openRoute = useCallback(
+    (path: string) => onAction(path),
+    [onAction]
+  );
 
   useEffect(() => {
     const foundSigner = signers?.find((s) => s.address === account?.address);
@@ -136,17 +140,6 @@ function Address ({ actions, address, children, className, exporting, genesisHas
     }
 
     const accountByAddress = findAccountByAddress(accounts, address);
-
-    // addressconsole.log(
-    //   address,
-    //   (
-    //     chain?.definition.chainType === 'ethereum' ||
-    //     accountByAddress?.type === 'ethereum' ||
-    //     (!accountByAddress && givenType === 'ethereum')
-    //   )
-    //     ? { account: accountByAddress, formatted: address, type: 'ethereum' }
-    //     : recodeAddress(address, accounts, chain, settings)
-    // );
 
     setRecoded(
       (
@@ -256,6 +249,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
 
     const selectAccount = (account: AccountJson | null): void => {
       appState.setCurrentAddress(account?.address);
+      openRoute('/tokens'); // redirect to tokens page
     };
 
     return (
