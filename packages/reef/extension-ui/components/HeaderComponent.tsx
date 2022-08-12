@@ -1,10 +1,10 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faCog, faCoins, faExchangeAlt, faPaperPlane, faPlusCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faCoins, faPlusCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ActionContext } from '@reef-defi/extension-ui/components';
 import MenuAdd from '@reef-defi/extension-ui/partials/MenuAdd';
 import Account from '@reef-defi/extension-ui/Popup/Accounts/Account';
-import { appState, availableNetworks, hooks, Network, ReefSigner, utils } from '@reef-defi/react-lib';
+import { appState, availableNetworks, hooks, Network, ReefSigner } from '@reef-defi/react-lib';
 import React, { useCallback, useContext, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
@@ -54,9 +54,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
   const location = useLocation();
 
   const showNavigation = (): boolean => {
-    console.log(location.pathname);
-
-    if (['/account/create', '/account/export-all', '/account/import-seed'].includes(location.pathname)) {
+    if (['/account/create', '/account/export-all', '/account/import-seed', '/bind'].includes(location.pathname)) {
       return false;
     }
 
@@ -136,7 +134,11 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
         )}
       </div>
       {isAddOpen && (
-        <MenuAdd reference={addRef} />
+        <MenuAdd
+          className='menu-add-account'
+          reference={addRef}
+          setShowAdd={setShowAdd}
+        />
       )}
 
       <button

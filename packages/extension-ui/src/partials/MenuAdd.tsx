@@ -20,12 +20,13 @@ import { windowOpen } from '../messaging';
 interface Props extends ThemeProps {
   className?: string;
   reference: React.MutableRefObject<null>;
+  setShow: any;
 }
 
 const jsonPath = '/account/restore-json';
 const ledgerPath = '/account/import-ledger';
 
-function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
+function MenuAdd ({ className, reference, setShowAdd }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const { master } = useContext(AccountContext);
   const mediaAllowed = useContext(MediaContext);
@@ -41,6 +42,11 @@ function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
     []
   );
 
+  const _closePopup = useCallback(
+    () => setShowAdd(false),
+    []
+  );
+
   return (
     <Menu
       className={className}
@@ -51,13 +57,15 @@ function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
       >
         <div className='steps'>
           <ActionText
-            onClick={false}
+            onClick={_closePopup}
             text='Cancel'
           />
         </div>
       </Header>
       <MenuItem className='menuItem'>
-        <Link to={'/account/create'}>
+        <Link
+          to={'/account/create'}
+          onClick={_closePopup}>
           <FontAwesomeIcon icon={faPlusCircle as IconProp} />
           <span>{ t('Create new account')}</span>
         </Link>
@@ -66,7 +74,9 @@ function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
       {!!master && (
         <>
           <MenuItem className='menuItem'>
-            <Link to={`/account/derive/${master.address}`}>
+            <Link
+              to={`/account/derive/${master.address}`}
+              onClick={_closePopup}>
               <FontAwesomeIcon icon={faCodeBranch as IconProp} />
               <span>{t('Derive from an account')}</span>
             </Link>
@@ -75,13 +85,17 @@ function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
         </>
       )}
       <MenuItem className='menuItem'>
-        <Link to={'/account/export-all'}>
+        <Link
+          to={'/account/export-all'}
+          onClick={_closePopup}>
           <FontAwesomeIcon icon={faFileExport as IconProp} />
           <span>{t<string>('Export all accounts')}</span>
         </Link>
       </MenuItem>
       <MenuItem className='menuItem'>
-        <Link to='/account/import-seed'>
+        <Link
+          to='/account/import-seed'
+          onClick={_closePopup}>
           <FontAwesomeIcon icon={faKey as IconProp} />
           <span>{t<string>('Import account from pre-existing seed')}</span>
         </Link>
@@ -104,6 +118,7 @@ function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
             : ''
           }
           to='/account/import-qr'
+          onClick={_closePopup}
         >
           <FontAwesomeIcon icon={faQrcode as IconProp} />
           <span>{t<string>('Attach external QR-signer account')}</span>
@@ -116,6 +131,7 @@ function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
               isDisabled={!isLedgerCapable}
               title={ (!isLedgerCapable && t<string>('Ledger devices can only be connected with Chrome browser')) || ''}
               to={ledgerPath}
+              onClick={_closePopup}
             >
               <FontAwesomeIcon
                 icon={faUsb as IconProp}
