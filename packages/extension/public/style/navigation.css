@@ -8,11 +8,15 @@
   min-height: 57px;
   max-height: 57px;
   background-color: #f3f0f9;
-  box-shadow: 0 5px 10px -5px rgba(0,0,0,.1);
   position: sticky;
   top: 0;
   z-index: 9999;
 }
+.navigation__account--selected {
+  background-color: #f3f0f9;
+  box-shadow: 0 5px 10px -5px rgba(0,0,0,.1);
+}
+
 
 .dark-theme > .navigation__wrapper,
 .light-theme > .navigation__wrapper {
@@ -22,11 +26,13 @@
 
 .navigation__wrapper .navigation__account--selected {
   margin: 0;
+  margin-bottom: 15px;
 }
 
 .navigation__wrapper .navigation__account--selected .account-card__wrapper {
   box-shadow: none;
   background: transparent;
+  padding-top: 2px;
 }
 
 .navigation__account--selected .account-card__chain {

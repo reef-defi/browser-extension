@@ -34,7 +34,7 @@ export default styled(Main)(({ theme }: ThemeProps) => `
   }
 
   > * {
-    padding-left: 24px;
-    padding-right: 24px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 `);
