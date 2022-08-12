@@ -1,7 +1,7 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCog, faCoins, faPlusCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ActionContext } from '@reef-defi/extension-ui/components';
+import { ActionContext, SigningReqContext } from '@reef-defi/extension-ui/components';
 import MenuAdd from '@reef-defi/extension-ui/partials/MenuAdd';
 import Account from '@reef-defi/extension-ui/Popup/Accounts/Account';
 import { appState, availableNetworks, hooks, Network, ReefSigner } from '@reef-defi/react-lib';
@@ -30,6 +30,8 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
   const addRef = useRef(null);
   const [isSettingsOpen, setShowSettings] = useState(false);
   const [isAddOpen, setShowAdd] = useState(false);
+  const requests = useContext(SigningReqContext);
+  const hasSignRequests = requests.length > 0;
 
   useOutsideClick(setRef, (): void => {
     isSettingsOpen && setShowSettings(!isSettingsOpen);
@@ -54,6 +56,10 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
   const location = useLocation();
 
   const showNavigation = (): boolean => {
+    if (hasSignRequests) {
+      return false;
+    }
+
     if (['/account/create', '/account/export-all', '/account/import-seed', '/bind'].includes(location.pathname)) {
       return false;
     }
@@ -155,7 +161,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
         <MenuSettings reference={setRef} />
       )}
     </div>)}
-    {['/tokens', '/'].includes(location.pathname) && (
+    {['/tokens', '/'].includes(location.pathname) && !hasSignRequests && (
       <div className='navigation__account--selected'>
         <Account
           hideBalance

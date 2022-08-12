@@ -143,8 +143,6 @@ export default function Popup (): React.ReactElement {
           : wrapWithErrorBoundary(<Dashboard />, 'tokens')
     : wrapWithErrorBoundary(<Welcome />, 'welcome');
 
-  console.log('CurrentSigner', currentSigner);
-
   return (
     <Loading>{accounts && authRequests && metaRequests && signRequests && apollo && (
       <ActionContext.Provider value={_onAction}>
