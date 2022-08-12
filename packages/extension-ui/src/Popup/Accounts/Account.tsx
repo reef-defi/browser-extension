@@ -173,7 +173,7 @@ export default styled(Account)(({ theme }: ThemeProps) => `
     font-size: 15px;
     line-height: 20px;
     margin: 0;
-    min-width: 13rem;
+    min-width: 15rem;
     padding: 4px 16px;
 
     .genesisSelection {

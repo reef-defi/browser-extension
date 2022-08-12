@@ -12,11 +12,11 @@
   top: 0;
   z-index: 9999;
 }
+
 .navigation__account--selected {
   background-color: #f3f0f9;
   box-shadow: 0 5px 10px -5px rgba(0,0,0,.1);
 }
-
 
 .dark-theme > .navigation__wrapper,
 .light-theme > .navigation__wrapper {
@@ -266,6 +266,11 @@
 }
 
 .navigation--dark {
+  box-shadow: 0 5px 10px -5px #1a1b20;
+  background-color: #2c2d33;
+}
+
+.navigation--dark .navigation__account--selected {
   box-shadow: 0 5px 10px -5px #1a1b20;
   background-color: #2c2d33;
 }

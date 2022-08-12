@@ -20,7 +20,7 @@ import { windowOpen } from '../messaging';
 interface Props extends ThemeProps {
   className?: string;
   reference: React.MutableRefObject<null>;
-  setShow: any;
+  setShowAdd: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const jsonPath = '/account/restore-json';
