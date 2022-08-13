@@ -38,8 +38,7 @@ function inject () {
     name: 'reef',
     version: process.env.PKG_VERSION as string
   });
-  console.log('inject called');
+  (window as any)._reefInjected = true;
   const event = new Event('reef-injected');
-
   document.dispatchEvent(event);
 }
