@@ -24,19 +24,22 @@ export function injectExtension (enable: (origin: string) => Promise<Injected>, 
   };
 }
 
-export function isInjected(name: string): boolean {
+export function isInjected (name: string): boolean {
   const windowInject = window as Window & InjectedWindow;
+
   return !!windowInject.injectedWeb3[name];
 }
 
-export function isInjectionStarted(name: string): boolean {
+export function isInjectionStarted (name: string): boolean {
   const windowInject = window as any;
+
   return !!windowInject._reefInjectionStart[name];
 }
 
-export function startInjection(name: string) {
-  if(!(window as any)._reefInjectionStart){
+export function startInjection (name: string) {
+  if (!(window as any)._reefInjectionStart) {
     (window as any)._reefInjectionStart = {};
   }
+
   (window as any)._reefInjectionStart[name] = true;
 }

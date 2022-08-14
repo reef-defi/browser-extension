@@ -3,11 +3,11 @@
 
 import type { Injected, InjectedAccount, InjectedAccountWithMeta, InjectedExtension, InjectedExtensionInfo, InjectedProviderWithMeta, InjectedWindow, ProviderList, Unsubcall, Web3AccountsOptions } from '@reef-defi/extension-inject/types';
 
+import { isInjected, isInjectionStarted, REEF_EXTENSION_IDENT, REEF_INJECTED_EVENT } from '@reef-defi/extension-inject';
 import { u8aEq } from '@reef-defi/util';
 import { decodeAddress, encodeAddress } from '@reef-defi/util-crypto';
 
 import { documentReadyPromise } from './util';
-import {isInjected, isInjectionStarted, REEF_EXTENSION_IDENT, REEF_INJECTED_EVENT} from "@reef-defi/extension-inject";
 
 // expose utility functions
 export { unwrapBytes, wrapBytes } from './wrapBytes';
@@ -65,8 +65,10 @@ function getWindowExtensions (originName: string): Promise<[InjectedExtensionInf
 
 const onReefInjectedPromise: () => Promise<boolean> = () => new Promise((resolve) => {
   const listener = () => resolve(true);
+
   document.addEventListener(REEF_INJECTED_EVENT, listener, false);
-  if(isInjected(REEF_EXTENSION_IDENT)){
+
+  if (isInjected(REEF_EXTENSION_IDENT)) {
     document.removeEventListener(REEF_INJECTED_EVENT, listener);
     resolve(true);
   }
@@ -77,6 +79,7 @@ export function web3Enable (originName: string, compatInits: (() => Promise<bool
   if (!originName) {
     throw new Error('You must pass a name for your app to the web3Enable function');
   }
+
   if (isInjectionStarted(REEF_EXTENSION_IDENT) && !isInjected(REEF_EXTENSION_IDENT)) {
     compatInits.push(onReefInjectedPromise);
   }

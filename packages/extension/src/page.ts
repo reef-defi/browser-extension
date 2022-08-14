@@ -6,12 +6,7 @@ import type { Message } from '@reef-defi/extension-base/types';
 
 import { PORT_CONTENT } from '@reef-defi/extension-base/defaults';
 import { enable, handleResponse, redirectIfPhishing } from '@reef-defi/extension-base/page';
-import {
-  injectExtension,
-  REEF_EXTENSION_IDENT,
-  REEF_INJECTED_EVENT,
-  startInjection
-} from '@reef-defi/extension-inject';
+import { injectExtension, REEF_EXTENSION_IDENT, REEF_INJECTED_EVENT, startInjection } from '@reef-defi/extension-inject';
 
 startInjection(REEF_EXTENSION_IDENT);
 
@@ -44,5 +39,6 @@ function inject () {
     version: process.env.PKG_VERSION as string
   });
   const event = new Event(REEF_INJECTED_EVENT);
+
   document.dispatchEvent(event);
 }
