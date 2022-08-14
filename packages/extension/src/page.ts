@@ -6,9 +6,14 @@ import type { Message } from '@reef-defi/extension-base/types';
 
 import { PORT_CONTENT } from '@reef-defi/extension-base/defaults';
 import { enable, handleResponse, redirectIfPhishing } from '@reef-defi/extension-base/page';
-import { injectExtension } from '@reef-defi/extension-inject';
+import {
+  injectExtension,
+  REEF_EXTENSION_IDENT,
+  REEF_INJECTED_EVENT,
+  startInjection
+} from '@reef-defi/extension-inject';
 
-(window as any)._reefInjectionInit = true;
+startInjection(REEF_EXTENSION_IDENT);
 
 // setup a response listener (events created by the loader for extension responses)
 window.addEventListener('message', ({ data, source }: Message): void => {
@@ -35,10 +40,9 @@ redirectIfPhishing().then((gotRedirected) => {
 
 function inject () {
   injectExtension(enable, {
-    name: 'reef',
+    name: REEF_EXTENSION_IDENT,
     version: process.env.PKG_VERSION as string
   });
-  (window as any)._reefInjected = true;
-  const event = new Event('reef-injected');
+  const event = new Event(REEF_INJECTED_EVENT);
   document.dispatchEvent(event);
 }
