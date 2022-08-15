@@ -3,6 +3,7 @@
 
 import type { Injected, InjectedAccount, InjectedAccountWithMeta, InjectedExtension, InjectedExtensionInfo, InjectedProviderWithMeta, InjectedWindow, ProviderList, Unsubcall, Web3AccountsOptions } from '@reef-defi/extension-inject/types';
 
+import { isInjected, isInjectionStarted, REEF_EXTENSION_IDENT, REEF_INJECTED_EVENT } from '@reef-defi/extension-inject';
 import { u8aEq } from '@reef-defi/util';
 import { decodeAddress, encodeAddress } from '@reef-defi/util-crypto';
 
@@ -63,7 +64,14 @@ function getWindowExtensions (originName: string): Promise<[InjectedExtensionInf
 }
 
 const onReefInjectedPromise: () => Promise<boolean> = () => new Promise((resolve) => {
-  document.addEventListener('reef-injected', () => resolve(true), false);
+  const listener = () => resolve(true);
+
+  document.addEventListener(REEF_INJECTED_EVENT, listener, false);
+
+  if (isInjected(REEF_EXTENSION_IDENT)) {
+    document.removeEventListener(REEF_INJECTED_EVENT, listener);
+    resolve(true);
+  }
 });
 
 // enables all the providers found on the injected window interface
@@ -72,7 +80,7 @@ export function web3Enable (originName: string, compatInits: (() => Promise<bool
     throw new Error('You must pass a name for your app to the web3Enable function');
   }
 
-  if ((window as any)._reefInjectionInit) {
+  if (isInjectionStarted(REEF_EXTENSION_IDENT) && !isInjected(REEF_EXTENSION_IDENT)) {
     compatInits.push(onReefInjectedPromise);
   }
 
