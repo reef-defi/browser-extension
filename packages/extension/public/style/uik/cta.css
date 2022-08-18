@@ -7,11 +7,10 @@
   align-items: center;
   border: none;
   white-space: nowrap;
-  border-radius: 999px;
+  border-radius: 10px;
   font-size: 1rem;
   line-height: 22.984px;
-  font-family: 'tenon', sans-serif;
-  font-weight: 500;
+  font-weight: 600;
   padding: 0.75rem 1.5rem;
   transition: all 0.4s;
   text-decoration: none;

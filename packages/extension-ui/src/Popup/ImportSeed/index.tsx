@@ -72,6 +72,14 @@ function ImportSeed (): React.ReactElement {
         step={step1 ? 1 : 2}
         text={t<string>('Import account')}
       />
+      {account?.address && (<div>
+        <Address
+          address={account?.address}
+          genesisHash={account?.genesis}
+          name={name}
+          presentation
+        />
+      </div>)}
       {step1
         ? (
           <SeedAndPath
