@@ -7,12 +7,12 @@ export const ReefContext = (props: {children?: any; apollo: any, signer?: ReefSi
   const tokens = hooks.useAllTokens(props.signer?.address, props.apollo);
   const pools = hooks.useAllPools();
   const tokenPrices = useMemo(
-    () => hooks.estimatePrice(tokens, pools, reefPrice || 0),
+    () => hooks.estimatePrice(tokens[0], pools, reefPrice || 0),
     [tokens, pools, reefPrice]
   );
 
   return (<>
-    <TokenContext.Provider value={tokens}>
+    <TokenContext.Provider value={tokens[0]}>
       <PoolContext.Provider value={pools}>
         <TokenPricesContext.Provider value={tokenPrices}>
           {props.children}
