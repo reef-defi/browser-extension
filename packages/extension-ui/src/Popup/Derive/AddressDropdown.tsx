@@ -102,7 +102,12 @@ export default styled(AddressDropdown)(({ theme }: ThemeProps) => `
 
     &.visible{
       visibility: visible;
-      max-height: 200px;
+      max-height: 300px;
+    }
+
+    & .account-card__wrapper {
+      margin-bottom: 5px;
+      padding: 5px 15px;
     }
 
     & > div {

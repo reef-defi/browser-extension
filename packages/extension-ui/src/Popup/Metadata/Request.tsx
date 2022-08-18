@@ -113,7 +113,7 @@ export default styled(Request)(({ theme }: ThemeProps) => `
     font-size: 10px;
     line-height: 20px;
     margin: 16px 15px 0 1.35rem;
-    font-weight: 800;
+    font-weight: 700;
     padding-left: 0.5px;
   }
 

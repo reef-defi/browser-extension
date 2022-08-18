@@ -15,7 +15,7 @@ interface Props {
 function Label ({ children, className, label }: Props): React.ReactElement<Props> {
   return (
     <div className={className}>
-      <label>{label}</label>
+      <label className='heading-label'>{label}</label>
       {children}
     </div>
   );
@@ -24,7 +24,7 @@ function Label ({ children, className, label }: Props): React.ReactElement<Props
 export default styled(Label)(({ theme }: ThemeProps) => `
   color: ${theme.textColor};
 
-  label {
+  label.heading-label {
     font-size: ${theme.inputLabelFontSize};
     line-height: 14px;
     letter-spacing: 0.04em;

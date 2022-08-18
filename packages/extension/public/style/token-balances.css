@@ -7,7 +7,7 @@
 }
 
 .token-balances__tokens {
-  margin-top: 20px;
+  margin-top: 12px;
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
