@@ -73,7 +73,7 @@ export const Swap = (): JSX.Element => {
     selectToken2,
     setSettings,
     setToken1Amount,
-    setToken2Amount,
+    setToken2Amount
   };
 
   return (

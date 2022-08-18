@@ -13,6 +13,7 @@ interface CTA {
   text?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const CTA = ({ children,
   className,
   danger,
