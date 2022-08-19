@@ -73,8 +73,12 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
     return true;
   };
 
+  const showAccount = (): boolean => {
+    return ['/tokens', '/'].includes(location.pathname) && !hasSignRequests;
+  };
+
   return (<div className='navigation__wrapper'>
-    {(showNavigation()) && (<div className={theme === 'dark' ? 'navigation navigation--dark' : 'navigation'}>
+    {(showNavigation()) && (<div className={['navigation', theme === 'dark' ? 'navigation--dark' : '', !showAccount() ? 'navigation--account' : ''].join(' ')}>
       <a
         className='reef-logo'
         href='#'
@@ -161,7 +165,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
         <MenuSettings reference={setRef} />
       )}
     </div>)}
-    {['/tokens', '/'].includes(location.pathname) && !hasSignRequests && (
+    {showAccount() && (
       <div className='navigation__account--selected'>
         <Account
           hideBalance

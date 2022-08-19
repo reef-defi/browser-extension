@@ -18,6 +18,10 @@
   box-shadow: 0 5px 10px -5px rgba(0,0,0,.1);
 }
 
+.navigation--account {
+  box-shadow: 0 5px 10px -5px rgba(0,0,0,.1);
+}
+
 .dark-theme > .navigation__wrapper,
 .light-theme > .navigation__wrapper {
   padding-left: 0;
