@@ -3066,51 +3066,51 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/devices@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "@ledgerhq/devices@npm:7.0.0"
+"@ledgerhq/devices@npm:6.27.1":
+  version: 6.27.1
+  resolution: "@ledgerhq/devices@npm:6.27.1"
   dependencies:
-    "@ledgerhq/errors": ^6.10.1
+    "@ledgerhq/errors": ^6.10.0
     "@ledgerhq/logs": ^6.10.0
     rxjs: 6
     semver: ^7.3.5
-  checksum: f15db293ea251adacc5b290da9e23542aa82227593835f3220172dba9743771c3bb3835c1a29b184f8cb8f79e6b5a8160cbf90bfbe2dc78a190280dfeec9283b
+  checksum: e4615841b094fe4990c74421c23f57da6a83b56bfa73880af3ce0a67db86f5b3a642f6022be24bf4b24d7b236623a578dbdba74805b28e2486006d1f0cbff543
   languageName: node
   linkType: hard
 
-"@ledgerhq/errors@npm:^6.10.1":
+"@ledgerhq/errors@npm:^6.10.0, @ledgerhq/errors@npm:^6.10.1":
   version: 6.10.1
   resolution: "@ledgerhq/errors@npm:6.10.1"
   checksum: 21049b57d9451ce50a89ae671eff363ccb64fb03b17d58e9d67284b654a552e289c4d75a4f074e711644ea089acdde3596db411a5b06b6eb85ec12e0e4d0b9c9
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport-node-hid-noevents@npm:^6.27.2":
-  version: 6.27.2
-  resolution: "@ledgerhq/hw-transport-node-hid-noevents@npm:6.27.2"
+"@ledgerhq/hw-transport-node-hid-noevents@npm:6.27.1":
+  version: 6.27.1
+  resolution: "@ledgerhq/hw-transport-node-hid-noevents@npm:6.27.1"
   dependencies:
-    "@ledgerhq/devices": ^7.0.0
-    "@ledgerhq/errors": ^6.10.1
-    "@ledgerhq/hw-transport": ^6.27.2
+    "@ledgerhq/devices": ^6.27.1
+    "@ledgerhq/errors": ^6.10.0
+    "@ledgerhq/hw-transport": ^6.27.1
     "@ledgerhq/logs": ^6.10.0
     node-hid: 2.1.1
-  checksum: 5af817914843ab155534e1acc139add0975edbabc0ff0968e40a5d41c9e3fb04d7dfe2cd6257c12b1bbca1d8d81066c65249bb1a48b5c57e6bbcb43a59ac9565
+  checksum: 81933c42d888361491766d49a2fc471b1f0521fb117c4a821d74f1e95babc37e1eb1823a250ea1b25b2a763d3d571974153eb7faff0f02ec998e3758485f2996
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport-node-hid-singleton@npm:^6.11.2":
-  version: 6.27.3
-  resolution: "@ledgerhq/hw-transport-node-hid-singleton@npm:6.27.3"
+"@ledgerhq/hw-transport-node-hid-singleton@npm:6.27.1":
+  version: 6.27.1
+  resolution: "@ledgerhq/hw-transport-node-hid-singleton@npm:6.27.1"
   dependencies:
-    "@ledgerhq/devices": ^7.0.0
-    "@ledgerhq/errors": ^6.10.1
-    "@ledgerhq/hw-transport": ^6.27.2
-    "@ledgerhq/hw-transport-node-hid-noevents": ^6.27.2
+    "@ledgerhq/devices": ^6.27.1
+    "@ledgerhq/errors": ^6.10.0
+    "@ledgerhq/hw-transport": ^6.27.1
+    "@ledgerhq/hw-transport-node-hid-noevents": ^6.27.1
     "@ledgerhq/logs": ^6.10.0
     lodash: ^4.17.21
     node-hid: 2.1.1
-    usb-detection: 4.13.0
-  checksum: 4e94dd8a0dea9cf237aae08c6322b8c639cabccbe98f4a4f1635ea64d13b2b7781329f3c58623c4a83dc291bfd877ef2126ef775ce7c210384ecdad29da5eb4e
+    usb-detection: ^4.13.0
+  checksum: 6763d2fa70915087bd9a32ee7c1e5a6750ed8bb7eec9bffe6e52425823059e2ee17be6275fb057b6df0d66078b1a7b6b186803e5db34ba9444f779e582f6bca9
   languageName: node
   linkType: hard
 
@@ -3138,7 +3138,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport@npm:^6.11.2, @ledgerhq/hw-transport@npm:^6.2.0, @ledgerhq/hw-transport@npm:^6.27.2":
+"@ledgerhq/hw-transport@npm:^6.11.2, @ledgerhq/hw-transport@npm:^6.2.0, @ledgerhq/hw-transport@npm:^6.27.1, @ledgerhq/hw-transport@npm:^6.27.2":
   version: 6.27.2
   resolution: "@ledgerhq/hw-transport@npm:6.27.2"
   dependencies:
@@ -5262,12 +5262,12 @@ __metadata:
   linkType: hard
 
 "@types/eslint@npm:*":
-  version: 8.4.5
-  resolution: "@types/eslint@npm:8.4.5"
+  version: 8.4.6
+  resolution: "@types/eslint@npm:8.4.6"
   dependencies:
     "@types/estree": "*"
     "@types/json-schema": "*"
-  checksum: 428b0c971a50adb0d08621e76f21b284580a0052a31341a0e6d553f72b54cd0142d549aa1497c7e3bc56e9f6bcc27286e66e0216e1ba76d1a5ecd2279c40bc8c
+  checksum: bfaf27b00031b2238139003965475d023306119e467947f7a43a41e380918e365618e2ae6a6ae638697f6421a6bb1571db078695ff5e548f23618000b38acd23
   languageName: node
   linkType: hard
 
@@ -9960,6 +9960,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"detect-libc@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "detect-libc@npm:2.0.1"
+  checksum: ccb05fcabbb555beb544d48080179c18523a343face9ee4e1a86605a8715b4169f94d663c21a03c310ac824592f2ba9a5270218819bb411ad7be578a527593d7
+  languageName: node
+  linkType: hard
+
 "detect-newline@npm:^3.0.0":
   version: 3.1.0
   resolution: "detect-newline@npm:3.1.0"
@@ -10313,9 +10320,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.3.47, electron-to-chromium@npm:^1.4.202":
-  version: 1.4.222
-  resolution: "electron-to-chromium@npm:1.4.222"
-  checksum: acae758e1cfb647cfaa7ac662200e3d2c15a66c50da999cac2c08e98908e61c276c4ef336e0f9d0f42d75b68f08cdc4efe6cb7b8031cfe5aed47645ebd07632c
+  version: 1.4.225
+  resolution: "electron-to-chromium@npm:1.4.225"
+  checksum: 54b5c5550e33ce5df1d2ab71543b9dc24e4dd55dc4650b29cc19b2911b932b072317e662ce3236c500a498ad69e90d2ceebe2433a772e53a337e97bd53cc7dc9
   languageName: node
   linkType: hard
 
@@ -16767,6 +16774,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-abi@npm:^3.3.0":
+  version: 3.24.0
+  resolution: "node-abi@npm:3.24.0"
+  dependencies:
+    semver: ^7.3.5
+  checksum: d90ab48802497b2203800cac71018668e99c246435395ca4f67afcabf689e7e81568ed36e8036bae79a052b63ea5707375bece6ca0a1d2e2b99bfafde7a5c9b2
+  languageName: node
+  linkType: hard
+
 "node-addon-api@npm:^2.0.0":
   version: 2.0.2
   resolution: "node-addon-api@npm:2.0.2"
@@ -17831,7 +17847,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prebuild-install@npm:^6.0.0, prebuild-install@npm:^6.1.4":
+"prebuild-install@npm:^6.0.0":
   version: 6.1.4
   resolution: "prebuild-install@npm:6.1.4"
   dependencies:
@@ -17851,6 +17867,28 @@ __metadata:
   bin:
     prebuild-install: bin.js
   checksum: de4313eda821305912af922700a2db04bb8e77fe8aa9c2788550f1000c026cbefc82da468ec0c0a37764c5417bd8169dbd540928535fb38d00bb9bbd673dd217
+  languageName: node
+  linkType: hard
+
+"prebuild-install@npm:^7.0.1":
+  version: 7.1.1
+  resolution: "prebuild-install@npm:7.1.1"
+  dependencies:
+    detect-libc: ^2.0.0
+    expand-template: ^2.0.3
+    github-from-package: 0.0.0
+    minimist: ^1.2.3
+    mkdirp-classic: ^0.5.3
+    napi-build-utils: ^1.0.1
+    node-abi: ^3.3.0
+    pump: ^3.0.0
+    rc: ^1.2.7
+    simple-get: ^4.0.0
+    tar-fs: ^2.0.0
+    tunnel-agent: ^0.6.0
+  bin:
+    prebuild-install: bin.js
+  checksum: dbf96d0146b6b5827fc8f67f72074d2e19c69628b9a7a0a17d0fad1bf37e9f06922896972e074197fc00a52eae912993e6ef5a0d471652f561df5cb516f3f467
   languageName: node
   linkType: hard
 
@@ -19300,8 +19338,8 @@ __metadata:
   linkType: hard
 
 "rollup@npm:^2.58.3":
-  version: 2.78.0
-  resolution: "rollup@npm:2.78.0"
+  version: 2.78.1
+  resolution: "rollup@npm:2.78.1"
   dependencies:
     fsevents: ~2.3.2
   dependenciesMeta:
@@ -19309,7 +19347,7 @@ __metadata:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: 01b5a7ae082d2a14201c973ee973099f0899cc87b65063d5ca5a77c05eeefb3b51e14b1346cf1a0fc879ac2cbb87239d4f960917bfc30b7c52f5dce50a7f56e7
+  checksum: 9034814383ca5bdb4bea6d499270aeb31cdb0bb884f81b0c6a1d19c63cc973f040e6ee09b7af8a7169dd231c090f4b44ef8b99c4bfdf884aceeb3dcefb8cfa14
   languageName: node
   linkType: hard
 
@@ -21428,16 +21466,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"usb-detection@npm:4.13.0":
-  version: 4.13.0
-  resolution: "usb-detection@npm:4.13.0"
+"usb-detection@npm:^4.13.0":
+  version: 4.14.1
+  resolution: "usb-detection@npm:4.14.1"
   dependencies:
     bindings: ^1.5.0
     eventemitter2: ^5.0.1
     nan: ^2.15.0
     node-gyp: latest
-    prebuild-install: ^6.1.4
-  checksum: e3d22bc0699b497557bf9e1c392377e5c12ddc2933d73be7dfe670396cb3c4287ee2fca0fb3ee9f021967f28849d733da94ae4d88d3420bafcbeb7942af8b6b2
+    prebuild-install: ^7.0.1
+  checksum: 3fff7b9871470c5092195ad07da5a45c19c7b470e1ed91ef53a9e3c0a93e3e3ccab4b20d39cba90ea440413975b90566f71769f6103ba5b006885b5120cfee64
   languageName: node
   linkType: hard
 
