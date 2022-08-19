@@ -55,6 +55,8 @@
     "typescript": "^4.4.4",
     "@ledgerhq/devices": "6.27.1",
     "@ledgerhq/hw-transport-node-hid-singleton": "6.27.1",
-    "@ledgerhq/hw-transport-node-hid-noevents": "6.27.1"
+    "@ledgerhq/hw-transport-node-hid-noevents": "6.27.1",
+    "@ledgerhq/hw-transport-webusb": "6.27.1",
+    "@ledgerhq/devices/hw-transport-webhid": "6.27.1"
   }
 }

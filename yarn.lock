@@ -3126,15 +3126,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport-webusb@npm:^6.11.2":
-  version: 6.27.2
-  resolution: "@ledgerhq/hw-transport-webusb@npm:6.27.2"
+"@ledgerhq/hw-transport-webusb@npm:6.27.1":
+  version: 6.27.1
+  resolution: "@ledgerhq/hw-transport-webusb@npm:6.27.1"
   dependencies:
-    "@ledgerhq/devices": ^7.0.0
-    "@ledgerhq/errors": ^6.10.1
-    "@ledgerhq/hw-transport": ^6.27.2
+    "@ledgerhq/devices": ^6.27.1
+    "@ledgerhq/errors": ^6.10.0
+    "@ledgerhq/hw-transport": ^6.27.1
     "@ledgerhq/logs": ^6.10.0
-  checksum: c9fcaedfa7684ee454c5e4fb017c18bb40d0569af252802eb3eb9d21f9d3312511f6c7890f0071d227c9c10b3185d606a48ca3402f4a227b08a2e0f6ad27fe58
+  checksum: a873d72936310c09cc45f894910709521e8842fec7d1d83fcc7c6b62b3a55ec8bae9598a98499af824463221eb19097f72f566b8ee0e79d36aeb9012f2ffdbaa
   languageName: node
   linkType: hard
 
