@@ -3114,15 +3114,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport-webhid@npm:^6.11.2":
-  version: 6.27.2
-  resolution: "@ledgerhq/hw-transport-webhid@npm:6.27.2"
+"@ledgerhq/hw-transport-webhid@npm:6.27.1":
+  version: 6.27.1
+  resolution: "@ledgerhq/hw-transport-webhid@npm:6.27.1"
   dependencies:
-    "@ledgerhq/devices": ^7.0.0
-    "@ledgerhq/errors": ^6.10.1
-    "@ledgerhq/hw-transport": ^6.27.2
+    "@ledgerhq/devices": ^6.27.1
+    "@ledgerhq/errors": ^6.10.0
+    "@ledgerhq/hw-transport": ^6.27.1
     "@ledgerhq/logs": ^6.10.0
-  checksum: 5c6bdd6fa0ef0ede6aacfbb85364c2a72d9870404b905ca74a3a04f67089debd863b83de1474cd221b3e5b44ff8da669921af5d623e756b083c84ef87e6fed11
+  checksum: 3b1acc8ab5e11058b17acaebfe3297be4cb5678030843b56cb558bc48c7b7816db8c95cc5eebfad1dd47fd2cff8f2384b168da1180d4682afbdd2adfc00937dc
   languageName: node
   linkType: hard
 
@@ -3138,7 +3138,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport@npm:^6.11.2, @ledgerhq/hw-transport@npm:^6.2.0, @ledgerhq/hw-transport@npm:^6.27.1, @ledgerhq/hw-transport@npm:^6.27.2":
+"@ledgerhq/hw-transport@npm:^6.11.2, @ledgerhq/hw-transport@npm:^6.2.0, @ledgerhq/hw-transport@npm:^6.27.1":
   version: 6.27.2
   resolution: "@ledgerhq/hw-transport@npm:6.27.2"
   dependencies:
