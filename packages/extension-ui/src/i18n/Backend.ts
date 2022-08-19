@@ -10,7 +10,9 @@ type LoadResult = [string | null, Record<string, string> | boolean];
 const loaders: Record<string, Promise<LoadResult>> = {};
 
 export default class Backend {
+  // eslint-disable-next-line @typescript-eslint/prefer-as-const
   static type: 'backend' = 'backend';
+  // eslint-disable-next-line @typescript-eslint/prefer-as-const
   type = 'backend';
 
   async read (lng: string, _namespace: string, responder: Callback): Promise<void> {

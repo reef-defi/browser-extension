@@ -10,7 +10,7 @@
     "url": "https://github.com/reef-defi/browser-extension.git"
   },
   "sideEffects": false,
-  "version": "1.0.7",
+  "version": "1.0.8",
   "workspaces": [
     "packages/*"
   ],
@@ -41,6 +41,11 @@
     "sinon-chrome": "^3.0.1"
   },
   "resolutions": {
+    "@ledgerhq/devices": "6.27.1",
+    "@ledgerhq/hw-transport-node-hid-noevents": "6.27.1",
+    "@ledgerhq/hw-transport-node-hid-singleton": "6.27.1",
+    "@ledgerhq/hw-transport-webhid": "6.27.1",
+    "@ledgerhq/hw-transport-webusb": "6.27.1",
     "@polkadot/api": "~6.4.2",
     "@polkadot/types": "~6.4.2",
     "@reef-defi/keyring": "^7.8.2",
@@ -48,6 +53,8 @@
     "@reef-defi/util": "^7.8.2",
     "@reef-defi/util-crypto": "^7.8.2",
     "@reef-defi/x-fetch": "^7.8.2",
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.2",
     "babel-core": "^7.0.0-bridge.0",
     "safe-buffer": "^5.2.1",
     "typescript": "^4.4.4"

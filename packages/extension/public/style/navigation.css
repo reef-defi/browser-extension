@@ -114,8 +114,9 @@
   transform: translateX(-2px) scale(1.2);
 }
 
-.reef-logo {
-  width: 62px;
+.navigation .reef-logo {
+  width: auto;
+  height: 80%;
 }
 
 .no-break-text {

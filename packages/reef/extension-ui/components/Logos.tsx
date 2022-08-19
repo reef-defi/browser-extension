@@ -9,6 +9,8 @@ export const ReefLogo = (): JSX.Element => (
     xmlSpace='preserve'
     xmlns='http://www.w3.org/2000/svg'
     y='0px'
+    width='100%'
+    height='100%'
   >
     <path
       d='M-338.3,768.7c-0.9,0-1.7,0.2-2.4,0.5c-0.8,0.3-1.4,0.8-2,1.4c-0.6,0.6-1,1.3-1.3,2c-0.3,0.8-0.5,1.5-0.5,2.4
@@ -85,6 +87,8 @@ export const ReefTestnetLogo = (): JSX.Element => (
   <svg
     fill='none'
     viewBox='0 0 113 62'
+    width='100%'
+    height='100%'
     xmlns='http://www.w3.org/2000/svg'>
     <path
       clipRule='evenodd'

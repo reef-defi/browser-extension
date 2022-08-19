@@ -66,6 +66,7 @@ export const Swap = (): JSX.Element => {
 
   const actions: store.SwapComponentActions = {
     onAddressChange: async () => {}, // eslint-disable-line
+    setPercentage: async () => {}, // eslint-disable-line
     onSwap,
     onSwitch,
     selectToken1,
