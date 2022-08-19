@@ -72,7 +72,7 @@ function ImportSeed (): React.ReactElement {
         step={step1 ? 1 : 2}
         text={t<string>('Import account')}
       />
-      {account?.address && (<div>
+      {account?.address && (<div className='account__section--steps'>
         <Address
           address={account?.address}
           genesisHash={account?.genesis}

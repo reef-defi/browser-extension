@@ -21,6 +21,10 @@
   line-height: 1.3;
 }
 
+.account__section--steps {
+  margin-bottom: 21px;
+}
+
 .logoText,
 .logoText * {
   font-family: var(--font-family-title) !important;

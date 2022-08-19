@@ -82,7 +82,7 @@ function Derive ({ isLocked }: Props): React.ReactElement<Props> {
       )}
       {account && (
         <>
-          <div>
+          <div className='account__section--steps'>
             <Address
               address={account.address}
               exporting
