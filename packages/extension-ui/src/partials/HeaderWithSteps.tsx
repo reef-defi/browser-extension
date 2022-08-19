@@ -43,6 +43,10 @@ function HeaderWithSteps ({ className, step, text }: Props): React.ReactElement<
 }
 
 export default React.memo(styled(HeaderWithSteps)(({ theme }: Props) => `
+  & {
+    margin-bottom: 20px;
+  }
+
   .current {
     font-size: ${theme.labelFontSize};
     line-height: ${theme.labelLineHeight};
@@ -55,8 +59,6 @@ export default React.memo(styled(HeaderWithSteps)(({ theme }: Props) => `
     justify-content: space-between;
     flex-grow: 1;
     padding-left: 1em;
-    padding-right: 24px;
-    margin-top: 3px;
   }
 
   .total {

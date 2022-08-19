@@ -160,7 +160,6 @@ export default React.memo(styled(Header)(({ theme }: Props) => `
   font-weight: normal;
   margin: 0;
   position: relative;
-  margin-bottom: 12px;
 
   && {
     padding: 0 0 0;
@@ -172,6 +171,7 @@ export default React.memo(styled(Header)(({ theme }: Props) => `
     width: 100%;
     border-bottom: 1px solid ${theme.inputBorderColor};
     min-height: 70px;
+    align-items: center;
 
     .branding {
       display: flex;
@@ -197,7 +197,7 @@ export default React.memo(styled(Header)(({ theme }: Props) => `
       flex: 1;
       display: flex;
       justify-content: end;
-      align-items: center;;
+      align-items: center;
 
       .searchIcon {
         margin-right: 8px;

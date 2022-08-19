@@ -175,7 +175,7 @@ export default React.memo(styled(MenuAdd)(({ theme }: Props) => `
     .svg-inline--fa {
       color: ${theme.iconNeutralColor};
       margin-right: 0.3rem;
-      width: 0.875em;
+      width: 17px;
     }
   }
 `));
