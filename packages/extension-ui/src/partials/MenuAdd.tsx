@@ -62,7 +62,7 @@ function MenuAdd ({ className, reference, setShowAdd }: Props): React.ReactEleme
           />
         </div>
       </Header>
-      <MenuItem className='menuItem'>
+      <MenuItem className='menuItem menuItem--space'>
         <Link
           to={'/account/create'}
           onClick={_closePopup}>
@@ -176,6 +176,10 @@ export default React.memo(styled(MenuAdd)(({ theme }: Props) => `
       color: ${theme.iconNeutralColor};
       margin-right: 0.3rem;
       width: 17px;
+    }
+
+    &.menuItem--space {
+      margin-top: 21px;
     }
   }
 `));
