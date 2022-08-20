@@ -10,7 +10,7 @@
     "url": "https://github.com/reef-defi/browser-extension.git"
   },
   "sideEffects": false,
-  "version": "1.0.8",
+  "version": "1.0.9",
   "workspaces": [
     "packages/*"
   ],
@@ -24,6 +24,7 @@
     "build:zip": "yarn build:zip:dst && yarn build:zip:src",
     "build:zip:dst": "rm -rf ./master-build.zip && cd packages/extension/build && zip -r -FS ../../../master-build.zip .",
     "build:zip:src": "rm -rf ./master-src.zip && zip -r -x '*build/*' -x '*node_modules*' -FS ./master-src.zip packages .editorconfig .eslintignore .eslintrc.js babel.config.cjs CHANGELOG.md CONTRIBUTING.md i18next-scanner.config.js jest.config.cjs LICENSE package.json README.md tsconfig.json yarn.lock",
+    "bump": "node bumpVersion.js",
     "clean": "polkadot-dev-clean-build",
     "lint": "polkadot-dev-run-lint",
     "postinstall": "polkadot-dev-yarn-only",
