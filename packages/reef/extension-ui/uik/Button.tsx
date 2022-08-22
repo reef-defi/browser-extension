@@ -1,58 +1,91 @@
 import React from 'react';
 
-import { FishAnimation, Icon, Loading } from './index';
+import { FishAnimation } from './FishAnimation';
+import { Icon } from './Icon';
+import { Loading } from './Loading';
 
-interface Button {
-  children?: any;
-  className?: string;
-  danger?: any;
-  fill?: any;
-  icon?: string;
-  iconOnly?: any;
-  loader?: any;
-  loading?: any;
-  onClick?: any;
-  size?: any;
-  success?: any;
-  text?: any;
-  type: string;
+export interface Props {
+  danger?: boolean,
+  fill?: boolean,
+  neomorph?: boolean,
+  icon?: any,
+  iconPosition?: 'right',
+  loader?: 'fish',
+  loading?: boolean,
+  onClick?: (...args: any[]) => any,
+  size?: 'small' | 'large',
+  rounded?: boolean,
+  success?: boolean,
+  disabled?: boolean,
+  text?: string,
+  type?: 'button' | 'submit' | 'reset' | undefined,
+  className?: string,
+  children?: any
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const Button = ({ children,
   className,
   danger,
+  disabled,
   fill,
   icon,
-  iconOnly,
+  iconPosition,
   loader,
   loading,
+  neomorph,
   onClick,
+  rounded,
   size,
   success,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  text }: Button): JSX.Element => (
+  text,
+  type }: Props): JSX.Element => (
   <button
     className={`
       uik-button
       ${fill ? 'uik-button--fill' : ''}
+      ${neomorph ? 'uik-button--neomorph' : ''}
       ${danger ? 'uik-button--danger' : ''}
       ${success ? 'uik-button--success' : ''}
       ${size === 'small' ? 'uik-button--small' : ''}
       ${size === 'large' ? 'uik-button--large' : ''}
+      ${rounded ? 'uik-button--rounded' : ''}
       ${loading ? 'uik-button--loading' : ''}
-      ${iconOnly ? 'uik-button--icon' : ''}
+      ${disabled ? 'uik-button--disabled' : ''}
+      ${!!icon && !text && !children ? 'uik-button--icon' : ''}
       ${className || ''}
     `}
+    disabled={loading || disabled}
     onClick={onClick}
-    type='button'
+    type={type || 'button'}
   >
-    {loading ? (loader === 'fish' ? <FishAnimation /> : <Loading />) : ''}
-    {icon
-      ? <Icon
+    {
+      loading &&
+      (
+        loader === 'fish'
+          ? <FishAnimation />
+          : <Loading />
+      )
+    }
+
+    {
+      !!icon && iconPosition !== 'right' &&
+      <Icon
         className='uik-button__icon'
         icon={icon}
       />
-      : ''}
-    <span className='uik-button__text'>{children}{text}</span>
+    }
+
+    {
+      (!!children || !!text) &&
+      <span className='uik-button__text'>{children}{text}</span>
+    }
+
+    {
+      !!icon && iconPosition === 'right' &&
+      <Icon
+        className='uik-button__icon'
+        icon={icon}
+      />
+    }
   </button>
 );

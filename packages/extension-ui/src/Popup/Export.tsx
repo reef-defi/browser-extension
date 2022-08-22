@@ -3,12 +3,12 @@
 
 import type { ThemeProps } from '../types';
 
-import Uik from '@reef-defi/ui-kit';
 import { saveAs } from 'file-saver';
 import React, { useCallback, useContext, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import styled from 'styled-components';
 
+import { Button } from '../../../reef/extension-ui/uik/Button';
 import { ActionContext, ActionText, Address, ButtonArea, InputWithLabel, VerticalSpace, Warning } from '../components';
 import useTranslation from '../hooks/useTranslation';
 import { exportAccount } from '../messaging';
@@ -104,7 +104,7 @@ function Export ({ className, match: { params: { address } } }: Props): React.Re
       </div>
       <VerticalSpace />
       <ButtonArea>
-        <Uik.Button
+        <Button
           className='uik-button--fullWidth export-button'
           rounded
           danger
@@ -114,7 +114,7 @@ function Export ({ className, match: { params: { address } } }: Props): React.Re
           loading={isBusy}
           onClick={_onExportButtonClick}>
           {t<string>('I want to export this account')}
-        </Uik.Button>
+        </Button>
       </ButtonArea>
     </>
   );

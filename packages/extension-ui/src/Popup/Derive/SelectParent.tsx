@@ -3,10 +3,10 @@
 
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { canDerive } from '@reef-defi/extension-base/utils';
-import Uik from '@reef-defi/ui-kit';
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
-import { AccountContext, ActionContext, Address, ButtonArea, InputWithLabel, Label, NextStepButton, VerticalSpace, Warning } from '../../components';
+import { Button } from '../../../../reef/extension-ui/uik/Button';
+import { AccountContext, ActionContext, Address, ButtonArea, InputWithLabel, Label, VerticalSpace, Warning } from '../../components';
 import useTranslation from '../../hooks/useTranslation';
 import { validateAccount, validateDerivationPath } from '../../messaging';
 import { nextDerivationPath } from '../../util/nextDerivationPath';
@@ -184,7 +184,7 @@ export default function SelectParent ({ className, isLocked, onDerivationConfirm
       </div>
       <VerticalSpace />
       <ButtonArea>
-        <Uik.Button
+        <Button
           data-button-action='create derived account'
           className='uik-button--fullWidth'
           rounded
@@ -196,7 +196,7 @@ export default function SelectParent ({ className, isLocked, onDerivationConfirm
           iconPosition='right'
           onClick={_onSubmit}>
           {t<string>('Create a derived account')}
-        </Uik.Button>
+        </Button>
       </ButtonArea>
     </>
   );

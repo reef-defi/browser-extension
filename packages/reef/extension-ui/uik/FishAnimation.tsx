@@ -1,11 +1,10 @@
 import React from 'react';
 
-interface FishAnimation {
-  className?: string;
+export interface Props {
+  className?: string
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const FishAnimation = ({ className }: FishAnimation): JSX.Element => (
+export const FishAnimation = ({ className }: Props): JSX.Element => (
   <div className='fish-animation'>
     <svg
       className={`fish-animation__fish ${className || ''}`}

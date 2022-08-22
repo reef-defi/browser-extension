@@ -3,16 +3,15 @@
 
 import type { ThemeProps } from '../types';
 
-import Uik from '@reef-defi/ui-kit';
 import React, { useCallback, useContext, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import styled from 'styled-components';
 
-import { ActionBar, ActionContext, ActionText, Address, ButtonArea, VerticalSpace, Warning } from '../components';
+import { Button } from '../../../reef/extension-ui/uik/Button';
+import { ActionContext, ActionText, Address, ButtonArea, VerticalSpace, Warning } from '../components';
 import useTranslation from '../hooks/useTranslation';
 import { forgetAccount } from '../messaging';
 import { Header } from '../partials';
-import { CTA } from './../../../reef/extension-ui/uik';
 
 interface Props extends RouteComponentProps<{ address: string }>, ThemeProps {
   className?: string;
@@ -69,7 +68,7 @@ function Forget ({ className, match: { params: { address } } }: Props): React.Re
       </div>
       <VerticalSpace />
       <ButtonArea>
-        <Uik.Button
+        <Button
           className='uik-button--fullWidth export-button'
           rounded
           danger
@@ -77,7 +76,7 @@ function Forget ({ className, match: { params: { address } } }: Props): React.Re
           loading={isBusy}
           onClick={_onClick}>
           {t<string>('I want to forget this account')}
-        </Uik.Button>
+        </Button>
       </ButtonArea>
     </>
   );

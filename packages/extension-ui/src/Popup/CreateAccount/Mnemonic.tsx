@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import Uik from '@reef-defi/ui-kit';
 import React, { useCallback, useState } from 'react';
 
+import { Button } from '../../../../reef/extension-ui/uik/Button';
 import { ButtonArea, Checkbox, MnemonicSeed, VerticalSpace, Warning } from '../../components';
 import useToast from '../../hooks/useToast';
 import useTranslation from '../../hooks/useTranslation';
@@ -51,7 +51,7 @@ function Mnemonic ({ onNextStep, seed }: Props): React.ReactElement<Props> {
         onChange={setIsMnemonicSaved}
       />
       <ButtonArea>
-        <Uik.Button
+        <Button
           className='uik-button--fullWidth'
           rounded
           fill
@@ -61,7 +61,7 @@ function Mnemonic ({ onNextStep, seed }: Props): React.ReactElement<Props> {
           iconPosition='right'
           onClick={onNextStep}>
           {t<string>('Next step')}
-        </Uik.Button>
+        </Button>
       </ButtonArea>
     </>
   );

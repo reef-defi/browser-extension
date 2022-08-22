@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import Uik from '@reef-defi/ui-kit';
 import React, { useCallback, useState } from 'react';
 
+import { Button } from '../../../reef/extension-ui/uik/Button';
 import { Name, Password } from '../partials';
 import { ButtonArea, VerticalSpace } from '.';
 
@@ -51,12 +51,12 @@ function AccountNamePasswordCreation ({ buttonLabel, isBusy, onBackClick, onCrea
       <Password onChange={setPassword} />
       <VerticalSpace />
       <ButtonArea>
-        <Uik.Button
+        <Button
           icon={faArrowLeft}
           size='large'
           onClick={_onBackClick}
         />
-        <Uik.Button
+        <Button
           data-button-action='add new root'
           className='uik-button--fullWidth'
           rounded
@@ -68,7 +68,7 @@ function AccountNamePasswordCreation ({ buttonLabel, isBusy, onBackClick, onCrea
           loading={isBusy}
           onClick={_onCreate}>
           {buttonLabel}
-        </Uik.Button>
+        </Button>
       </ButtonArea>
     </>
   );

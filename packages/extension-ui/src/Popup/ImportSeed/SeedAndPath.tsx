@@ -9,11 +9,11 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faArrowRight, faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { validateSeed } from '@reef-defi/extension-ui/messaging';
-import Uik from '@reef-defi/ui-kit';
 import { objectSpread } from '@reef-defi/util';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import { Button } from '../../../../reef/extension-ui/uik/Button';
 import { ButtonArea, Dropdown, InputWithLabel, TextAreaWithLabel, VerticalSpace, Warning } from '../../components';
 import useGenesisHashOptions from '../../hooks/useGenesisHashOptions';
 import useTranslation from '../../hooks/useTranslation';
@@ -122,7 +122,7 @@ function SeedAndPath ({ className, onAccountChange, onNextStep, type }: Props): 
       </div>
       <VerticalSpace />
       <ButtonArea>
-        <Uik.Button
+        <Button
           className='uik-button--fullWidth'
           rounded
           fill
@@ -132,7 +132,7 @@ function SeedAndPath ({ className, onAccountChange, onNextStep, type }: Props): 
           iconPosition='right'
           onClick={onNextStep}>
           {t<string>('Next step')}
-        </Uik.Button>
+        </Button>
       </ButtonArea>
     </>
   );
