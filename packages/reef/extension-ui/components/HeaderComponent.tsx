@@ -179,5 +179,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
 
 export const HeaderComponent = styled(NavHeaderComp)`
   background: #ccc;
-  .nav-header{background: #000;}
-  `;
+  .nav-header {
+    background: #000;
+  }
+`;
