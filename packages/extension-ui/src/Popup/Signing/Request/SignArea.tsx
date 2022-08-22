@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PASSWORD_EXPIRY_MIN } from '@reef-defi/extension-base/defaults';
+import Uik from '@reef-defi/ui-kit';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -9,7 +10,6 @@ import { ActionBar, ActionContext, ButtonArea, Checkbox, Link } from '../../../c
 import useTranslation from '../../../hooks/useTranslation';
 import { approveSignPassword, cancelSignRequest, isSignLocked } from '../../../messaging';
 import Unlock from '../Unlock';
-import { CTA } from './../../../../../reef/extension-ui/uik';
 
 interface Props {
   buttonText: string;
@@ -106,13 +106,16 @@ function SignArea ({ buttonText, className, error, isExternal, isFirst, setError
             />
           )}
           <RememberPasswordCheckbox />
-          <CTA
+          <Uik.Button
+            className='uik-button--fullWidth'
+            rounded
+            fill
+            size='large'
             disabled={(!!isLocked && !password) || !!error}
             loading={isBusy}
-            onClick={_onSign}
-          >
+            onClick={_onSign}>
             {buttonText}
-          </CTA>
+          </Uik.Button>
         </>
       )}
       <ActionBar className='cancelButton'>

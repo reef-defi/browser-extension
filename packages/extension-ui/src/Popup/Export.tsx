@@ -3,16 +3,16 @@
 
 import type { ThemeProps } from '../types';
 
+import Uik from '@reef-defi/ui-kit';
 import { saveAs } from 'file-saver';
 import React, { useCallback, useContext, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import styled from 'styled-components';
 
-import { ActionBar, ActionContext, ActionText, Address, InputWithLabel, Warning } from '../components';
+import { ActionContext, ActionText, Address, ButtonArea, InputWithLabel, VerticalSpace, Warning } from '../components';
 import useTranslation from '../hooks/useTranslation';
 import { exportAccount } from '../messaging';
 import { Header } from '../partials';
-import { CTA } from './../../../reef/extension-ui/uik';
 
 const MIN_LENGTH = 6;
 
@@ -63,9 +63,15 @@ function Export ({ className, match: { params: { address } } }: Props): React.Re
   return (
     <>
       <Header
-        showBackArrow
-        text={t<string>('Export account')}
-      />
+        showLogo
+        text={t<string>('Export account')}>
+        <div className='steps'>
+          <ActionText
+            onClick={_goHome}
+            text='Cancel'
+          />
+        </div>
+      </Header>
       <div className={className}>
         <Address
           address={address}
@@ -73,7 +79,8 @@ function Export ({ className, match: { params: { address } } }: Props): React.Re
           presentation
         >
           <Warning className='movedWarning'>
-            {t<string>("You are exporting your account. Keep it safe and don't share it with anyone.")}
+            {t<string>("You are exporting your account. Keep it safe and don't share it with anyone.")}<br />
+            {t<string>('Password must be at least ' + MIN_LENGTH + ' characters long.')}
           </Warning>
           <div className='actionArea'>
             <InputWithLabel
@@ -92,48 +99,34 @@ function Export ({ className, match: { params: { address } } }: Props): React.Re
                 {error}
               </Warning>
             )}
-            <CTA
-              className='export-button'
-              danger
-              data-export-button
-              disabled={pass.length === 0 || !!error}
-              loading={isBusy}
-              onClick={_onExportButtonClick}
-            >
-              {t<string>('I want to export this account')}
-            </CTA>
-            <ActionBar className='withMarginTop'>
-              <ActionText
-                className='center'
-                onClick={_goHome}
-                text={t<string>('Cancel')}
-              />
-            </ActionBar>
           </div>
         </Address>
       </div>
+      <VerticalSpace />
+      <ButtonArea>
+        <Uik.Button
+          className='uik-button--fullWidth export-button'
+          rounded
+          danger
+          size='large'
+          data-export-button
+          disabled={pass.length < MIN_LENGTH || !!error}
+          loading={isBusy}
+          onClick={_onExportButtonClick}>
+          {t<string>('I want to export this account')}
+        </Uik.Button>
+      </ButtonArea>
     </>
   );
 }
 
 export default withRouter(styled(Export)`
+  margin-top: 15px;
   .actionArea {
     padding: 10px 24px;
   }
 
-  .center {
-    margin: auto;
-  }
-
-  .export-button {
-    margin-top: 6px;
-  }
-
   .movedWarning {
     margin-top: 8px;
-  }
-
-  .withMarginTop {
-    margin-top: 4px;
   }
 `);

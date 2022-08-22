@@ -6,7 +6,7 @@ import type { ThemeProps } from '../types';
 import Uik from '@reef-defi/ui-kit';
 import { saveAs } from 'file-saver';
 import React, { useCallback, useContext, useState } from 'react';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 import styled from 'styled-components';
 
 import { AccountContext, ActionContext, ActionText, ButtonArea, InputWithLabel, VerticalSpace, Warning } from '../components';
@@ -20,7 +20,7 @@ interface Props extends RouteComponentProps, ThemeProps {
   className?: string;
 }
 
-function ExportAll (): React.ReactElement<Props> {
+function ExportAll ({ className }): React.ReactElement<Props> {
   const { t } = useTranslation();
   const { accounts } = useContext(AccountContext);
   const onAction = useContext(ActionContext);
@@ -73,7 +73,11 @@ function ExportAll (): React.ReactElement<Props> {
           />
         </div>
       </Header>
-      <div className='export-all__input-area'>
+      <div className={className}>
+        <Warning className='movedWarning'>
+          {t<string>("You are exporting your accounts. Keep it safe and don't share it with anyone.")}<br />
+          {t<string>('Password must be at least ' + MIN_LENGTH + ' characters long.')}
+        </Warning>
         <InputWithLabel
           data-export-all-password
           disabled={isBusy}
@@ -99,7 +103,7 @@ function ExportAll (): React.ReactElement<Props> {
           danger
           size='large'
           data-export-button
-          disabled={pass.length === 0 || !!error}
+          disabled={pass.length < MIN_LENGTH || !!error}
           loading={isBusy}
           onClick={_onExportAllButtonClick}>
           {t<string>('I want to export all my accounts')}
@@ -109,9 +113,9 @@ function ExportAll (): React.ReactElement<Props> {
   );
 }
 
-// eslint-disable-next-line no-empty-pattern
-export default React.memo(styled(ExportAll)(({ }: Props) => `
-  .export-all__input-area {
-    margin-top: 15px;
+export default withRouter(styled(ExportAll)`
+  margin-top: 15px;
+  .movedWarning {
+    margin-bottom: 8px;
   }
-`));
+`);

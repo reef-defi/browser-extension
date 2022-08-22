@@ -3,11 +3,12 @@
 
 import type { ThemeProps } from '../types';
 
+import Uik from '@reef-defi/ui-kit';
 import React, { useCallback, useContext, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import styled from 'styled-components';
 
-import { ActionBar, ActionContext, ActionText, Address, Warning } from '../components';
+import { ActionBar, ActionContext, ActionText, Address, ButtonArea, VerticalSpace, Warning } from '../components';
 import useTranslation from '../hooks/useTranslation';
 import { forgetAccount } from '../messaging';
 import { Header } from '../partials';
@@ -46,9 +47,15 @@ function Forget ({ className, match: { params: { address } } }: Props): React.Re
   return (
     <>
       <Header
-        showBackArrow
-        text={t<string>('Forget account')}
-      />
+        showLogo
+        text={t<string>('Forget account')}>
+        <div className='steps'>
+          <ActionText
+            onClick={_goHome}
+            text='Cancel'
+          />
+        </div>
+      </Header>
       <div className={className}>
         <Address
           address={address}
@@ -58,42 +65,27 @@ function Forget ({ className, match: { params: { address } } }: Props): React.Re
           <Warning className='movedWarning'>
             {t<string>('You are about to remove the account. This means that you will not be able to access it via this extension anymore. If you wish to recover it, you would need to use the seed.')}
           </Warning>
-          <div className='actionArea'>
-            <CTA
-              danger
-              loading={isBusy}
-              onClick={_onClick}
-            >
-              {t<string>('I want to forget this account')}
-            </CTA>
-            <ActionBar className='withMarginTop'>
-              <ActionText
-                className='center'
-                onClick={_goHome}
-                text={t<string>('Cancel')}
-              />
-            </ActionBar>
-          </div>
         </Address>
       </div>
+      <VerticalSpace />
+      <ButtonArea>
+        <Uik.Button
+          className='uik-button--fullWidth export-button'
+          rounded
+          danger
+          size='large'
+          loading={isBusy}
+          onClick={_onClick}>
+          {t<string>('I want to forget this account')}
+        </Uik.Button>
+      </ButtonArea>
     </>
   );
 }
 
 export default withRouter(styled(Forget)`
-  .actionArea {
-    padding: 10px 24px;
-  }
-
-  .center {
-    margin: auto;
-  }
-
+  margin-top: 15px;
   .movedWarning {
     margin-top: 8px;
-  }
-
-  .withMarginTop {
-    margin-top: 4px;
   }
 `);
