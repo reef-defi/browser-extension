@@ -14,10 +14,6 @@
   margin-top: 15px;
 }
 
-.token-card .uik-card {
-  padding-right: 25px;
-}
-
 .token-card .uik-card__content {
   display: flex;
   flex-flow: row nowrap;
@@ -53,4 +49,14 @@
 
 .token-card__value {
   font-size: 1.125rem;
+}
+
+.token-card__price {
+  color: var(--primary);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.token-card .uik-card {
+  padding: 15px;
 }

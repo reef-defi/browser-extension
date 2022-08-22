@@ -546,20 +546,3 @@ svg + .account-card__address {
 .dark-theme .account-card__address {
   color: rgba(255, 255, 255, 0.8);
 }
-
-.dark-theme .uik-button {
-  background-color: rgba(169, 49, 133, 0.16);
-  color: #ff62ff;
-}
-
-.dark-theme .uik-button:hover {
-  background-color: rgba(169, 49, 133, 0.25);
-}
-
-.dark-theme .uik-button:active {
-  background-color: rgba(169, 49, 133, 0.35);
-}
-
-.dark-theme .uik-button--fill {
-  color: white;
-}

@@ -30,7 +30,7 @@ export default styled(Menu)(({ theme }: ThemeProps) => `
   box-sizing: border-box;
   box-shadow: 0 0 10px ${theme.boxShadow};
   margin-top: 60px;
-  padding: 0;
+  padding: 15px 0;
   position: absolute;
   right: 0;
   z-index: 2;

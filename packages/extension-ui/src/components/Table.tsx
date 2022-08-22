@@ -30,7 +30,6 @@ export default React.memo(styled(Table)(({ theme }: ThemeProps) => `
   margin-bottom: 1rem;
 
   &.isFull {
-    height: 100%;
     overflow: auto;
   }
 
