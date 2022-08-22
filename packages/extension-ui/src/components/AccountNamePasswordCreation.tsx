@@ -1,10 +1,12 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import Uik from '@reef-defi/ui-kit';
 import React, { useCallback, useState } from 'react';
 
 import { Name, Password } from '../partials';
-import { BackButton, ButtonArea, NextStepButton, VerticalSpace } from '.';
+import { ButtonArea, VerticalSpace } from '.';
 
 interface Props {
   buttonLabel: string;
@@ -49,15 +51,24 @@ function AccountNamePasswordCreation ({ buttonLabel, isBusy, onBackClick, onCrea
       <Password onChange={setPassword} />
       <VerticalSpace />
       <ButtonArea>
-        <BackButton onClick={_onBackClick} />
-        <NextStepButton
+        <Uik.Button
+          icon={faArrowLeft}
+          size='large'
+          onClick={_onBackClick}
+        />
+        <Uik.Button
           data-button-action='add new root'
+          className='uik-button--fullWidth'
+          rounded
+          fill
+          size='large'
+          icon={faArrowRight}
+          iconPosition='right'
           disabled={!password || !name}
           loading={isBusy}
-          onClick={_onCreate}
-        >
+          onClick={_onCreate}>
           {buttonLabel}
-        </NextStepButton>
+        </Uik.Button>
       </ButtonArea>
     </>
   );

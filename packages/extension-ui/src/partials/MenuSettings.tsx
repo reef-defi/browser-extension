@@ -183,8 +183,10 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
 
 export default React.memo(styled(MenuSettings)(({ theme }: Props) => `
   margin-top: 50px;
-  right: 24px;
+  margin-right: 15px;
   user-select: none;
+  top: 0;
+  padding: 15px 0 !important;
 
   .openWindow, .manageWebsiteAccess{
     span {

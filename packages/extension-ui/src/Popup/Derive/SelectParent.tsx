@@ -1,7 +1,9 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { canDerive } from '@reef-defi/extension-base/utils';
+import Uik from '@reef-defi/ui-kit';
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { AccountContext, ActionContext, Address, ButtonArea, InputWithLabel, Label, NextStepButton, VerticalSpace, Warning } from '../../components';
@@ -182,14 +184,19 @@ export default function SelectParent ({ className, isLocked, onDerivationConfirm
       </div>
       <VerticalSpace />
       <ButtonArea>
-        <NextStepButton
+        <Uik.Button
           data-button-action='create derived account'
+          className='uik-button--fullWidth'
+          rounded
+          fill
+          size='large'
           disabled={!isProperParentPassword || !!pathError}
           loading={isBusy}
-          onClick={_onSubmit}
-        >
+          icon={faArrowRight}
+          iconPosition='right'
+          onClick={_onSubmit}>
           {t<string>('Create a derived account')}
-        </NextStepButton>
+        </Uik.Button>
       </ButtonArea>
     </>
   );

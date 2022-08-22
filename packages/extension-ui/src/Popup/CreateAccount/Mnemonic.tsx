@@ -1,9 +1,11 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import Uik from '@reef-defi/ui-kit';
 import React, { useCallback, useState } from 'react';
 
-import { ButtonArea, Checkbox, MnemonicSeed, NextStepButton, VerticalSpace, Warning } from '../../components';
+import { ButtonArea, Checkbox, MnemonicSeed, VerticalSpace, Warning } from '../../components';
 import useToast from '../../hooks/useToast';
 import useTranslation from '../../hooks/useTranslation';
 
@@ -49,12 +51,17 @@ function Mnemonic ({ onNextStep, seed }: Props): React.ReactElement<Props> {
         onChange={setIsMnemonicSaved}
       />
       <ButtonArea>
-        <NextStepButton
+        <Uik.Button
+          className='uik-button--fullWidth'
+          rounded
+          fill
+          size='large'
           disabled={!isMnemonicSaved}
-          onClick={onNextStep}
-        >
+          icon={faArrowRight}
+          iconPosition='right'
+          onClick={onNextStep}>
           {t<string>('Next step')}
-        </NextStepButton>
+        </Uik.Button>
       </ButtonArea>
     </>
   );
