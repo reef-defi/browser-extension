@@ -1,9 +1,9 @@
 .uik-button--fullWidth {
   width: 100%;
 }
-.uik-button--disabled {
+.uik-button.uik-button--disabled {
   pointer-events: none;
-  background: var(--border-color-dark) !important;
+  background: var(--border-color-dark);
   color: var(--text-light);
   box-shadow: none;
 }
