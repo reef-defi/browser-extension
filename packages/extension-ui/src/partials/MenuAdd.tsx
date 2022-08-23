@@ -42,10 +42,7 @@ function MenuAdd ({ className, reference, setShowAdd }: Props): React.ReactEleme
     []
   );
 
-  const _closePopup = useCallback(
-    () => setShowAdd(false),
-    []
-  );
+  const _closePopup = () => setShowAdd(false);
 
   return (
     <Menu
