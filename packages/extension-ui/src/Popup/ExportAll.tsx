@@ -20,7 +20,7 @@ interface Props extends RouteComponentProps, ThemeProps {
   className?: string;
 }
 
-function ExportAll ({ className }): React.ReactElement<Props> {
+function ExportAll ({ className }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const { accounts } = useContext(AccountContext);
   const onAction = useContext(ActionContext);
