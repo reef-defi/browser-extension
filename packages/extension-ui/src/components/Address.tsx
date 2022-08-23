@@ -230,6 +230,23 @@ function Address ({ actions, address, children, className, exporting, genesisHas
       </>);
   };
 
+  const OpenApp = () => {
+    return (
+      <>
+        { // @Todo where can we put the URL to the App?
+          <Button
+            className='account-card__bind-btn'
+            fill
+            onClick={() => window.open('https://app.reef.io/', '_blank')}
+            size='small'
+            type='button'
+          >
+            <span>Open App</span>
+          </Button>
+        }
+      </>);
+  };
+
   const Balance = () => {
     return (
       <>
@@ -421,7 +438,8 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           ? (
             <div className='account-card__aside'>
               { !signer?.isEvmClaimed ? <Bind /> : '' }
-              { !isSelected() && !presentation ? <SelectButton /> : '' }
+              {!isSelected() && !presentation ? <SelectButton /> : ''}
+              {isSelected() && presentation && signer && signer.isEvmClaimed ? <OpenApp /> : ''}
 
               <div className='account-card__actions'>
                 {actions && (
