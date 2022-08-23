@@ -140,7 +140,9 @@ export default function Popup (): React.ReactElement {
         ? wrapWithErrorBoundary(<Metadata />, 'metadata')
         : signRequests && signRequests.length
           ? wrapWithErrorBoundary(<Signing />, 'signing')
-          : wrapWithErrorBoundary(<Dashboard />, 'tokens')
+          : accounts && accounts.length
+            ? wrapWithErrorBoundary(<Dashboard />, 'tokens')
+            : wrapWithErrorBoundary(<Accounts />, 'tokens')
     : wrapWithErrorBoundary(<Welcome />, 'welcome');
 
   return (
@@ -159,7 +161,7 @@ export default function Popup (): React.ReactElement {
                       </ReefContext>
                     </ApolloProvider>)}
                     <ToastProvider>
-                      <HeaderComponent></HeaderComponent>
+                      {isWelcomeDone && accounts?.length > 0 && (<HeaderComponent></HeaderComponent>)}
                       <Switch>
                         <Route
                           exact
