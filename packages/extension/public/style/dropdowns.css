@@ -11,6 +11,10 @@
   height: calc(100vh - 4px);
 }
 
+.navigation .menu-add-account {
+  padding: 0;
+}
+
 .menu-add-account .menuItem > a {
   padding: 10px;
 }
