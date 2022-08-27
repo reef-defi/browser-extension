@@ -110,7 +110,7 @@ describe('Create Account', () => {
       await act(flushAllPromises);
 
       expect(messaging.createAccountSuri).toBeCalledWith('abc', 'abcdef', exampleAccount.seed, 'sr25519', kusamaGenesis);
-      expect(onActionStub).toBeCalledWith('/');
+      expect(onActionStub).toBeCalledWith(`/bind?bindAddress=${exampleAccount.address}`);
     });
   });
 });
