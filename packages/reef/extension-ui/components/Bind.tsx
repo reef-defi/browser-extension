@@ -1,6 +1,9 @@
+import { ActionContext, ActionText, SigningReqContext } from '@reef-defi/extension-ui/components';
+import { useTranslation } from '@reef-defi/extension-ui/components/translate';
+import { Header } from '@reef-defi/extension-ui/partials';
 import { appState, Components, hooks, ReefSigner } from '@reef-defi/react-lib';
 import { TxStatusUpdate } from '@reef-defi/react-lib/dist/utils';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import { SigningOrChildren } from './SigningOrChildren';
 
@@ -37,10 +40,14 @@ const onTxUpdate = (state: TxStatusUpdate) => {
 };
 
 export const Bind = (): JSX.Element => {
+  const { t } = useTranslation();
   const accounts: ReefSigner[] | undefined | null = hooks.useObservableState(appState.signers$);
   const selectedSigner: ReefSigner | undefined | null = hooks.useObservableState(appState.selectedSigner$);
   const [bindSigner, setBindSigner] = useState<ReefSigner>();
   const theme = localStorage.getItem('theme');
+  const requests = useContext(SigningReqContext);
+  const hasSignRequests = requests.length > 0;
+  const onAction = useContext(ActionContext);
 
   useEffect(() => {
     const [, params] = window.location.href.split('?');
@@ -59,14 +66,34 @@ export const Bind = (): JSX.Element => {
     setBindSigner(paramAccount || selectedSigner || undefined);
   }, [accounts, selectedSigner]);
 
+  const _goHome = useCallback(
+    () => onAction('/'),
+    [onAction]
+  );
+
   return (
-    <SigningOrChildren>
-      {bindSigner && accounts && (<div className={theme === 'dark' ? 'theme-dark' : ''}>
-        <Components.EvmBindComponent
-          bindSigner={bindSigner}
-          onTxUpdate={onTxUpdate}
-          signers={accounts}
-        ></Components.EvmBindComponent></div>)}
-    </SigningOrChildren>
+    <>
+      {!hasSignRequests && (<Header
+        showLogo
+        text={t<string>('Bind EVM')}
+      >
+        <div className='steps'>
+          <ActionText
+            onClick={_goHome}
+            text='Cancel'
+          />
+        </div>
+      </Header>)
+      }
+      {!hasSignRequests && (<div className='section__container--space'></div>)}
+      <SigningOrChildren>
+        {bindSigner && accounts && (<div className={theme === 'dark' ? 'theme-dark' : ''}>
+          <Components.EvmBindComponent
+            bindSigner={bindSigner}
+            onTxUpdate={onTxUpdate}
+            signers={accounts}
+          ></Components.EvmBindComponent></div>)}
+      </SigningOrChildren>
+    </>
   );
 };

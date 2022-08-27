@@ -7,10 +7,11 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faUsb } from '@fortawesome/free-brands-svg-icons';
 import { faCodeBranch, faFileExport, faFileUpload, faKey, faPlusCircle, faQrcode } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Header } from '@reef-defi/extension-ui/partials';
 import React, { useCallback, useContext } from 'react';
 import styled from 'styled-components';
 
-import { AccountContext, Link, MediaContext, Menu, MenuDivider, MenuItem } from '../components';
+import { AccountContext, ActionText, Link, MediaContext, Menu, MenuDivider, MenuItem } from '../components';
 import useIsPopup from '../hooks/useIsPopup';
 import { useLedger } from '../hooks/useLedger';
 import useTranslation from '../hooks/useTranslation';
@@ -19,12 +20,13 @@ import { windowOpen } from '../messaging';
 interface Props extends ThemeProps {
   className?: string;
   reference: React.MutableRefObject<null>;
+  setShowAdd: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const jsonPath = '/account/restore-json';
 const ledgerPath = '/account/import-ledger';
 
-function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
+function MenuAdd ({ className, reference, setShowAdd }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const { master } = useContext(AccountContext);
   const mediaAllowed = useContext(MediaContext);
@@ -40,13 +42,27 @@ function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
     []
   );
 
+  const _closePopup = () => setShowAdd(false);
+
   return (
     <Menu
       className={className}
       reference={reference}
     >
-      <MenuItem className='menuItem'>
-        <Link to={'/account/create'}>
+      <Header
+        text={t<string>('Add account menu')}
+      >
+        <div className='steps'>
+          <ActionText
+            onClick={_closePopup}
+            text='Cancel'
+          />
+        </div>
+      </Header>
+      <MenuItem className='menuItem menuItem--space'>
+        <Link
+          to={'/account/create'}
+          onClick={_closePopup}>
           <FontAwesomeIcon icon={faPlusCircle as IconProp} />
           <span>{ t('Create new account')}</span>
         </Link>
@@ -55,7 +71,9 @@ function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
       {!!master && (
         <>
           <MenuItem className='menuItem'>
-            <Link to={`/account/derive/${master.address}`}>
+            <Link
+              to={`/account/derive/${master.address}`}
+              onClick={_closePopup}>
               <FontAwesomeIcon icon={faCodeBranch as IconProp} />
               <span>{t('Derive from an account')}</span>
             </Link>
@@ -64,13 +82,17 @@ function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
         </>
       )}
       <MenuItem className='menuItem'>
-        <Link to={'/account/export-all'}>
+        <Link
+          to={'/account/export-all'}
+          onClick={_closePopup}>
           <FontAwesomeIcon icon={faFileExport as IconProp} />
           <span>{t<string>('Export all accounts')}</span>
         </Link>
       </MenuItem>
       <MenuItem className='menuItem'>
-        <Link to='/account/import-seed'>
+        <Link
+          to='/account/import-seed'
+          onClick={_closePopup}>
           <FontAwesomeIcon icon={faKey as IconProp} />
           <span>{t<string>('Import account from pre-existing seed')}</span>
         </Link>
@@ -93,6 +115,7 @@ function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
             : ''
           }
           to='/account/import-qr'
+          onClick={_closePopup}
         >
           <FontAwesomeIcon icon={faQrcode as IconProp} />
           <span>{t<string>('Attach external QR-signer account')}</span>
@@ -105,6 +128,7 @@ function MenuAdd ({ className, reference }: Props): React.ReactElement<Props> {
               isDisabled={!isLedgerCapable}
               title={ (!isLedgerCapable && t<string>('Ledger devices can only be connected with Chrome browser')) || ''}
               to={ledgerPath}
+              onClick={_closePopup}
             >
               <FontAwesomeIcon
                 icon={faUsb as IconProp}
@@ -148,7 +172,11 @@ export default React.memo(styled(MenuAdd)(({ theme }: Props) => `
     .svg-inline--fa {
       color: ${theme.iconNeutralColor};
       margin-right: 0.3rem;
-      width: 0.875em;
+      width: 17px;
+    }
+
+    &.menuItem--space {
+      margin-top: 21px;
     }
   }
 `));

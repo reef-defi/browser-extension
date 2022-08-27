@@ -288,7 +288,7 @@ describe('Signing requests', () => {
     it('passes request id and password to approve call', async () => {
       wrapper.find(Input).simulate('change', { target: { value: 'hunter1' } });
       await act(flushAllPromises);
-      wrapper.find('.uik-cta__text').simulate('click');
+      wrapper.find('.uik-button').simulate('click');
       await act(flushAllPromises);
       wrapper.update();
 
@@ -302,7 +302,7 @@ describe('Signing requests', () => {
       wrapper.find(Input).simulate('change', { target: { value: 'hunter1' } });
       await act(flushAllPromises);
 
-      wrapper.find('.uik-cta__text').simulate('click');
+      wrapper.find('.uik-button').simulate('click');
       await act(flushAllPromises);
       wrapper.update();
 
@@ -320,7 +320,7 @@ describe('Signing requests', () => {
       wrapper.find(Input).simulate('change', { target: { value: 'anything' } });
       await act(flushAllPromises);
 
-      wrapper.find('.uik-cta__text').simulate('click');
+      wrapper.find('.uik-button').simulate('click');
       await act(flushAllPromises);
       wrapper.update();
 

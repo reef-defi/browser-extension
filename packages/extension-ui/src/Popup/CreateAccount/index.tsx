@@ -89,11 +89,12 @@ function CreateAccount ({ className }: Props): React.ReactElement {
   return (
     <>
       <HeaderWithSteps
+        showLogo
         step={step}
         text={t<string>('Create an account')}
       />
       <Loading>
-        <div>
+        <div className='account__section--steps'>
           <Address
             address={address}
             exporting

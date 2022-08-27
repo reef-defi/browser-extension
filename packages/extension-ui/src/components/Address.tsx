@@ -42,13 +42,14 @@ export interface Props {
   isExternal?: boolean | null;
   isHardware?: boolean | null;
   isHidden?: boolean;
+  hideBalance?: any;
   name?: string | null;
   parentName?: string | null;
   suri?: string;
   toggleActions?: number;
   type?: KeypairType;
   exporting?: any;
-  presentation?: boolean;
+  presentation?: any;
   signerProp?: ReefSigner;
 }
 
@@ -101,7 +102,7 @@ const ACCOUNTS_SCREEN_HEIGHT = 550;
 const defaultRecoded = { account: null, formatted: null, prefix: 42, type: DEFAULT_TYPE };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function Address ({ actions, address, children, className, exporting, genesisHash, isExternal, isHardware, isHidden, name, parentName, presentation, signerProp, suri, toggleActions, type: givenType }: Props): React.ReactElement<Props> {
+function Address ({ actions, address, children, className, exporting, genesisHash, hideBalance, isExternal, isHardware, isHidden, name, parentName, presentation, signerProp, suri, toggleActions, type: givenType }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const onAction = useContext(ActionContext);
   const { accounts } = useContext(AccountContext);
@@ -116,6 +117,10 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   const [moveMenuUp, setIsMovedMenu] = useState(false);
   const actionsRef = useRef<HTMLDivElement>(null);
   const [signer, setSigner] = useState<ReefSigner|undefined>(signerProp);
+  const openRoute = useCallback(
+    (path: string) => onAction(path),
+    [onAction]
+  );
 
   useEffect(() => {
     const foundSigner = signers?.find((s) => s.address === account?.address);
@@ -135,17 +140,6 @@ function Address ({ actions, address, children, className, exporting, genesisHas
     }
 
     const accountByAddress = findAccountByAddress(accounts, address);
-
-    // addressconsole.log(
-    //   address,
-    //   (
-    //     chain?.definition.chainType === 'ethereum' ||
-    //     accountByAddress?.type === 'ethereum' ||
-    //     (!accountByAddress && givenType === 'ethereum')
-    //   )
-    //     ? { account: accountByAddress, formatted: address, type: 'ethereum' }
-    //     : recodeAddress(address, accounts, chain, settings)
-    // );
 
     setRecoded(
       (
@@ -236,6 +230,23 @@ function Address ({ actions, address, children, className, exporting, genesisHas
       </>);
   };
 
+  const OpenApp = () => {
+    return (
+      <>
+        { // @Todo where can we put the URL to the App?
+          <Button
+            className='account-card__bind-btn'
+            fill
+            onClick={() => window.open('https://app.reef.io/', '_blank')}
+            size='small'
+            type='button'
+          >
+            <span>Open App</span>
+          </Button>
+        }
+      </>);
+  };
+
   const Balance = () => {
     return (
       <>
@@ -255,6 +266,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
 
     const selectAccount = (account: AccountJson | null): void => {
       appState.setCurrentAddress(account?.address);
+      openRoute('/tokens'); // redirect to tokens page
     };
 
     return (
@@ -339,7 +351,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
               : children }
           </div>
 
-          {signer && <div className='account-card__balance'>
+          {signer && (!presentation || !hideBalance) && <div className='account-card__status'>
             {
               !presentation &&
               <FontAwesomeIcon
@@ -350,59 +362,71 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                 title={t('Account Visibility')}
               />
             }
-            <img
-              alt='balance'
-              src='https://s2.coinmarketcap.com/static/img/coins/64x64/6951.png'
-            />
-            <div>{<Balance />}</div>
+            {
+              !hideBalance &&
+              <div className='account-card__balance'>
+                <img
+                  alt='balance'
+                  src='https://s2.coinmarketcap.com/static/img/coins/64x64/6951.png'
+                />
+                <div>{<Balance />}</div>
+              </div>
+            }
           </div>}
 
-          <div className='account-card__meta'>
+          <CopyToClipboard text={(formatted && formatted) || ''}>
             <div
-              className='account-card__address'
-              title={formatted || address || ''}
-            >Native address: {utils.toAddressShortDisplay(formatted || address || '')}</div>
-            <CopyToClipboard text={(formatted && formatted) || ''}>
+              className='account-card__meta'
+              onClick={() => notify.info({
+                aliveFor: 2,
+                message: 'Copied Reef Account Address to clipboard.'
+              })}>
+              <div
+                className='account-card__address'
+                title={formatted || address || ''}
+              >
+                <label>Native address:</label>
+                {utils.toAddressShortDisplay(formatted || address || '')}
+              </div>
               <FontAwesomeIcon
                 className='copyIcon'
                 icon={faCopy as IconProp}
-                onClick={() => notify.info({
-                  aliveFor: 2,
-                  message: 'Copied Reef Account Address to clipboard.'
-                })}
                 size='sm'
                 title={t('Copy Reef Account Address')}
               />
-            </CopyToClipboard>
-          </div>
+            </div>
+          </CopyToClipboard>
 
           {
             signer?.evmAddress && signer?.isEvmClaimed
               ? <>
-                <div className='account-card__meta'>
-                  <div
-                    className='account-card__address'
-                    title={signer?.evmAddress || ''}
-                  >EVM Address: {utils.toAddressShortDisplay(signer?.evmAddress || '')}</div>
-                  <CopyToClipboard text={(signer?.evmAddress) ? `${utils.addReefSpecificStringFromAddress(signer.evmAddress)}` : ''}>
-                    <FontAwesomeIcon
-                      className='copyIcon'
-                      icon={faCopy as IconProp}
-                      onClick={() => notify.danger({
-                        children:
+                <CopyToClipboard text={(signer?.evmAddress) ? `${utils.addReefSpecificStringFromAddress(signer.evmAddress)}` : ''}><div
+                  className='account-card__meta'
+                  onClick={() => notify.danger({
+                    children:
                         <Button
                           text='I understand'
                           type='button'
                         />,
-                        keepAlive: true,
-                        message: 'Copied to clipboard.\nDO NOT use this Reef EVM address on any other chain. ONLY use it on Reef chain.'
-                      })}
-                      size='sm'
-                      title={t('Copy Ethereum VM Address')
-                      }
-                    />
-                  </CopyToClipboard>
+                    keepAlive: true,
+                    message: 'Copied to clipboard.\nDO NOT use this Reef EVM address on any other chain. ONLY use it on Reef chain.'
+                  })}>
+                  <div
+                    className='account-card__address'
+                    title={signer?.evmAddress || ''}
+                  >
+                    <label>EVM Address:</label>
+                    {utils.toAddressShortDisplay(signer?.evmAddress || '')}
+                  </div>
+                  <FontAwesomeIcon
+                    className='copyIcon'
+                    icon={faCopy as IconProp}
+                    size='sm'
+                    title={t('Copy Ethereum VM Address')
+                    }
+                  />
                 </div>
+                </CopyToClipboard>
               </>
               : ''
           }
@@ -414,7 +438,8 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           ? (
             <div className='account-card__aside'>
               { !signer?.isEvmClaimed ? <Bind /> : '' }
-              { !isSelected() && !presentation ? <SelectButton /> : '' }
+              {!isSelected() && !presentation ? <SelectButton /> : ''}
+              {isSelected() && presentation && signer && signer.isEvmClaimed ? <OpenApp /> : ''}
 
               <div className='account-card__actions'>
                 {actions && (
@@ -542,7 +567,7 @@ export default styled(Address)(({ theme }: ThemeProps) => `
   }
 
   .name {
-    font-size: 16px;
+    font-size: 15px;
     line-height: 22px;
     margin: 2px 0;
     overflow: hidden;

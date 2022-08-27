@@ -15,10 +15,14 @@
 }
 
 .accounts__header .branding .logoText {
-  font-size: 1.25rem;
+  font-size: 18px;
   font-weight: 500;
   color: var(--text);
   line-height: 1.3;
+}
+
+.account__section--steps {
+  margin-bottom: 21px;
 }
 
 .logoText,
@@ -167,7 +171,7 @@
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
-  max-width: 50%;
+  max-width: 100%;
 }
 
 .account-card__identicon {
@@ -318,16 +322,26 @@
   transform: translateY(-2px);
 }
 
+.account-card__meta-wrapper {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 25px;
+}
+
 .account-card__meta {
   width: 100%;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
+  cursor: pointer;
 }
 
 .account-card__meta + .account-card__meta {
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
 svg + .account-card__address {
@@ -335,11 +349,17 @@ svg + .account-card__address {
 }
 
 .account-card__address {
-  font-size: 0.875rem;
+  font-size: 13px;
   line-height: 1.3;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--text);
   white-space: nowrap;
+  width: 100%;
+}
+
+.account-card__address label {
+  width: 110px;
+  cursor: pointer;
 }
 
 .account-card__meta svg {
@@ -362,15 +382,16 @@ svg + .account-card__address {
   color: var(--danger) !important;
 }
 
-.account-card__meta svg:hover,
-.account-card__visibility:hover {
+.account-card__meta:hover .account-card__address,
+.account-card__meta:hover .account-card__visibility {
   color: var(--primary);
 }
 
-.account-card__meta svg:active,
-.account-card__visibility:active {
+.account-card__meta:active svg,
+.account-card__meta:hover svg
+{
   color: var(--primary);
-  transform: scale(1.2);
+  transform: scale(1.075);
 }
 
 .account-card__aside {
@@ -380,7 +401,7 @@ svg + .account-card__address {
   align-items: center;
 }
 
-.account-card__balance {
+.account-card__status {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
@@ -391,20 +412,37 @@ svg + .account-card__address {
   overflow: hidden;
 }
 
-.account-card__balance img {
+.account-card__status img {
   width: 16px;
   margin-right: 6px;
 }
 
-.account-card__balance div {
+.account-card__status div {
   font-size: 0.875rem;
   line-height: 1.2;
-  font-weight: 900;
+  font-weight: 700;
   color: #a93185;
   background: linear-gradient(to right, #a93185, #5531a9);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   transform: translateY(1px);
+}
+
+.dark-theme .account-card__status div {
+  background: transparent;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  color: #ff62ff;
+  font-weight: 500;
+}
+
+
+.account-card__balance {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .account-card__select-btn,
@@ -492,6 +530,7 @@ svg + .account-card__address {
 .dark-theme .account-card__name {
   color: white;
   font-weight: 500;
+  margin-bottom: 4px;
 }
 
 .dark-theme .account-card__rename input {
@@ -506,29 +545,4 @@ svg + .account-card__address {
 
 .dark-theme .account-card__address {
   color: rgba(255, 255, 255, 0.8);
-}
-
-.dark-theme .uik-button {
-  background-color: rgba(169, 49, 133, 0.16);
-  color: #ff62ff;
-}
-
-.dark-theme .uik-button:hover {
-  background-color: rgba(169, 49, 133, 0.25);
-}
-
-.dark-theme .uik-button:active {
-  background-color: rgba(169, 49, 133, 0.35);
-}
-
-.dark-theme .uik-button--fill {
-  color: white;
-}
-
-.dark-theme .account-card__balance div {
-  background: transparent;
-  -webkit-background-clip: unset;
-  -webkit-text-fill-color: unset;
-  color: #ff62ff;
-  font-weight: 500;
 }

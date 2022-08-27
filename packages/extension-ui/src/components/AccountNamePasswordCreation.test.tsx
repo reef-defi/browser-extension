@@ -10,9 +10,9 @@ import { configure, mount } from 'enzyme';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 
+import { Button } from '../../../reef/extension-ui/uik/Button';
 import { flushAllPromises } from '../testHelpers';
-import BackButton from './BackButton';
-import { AccountNamePasswordCreation, Input, InputWithLabel, NextStepButton } from '.';
+import { AccountNamePasswordCreation, Input, InputWithLabel } from '.';
 
 // For this file, there are a lot of them
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -74,11 +74,11 @@ describe('AccountNamePasswordCreation', () => {
   });
 
   it('next step button has the correct label', () => {
-    expect(wrapper.find(NextStepButton).text()).toBe(buttonLabel);
+    expect(wrapper.find(Button).find('.uik-button--fullWidth.uik-button--fill').text()).toBe(buttonLabel);
   });
 
   it('back button calls onBackClick', () => {
-    wrapper.find(BackButton).simulate('click');
+    wrapper.find(Button).find('.uik-button--icon').simulate('click');
     expect(onBackClick).toHaveBeenCalledTimes(1);
   });
 
@@ -196,6 +196,6 @@ describe('AccountNamePasswordCreation busy button', () => {
   });
 
   it('button is busy', () => {
-    expect(wrapper.find('.next-step-btn.uik-cta--loading').length).toEqual(1);
+    expect(wrapper.find('.uik-button--loading').length).toEqual(1);
   });
 });

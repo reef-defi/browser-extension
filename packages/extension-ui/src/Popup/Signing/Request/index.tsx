@@ -83,7 +83,7 @@ export default function Request ({ account: { accountIndex, addressOffset, isExt
 
     return (
       <>
-        <div>
+        <div className='section__container--space'>
           <Address
             address={json.address}
             exporting

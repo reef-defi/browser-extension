@@ -12,14 +12,14 @@
 .uik-text--headline {
   color: var(--primary);
   font-size: 2.875rem;
-  font-weight: 900;
+  font-weight: 700;
   background: -webkit-linear-gradient(0deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .uik-text--title {
-  font-size: 1.25rem;
+  font-size: 18px;
   font-weight: 500;
   font-family: var(--font-family-title) !important;
 }
@@ -43,7 +43,7 @@
 }
 
 .dark-theme .uik-text--headline {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--primary-light);
   background: transparent;
   -webkit-background-clip: unset;

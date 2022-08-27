@@ -74,11 +74,9 @@ export const TokenPill = ({ token }: TokenPill): JSX.Element => (
       </div>
 
       <div className='token-card__right'>
-        <UikText
-          className='token-card__value'
-          text={isDataSet(token.price) && toCurrencyFormat(token.price, { maximumFractionDigits: token.price < 1 ? 4 : 2 })}
-          type='headline'
-        />
+        <div className='token-card__price'>
+          {isDataSet(token.price) && toCurrencyFormat(token.price, { maximumFractionDigits: token.price < 1 ? 4 : 2 })}
+        </div>
       </div>
     </Card>
   </div>

@@ -1,8 +1,12 @@
-import { faCog, faCoins, faExchangeAlt, faPaperPlane, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faCog, faCoins, faPlusCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ActionContext } from '@reef-defi/extension-ui/components';
-import { appState, availableNetworks, hooks, Network, ReefSigner, utils } from '@reef-defi/react-lib';
+import { ActionContext, SigningReqContext } from '@reef-defi/extension-ui/components';
+import MenuAdd from '@reef-defi/extension-ui/partials/MenuAdd';
+import Account from '@reef-defi/extension-ui/Popup/Accounts/Account';
+import { appState, availableNetworks, hooks, Network, ReefSigner } from '@reef-defi/react-lib';
 import React, { useCallback, useContext, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import useOutsideClick from './../../../extension-ui/src/hooks/useOutsideClick';
@@ -17,18 +21,24 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
   const onAction = useContext(ActionContext);
   const network: Network | undefined = hooks.useObservableState(appState.currentNetwork$);
   const mainnetSelected = network == null || network?.rpcUrl === availableNetworks.mainnet.rpcUrl;
-  const selectedAccount: ReefSigner|undefined | null = hooks.useObservableState(appState.selectedSigner$);
+  const selectedAccount: ReefSigner | undefined | null = hooks.useObservableState(appState.selectedSigner$);
   const openRoute = useCallback(
     (path: string) => onAction(path),
     [onAction]
   );
-
   const setRef = useRef(null);
-
+  const addRef = useRef(null);
   const [isSettingsOpen, setShowSettings] = useState(false);
+  const [isAddOpen, setShowAdd] = useState(false);
+  const requests = useContext(SigningReqContext);
+  const hasSignRequests = requests.length > 0;
 
   useOutsideClick(setRef, (): void => {
     isSettingsOpen && setShowSettings(!isSettingsOpen);
+  });
+
+  useOutsideClick(addRef, (): void => {
+    isAddOpen && setShowAdd(!isAddOpen);
   });
 
   const _toggleSettings = useCallback(
@@ -36,107 +46,140 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
     []
   );
 
+  const _toggleAdd = useCallback(
+    (): void => setShowAdd((isAddOpen) => !isAddOpen),
+    []
+  );
+
   const theme = localStorage.getItem('theme');
 
-  return (<div className={theme === 'dark' ? 'navigation navigation--dark' : 'navigation'}>
-    <div className='reef-logo'>
-      {mainnetSelected ? <ReefLogo /> : <ReefTestnetLogo />}
-    </div>
-    <div className='navigation__links'>
+  const location = useLocation();
+
+  const showNavigation = (): boolean => {
+    if (hasSignRequests) {
+      return false;
+    }
+
+    if (['/account/create', '/account/export-all', '/account/import-seed', '/bind'].includes(location.pathname)) {
+      return false;
+    }
+
+    if (location.pathname.startsWith('/account/derive/') ||
+      location.pathname.startsWith('/account/export/') ||
+      location.pathname.startsWith('/account/forget/')) {
+      return false;
+    }
+
+    return true;
+  };
+
+  const showAccount = (): boolean => {
+    return ['/tokens', '/'].includes(location.pathname) && !hasSignRequests;
+  };
+
+  return (<div className='navigation__wrapper'>
+    {(showNavigation()) && (<div className={['navigation', theme === 'dark' ? 'navigation--dark' : '', !showAccount() ? 'navigation--account' : ''].join(' ')}>
       <a
-        className='navigation__link'
+        className='reef-logo'
         href='#'
         onClick={(ev) => {
           ev.stopPropagation();
           ev.preventDefault();
           openRoute('/tokens');
-        }}
-        title='Dashboard'
-      >
-        <FontAwesomeIcon
-          className='navigation__link-icon'
-          icon={faCoins as any}
-        />
+        }}>
+        {mainnetSelected ? <ReefLogo /> : <ReefTestnetLogo />}
       </a>
-      <a
-        className='navigation__link'
-        href='#'
-        onClick={(ev) => {
-          ev.stopPropagation();
-          ev.preventDefault();
-          openRoute('/transfer');
-        }}
-        title='Send'
-      >
-        <FontAwesomeIcon
-          className='navigation__link-icon navigation__link-icon--plane'
-          icon={faPaperPlane as any}
-        />
-      </a>
-      <a
-        className='navigation__link'
-        href='#'
-        onClick={(ev) => {
-          ev.stopPropagation();
-          ev.preventDefault();
-          openRoute('/swap');
-        }}
-        title='Swap'
-      >
-        <FontAwesomeIcon
-          className='navigation__link-icon'
-          icon={faExchangeAlt as any}
-        />
-      </a>
-      <a
-        className='navigation__link'
-        href='#'
-        onClick={(ev) => {
-          ev.stopPropagation();
-          ev.preventDefault();
-          openRoute('/accounts');
-        }}
-        title='Accounts'
-      >
-        <FontAwesomeIcon
-          className='navigation__link-icon'
-          icon={faWallet as any}
-        />
-      </a>
-    </div>
-
-    <button
-      className='navigation__account'
-      onClick={() => { openRoute('/accounts'); }}
-      type='button'
-    >
-      <div className='navigation__account-info'>
-        <div className='navigation__account-name'>{selectedAccount?.name}</div>
-        <div className='navigation__account-address'>{utils.toAddressShortDisplay(selectedAccount?.address || '')}</div>
+      <div className='navigation__links'>
+        {(location.pathname === '/accounts') && (
+          <a
+            className='navigation__link'
+            href='#'
+            onClick={(ev) => {
+              ev.stopPropagation();
+              ev.preventDefault();
+              openRoute('/tokens');
+            }}
+            title='Tokens'
+          >
+            <FontAwesomeIcon
+              className='navigation__link-icon'
+              icon={faCoins as any}
+            /> Tokens
+          </a>
+        )}
+        {(['/tokens', '/'].includes(location.pathname)) && (
+          <a
+            className='navigation__link'
+            href='#'
+            onClick={(ev) => {
+              ev.stopPropagation();
+              ev.preventDefault();
+              openRoute('/accounts');
+            }}
+            title='Accounts'
+          >
+            <FontAwesomeIcon
+              className='navigation__link-icon'
+              icon={faWallet as any}
+            /> Switch accounts
+          </a>
+        )}
+        {(location.pathname !== '/account/create') && (
+          <a
+            className='navigation__link'
+            href='#'
+            onClick={(ev) => {
+              ev.stopPropagation();
+              ev.preventDefault();
+              _toggleAdd();
+            }}
+            title='Add account'
+          >
+            <FontAwesomeIcon
+              className={'plusIcon'}
+              icon={faPlusCircle as IconProp}
+              size='lg'
+            /> Add account
+          </a>
+        )}
       </div>
-      <div className='navigation__account-tokens'>
-        <img src='https://s2.coinmarketcap.com/static/img/coins/64x64/6951.png' />
-        <div className='navigation__account-tokens-amount'>{selectedAccount ? utils.toReefBalanceDisplay(selectedAccount.balance).replace('-', '0.00').replace(' REEF', '') : ''}</div>
+      {isAddOpen && (
+        <MenuAdd
+          className='menu-add-account'
+          reference={addRef}
+          setShowAdd={setShowAdd}
+        />
+      )}
+
+      <button
+        className={`navigation__settings-btn ${isSettingsOpen ? 'navigation__settings-btn--active' : ''}`}
+        onClick={_toggleSettings}
+      >
+        <FontAwesomeIcon
+          className='navigation__settings-icon'
+          icon={faCog as any}
+        />
+      </button>
+
+      {isSettingsOpen && (
+        <MenuSettings reference={setRef} />
+      )}
+    </div>)}
+    {showAccount() && (
+      <div className='navigation__account--selected'>
+        <Account
+          hideBalance
+          presentation
+          {...selectedAccount}
+        />
       </div>
-    </button>
-
-    <button
-      className={`navigation__settings-btn ${isSettingsOpen ? 'navigation__settings-btn--active' : ''}`}
-      onClick={_toggleSettings}
-    >
-      <FontAwesomeIcon
-        className='navigation__settings-icon'
-        icon={faCog as any}
-      />
-    </button>
-
-    {isSettingsOpen && (
-      <MenuSettings reference={setRef} />
     )}
   </div>);
 }
 
 export const HeaderComponent = styled(NavHeaderComp)`
   background: #ccc;
-  .nav-header{background: #000;}
-  `;
+  .nav-header {
+    background: #000;
+  }
+`;

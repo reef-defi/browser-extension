@@ -25,11 +25,12 @@ interface Props extends ThemeProps {
   showBackArrow?: boolean;
   showSearch?: boolean;
   showSettings?: boolean;
+  showLogo?: boolean;
   smallMargin?: boolean;
   text?: React.ReactNode;
 }
 
-function Header ({ children, className = '', onFilter, showAdd, showBackArrow, showSearch, showSettings, smallMargin = false, text }: Props): React.ReactElement<Props> {
+function Header ({ children, className = '', onFilter, showAdd, showBackArrow, showLogo = false, showSearch, showSettings, smallMargin = false, text }: Props): React.ReactElement<Props> {
   const [isAddOpen, setShowAdd] = useState(false);
   const [isSettingsOpen, setShowSettings] = useState(false);
   const [isSearchOpen, setShowSearch] = useState(false);
@@ -76,25 +77,23 @@ function Header ({ children, className = '', onFilter, showAdd, showBackArrow, s
     <div className={`${className} ${smallMargin ? 'smallMargin' : ''}`}>
       <div className='container accounts__header'>
         <div className='branding'>
-          {showBackArrow
-            ? (
-              <Link
-                className='backlink'
-                to='/'
-              >
-                <FontAwesomeIcon
-                  className='arrowLeftIcon'
-                  icon={faArrowLeft as IconProp}
-                />
-              </Link>
-            )
-            : (
-              <img
-                className='logo'
-                src={logo}
+          {showBackArrow && (
+            <Link
+              className='backlink'
+              to='/'
+            >
+              <FontAwesomeIcon
+                className='arrowLeftIcon'
+                icon={faArrowLeft as IconProp}
               />
-            )
-          }
+            </Link>
+          )}
+          { showLogo && (
+            <img
+              className='logo'
+              src={logo}
+            />
+          )}
           <span className='logoText'>{text || 'reef-js'}</span>
         </div>
         {showSearch && (
@@ -161,7 +160,6 @@ export default React.memo(styled(Header)(({ theme }: Props) => `
   font-weight: normal;
   margin: 0;
   position: relative;
-  margin-bottom: 25px;
 
   && {
     padding: 0 0 0;
@@ -173,6 +171,7 @@ export default React.memo(styled(Header)(({ theme }: Props) => `
     width: 100%;
     border-bottom: 1px solid ${theme.inputBorderColor};
     min-height: 70px;
+    align-items: center;
 
     .branding {
       display: flex;
@@ -198,7 +197,7 @@ export default React.memo(styled(Header)(({ theme }: Props) => `
       flex: 1;
       display: flex;
       justify-content: end;
-      align-items: center;;
+      align-items: center;
 
       .searchIcon {
         margin-right: 8px;

@@ -358,7 +358,7 @@ If this abort() is unexpected, build with -s ASSERTIONS=1 which can give more in
   --compact-font-size-sans-normal: 12px;
   --compact-font-size-sans-large: 14px;
   --compact-line-height-data: 18px;
-  --compact-root-font-size: 16px;
+  --compact-root-font-size: 15px;
 
   /* Comfortable density */
   --comfortable-font-size-monospace-small: 10px;

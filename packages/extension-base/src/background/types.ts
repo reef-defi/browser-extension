@@ -36,6 +36,8 @@ export interface AccountJson extends KeyringPair$Meta {
   isExternal?: boolean;
   isHardware?: boolean;
   isHidden?: boolean;
+  hideBalance?: any;
+  presentation?: any;
   name?: string;
   parentAddress?: string;
   suri?: string;

@@ -26,8 +26,8 @@ function AddAccount ({ className }: Props): React.ReactElement<Props> {
   return (
     <>
       <Header
-        showAdd
         showSettings
+        showLogo
         text={t<string>('Add Account')}
       />
       <div className={className}>
@@ -62,8 +62,8 @@ export default React.memo(styled(AddAccount)(({ theme }: Props) => `
 
   > .no-accounts p {
     text-align: center;
-    font-size: 16px;
-    line-height: 26px;
+    font-size: 15px;
+    line-height: 1.5;
     margin: 0 30px;
     color: ${theme.subTextColor};
   }

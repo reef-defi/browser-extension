@@ -33,11 +33,11 @@ html, body, #root, .App {
 }
 
 .text-bold {
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .text-semi-bold {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .text-color-dark-accent {
@@ -263,11 +263,11 @@ html, body, #root, .App {
 }
 
 .text-bold {
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .text-semi-bold {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .text-color-dark-accent {
@@ -383,10 +383,10 @@ svg.fill-white {
 }
 
 .extrinsic-table td.label {
-  font-size: 14px;
+  font-size: 13px;
   opacity: 1 !important;
   color: var(--primary);
-  font-weight: 900;
+  font-weight: 700;
   background: -webkit-linear-gradient(0deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -394,7 +394,7 @@ svg.fill-white {
 }
 
 .extrinsic-table td.data {
-  font-size: 14px;
+  font-size: 13px;
   opacity: 1 !important;
   color: black;
 }

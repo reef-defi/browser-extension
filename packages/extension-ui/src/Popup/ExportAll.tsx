@@ -8,11 +8,11 @@ import React, { useCallback, useContext, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import styled from 'styled-components';
 
-import { AccountContext, ActionBar, ActionContext, ActionText, InputWithLabel, Warning } from '../components';
+import { Button } from '../../../reef/extension-ui/uik/Button';
+import { AccountContext, ActionContext, ActionText, ButtonArea, InputWithLabel, VerticalSpace, Warning } from '../components';
 import useTranslation from '../hooks/useTranslation';
 import { exportAccounts } from '../messaging';
 import { Header } from '../partials';
-import { CTA } from './../../../reef/extension-ui/uik';
 
 const MIN_LENGTH = 6;
 
@@ -64,68 +64,58 @@ function ExportAll ({ className }: Props): React.ReactElement<Props> {
   return (
     <>
       <Header
-        showBackArrow
-        text={t<string>('All account')}
-      />
-      <div className={className}>
-        <div className='actionArea'>
-          <InputWithLabel
-            data-export-all-password
-            disabled={isBusy}
-            isError={pass.length < MIN_LENGTH || !!error}
-            label={t<string>('password for encrypting all accounts')}
-            onChange={onPassChange}
-            type='password'
+        showLogo
+        text={t<string>('Export all accounts')}>
+        <div className='steps'>
+          <ActionText
+            onClick={_goHome}
+            text='Cancel'
           />
-          {error && (
-            <Warning
-              isBelowInput
-              isDanger
-            >
-              {error}
-            </Warning>
-          )}
-          <CTA
-            className='export-button'
-            danger
-            data-export-button
-            disabled={pass.length === 0 || !!error}
-            loading={isBusy}
-            onClick={_onExportAllButtonClick}
-          >
-            {t<string>('I want to export all my accounts')}
-          </CTA>
-          <ActionBar className='withMarginTop'>
-            <ActionText
-              className='center'
-              onClick={_goHome}
-              text={t<string>('Cancel')}
-            />
-          </ActionBar>
         </div>
+      </Header>
+      <div className={className}>
+        <Warning className='movedWarning'>
+          {t<string>("You are exporting your accounts. Keep it safe and don't share it with anyone.")}<br />
+          {t<string>('Password must be at least ' + MIN_LENGTH + ' characters long.')}
+        </Warning>
+        <InputWithLabel
+          data-export-all-password
+          disabled={isBusy}
+          isError={pass.length < MIN_LENGTH || !!error}
+          label={t<string>('password for encrypting all accounts')}
+          onChange={onPassChange}
+          type='password'
+        />
+        {error && (
+          <Warning
+            isBelowInput
+            isDanger
+          >
+            {error}
+          </Warning>
+        )}
       </div>
+      <VerticalSpace />
+      <ButtonArea>
+        <Button
+          className='uik-button--fullWidth export-button'
+          rounded
+          danger
+          size='large'
+          data-export-button
+          disabled={pass.length < MIN_LENGTH || !!error}
+          loading={isBusy}
+          onClick={_onExportAllButtonClick}>
+          {t<string>('I want to export all my accounts')}
+        </Button>
+      </ButtonArea>
     </>
   );
 }
 
 export default withRouter(styled(ExportAll)`
-  .actionArea {
-    padding: 10px 24px;
-  }
-
-  .center {
-    margin: auto;
-  }
-
-  .export-button {
-    margin-top: 6px;
-  }
-
+  margin-top: 15px;
   .movedWarning {
-    margin-top: 8px;
-  }
-
-  .withMarginTop {
-    margin-top: 4px;
+    margin-bottom: 8px;
   }
 `);

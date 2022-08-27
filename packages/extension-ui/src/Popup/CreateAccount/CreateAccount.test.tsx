@@ -64,7 +64,7 @@ describe('Create Account', () => {
     });
 
     it('next step button is disabled when checkbox is not checked', () => {
-      expect(wrapper.find('.next-step-btn').first().prop('disabled')).toBe(true);
+      expect(wrapper.find('.uik-button').first().prop('disabled')).toBe(true);
     });
 
     it('action text is "Cancel"', () => {
@@ -77,10 +77,10 @@ describe('Create Account', () => {
     });
 
     it('checking the checkbox enables the Next button', () => {
-      expect(wrapper.find('.next-step-btn').first().prop('disabled')).toBe(true);
+      expect(wrapper.find('.uik-button').first().prop('disabled')).toBe(true);
       check(wrapper.find('input[type="checkbox"]'));
 
-      expect(wrapper.find('.next-step-btn').first().prop('disabled')).toBe(false);
+      expect(wrapper.find('.uik-button').first().prop('disabled')).toBe(false);
     });
 
     it('clicking on Next activates phase 2', () => {
