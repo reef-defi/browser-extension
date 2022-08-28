@@ -5,6 +5,7 @@ import '../../../../__mocks__/chrome';
 
 import type { AccountJson } from '@reef-defi/extension-base/background/types';
 import type { ReactWrapper } from 'enzyme';
+import type { Signer as InjectedSigner } from '@polkadot/api/types';
 import type { IconTheme } from '@polkadot/react-identicon/types';
 import type { Props as AddressComponentProps } from './Address';
 
@@ -14,6 +15,7 @@ import { BigNumber } from 'ethers';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 
+import { ReefSigner } from '../../../../../reef-react-lib';
 import * as messaging from '../messaging';
 import * as MetadataCache from '../MetadataCache';
 import { westendMetadata } from '../Popup/Signing/metadataMock';
@@ -22,8 +24,6 @@ import { buildHierarchy } from '../util/buildHierarchy';
 import { DEFAULT_TYPE } from '../util/defaultType';
 import getParentNameSuri from '../util/getParentNameSuri';
 import { AccountContext, Address } from '.';
-import type { Signer as InjectedSigner } from '@polkadot/api/types';
-import {ReefSigner} from "../../../../../reef-react-lib";
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call
 configure({ adapter: new Adapter() });
@@ -133,7 +133,7 @@ const getWrapper = async (account: AccountJson, contextAccounts: AccountJson[], 
   // only the address is passed as props, the full acount info are loaded in the context
     ? await mountComponent({ address: account.address, ...signerPropVal }, contextAccounts)
   // the context is empty, all account's info are passed as props to the Address component
-    : await mountComponent({ ...account, signerProp:(signerPropVal.signerProp as ReefSigner) } as AddressComponentProps, []);
+    : await mountComponent({ ...account, signerProp: (signerPropVal.signerProp) } as AddressComponentProps, []);
 
   return mountedComponent.wrapper;
 };
