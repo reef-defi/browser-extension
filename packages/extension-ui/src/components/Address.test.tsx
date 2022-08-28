@@ -15,7 +15,7 @@ import { BigNumber } from 'ethers';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 
-import { ReefSigner } from '../../../../../reef-react-lib';
+import { ReefSigner } from '@reef-defi/react-lib';
 import * as messaging from '../messaging';
 import * as MetadataCache from '../MetadataCache';
 import { westendMetadata } from '../Popup/Signing/metadataMock';
