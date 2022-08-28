@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 1.0.10 August 28, 2022
+- Faster start time
+- Simplified UX
+- Multiple networks
+- Binding in create account flow
+
+## 1.0.9 August 20, 2022
+- extension-dapp handle if web3Enable called before extension registered
+
 ## 1.0.1 May 20, 2022
 - Account Reef EVM binding
 - Tokens dashboard

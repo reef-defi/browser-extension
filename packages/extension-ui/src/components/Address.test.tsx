@@ -5,9 +5,11 @@ import '../../../../__mocks__/chrome';
 
 import type { AccountJson } from '@reef-defi/extension-base/background/types';
 import type { ReactWrapper } from 'enzyme';
+import type { Signer as InjectedSigner } from '@polkadot/api/types';
 import type { IconTheme } from '@polkadot/react-identicon/types';
 import type { Props as AddressComponentProps } from './Address';
 
+import { ReefSigner } from '@reef-defi/react-lib';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { configure, mount } from 'enzyme';
 import { BigNumber } from 'ethers';
@@ -117,8 +119,9 @@ const signerPropVal = {
     isEvmClaimed: false,
     name: 'signnn',
     signer: ({} as any),
-    source: 'extension'
-  }
+    source: 'extension',
+    sign: ({} as InjectedSigner)
+  } as ReefSigner
 };
 
 const getWrapper = async (account: AccountJson, contextAccounts: AccountJson[], withAccountsInContext: boolean) => {
@@ -130,7 +133,7 @@ const getWrapper = async (account: AccountJson, contextAccounts: AccountJson[], 
   // only the address is passed as props, the full acount info are loaded in the context
     ? await mountComponent({ address: account.address, ...signerPropVal }, contextAccounts)
   // the context is empty, all account's info are passed as props to the Address component
-    : await mountComponent({ ...account, ...signerPropVal }, []);
+    : await mountComponent({ ...account, signerProp: (signerPropVal.signerProp) } as AddressComponentProps, []);
 
   return mountedComponent.wrapper;
 };
@@ -179,7 +182,7 @@ const genericTestSuite = (account: AccountTestJson, withAccountsInContext = true
 
       const mountedHiddenComponent = withAccountsInContext
         ? await mountComponent({ address, ...additionalProps, ...signerPropVal }, accounts)
-        : await mountComponent({ ...account, ...additionalProps, ...signerPropVal }, []);
+        : await mountComponent({ ...account, ...additionalProps, ...signerPropVal } as AddressComponentProps, []);
 
       const wrapperHidden = mountedHiddenComponent.wrapper;
 

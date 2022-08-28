@@ -75,7 +75,7 @@ export const Bind = (): JSX.Element => {
     <>
       {!hasSignRequests && (<Header
         showLogo
-        text={t<string>('Bind EVM')}
+        text={t<string>('Connect EVM')}
       >
         <div className='steps'>
           <ActionText
@@ -92,6 +92,7 @@ export const Bind = (): JSX.Element => {
             bindSigner={bindSigner}
             onTxUpdate={onTxUpdate}
             signers={accounts}
+            onComplete={_goHome}
           ></Components.EvmBindComponent></div>)}
       </SigningOrChildren>
     </>
