@@ -121,7 +121,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
             <FontAwesomeIcon
               className='navigation__link-icon'
               icon={faWallet as any}
-            /> Switch accounts
+            /> Switch account
           </a>
         )}
         {(location.pathname !== '/account/create') && (

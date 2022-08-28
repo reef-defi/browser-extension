@@ -4491,7 +4491,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reef-defi/evm-provider@npm:^1.0.7":
+"@reef-defi/evm-provider@npm:^1.0.9":
   version: 1.0.9
   resolution: "@reef-defi/evm-provider@npm:1.0.9"
   dependencies:
@@ -4514,7 +4514,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reef-defi/extension-base@^1.0.5, @reef-defi/extension-base@^1.0.9, @reef-defi/extension-base@workspace:packages/extension-base":
+"@reef-defi/extension-base@^1.0.9, @reef-defi/extension-base@workspace:packages/extension-base":
   version: 0.0.0-use.local
   resolution: "@reef-defi/extension-base@workspace:packages/extension-base"
   dependencies:
@@ -4568,22 +4568,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reef-defi/extension-dapp@npm:^0.41.2":
-  version: 0.41.5
-  resolution: "@reef-defi/extension-dapp@npm:0.41.5"
-  dependencies:
-    "@babel/runtime": ^7.16.0
-    "@reef-defi/extension-inject": ^0.41.5
-    "@reef-defi/util": ^7.8.2
-    "@reef-defi/util-crypto": ^7.8.2
-  peerDependencies:
-    "@polkadot/api": "*"
-    "@reef-defi/util": "*"
-    "@reef-defi/util-crypto": "*"
-  checksum: 5f6d3e51cd615dd2afa554defcf396eeb10241a9799734002a38ab33647584ee677a6f37ad3b6cbaf810ae85cb742953888dca62441961f5e9c64a0fcf1385c0
-  languageName: node
-  linkType: hard
-
 "@reef-defi/extension-inject@^1.0.9, @reef-defi/extension-inject@workspace:packages/extension-inject":
   version: 0.0.0-use.local
   resolution: "@reef-defi/extension-inject@workspace:packages/extension-inject"
@@ -4595,17 +4579,6 @@ __metadata:
     "@polkadot/api": "*"
   languageName: unknown
   linkType: soft
-
-"@reef-defi/extension-inject@npm:^0.41.2, @reef-defi/extension-inject@npm:^0.41.5":
-  version: 0.41.5
-  resolution: "@reef-defi/extension-inject@npm:0.41.5"
-  dependencies:
-    "@babel/runtime": ^7.16.0
-  peerDependencies:
-    "@polkadot/api": "*"
-  checksum: 695e6a00bddbc52c7700daa1c1861e7d7dbe598f193abb2a3b8b186ebb90c12860a93d02f1961103563e5311834046cd8520fbf002fa58dcfc45798160e30a8d
-  languageName: node
-  linkType: hard
 
 "@reef-defi/extension-ui@^1.0.9, @reef-defi/extension-ui@workspace:packages/extension-ui":
   version: 0.0.0-use.local
@@ -4633,7 +4606,7 @@ __metadata:
     "@reef-defi/hw-ledger": ^7.8.2
     "@reef-defi/keyring": ^7.8.2
     "@reef-defi/networks": ^7.8.2
-    "@reef-defi/react-lib": 1.0.70
+    "@reef-defi/react-lib": 1.0.75
     "@reef-defi/util": ^7.8.2
     "@reef-defi/util-crypto": ^7.8.2
     "@types/bn.js": ^4.11.6
@@ -4750,27 +4723,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reef-defi/react-lib@npm:1.0.70":
-  version: 1.0.70
-  resolution: "@reef-defi/react-lib@npm:1.0.70"
+"@reef-defi/react-lib@npm:1.0.75":
+  version: 1.0.75
+  resolution: "@reef-defi/react-lib@npm:1.0.75"
   dependencies:
     "@apollo/client": ^3.6.2
     "@fortawesome/free-regular-svg-icons": ^6.1.0
     "@fortawesome/free-solid-svg-icons": ^6.1.0
     "@polkadot/extension-dapp": ^0.40.4
     "@polkadot/react-identicon": ^0.86.4
-    "@reef-defi/evm-provider": ^1.0.7
-    "@reef-defi/extension-base": ^1.0.5
-    "@reef-defi/extension-dapp": ^0.41.2
-    "@reef-defi/extension-inject": ^0.41.2
+    "@reef-defi/evm-provider": ^1.0.9
+    "@reef-defi/extension-base": ^1.0.9
+    "@reef-defi/extension-dapp": ^1.0.9
+    "@reef-defi/extension-inject": ^1.0.9
     "@reef-defi/ui-kit": ^1.0.3
     "@types/react-router-dom": ^5.3.0
     axios: ^0.21.4
     bignumber.js: ^9.0.2
     bootstrap: ^5.1.1
     eslint-import-resolver-typescript: ^2.4.0
-    ethers: ^5.5.4
+    ethers: ^5.7.0
     graphql: ^16.2.0
+    graphql-ws: ^5.10.0
     process: ^0.11.10
     react-copy-to-clipboard: ^5.0.4
     react-router-dom: ^5.3.0
@@ -4782,7 +4756,7 @@ __metadata:
     zen-observable-ts: ^1.1.0
   peerDependencies:
     react: ^17.0.2
-  checksum: 75ef00fddc370b342fa516adc7cd40b5f68f0ddee0604b9ee69f9d1a1b8c732776a07859e59f2c658363f30e9f492b9393c06fe7f29f8b2b43d85c2e16b83ad1
+  checksum: b27b3ae99134a6269364d5410b3fdf4f1252f721599682899775398bb93a5e29f6b822f01f16bb6212f0a75c47916a3f92b173ebeda2e2926a7615070bf8900f
   languageName: node
   linkType: hard
 
@@ -11320,7 +11294,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethers@npm:^5.5.4":
+"ethers@npm:^5.7.0":
   version: 5.7.0
   resolution: "ethers@npm:5.7.0"
   dependencies:
@@ -12796,6 +12770,15 @@ __metadata:
   peerDependencies:
     graphql: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
   checksum: b15162a3d62f17b9b79302445b9ee330e041582f1c7faca74b9dec5daa74272c906ec1c34e1c50592bb6215e5c3eba80a309103f6ba9e4c1cddc350c46f010df
+  languageName: node
+  linkType: hard
+
+"graphql-ws@npm:^5.10.0":
+  version: 5.10.1
+  resolution: "graphql-ws@npm:5.10.1"
+  peerDependencies:
+    graphql: ">=0.11 <=16"
+  checksum: ad8eb8a6823a32a7bd9bc6ec73a0b244f503e50318ef5db1312f1d09c5f0b0e4505ad75b08f06e4c40c6935cf5170444b19347b7b83222b4e1af01401418cb91
   languageName: node
   linkType: hard
 

@@ -224,7 +224,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             size='small'
             type='button'
           >
-            <span>Bind EVM</span>
+            <span>Connect EVM</span>
           </Button>
         }
       </>);
