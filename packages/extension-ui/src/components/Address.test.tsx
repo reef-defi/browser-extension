@@ -9,13 +9,13 @@ import type { Signer as InjectedSigner } from '@polkadot/api/types';
 import type { IconTheme } from '@polkadot/react-identicon/types';
 import type { Props as AddressComponentProps } from './Address';
 
+import { ReefSigner } from '@reef-defi/react-lib';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { configure, mount } from 'enzyme';
 import { BigNumber } from 'ethers';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 
-import { ReefSigner } from '@reef-defi/react-lib';
 import * as messaging from '../messaging';
 import * as MetadataCache from '../MetadataCache';
 import { westendMetadata } from '../Popup/Signing/metadataMock';
