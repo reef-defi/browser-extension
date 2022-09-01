@@ -21,19 +21,20 @@ function Authorize ({ className = '' }: Props): React.ReactElement {
 
   return (
     <>
-      <div className={`${className} ${requests.length === 1 ? 'lastRequest' : ''}`}>
-        <Header text={t<string>('Authorize')} />
-        {requests.map(({ id, request, url }, index): React.ReactNode => (
-          <Request
-            authId={id}
-            className='request'
-            isFirst={index === 0}
-            key={id}
-            request={request}
-            url={url}
-          />
-        ))}
-      </div>
+      <Header
+        showLogo
+        text={t<string>('Authorize')}>
+      </Header>
+      {requests.map(({ id, request, url }, index): React.ReactNode => (
+        <Request
+          authId={id}
+          className={`request ${className} ${requests.length === 1 ? 'lastRequest' : ''}`}
+          isFirst={index === 0}
+          key={id}
+          request={request}
+          url={url}
+        />
+      ))}
     </>
   );
 }
