@@ -16,6 +16,8 @@ export interface InjectedAccount {
   genesisHash?: string | null;
   name?: string;
   type?: KeypairType;
+  // REEF update
+  isSelected?: boolean;
 }
 
 export interface InjectedAccountWithMeta {
