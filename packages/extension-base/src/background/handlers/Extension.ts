@@ -59,6 +59,7 @@ export default class Extension {
 
   // eslint-disable-next-line @typescript-eslint/require-await
   public async handle<TMessageType extends MessageTypes> (id: string, type: TMessageType, request: RequestTypes[TMessageType], port: chrome.runtime.Port): Promise<ResponseType<TMessageType>> {
+
     switch (type) {
       case 'pri(authorize.approve)':
         return this.authorizeApprove(request as RequestAuthorizeApprove);
@@ -231,7 +232,7 @@ export default class Extension {
     };
   }
 
-  private accountsForget ({ address }: RequestAccountForget): boolean {
+  protected accountsForget ({ address }: RequestAccountForget): boolean {
     keyring.forgetAccount(address);
 
     return true;
@@ -253,7 +254,7 @@ export default class Extension {
     return remainingTime;
   }
 
-  private accountsShow ({ address, isShowing }: RequestAccountShow): boolean {
+  protected accountsShow ({ address, isShowing }: RequestAccountShow): boolean {
     const pair = keyring.getPair(address);
 
     assert(pair, 'Unable to find pair');

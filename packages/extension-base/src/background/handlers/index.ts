@@ -1,17 +1,17 @@
 // Copyright 2019-2021 @polkadot/extension authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { MessageTypes, TransportRequestMessage } from '../types';
+import type {MessageTypes, TransportRequestMessage} from '../types';
 
-import { assert } from '@reef-defi/util';
+import {assert} from '@reef-defi/util';
 
-import { PORT_EXTENSION } from '../../defaults';
-import Extension from './Extension';
+import {PORT_EXTENSION} from '../../defaults';
 import State from './State';
 import Tabs from './Tabs';
+import ReefExtension from "../../../../reef/extension-base/background/handlers/ReefExtension";
 
 const state = new State();
-const extension = new Extension(state);
+const extension = new ReefExtension(state);
 const tabs = new Tabs(state);
 
 export default function handler<TMessageType extends MessageTypes> ({ id, message, request }: TransportRequestMessage<TMessageType>, port: chrome.runtime.Port, extensionPortName = PORT_EXTENSION): void {

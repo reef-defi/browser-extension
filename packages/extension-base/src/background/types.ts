@@ -3,24 +3,30 @@
 
 /* eslint-disable no-use-before-define */
 
-import type { InjectedAccount, InjectedMetadataKnown, MetadataDef, ProviderList, ProviderMeta } from '@reef-defi/extension-inject/types';
-import type { KeyringPair, KeyringPair$Json, KeyringPair$Meta } from '@polkadot/keyring/types';
-import type { JsonRpcResponse } from '@polkadot/rpc-provider/types';
-import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
-import type { KeyringPairs$Json } from '@polkadot/ui-keyring/types';
-import type { HexString } from '@polkadot/util/types';
-import type { KeypairType } from '@polkadot/util-crypto/types';
+import type {
+  InjectedAccount,
+  InjectedMetadataKnown,
+  MetadataDef,
+  ProviderList,
+  ProviderMeta
+} from '@reef-defi/extension-inject/types';
+import type {KeyringPair, KeyringPair$Json, KeyringPair$Meta} from '@polkadot/keyring/types';
+import type {JsonRpcResponse} from '@polkadot/rpc-provider/types';
+import type {SignerPayloadJSON, SignerPayloadRaw} from '@polkadot/types/types';
+import type {KeyringPairs$Json} from '@polkadot/ui-keyring/types';
+import type {HexString} from '@polkadot/util/types';
+import type {KeypairType} from '@polkadot/util-crypto/types';
 
-import { TypeRegistry } from '@polkadot/types';
+import {TypeRegistry} from '@polkadot/types';
 
-import { ALLOWED_PATH } from '../defaults';
-import { AuthUrls } from './handlers/State';
+import {ALLOWED_PATH} from '../defaults';
+import {AuthUrls} from './handlers/State';
 
 type KeysWithDefinedValues<T> = {
   [K in keyof T]: T[K] extends undefined ? never : K
 }[keyof T];
 
-type NoUndefinedValues<T> = {
+export type NoUndefinedValues<T> = {
   [K in KeysWithDefinedValues<T>]: T[K]
 };
 
@@ -43,6 +49,8 @@ export interface AccountJson extends KeyringPair$Meta {
   suri?: string;
   type?: KeypairType;
   whenCreated?: number;
+  // REEF update
+  isSelected?: boolean;
 }
 
 export type AccountWithChildren = AccountJson & {
@@ -130,6 +138,8 @@ export interface RequestSignatures {
   'pub(rpc.subscribe)': [RequestRpcSubscribe, number, JsonRpcResponse];
   'pub(rpc.subscribeConnected)': [null, boolean, boolean];
   'pub(rpc.unsubscribe)': [RequestRpcUnsubscribe, boolean];
+  // REEF update
+  'pri(accounts.select)': [RequestAccountSelect, boolean];
 }
 
 export type MessageTypes = keyof RequestSignatures;
@@ -147,6 +157,10 @@ export interface TransportRequestMessage<TMessageType extends MessageTypes> {
   message: TMessageType;
   origin: 'reef_page' | 'reef_extension';
   request: RequestTypes[TMessageType];
+}
+// REEF update
+export interface RequestAccountSelect {
+  address: string;
 }
 
 export interface RequestAuthorizeTab {
@@ -320,8 +334,8 @@ export type ResponseType<TMessageType extends keyof RequestSignatures> = Request
 interface TransportResponseMessageSub<TMessageType extends MessageTypesWithSubscriptions> {
   error?: string;
   id: string;
-  response?: ResponseTypes[TMessageType];
-  subscription?: SubscriptionMessageTypes[TMessageType];
+  response?: ResponseTypes[TMessageType] | ResponseTypes[TMessageType];
+  subscription?: SubscriptionMessageTypes[TMessageType] | SubscriptionMessageTypes[TMessageType];
 }
 
 interface TransportResponseMessageNoSub<TMessageType extends MessageTypesWithNoSubscriptions> {
