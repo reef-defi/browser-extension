@@ -266,6 +266,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
 
   const SelectButton = () => {
     const selected =  account?.isSelected;
+    ... display visible btn when isHidden&&isSelected, remove selectedAccount observable,
     // const selected =  selectedAccount?.address === account?.address;
 
     const onSelectAccount = (account: AccountJson | null): void => {
