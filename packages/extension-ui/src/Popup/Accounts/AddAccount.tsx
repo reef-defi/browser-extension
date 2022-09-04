@@ -46,18 +46,18 @@ function AddAccount ({ className }: Props): React.ReactElement<Props> {
       </div>
       <ButtonArea>
         <Button
+          rounded
+          size='large'
+          onClick={_onClickImport}>
+          {t<string>('Import account')}
+        </Button>
+        <Button
           className='uik-button--fullWidth'
           rounded
           fill
           size='large'
           onClick={_onClickCreate}>
           {t<string>('Create account')}
-        </Button>
-        <Button
-          rounded
-          size='large'
-          onClick={_onClickImport}>
-          {t<string>('Import account')}
         </Button>
       </ButtonArea>
     </>
