@@ -165,7 +165,7 @@ export default function Popup (): React.ReactElement {
                       </ReefContext>
                     </ApolloProvider>)}
                     <ToastProvider>
-                      {isWelcomeDone && accounts?.length > 0 && (<HeaderComponent></HeaderComponent>)}
+                      {isWelcomeDone && accounts?.length > 0 && authRequests?.length <= 0 && (<HeaderComponent></HeaderComponent>)}
                       <Switch>
                         <Route
                           exact
