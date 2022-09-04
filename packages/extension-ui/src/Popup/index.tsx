@@ -41,6 +41,7 @@ import PhishingDetected from './PhishingDetected';
 import RestoreJson from './RestoreJson';
 import Signing from './Signing';
 import Welcome from './Welcome';
+import {selectAccount} from "../../../reef/extension-ui/messaging";
 
 const startSettings = uiSettings.get();
 
@@ -119,8 +120,20 @@ export default function Popup (): React.ReactElement {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect((): void => {
-    setAccountCtx(initAccountContext(accounts || [], null));
+  useEffect( (): void => {
+     const onAccounts = async() => {
+      const selAcc = accounts?.find((acc: AccountJson) => acc.isSelected);
+       console.log("SELLLLLaaa=",selAcc);
+      if (!selAcc && accounts?.length) {
+        await selectAccount(accounts[0].address);
+        return;
+      }
+      setAccountCtx(initAccountContext(accounts || [], selAcc || null));
+      appState.setCurrentAddress(selAcc?.address);
+    }
+
+    onAccounts();
+
   }, [accounts]);
 
   useEffect((): void => {

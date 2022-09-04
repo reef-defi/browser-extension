@@ -10,6 +10,7 @@ import {
 import keyring from "@polkadot/ui-keyring";
 import {assert} from "@reef-defi/util";
 import {accounts as accountsObservable} from "@polkadot/ui-keyring/observable/accounts";
+// import chrome from "@reef-defi/extension-inject/chrome";
 
 export default class ReefExtension extends Extension {
 

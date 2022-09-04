@@ -258,19 +258,17 @@ function Address ({ actions, address, children, className, exporting, genesisHas
 
   const isSelected = () => {
     // const selected = selectedAccount && selectedAccount.address === account?.address;
-    const selected = account?.isSelected;
+    // const selected = account?.isSelected;
 
     // return !(!!signRequests && !!signRequests.length) && selectedAccount && selected;
-    return !(!!signRequests && !!signRequests.length) && selected;
+    return !(!!signRequests && !!signRequests.length) && account?.isSelected;
   };
 
   const SelectButton = () => {
-    const selected =  account?.isSelected;
-    ... display visible btn when isHidden&&isSelected, remove selectedAccount observable,
+    // const selected =  account?.isSelected;
     // const selected =  selectedAccount?.address === account?.address;
 
     const onSelectAccount = (account: AccountJson | null): void => {
-      // appState.setCurrentAddress(account?.address);
       if(account) {
         selectAccount(account.address);
       }
@@ -280,7 +278,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
     return (
       <>
         {/*{!(!!signRequests && !!signRequests.length) && selectedAccount && (selected*/}
-        {!(!!signRequests && !!signRequests.length) && (selected
+        {!(!!signRequests && !!signRequests.length) && (account?.isSelected
           ? <Button
             className='account-card__select-btn account-card__select-btn--selected'
             fill
