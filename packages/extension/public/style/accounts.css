@@ -546,3 +546,18 @@ svg + .account-card__address {
 .dark-theme .account-card__address {
   color: rgba(255, 255, 255, 0.8);
 }
+
+.authorize__requests {
+  height: 100vh;
+  padding: 0 !important;
+}
+
+.authorize__request {
+  height: calc(100% - 362px);
+  position: absolute;
+  background: var(--bg);
+}
+
+.dark-theme .authorize__request {
+  background: #2c2d33;
+}

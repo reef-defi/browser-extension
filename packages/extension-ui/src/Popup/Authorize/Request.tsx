@@ -53,7 +53,7 @@ function Request ({ authId, className, isFirst, request: { origin }, url }: Prop
             </a>.
           </Trans>
         </div>
-        {isFirst && (
+        {(
           <Warning className='warningMargin'>
             {t<string>('Only approve this request if you trust the application. Approving gives the application access to the addresses of your accounts.')}
           </Warning>
@@ -82,9 +82,11 @@ function Request ({ authId, className, isFirst, request: { origin }, url }: Prop
 }
 
 export default styled(Request)(({ theme }: Props) => `
+  height: 100%;
   .tab-info {
     overflow: hidden;
-    margin: 0.75rem 20px 0 0;
+    margin: 24px 24px 0px 1.45rem;
+    
   }
 
   .tab-name,

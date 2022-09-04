@@ -24,17 +24,30 @@ function Authorize ({ className = '' }: Props): React.ReactElement {
       <Header
         showLogo
         text={t<string>('Authorize')}>
+        {requests.length > 1 && (<div className='steps'>
+          <div>
+            <span className='current'>1</span>
+            <span className='total'>/{requests.length}</span>
+          </div>
+        </div>)}
       </Header>
-      {requests.map(({ id, request, url }, index): React.ReactNode => (
-        <Request
-          authId={id}
-          className={`request ${className} ${requests.length === 1 ? 'lastRequest' : ''}`}
-          isFirst={index === 0}
-          key={id}
-          request={request}
-          url={url}
-        />
-      ))}
+
+      <div className='authorize__requests'>
+        {requests.map(({ id, request, url }, index): React.ReactNode => (
+          <div
+            className='authorize__request'
+            key={id}>
+            <Request
+              authId={id}
+              className={`request ${className} ${requests.length === 1 ? 'lastRequest' : ''}`}
+              isFirst={index === 0}
+              request={request}
+              key={id}
+              url={url}
+            />
+          </div>
+        ))}
+      </div>
     </>
   );
 }
@@ -42,15 +55,7 @@ function Authorize ({ className = '' }: Props): React.ReactElement {
 export default styled(Authorize)`
   overflow-y: auto;
 
-  &.lastRequest {
-    overflow: hidden;
-  }
-
   && {
     padding: 0;
-  }
-
-  .request {
-    padding: 0 24px;
   }
 `;
