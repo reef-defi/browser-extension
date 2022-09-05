@@ -363,6 +363,7 @@ svg.fill-white {
 
 .bind-evm {
   padding: 0 5px;
+  min-height: 525px;
 }
 
 .bind-evm p {
@@ -415,7 +416,7 @@ svg.fill-white {
     margin-top: -20px;
 }
 
-.bind-evm .modal-body li {
+.bind-evm .modal-body li.list-group-item {
     align-items: center;
     background-color: transparent;
     border: none;
@@ -429,6 +430,10 @@ svg.fill-white {
     transition: all .125s;
     width: 100%;
     cursor: pointer;
+}
+
+.bind-evm .modal-body li.list-group-item > div.d-flex {
+  width: 100%;
 }
 
 .bind-evm .modal-body li:hover { 
@@ -461,6 +466,14 @@ svg.fill-white {
     flex-flow: column nowrap;
     justify-content: center;
     margin-left: 13px;
+    width: 100%;
+}
+
+.bind-evm .uik-button {
+  position: absolute;
+  bottom: 12px;
+  width: calc(100% - 40px) !important;
+  left: 20px;
 }
 
 .bind-evm .uik-button::before {
