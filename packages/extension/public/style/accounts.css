@@ -559,5 +559,27 @@ svg + .account-card__address {
 }
 
 .dark-theme .authorize__request {
-  background: #2c2d33;
+  background: #26272c;
+}
+
+.steps::selection {
+  background: transparent;
+}
+.steps__arrow {
+  margin-left: 10px;
+  cursor: pointer;
+}
+.steps__arrow:first-child {
+  margin-right: 10px;
+}
+
+.authorize__request.request--top {
+  left: 0;
+  z-index: 2;
+}
+
+.authorize__request {
+  transition: all ease-out 120ms;
+  left: 100%;
+  z-index: 1;
 }
