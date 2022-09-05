@@ -3,6 +3,9 @@
 
 import type { ThemeProps } from '../../types';
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 
@@ -39,14 +42,16 @@ function Authorize ({ className = '' }: Props): React.ReactElement {
         text={t<string>('Authorize')}>
         {requests.length > 1 && (<div className='steps'>
           <div>
-            <span
+            <FontAwesomeIcon
               className='steps__arrow'
-              onClick={() => setRequestIndex(handleRequestIndexLoop(requestIndex + 1))}>&lt;&lt;</span>
+              icon={faArrowLeft as IconProp}
+              onClick={() => setRequestIndex(handleRequestIndexLoop(requestIndex + 1))} />
             <span className='current'>{requestIndex + 1}</span>
             <span className='total'>/{requests.length}</span>
-            <span
+            <FontAwesomeIcon
+              icon={faArrowRight as IconProp}
               className='steps__arrow'
-              onClick={() => setRequestIndex(handleRequestIndexLoop(requestIndex - 1))}>&gt;&gt;</span>
+              onClick={() => setRequestIndex(handleRequestIndexLoop(requestIndex - 1))} />
           </div>
         </div>)}
       </Header>

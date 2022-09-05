@@ -562,12 +562,17 @@ svg + .account-card__address {
   background: #26272c;
 }
 
-.steps::selection {
+.steps *::selection {
   background: transparent;
+}
+.steps > div {
+  display: flex;
+  align-items: center;
 }
 .steps__arrow {
   margin-left: 10px;
   cursor: pointer;
+  font-size: 12px;
 }
 .steps__arrow:first-child {
   margin-right: 10px;
