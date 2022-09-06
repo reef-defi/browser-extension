@@ -16,12 +16,11 @@ import { approveAuthRequest, rejectAuthRequest } from '../../messaging';
 interface Props extends ThemeProps {
   authId: string;
   className?: string;
-  isFirst: boolean;
   request: RequestAuthorizeTab;
   url: string;
 }
 
-function Request ({ authId, className, isFirst, request: { origin }, url }: Props): React.ReactElement<Props> {
+function Request ({ authId, className, request: { origin }, url }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const onAction = useContext(ActionContext);
 

@@ -64,7 +64,6 @@ function Authorize ({ className = '' }: Props): React.ReactElement {
             <Request
               authId={id}
               className={`request ${className}`}
-              isFirst={index === 0}
               request={request}
               key={id}
               url={url}
