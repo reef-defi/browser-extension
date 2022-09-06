@@ -358,8 +358,9 @@ svg + .account-card__address {
 }
 
 .account-card__address label {
-  width: 110px;
+  width: 107px;
   cursor: pointer;
+  display: inline-block;
 }
 
 .account-card__meta svg {
