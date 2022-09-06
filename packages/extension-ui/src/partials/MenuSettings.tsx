@@ -15,6 +15,7 @@ import useIsPopup from '../hooks/useIsPopup';
 import useTranslation from '../hooks/useTranslation';
 import { setNotification, windowOpen } from '../messaging';
 import getLanguageOptions from '../util/getLanguageOptions';
+import {selectNetwork} from "../../../reef/extension-ui/messaging";
 
 interface Props extends ThemeProps {
   className?: string;
@@ -90,7 +91,7 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
         .find((network: Network) => network.rpcUrl === value);
 
       if (selectedNetwork) {
-        appState.setCurrentNetwork(selectedNetwork);
+        selectNetwork(selectedNetwork.rpcUrl);
       }
     }, []
   );

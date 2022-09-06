@@ -96,6 +96,11 @@ export interface RequestSignatures {
   'pri(accounts.show)': [RequestAccountShow, boolean];
   'pri(accounts.tie)': [RequestAccountTie, boolean];
   'pri(accounts.subscribe)': [RequestAccountSubscribe, boolean, AccountJson[]];
+  // REEF update
+  'pri(network.subscribe)': [RequestNetworkSubscribe, boolean, string];
+  'pri(network.select)': [RequestNetworkSelect, boolean];
+  // REEF update
+  'pri(accounts.select)': [RequestAccountSelect, boolean];
   'pri(accounts.validate)': [RequestAccountValidate, boolean];
   'pri(accounts.changePassword)': [RequestAccountChangePassword, boolean];
   'pri(authorize.approve)': [RequestAuthorizeApprove, boolean];
@@ -139,7 +144,7 @@ export interface RequestSignatures {
   'pub(rpc.subscribeConnected)': [null, boolean, boolean];
   'pub(rpc.unsubscribe)': [RequestRpcUnsubscribe, boolean];
   // REEF update
-  'pri(accounts.select)': [RequestAccountSelect, boolean];
+  'pub(network.subscribe)': [RequestNetworkSubscribe, boolean, string];
 }
 
 export type MessageTypes = keyof RequestSignatures;
@@ -163,6 +168,11 @@ export interface RequestAccountSelect {
   address: string;
 }
 
+// REEF update
+export interface RequestNetworkSelect {
+  rpcUrl: string;
+}
+
 export interface RequestAuthorizeTab {
   origin: string;
 }
@@ -176,6 +186,9 @@ export interface RequestAuthorizeReject {
 }
 
 export type RequestAuthorizeSubscribe = null;
+
+// REEF update
+export type RequestNetworkSubscribe = null;
 
 export interface RequestMetadataApprove {
   id: string;

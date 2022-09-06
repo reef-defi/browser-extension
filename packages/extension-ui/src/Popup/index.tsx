@@ -8,7 +8,7 @@ import { ApolloClient, ApolloProvider } from '@apollo/client';
 import { Provider } from '@reef-defi/evm-provider';
 import { PHISHING_PAGE_REDIRECT } from '@reef-defi/extension-base/defaults';
 import { canDerive } from '@reef-defi/extension-base/utils';
-import { appState, graphql, hooks, ReefSigner } from '@reef-defi/react-lib';
+import {appState, availableNetworks, graphql, hooks, ReefSigner} from '@reef-defi/react-lib';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router';
 
@@ -41,7 +41,7 @@ import PhishingDetected from './PhishingDetected';
 import RestoreJson from './RestoreJson';
 import Signing from './Signing';
 import Welcome from './Welcome';
-import {selectAccount} from "../../../reef/extension-ui/messaging";
+import {selectAccount, subscribeNetwork} from "../../../reef/extension-ui/messaging";
 
 const startSettings = uiSettings.get();
 
@@ -116,6 +116,9 @@ export default function Popup (): React.ReactElement {
       setCameraOn(settings.camera === 'on');
     });
 
+    // REEF update
+    subscribeNetwork((rpcUrl) => appState.setCurrentNetwork(Object.values(availableNetworks).find(n => n.rpcUrl === rpcUrl)||availableNetworks.mainnet));
+
     _onAction();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -123,7 +126,6 @@ export default function Popup (): React.ReactElement {
   useEffect( (): void => {
      const onAccounts = async() => {
       const selAcc = accounts?.find((acc: AccountJson) => acc.isSelected);
-       console.log("SELLLLLaaa=",selAcc);
       if (!selAcc && accounts?.length) {
         await selectAccount(accounts[0].address);
         return;

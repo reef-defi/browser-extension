@@ -10,3 +10,11 @@ export async function subscribeSelectedAccount(cb: (selected: AccountJson | unde
         cb(accounts.find(a => a.isSelected));
     });
 }
+
+export async function selectNetwork(rpcUrl: string): Promise<boolean> {
+    return sendMessage('pri(network.select)', {rpcUrl});
+}
+
+export async function subscribeNetwork(cb: (rpcUrl: string) => void): Promise<boolean> {
+    return sendMessage('pri(network.subscribe)', null, cb);
+}
