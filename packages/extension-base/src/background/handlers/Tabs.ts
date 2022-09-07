@@ -28,14 +28,15 @@ function transformAccounts (accounts: SubjectInfo, anyType = false): InjectedAcc
     .filter(({ type }) => anyType ? true : canDerive(type))
     .sort((a, b) => (a.json.meta.whenCreated || 0) - (b.json.meta.whenCreated || 0))
     .map((val): InjectedAccount => {
-      const { json: { address, meta: { genesisHash, name } }, type } = val
+      const { json: { address, meta: { genesisHash, name } }, type } = val;
+
       return {
         address,
-            genesisHash,
-            name,
-            type,
-            isSelected: !!val.json.meta.isSelected
-      }
+        genesisHash,
+        name,
+        type,
+        isSelected: !!val.json.meta.isSelected
+      };
     });
 }
 

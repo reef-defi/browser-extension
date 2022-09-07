@@ -5,7 +5,7 @@ import type { MessageTypes, MessageTypesWithNoSubscriptions, MessageTypesWithNul
 
 import { PORT_PAGE } from '@reef-defi/extension-base/defaults';
 
-import {ReefInjected} from "../../../reef/extension-base/src/page/ReefInjected";
+import { ReefInjected } from '../../../reef/extension-base/src/page/ReefInjected';
 
 // when sending a message from the injector to the extension, we
 //  - create an event - this we send to the loader

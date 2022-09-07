@@ -8,7 +8,7 @@ import { ApolloClient, ApolloProvider } from '@apollo/client';
 import { Provider } from '@reef-defi/evm-provider';
 import { PHISHING_PAGE_REDIRECT } from '@reef-defi/extension-base/defaults';
 import { canDerive } from '@reef-defi/extension-base/utils';
-import {appState, availableNetworks, graphql, hooks, ReefSigner} from '@reef-defi/react-lib';
+import { appState, availableNetworks, graphql, hooks, ReefSigner } from '@reef-defi/react-lib';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router';
 
@@ -20,6 +20,7 @@ import { HeaderComponent } from '../../../reef/extension-ui/components/HeaderCom
 import { ReefContext } from '../../../reef/extension-ui/components/ReefContext';
 import { Swap } from '../../../reef/extension-ui/components/Swap';
 import { useReefSigners } from '../../../reef/extension-ui/hooks/useReefSigners';
+import { selectAccount, subscribeNetwork } from '../../../reef/extension-ui/messaging';
 import { ErrorBoundary, Loading } from '../components';
 import { AccountContext, ActionContext, AuthorizeReqContext, MediaContext, MetadataReqContext, SettingsContext, SigningReqContext } from '../components/contexts';
 import ToastProvider from '../components/Toast/ToastProvider';
@@ -41,7 +42,6 @@ import PhishingDetected from './PhishingDetected';
 import RestoreJson from './RestoreJson';
 import Signing from './Signing';
 import Welcome from './Welcome';
-import {selectAccount, subscribeNetwork} from "../../../reef/extension-ui/messaging";
 
 const startSettings = uiSettings.get();
 
@@ -117,26 +117,30 @@ export default function Popup (): React.ReactElement {
     });
 
     // REEF update
-    subscribeNetwork((rpcUrl) => appState.setCurrentNetwork(Object.values(availableNetworks).find(n => n.rpcUrl === rpcUrl)||availableNetworks.mainnet));
+    subscribeNetwork((rpcUrl) => appState.setCurrentNetwork(Object.values(availableNetworks).find((n) => n.rpcUrl === rpcUrl) || availableNetworks.mainnet))
+      .catch((reason) => console.log('Error subscribing network', reason));
 
     _onAction();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect( (): void => {
-     const onAccounts = async() => {
+  useEffect((): void => {
+    const onAccounts = (): void => {
       const selAcc = (accounts as AccountJson[])?.find((acc) => !!acc.isSelected);
+
       if (!selAcc && accounts?.length) {
-        await selectAccount(accounts[0].address);
+        selectAccount(accounts[0].address)
+          .catch((reason) => console.log('Error selecting account', reason));
+
         return;
       }
+
       setAccountCtx(initAccountContext(accounts || [], selAcc || null));
 
       appState.setCurrentAddress(selAcc?.address);
-    }
+    };
 
     onAccounts();
-
   }, [accounts]);
 
   useEffect((): void => {

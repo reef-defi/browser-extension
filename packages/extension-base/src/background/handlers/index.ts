@@ -1,14 +1,14 @@
 // Copyright 2019-2021 @polkadot/extension authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type {MessageTypes, TransportRequestMessage} from '../types';
+import type { MessageTypes, TransportRequestMessage } from '../types';
 
-import {assert} from '@reef-defi/util';
+import { assert } from '@reef-defi/util';
 
-import {PORT_EXTENSION} from '../../defaults';
+import ReefExtension from '../../../../reef/extension-base/background/handlers/ReefExtension';
+import { ReefTabs } from '../../../../reef/extension-base/background/handlers/ReefTabs';
+import { PORT_EXTENSION } from '../../defaults';
 import State from './State';
-import ReefExtension from "../../../../reef/extension-base/background/handlers/ReefExtension";
-import {ReefTabs} from "../../../../reef/extension-base/background/handlers/ReefTabs";
 
 const state = new State();
 const extension = new ReefExtension(state);
