@@ -5,7 +5,7 @@ import type { MessageTypes, MessageTypesWithNoSubscriptions, MessageTypesWithNul
 
 import { PORT_PAGE } from '@reef-defi/extension-base/defaults';
 
-import Injected from './Injected';
+import {ReefInjected} from "../../../reef/extension-base/src/page/ReefInjected";
 
 // when sending a message from the injector to the extension, we
 //  - create an event - this we send to the loader
@@ -51,10 +51,10 @@ export function sendMessage<TMessageType extends MessageTypes> (message: TMessag
 }
 
 // the enable function, called by the dapp to allow access
-export async function enable (origin: string): Promise<Injected> {
+export async function enable (origin: string): Promise<ReefInjected> {
   await sendMessage('pub(authorize.tab)', { origin });
 
-  return new Injected(sendMessage);
+  return new ReefInjected(sendMessage);
 }
 
 // redirect users if this page is considered as phishing, otherwise return false

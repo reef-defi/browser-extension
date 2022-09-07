@@ -109,7 +109,7 @@ export function web3Enable (originName: string, compatInits: (() => Promise<bool
                   };
                 }
 
-                return { ...info, ...ext };
+                return { ...info, ...ext } as InjectedExtension;
               });
           })
           .catch((): InjectedExtension[] => [])

@@ -5,6 +5,7 @@ import type { KeypairType } from '@reef-defi/util-crypto/types';
 import type { Signer as InjectedSigner } from '@polkadot/api/types';
 import type { ProviderInterface } from '@polkadot/rpc-provider/types';
 import type { ExtDef } from '@polkadot/types/extrinsic/signedExtensions/types';
+import {ReefInjected} from "../../reef/extension-inject/types";
 
 // eslint-disable-next-line no-undef
 type This = typeof globalThis;
@@ -108,8 +109,8 @@ export interface InjectedWindowProvider {
 export interface InjectedWindow extends This {
   injectedWeb3: Record<string, InjectedWindowProvider>;
 }
-
-export type InjectedExtension = InjectedExtensionInfo & Injected;
+// REEF update
+export type InjectedExtension = InjectedExtensionInfo & Injected & ReefInjected;
 
 export type InjectOptions = InjectedExtensionInfo;
 

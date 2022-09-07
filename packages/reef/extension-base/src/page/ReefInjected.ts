@@ -1,8 +1,9 @@
 import Injected from "@reef-defi/extension-base/page/Injected";
 import {SendRequest} from "@reef-defi/extension-base/page/types";
 import {ReefSigners} from "./ReefSigners";
+import {ReefInjected as RInjected} from '../../../extension-inject/types'
 
-export class ReefInjected extends Injected {
+export class ReefInjected extends Injected implements RInjected {
 
     public readonly accountSigner: ReefSigners;
 
