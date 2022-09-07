@@ -125,12 +125,13 @@ export default function Popup (): React.ReactElement {
 
   useEffect( (): void => {
      const onAccounts = async() => {
-      const selAcc = accounts?.find((acc: AccountJson) => acc.isSelected);
+      const selAcc = (accounts as AccountJson[])?.find((acc) => !!acc.isSelected);
       if (!selAcc && accounts?.length) {
         await selectAccount(accounts[0].address);
         return;
       }
       setAccountCtx(initAccountContext(accounts || [], selAcc || null));
+
       appState.setCurrentAddress(selAcc?.address);
     }
 

@@ -118,10 +118,10 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   const [moveMenuUp, setIsMovedMenu] = useState(false);
   const actionsRef = useRef<HTMLDivElement>(null);
   const [signer, setSigner] = useState<ReefSigner|undefined>(signerProp);
-  const openRoute = useCallback(
+  /*const openRoute = useCallback(
     (path: string) => onAction(path),
     [onAction]
-  );
+  );*/
 
   useEffect(() => {
     const foundSigner = signers?.find((s) => s.address === account?.address);
@@ -272,7 +272,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
       if(account) {
         selectAccount(account.address);
       }
-      openRoute('/tokens'); // redirect to tokens page
+      // openRoute('/tokens'); // redirect to tokens page
     };
 
     return (

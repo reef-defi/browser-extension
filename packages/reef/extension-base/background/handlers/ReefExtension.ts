@@ -1,6 +1,7 @@
 import Extension from "@reef-defi/extension-base/background/handlers/Extension";
 import State from "@reef-defi/extension-base/background/handlers/State";
 import {
+    AccountJson,
     MessageTypes,
     RequestAccountSelect,
     RequestNetworkSelect,
@@ -9,13 +10,28 @@ import {
 } from "@reef-defi/extension-base/background/types";
 import keyring from "@polkadot/ui-keyring";
 import {assert} from "@reef-defi/util";
-import {accounts as accountsObservable} from "@polkadot/ui-keyring/observable/accounts";
 import {BehaviorSubject} from "rxjs";
 import {availableNetworks} from "@reef-defi/react-lib";
 import {createSubscription, unsubscribe} from "@reef-defi/extension-base/background/handlers/subscriptions";
+//import chrome from "@reef-defi/extension-inject/chrome";
 
 const REEF_NETWORK_RPC_URL_KEY = 'reefNetworkRpcUrl';
 export const networkRpcUrlSubject: BehaviorSubject<string> = new BehaviorSubject<string>(localStorage.getItem(REEF_NETWORK_RPC_URL_KEY) || availableNetworks.mainnet.rpcUrl);
+
+export function setSelectedAccount(accountsJson: AccountJson[]): AccountJson[] {
+    if (accountsJson.length) {
+        const lastSelectedSort = accountsJson.sort((a, b) => {
+            const selectedAAt = a['_isSelectedTs'] as number || 0;
+            const selectedBAt = b['_isSelectedTs'] as number || 0;
+            return selectedBAt - selectedAAt;
+        });
+        const selected = lastSelectedSort[0];
+        accountsJson.forEach((aJson) => {
+            aJson.isSelected = aJson.address === selected.address
+        });
+    }
+    return accountsJson;
+}
 
 export default class ReefExtension extends Extension {
 
@@ -37,19 +53,13 @@ export default class ReefExtension extends Extension {
     }
 
     private accountsSelect({address}: RequestAccountSelect): boolean {
-        const currSelected = keyring.getPairs().find(p => p.meta.isSelected === true);
         const newSelectPair = keyring.getPair(address);
         assert(newSelectPair, 'Unable to find pair');
-        if (currSelected) {
-            if (currSelected.address === address) {
-                return true;
-            }
-            keyring.saveAccountMeta(currSelected, {...currSelected.meta, isSelected: false});
-        }
+        // using timestamp since subject emits on every meta change - so can't unselect old without event
+        keyring.saveAccountMeta(newSelectPair, {...newSelectPair.meta, _isSelectedTs: (new Date()).getTime()});
 
-        keyring.saveAccountMeta(newSelectPair, {...newSelectPair.meta, isSelected: true});
 
-        accountsObservable.subject.next(accountsObservable.subject.getValue());
+        // accountsObservable.subject.next(accountsObservable.subject.getValue());
         return true;
     }
 

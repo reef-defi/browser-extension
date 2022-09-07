@@ -19,6 +19,7 @@ import { accounts as accountsObservable } from '@polkadot/ui-keyring/observable/
 
 import State from './State';
 import { createSubscription, unsubscribe } from './subscriptions';
+import {setSelectedAccount} from "../../../../reef/extension-base/background/handlers/ReefExtension";
 
 type CachedUnlocks = Record<string, number>;
 
@@ -36,11 +37,12 @@ function getSuri (seed: string, type?: KeypairType): string {
 }
 
 export function transformAccounts (accounts: SubjectInfo): AccountJson[] {
-  return Object.values(accounts).map(({ json: { address, meta }, type }): AccountJson => ({
+  const accountsJson = Object.values(accounts).map(({json: {address, meta}, type}): AccountJson => ({
     address,
     ...meta,
     type
   }));
+  return setSelectedAccount(accountsJson);
 }
 
 function isJsonPayload (value: SignerPayloadJSON | SignerPayloadRaw): value is SignerPayloadJSON {
@@ -170,7 +172,7 @@ export default class Extension {
         return this.windowOpen(request as AllowedPath);
 
       default:
-        throw new Error(`Unable to handle message of type ${type}`);
+        throw new Error(`Extension.ts Unable to handle message of type ${type}`);
     }
   }
 
