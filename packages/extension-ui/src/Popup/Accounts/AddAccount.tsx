@@ -3,10 +3,12 @@
 
 import type { ThemeProps } from '../../types';
 
+import { ActionContext } from '@reef-defi/extension-ui/components';
 import React, { useCallback, useContext } from 'react';
 import styled from 'styled-components';
 
-import { ActionContext } from '../../components';
+import { Button } from '../../../../reef/extension-ui/uik/Button';
+import { ButtonArea } from '../../components';
 import useTranslation from '../../hooks/useTranslation';
 import Header from '../../partials/Header';
 import AddAccountImage from './AddAccountImage';
@@ -18,8 +20,12 @@ interface Props extends ThemeProps {
 function AddAccount ({ className }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const onAction = useContext(ActionContext);
-  const _onClick = useCallback(
+  const _onClickCreate = useCallback(
     () => onAction('/account/create'),
+    [onAction]
+  );
+  const _onClickImport = useCallback(
+    () => onAction('/account/import-seed'),
     [onAction]
   );
 
@@ -32,12 +38,28 @@ function AddAccount ({ className }: Props): React.ReactElement<Props> {
       />
       <div className={className}>
         <div className='image'>
-          <AddAccountImage onClick={_onClick} />
+          <AddAccountImage onClick={_onClickCreate} />
         </div>
         <div className='no-accounts'>
-          <p>{t<string>("You currently don't have any accounts. Create your first account to get started.")}</p>
+          <p>{t<string>("You currently don't have any accounts. Create your first account to get started. Or import if you already have an account.")}</p>
         </div>
       </div>
+      <ButtonArea>
+        <Button
+          className='uik-button--fullWidth'
+          rounded
+          fill
+          size='large'
+          onClick={_onClickCreate}>
+          {t<string>('Create account')}
+        </Button>
+        <Button
+          rounded
+          size='large'
+          onClick={_onClickImport}>
+          {t<string>('Import account')}
+        </Button>
+      </ButtonArea>
     </>
   );
 }

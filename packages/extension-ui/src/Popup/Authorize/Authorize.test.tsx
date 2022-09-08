@@ -10,7 +10,7 @@ import { configure, mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 
-import { AuthorizeReqContext, Icon, themes } from '../../components';
+import { AuthorizeReqContext, themes } from '../../components';
 import { Header } from '../../partials';
 import Request from './Request';
 import Authorize from '.';
@@ -48,8 +48,7 @@ describe('Authorize', () => {
     ]);
 
     expect(wrapper.find(Request).length).toBe(2);
-    expect(wrapper.find(Icon).length).toBe(2);
     expect(wrapper.find(Request).at(1).find('.tab-info').text()).toBe('An application, self-identifying as abc is requesting access from http://polkadot.pl.');
-    expect(wrapper.find('button.acceptButton').length).toBe(1);
+    expect(wrapper.find('button.uik-button--fullWidth').length).toBe(2);
   });
 });

@@ -93,7 +93,11 @@ export function chooseTheme (): AvailableThemes {
       : 'light';
   }
 
-  return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches
+  const theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches
     ? 'light'
     : 'dark';
+
+  localStorage.setItem('theme', theme);
+
+  return theme;
 }
