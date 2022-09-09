@@ -16,7 +16,7 @@ export class ReefTabs extends Tabs {
         return this.networkSubscribe(id, port);
     }
 
-    super.handle(id, type, request, url, port);
+    return super.handle(id, type, request, url, port);
   }
 
   private networkSubscribe (id: string, port: chrome.runtime.Port): boolean {
