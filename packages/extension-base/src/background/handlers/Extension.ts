@@ -17,12 +17,9 @@ import { TypeRegistry } from '@polkadot/types';
 import keyring from '@polkadot/ui-keyring';
 import { accounts as accountsObservable } from '@polkadot/ui-keyring/observable/accounts';
 
+import { getSelectedAccountIndex, setSelectedAccount } from '../../../../reef/extension-base/background/handlers/ReefExtension';
 import State from './State';
 import { createSubscription, unsubscribe } from './subscriptions';
-import {
-  getSelectedAccountIndex,
-  setSelectedAccount
-} from "../../../../reef/extension-base/background/handlers/ReefExtension";
 
 type CachedUnlocks = Record<string, number>;
 
@@ -41,12 +38,12 @@ function getSuri (seed: string, type?: KeypairType): string {
 
 export function transformAccounts (accounts: SubjectInfo): AccountJson[] {
   const singleAddresses = Object.values(accounts);
-  const accountsJson = singleAddresses.map(({json: {address, meta}, type}): AccountJson => ({
+  const accountsJson = singleAddresses.map(({ json: { address, meta }, type }): AccountJson => ({
     address,
     ...meta,
     type
   }));
-  const selIndex = getSelectedAccountIndex(singleAddresses.map(sa => sa.json));
+  const selIndex = getSelectedAccountIndex(singleAddresses.map((sa) => sa.json));
 
   return setSelectedAccount(accountsJson, selIndex);
 }
@@ -67,7 +64,6 @@ export default class Extension {
 
   // eslint-disable-next-line @typescript-eslint/require-await
   public async handle<TMessageType extends MessageTypes> (id: string, type: TMessageType, request: RequestTypes[TMessageType], port: chrome.runtime.Port): Promise<ResponseType<TMessageType>> {
-
     switch (type) {
       case 'pri(authorize.approve)':
         return this.authorizeApprove(request as RequestAuthorizeApprove);

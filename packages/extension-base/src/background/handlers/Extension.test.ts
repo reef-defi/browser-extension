@@ -14,10 +14,10 @@ import { cryptoWaitReady } from '@reef-defi/util-crypto';
 import { TypeRegistry } from '@polkadot/types';
 import keyring from '@polkadot/ui-keyring';
 
+import ReefExtension from '../../../../reef/extension-base/background/handlers/ReefExtension';
 import { AccountsStore } from '../../stores';
 import State, { AuthUrls } from './State';
 import Tabs from './Tabs';
-import ReefExtension from "../../../../reef/extension-base/background/handlers/ReefExtension";
 
 describe('Extension', () => {
   let extension: ReefExtension;

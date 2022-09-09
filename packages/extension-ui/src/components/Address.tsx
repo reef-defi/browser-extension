@@ -21,6 +21,7 @@ import styled from 'styled-components';
 
 import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
 
+import { selectAccount } from '../../../reef/extension-ui/messaging';
 import useMetadata from '../hooks/useMetadata';
 import useOutsideClick from '../hooks/useOutsideClick';
 import useTranslation from '../hooks/useTranslation';
@@ -32,7 +33,6 @@ import { Button, Loading } from './../../../reef/extension-ui/uik';
 import { AccountContext, ActionContext, SettingsContext, SigningReqContext } from './contexts';
 import Identicon from './Identicon';
 import Menu from './Menu';
-import {selectAccount} from "../../../reef/extension-ui/messaging";
 
 export interface Props {
   actions?: React.ReactNode;
@@ -118,10 +118,10 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   const [moveMenuUp, setIsMovedMenu] = useState(false);
   const actionsRef = useRef<HTMLDivElement>(null);
   const [signer, setSigner] = useState<ReefSigner|undefined>(signerProp);
-  /*const openRoute = useCallback(
+  /* const openRoute = useCallback(
     (path: string) => onAction(path),
     [onAction]
-  );*/
+  ); */
 
   useEffect(() => {
     const foundSigner = signers?.find((s) => s.address === account?.address);
@@ -269,7 +269,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
     // const selected =  selectedAccount?.address === account?.address;
 
     const onSelectAccount = (account: AccountJson | null): void => {
-      if(account) {
+      if (account) {
         selectAccount(account.address);
       }
       // openRoute('/tokens'); // redirect to tokens page
@@ -277,7 +277,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
 
     return (
       <>
-        {/*{!(!!signRequests && !!signRequests.length) && selectedAccount && (selected*/}
+        {/* {!(!!signRequests && !!signRequests.length) && selectedAccount && (selected */}
         {!(!!signRequests && !!signRequests.length) && (account?.isSelected
           ? <Button
             className='account-card__select-btn account-card__select-btn--selected'

@@ -1,67 +1,53 @@
 // Copyright 2019-2021 @polkadot/extension authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type {
-  InjectedAccount,
-  InjectedMetadataKnown,
-  MetadataDef,
-  ProviderMeta
-} from '@reef-defi/extension-inject/types';
-import type {KeyringPair} from '@polkadot/keyring/types';
-import type {JsonRpcResponse} from '@polkadot/rpc-provider/types';
-import type {SignerPayloadJSON, SignerPayloadRaw} from '@polkadot/types/types';
-import type {SingleAddress, SubjectInfo} from '@polkadot/ui-keyring/observable/types';
-import type {
-  MessageTypes,
-  RequestAccountList,
-  RequestAuthorizeTab,
-  RequestRpcSend,
-  RequestRpcSubscribe,
-  RequestRpcUnsubscribe,
-  RequestTypes,
-  ResponseRpcListProviders,
-  ResponseSigning,
-  ResponseTypes,
-  SubscriptionMessageTypes
-} from '../types';
+import type { InjectedAccount, InjectedMetadataKnown, MetadataDef, ProviderMeta } from '@reef-defi/extension-inject/types';
+import type { KeyringPair } from '@polkadot/keyring/types';
+import type { JsonRpcResponse } from '@polkadot/rpc-provider/types';
+import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
+import type { SingleAddress, SubjectInfo } from '@polkadot/ui-keyring/observable/types';
+import type { MessageTypes, RequestAccountList, RequestAuthorizeTab, RequestRpcSend, RequestRpcSubscribe, RequestRpcUnsubscribe, RequestTypes, ResponseRpcListProviders, ResponseSigning, ResponseTypes, SubscriptionMessageTypes } from '../types';
 
-import {PHISHING_PAGE_REDIRECT} from '@reef-defi/extension-base/defaults';
-import {canDerive} from '@reef-defi/extension-base/utils';
+import { PHISHING_PAGE_REDIRECT } from '@reef-defi/extension-base/defaults';
+import { canDerive } from '@reef-defi/extension-base/utils';
 
-import {checkIfDenied} from '@polkadot/phishing';
+import { checkIfDenied } from '@polkadot/phishing';
 import keyring from '@polkadot/ui-keyring';
-import {accounts as accountsObservable} from '@polkadot/ui-keyring/observable/accounts';
-import {assert, isNumber} from '@polkadot/util';
+import { accounts as accountsObservable } from '@polkadot/ui-keyring/observable/accounts';
+import { assert, isNumber } from '@polkadot/util';
 
+import { getSelectedAccountIndex } from '../../../../reef/extension-base/background/handlers/ReefExtension';
 import RequestBytesSign from '../RequestBytesSign';
 import RequestExtrinsicSign from '../RequestExtrinsicSign';
 import State from './State';
-import {createSubscription, unsubscribe} from './subscriptions';
-import {getSelectedAccountIndex} from "../../../../reef/extension-base/background/handlers/ReefExtension";
+import { createSubscription, unsubscribe } from './subscriptions';
 
 function transformAccounts (accounts: SubjectInfo, anyType = false): InjectedAccount[] {
   const accs = Object
-    .values(accounts)
+    .values(accounts);
 
   const filtered = accs.filter(({ json: { meta: { isHidden } } }) => !isHidden)
     .filter(({ type }) => anyType ? true : canDerive(type))
-    .sort((a, b) => (a.json.meta.whenCreated || 0) - (b.json.meta.whenCreated || 0))
+    .sort((a, b) => (a.json.meta.whenCreated || 0) - (b.json.meta.whenCreated || 0));
 
-  const selIndex = getSelectedAccountIndex(accs.map(sa => sa.json));
+  const selIndex = getSelectedAccountIndex(accs.map((sa) => sa.json));
   let selAccountAddress: string;
+
   if (selIndex != null) {
     selAccountAddress = accs[selIndex].json.address;
   }
+
   return filtered.map((val: SingleAddress): InjectedAccount => {
-      const { json: { address, meta: { genesisHash, name } }, type } = val
-      return {
-        address,
-            genesisHash,
-            name,
-            type,
-            isSelected: address===selAccountAddress,
-      }
-    });
+    const { json: { address, meta: { genesisHash, name } }, type } = val;
+
+    return {
+      address,
+      genesisHash,
+      name,
+      type,
+      isSelected: address === selAccountAddress
+    };
+  });
 }
 
 export default class Tabs {

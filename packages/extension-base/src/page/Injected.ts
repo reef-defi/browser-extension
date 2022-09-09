@@ -1,14 +1,16 @@
 // Copyright 2019-2021 @polkadot/extension authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type {Injected} from '@reef-defi/extension-inject/types';
-import type {SendRequest} from './types';
+import type { Injected } from '@reef-defi/extension-inject/types';
+import type { SendRequest } from './types';
+
+import Accounts from '@reef-defi/extension-base/page/Accounts';
+
+import { ReefInjectedProvider } from '../../../reef/extension-base/src/page/ReefInjectedProvider';
+import { ReefInjectedSigner } from '../../../reef/extension-base/src/page/ReefInjectedSigner';
 import Metadata from './Metadata';
 import PostMessageProvider from './PostMessageProvider';
 import Signer from './Signer';
-import Accounts from "@reef-defi/extension-base/page/Accounts";
-import {ReefInjectedSigner} from "../../../reef/extension-base/src/page/ReefInjectedSigner";
-import {ReefInjectedProvider} from "../../../reef/extension-base/src/page/ReefInjectedProvider";
 
 export default class implements Injected {
   public readonly accounts: Accounts;

@@ -10,12 +10,12 @@ import styled, { ThemeContext } from 'styled-components';
 
 import settings from '@polkadot/ui-settings';
 
+import { selectNetwork } from '../../../reef/extension-ui/messaging';
 import { ActionContext, ActionText, Checkbox, Dropdown, Menu, MenuDivider, MenuItem, Svg, Switch, themes, ThemeSwitchContext } from '../components';
 import useIsPopup from '../hooks/useIsPopup';
 import useTranslation from '../hooks/useTranslation';
 import { setNotification, windowOpen } from '../messaging';
 import getLanguageOptions from '../util/getLanguageOptions';
-import {selectNetwork} from "../../../reef/extension-ui/messaging";
 
 interface Props extends ThemeProps {
   className?: string;
