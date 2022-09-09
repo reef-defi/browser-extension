@@ -19,7 +19,10 @@ import { accounts as accountsObservable } from '@polkadot/ui-keyring/observable/
 
 import State from './State';
 import { createSubscription, unsubscribe } from './subscriptions';
-import {setSelectedAccount} from "../../../../reef/extension-base/background/handlers/ReefExtension";
+import {
+  getSelectedAccountIndex,
+  setSelectedAccount
+} from "../../../../reef/extension-base/background/handlers/ReefExtension";
 
 type CachedUnlocks = Record<string, number>;
 
@@ -37,12 +40,15 @@ function getSuri (seed: string, type?: KeypairType): string {
 }
 
 export function transformAccounts (accounts: SubjectInfo): AccountJson[] {
-  const accountsJson = Object.values(accounts).map(({json: {address, meta}, type}): AccountJson => ({
+  const singleAddresses = Object.values(accounts);
+  const accountsJson = singleAddresses.map(({json: {address, meta}, type}): AccountJson => ({
     address,
     ...meta,
     type
   }));
-  return setSelectedAccount(accountsJson);
+  const selIndex = getSelectedAccountIndex(singleAddresses.map(sa => sa.json));
+
+  return setSelectedAccount(accountsJson, selIndex);
 }
 
 function isJsonPayload (value: SignerPayloadJSON | SignerPayloadRaw): value is SignerPayloadJSON {

@@ -1,5 +1,4 @@
 import Extension from "@reef-defi/extension-base/background/handlers/Extension";
-import State from "@reef-defi/extension-base/background/handlers/State";
 import {
     AccountJson,
     MessageTypes,
@@ -13,31 +12,35 @@ import {assert} from "@reef-defi/util";
 import {BehaviorSubject} from "rxjs";
 import {availableNetworks} from "@reef-defi/react-lib";
 import {createSubscription, unsubscribe} from "@reef-defi/extension-base/background/handlers/subscriptions";
-//import chrome from "@reef-defi/extension-inject/chrome";
+import {InjectedAccount} from "@reef-defi/extension-inject/types";
 
 const REEF_NETWORK_RPC_URL_KEY = 'reefNetworkRpcUrl';
 export const networkRpcUrlSubject: BehaviorSubject<string> = new BehaviorSubject<string>(localStorage.getItem(REEF_NETWORK_RPC_URL_KEY) || availableNetworks.mainnet.rpcUrl);
 
-export function setSelectedAccount(accountsJson: AccountJson[]): AccountJson[] {
-    if (accountsJson.length) {
-        const lastSelectedSort = accountsJson.sort((a, b) => {
-            const selectedAAt = a['_isSelectedTs'] as number || 0;
-            const selectedBAt = b['_isSelectedTs'] as number || 0;
-            return selectedBAt - selectedAAt;
-        });
-        const selected = lastSelectedSort[0];
-        accountsJson.forEach((aJson) => {
-            aJson.isSelected = aJson.address === selected.address
+export function setSelectedAccount<T extends AccountJson|InjectedAccount>(accountsJson: T[], index: number|undefined): T[] {
+    if (accountsJson.length && index!=null) {
+        accountsJson.forEach((a, i) => {
+            a.isSelected = i === index
         });
     }
     return accountsJson;
 }
 
-export default class ReefExtension extends Extension {
-
-    constructor(state: State) {
-        super(state);
+export function getSelectedAccountIndex(accountsMeta: { meta:any }[]): number|undefined {
+    if (accountsMeta.length) {
+        const accsSelectedTsArr = accountsMeta.map(a => a.meta._isSelectedTs);
+        const lastSelectedSort = accsSelectedTsArr.sort((a, b) => {
+            const selectedAAt = a || 0;
+            const selectedBAt = b || 0;
+            return selectedBAt - selectedAAt;
+        });
+        const lastTs = lastSelectedSort[0];
+        return accountsMeta.findIndex(am => am.meta._isSelectedTs === lastTs);
     }
+    return undefined;
+}
+
+export default class ReefExtension extends Extension {
 
     override async handle<TMessageType extends MessageTypes>(id: string, type: TMessageType, request: RequestTypes[TMessageType], port: chrome.runtime.Port): Promise<ResponseType<TMessageType>> {
         switch (type) {
