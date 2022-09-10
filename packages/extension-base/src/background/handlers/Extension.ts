@@ -17,6 +17,7 @@ import { TypeRegistry } from '@polkadot/types';
 import keyring from '@polkadot/ui-keyring';
 import { accounts as accountsObservable } from '@polkadot/ui-keyring/observable/accounts';
 
+import { getSelectedAccountIndex, setSelectedAccount } from '../../../../reef/extension-base/background/handlers/ReefExtension';
 import State from './State';
 import { createSubscription, unsubscribe } from './subscriptions';
 
@@ -36,11 +37,15 @@ function getSuri (seed: string, type?: KeypairType): string {
 }
 
 export function transformAccounts (accounts: SubjectInfo): AccountJson[] {
-  return Object.values(accounts).map(({ json: { address, meta }, type }): AccountJson => ({
+  const singleAddresses = Object.values(accounts);
+  const accountsJson = singleAddresses.map(({ json: { address, meta }, type }): AccountJson => ({
     address,
     ...meta,
     type
   }));
+  const selIndex = getSelectedAccountIndex(singleAddresses.map((sa) => sa.json));
+
+  return setSelectedAccount(accountsJson, selIndex);
 }
 
 function isJsonPayload (value: SignerPayloadJSON | SignerPayloadRaw): value is SignerPayloadJSON {
@@ -169,7 +174,7 @@ export default class Extension {
         return this.windowOpen(request as AllowedPath);
 
       default:
-        throw new Error(`Unable to handle message of type ${type}`);
+        throw new Error(`Extension.ts Unable to handle message of type ${type}`);
     }
   }
 
@@ -231,7 +236,7 @@ export default class Extension {
     };
   }
 
-  private accountsForget ({ address }: RequestAccountForget): boolean {
+  protected accountsForget ({ address }: RequestAccountForget): boolean {
     keyring.forgetAccount(address);
 
     return true;
@@ -253,7 +258,7 @@ export default class Extension {
     return remainingTime;
   }
 
-  private accountsShow ({ address, isShowing }: RequestAccountShow): boolean {
+  protected accountsShow ({ address, isShowing }: RequestAccountShow): boolean {
     const pair = keyring.getPair(address);
 
     assert(pair, 'Unable to find pair');
@@ -284,7 +289,7 @@ export default class Extension {
   }
 
   // FIXME This looks very much like what we have in Tabs
-  private accountsSubscribe (id: string, port: chrome.runtime.Port): boolean {
+  protected accountsSubscribe (id: string, port: chrome.runtime.Port): boolean {
     const cb = createSubscription<'pri(accounts.subscribe)'>(id, port);
     const subscription = accountsObservable.subject.subscribe((accounts: SubjectInfo): void =>
       cb(transformAccounts(accounts))

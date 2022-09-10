@@ -10,6 +10,7 @@ import styled, { ThemeContext } from 'styled-components';
 
 import settings from '@polkadot/ui-settings';
 
+import { selectNetwork } from '../../../reef/extension-ui/messaging';
 import { ActionContext, ActionText, Checkbox, Dropdown, Menu, MenuDivider, MenuItem, Svg, Switch, themes, ThemeSwitchContext } from '../components';
 import useIsPopup from '../hooks/useIsPopup';
 import useTranslation from '../hooks/useTranslation';
@@ -90,7 +91,7 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
         .find((network: Network) => network.rpcUrl === value);
 
       if (selectedNetwork) {
-        appState.setCurrentNetwork(selectedNetwork);
+        selectNetwork(selectedNetwork.rpcUrl).catch((err) => console.log('Error selectNetwork ', err));
       }
     }, []
   );

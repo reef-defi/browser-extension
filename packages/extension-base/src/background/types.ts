@@ -20,7 +20,7 @@ type KeysWithDefinedValues<T> = {
   [K in keyof T]: T[K] extends undefined ? never : K
 }[keyof T];
 
-type NoUndefinedValues<T> = {
+export type NoUndefinedValues<T> = {
   [K in KeysWithDefinedValues<T>]: T[K]
 };
 
@@ -43,6 +43,8 @@ export interface AccountJson extends KeyringPair$Meta {
   suri?: string;
   type?: KeypairType;
   whenCreated?: number;
+  // REEF update
+  isSelected?: boolean;
 }
 
 export type AccountWithChildren = AccountJson & {
@@ -88,6 +90,11 @@ export interface RequestSignatures {
   'pri(accounts.show)': [RequestAccountShow, boolean];
   'pri(accounts.tie)': [RequestAccountTie, boolean];
   'pri(accounts.subscribe)': [RequestAccountSubscribe, boolean, AccountJson[]];
+  // REEF update
+  'pri(network.subscribe)': [RequestNetworkSubscribe, boolean, string];
+  'pri(network.select)': [RequestNetworkSelect, boolean];
+  // REEF update
+  'pri(accounts.select)': [RequestAccountSelect, boolean];
   'pri(accounts.validate)': [RequestAccountValidate, boolean];
   'pri(accounts.changePassword)': [RequestAccountChangePassword, boolean];
   'pri(authorize.approve)': [RequestAuthorizeApprove, boolean];
@@ -130,6 +137,8 @@ export interface RequestSignatures {
   'pub(rpc.subscribe)': [RequestRpcSubscribe, number, JsonRpcResponse];
   'pub(rpc.subscribeConnected)': [null, boolean, boolean];
   'pub(rpc.unsubscribe)': [RequestRpcUnsubscribe, boolean];
+  // REEF update
+  'pub(network.subscribe)': [RequestNetworkSubscribe, boolean, string];
 }
 
 export type MessageTypes = keyof RequestSignatures;
@@ -148,6 +157,15 @@ export interface TransportRequestMessage<TMessageType extends MessageTypes> {
   origin: 'reef_page' | 'reef_extension';
   request: RequestTypes[TMessageType];
 }
+// REEF update
+export interface RequestAccountSelect {
+  address: string;
+}
+
+// REEF update
+export interface RequestNetworkSelect {
+  rpcUrl: string;
+}
 
 export interface RequestAuthorizeTab {
   origin: string;
@@ -162,6 +180,9 @@ export interface RequestAuthorizeReject {
 }
 
 export type RequestAuthorizeSubscribe = null;
+
+// REEF update
+export type RequestNetworkSubscribe = null;
 
 export interface RequestMetadataApprove {
   id: string;
@@ -320,8 +341,8 @@ export type ResponseType<TMessageType extends keyof RequestSignatures> = Request
 interface TransportResponseMessageSub<TMessageType extends MessageTypesWithSubscriptions> {
   error?: string;
   id: string;
-  response?: ResponseTypes[TMessageType];
-  subscription?: SubscriptionMessageTypes[TMessageType];
+  response?: ResponseTypes[TMessageType] | ResponseTypes[TMessageType];
+  subscription?: SubscriptionMessageTypes[TMessageType] | SubscriptionMessageTypes[TMessageType];
 }
 
 interface TransportResponseMessageNoSub<TMessageType extends MessageTypesWithNoSubscriptions> {

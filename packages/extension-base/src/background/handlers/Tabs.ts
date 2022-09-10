@@ -5,7 +5,7 @@ import type { InjectedAccount, InjectedMetadataKnown, MetadataDef, ProviderMeta 
 import type { KeyringPair } from '@polkadot/keyring/types';
 import type { JsonRpcResponse } from '@polkadot/rpc-provider/types';
 import type { SignerPayloadJSON, SignerPayloadRaw } from '@polkadot/types/types';
-import type { SubjectInfo } from '@polkadot/ui-keyring/observable/types';
+import type { SingleAddress, SubjectInfo } from '@polkadot/ui-keyring/observable/types';
 import type { MessageTypes, RequestAccountList, RequestAuthorizeTab, RequestRpcSend, RequestRpcSubscribe, RequestRpcUnsubscribe, RequestTypes, ResponseRpcListProviders, ResponseSigning, ResponseTypes, SubscriptionMessageTypes } from '../types';
 
 import { PHISHING_PAGE_REDIRECT } from '@reef-defi/extension-base/defaults';
@@ -16,23 +16,38 @@ import keyring from '@polkadot/ui-keyring';
 import { accounts as accountsObservable } from '@polkadot/ui-keyring/observable/accounts';
 import { assert, isNumber } from '@polkadot/util';
 
+import { getSelectedAccountIndex } from '../../../../reef/extension-base/background/handlers/ReefExtension';
 import RequestBytesSign from '../RequestBytesSign';
 import RequestExtrinsicSign from '../RequestExtrinsicSign';
 import State from './State';
 import { createSubscription, unsubscribe } from './subscriptions';
 
 function transformAccounts (accounts: SubjectInfo, anyType = false): InjectedAccount[] {
-  return Object
-    .values(accounts)
-    .filter(({ json: { meta: { isHidden } } }) => !isHidden)
+  const accs = Object
+    .values(accounts);
+
+  const filtered = accs.filter(({ json: { meta: { isHidden } } }) => !isHidden)
     .filter(({ type }) => anyType ? true : canDerive(type))
-    .sort((a, b) => (a.json.meta.whenCreated || 0) - (b.json.meta.whenCreated || 0))
-    .map(({ json: { address, meta: { genesisHash, name } }, type }): InjectedAccount => ({
+    .sort((a, b) => (a.json.meta.whenCreated || 0) - (b.json.meta.whenCreated || 0));
+
+  const selIndex = getSelectedAccountIndex(accs.map((sa) => sa.json));
+  let selAccountAddress: string;
+
+  if (selIndex != null) {
+    selAccountAddress = accs[selIndex].json.address;
+  }
+
+  return filtered.map((val: SingleAddress): InjectedAccount => {
+    const { json: { address, meta: { genesisHash, name } }, type } = val;
+
+    return {
       address,
       genesisHash,
       name,
-      type
-    }));
+      type,
+      isSelected: address === selAccountAddress
+    };
+  });
 }
 
 export default class Tabs {

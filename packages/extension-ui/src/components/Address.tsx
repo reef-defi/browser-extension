@@ -21,6 +21,7 @@ import styled from 'styled-components';
 
 import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
 
+import { selectAccount } from '../../../reef/extension-ui/messaging';
 import useMetadata from '../hooks/useMetadata';
 import useOutsideClick from '../hooks/useOutsideClick';
 import useTranslation from '../hooks/useTranslation';
@@ -106,7 +107,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   const { t } = useTranslation();
   const onAction = useContext(ActionContext);
   const { accounts } = useContext(AccountContext);
-  const selectedAccount: ReefSigner|undefined | null = hooks.useObservableState(appState.selectedSigner$);
+  // const selectedAccount: ReefSigner|undefined | null = hooks.useObservableState(appState.selectedSigner$);
   const signers: ReefSigner[]|undefined | null = hooks.useObservableState(appState.signers$);
   const settings = useContext(SettingsContext);
   const [{ account, formatted, genesisHash: recodedGenesis, prefix, type }, setRecoded] = useState<Recoded>(defaultRecoded);
@@ -117,10 +118,10 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   const [moveMenuUp, setIsMovedMenu] = useState(false);
   const actionsRef = useRef<HTMLDivElement>(null);
   const [signer, setSigner] = useState<ReefSigner|undefined>(signerProp);
-  const openRoute = useCallback(
+  /* const openRoute = useCallback(
     (path: string) => onAction(path),
     [onAction]
-  );
+  ); */
 
   useEffect(() => {
     const foundSigner = signers?.find((s) => s.address === account?.address);
@@ -256,22 +257,22 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   };
 
   const isSelected = () => {
-    const selected = selectedAccount?.address === account?.address;
-
-    return !(!!signRequests && !!signRequests.length) && selectedAccount && selected;
+    return !(!!signRequests && !!signRequests.length) && account?.isSelected;
   };
 
   const SelectButton = () => {
-    const selected = selectedAccount?.address === account?.address;
-
-    const selectAccount = (account: AccountJson | null): void => {
-      appState.setCurrentAddress(account?.address);
-      openRoute('/tokens'); // redirect to tokens page
+    const onSelectAccount = (account: AccountJson | null): void => {
+      if (account) {
+        selectAccount(account.address)
+          .catch((error: Error) => console.log('Error selectAccount ', error));
+      }
+      // openRoute('/tokens'); // redirect to tokens page
     };
 
     return (
       <>
-        {!(!!signRequests && !!signRequests.length) && selectedAccount && (selected
+        {/* {!(!!signRequests && !!signRequests.length) && selectedAccount && (selected */}
+        {!(!!signRequests && !!signRequests.length) && (account?.isSelected
           ? <Button
             className='account-card__select-btn account-card__select-btn--selected'
             fill
@@ -281,7 +282,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           </Button>
           : <Button
             className='account-card__select-btn'
-            onClick={() => selectAccount(account)}
+            onClick={() => onSelectAccount(account)}
             size='small'
             type='button'
           >Select

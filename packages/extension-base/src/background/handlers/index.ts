@@ -5,14 +5,14 @@ import type { MessageTypes, TransportRequestMessage } from '../types';
 
 import { assert } from '@reef-defi/util';
 
+import ReefExtension from '../../../../reef/extension-base/background/handlers/ReefExtension';
+import { ReefTabs } from '../../../../reef/extension-base/background/handlers/ReefTabs';
 import { PORT_EXTENSION } from '../../defaults';
-import Extension from './Extension';
 import State from './State';
-import Tabs from './Tabs';
 
 const state = new State();
-const extension = new Extension(state);
-const tabs = new Tabs(state);
+const extension = new ReefExtension(state);
+const tabs = new ReefTabs(state);
 
 export default function handler<TMessageType extends MessageTypes> ({ id, message, request }: TransportRequestMessage<TMessageType>, port: chrome.runtime.Port, extensionPortName = PORT_EXTENSION): void {
   const isExtension = port.name === extensionPortName;

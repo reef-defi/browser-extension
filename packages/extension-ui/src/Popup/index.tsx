@@ -8,7 +8,7 @@ import { ApolloClient, ApolloProvider } from '@apollo/client';
 import { Provider } from '@reef-defi/evm-provider';
 import { PHISHING_PAGE_REDIRECT } from '@reef-defi/extension-base/defaults';
 import { canDerive } from '@reef-defi/extension-base/utils';
-import { appState, graphql, hooks, ReefSigner } from '@reef-defi/react-lib';
+import { appState, availableNetworks, graphql, hooks, ReefSigner } from '@reef-defi/react-lib';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router';
 
@@ -20,6 +20,7 @@ import { HeaderComponent } from '../../../reef/extension-ui/components/HeaderCom
 import { ReefContext } from '../../../reef/extension-ui/components/ReefContext';
 import { Swap } from '../../../reef/extension-ui/components/Swap';
 import { useReefSigners } from '../../../reef/extension-ui/hooks/useReefSigners';
+import { selectAccount, subscribeNetwork } from '../../../reef/extension-ui/messaging';
 import { ErrorBoundary, Loading } from '../components';
 import { AccountContext, ActionContext, AuthorizeReqContext, MediaContext, MetadataReqContext, SettingsContext, SigningReqContext } from '../components/contexts';
 import { chooseTheme } from '../components/themes';
@@ -119,12 +120,30 @@ export default function Popup (): React.ReactElement {
       setCameraOn(settings.camera === 'on');
     });
 
+    // REEF update
+    subscribeNetwork((rpcUrl) => appState.setCurrentNetwork(Object.values(availableNetworks).find((n) => n.rpcUrl === rpcUrl) || availableNetworks.mainnet))
+      .catch((err) => console.log('Error Popup subscribeNetwork ', err));
+
     _onAction();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect((): void => {
-    setAccountCtx(initAccountContext(accounts || [], null));
+    const onAccounts = async () => {
+      const selAcc = (accounts as AccountJson[])?.find((acc) => !!acc.isSelected);
+
+      if (!selAcc && accounts?.length) {
+        await selectAccount(accounts[0].address);
+
+        return;
+      }
+
+      setAccountCtx(initAccountContext(accounts || [], selAcc || null));
+
+      appState.setCurrentAddress(selAcc?.address);
+    };
+
+    onAccounts().catch((err) => console.log('Error onAccounts ', err));
   }, [accounts]);
 
   useEffect((): void => {
