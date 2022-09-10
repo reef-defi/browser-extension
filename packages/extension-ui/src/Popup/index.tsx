@@ -23,6 +23,7 @@ import { useReefSigners } from '../../../reef/extension-ui/hooks/useReefSigners'
 import { selectAccount, subscribeNetwork } from '../../../reef/extension-ui/messaging';
 import { ErrorBoundary, Loading } from '../components';
 import { AccountContext, ActionContext, AuthorizeReqContext, MediaContext, MetadataReqContext, SettingsContext, SigningReqContext } from '../components/contexts';
+import { chooseTheme } from '../components/themes';
 import ToastProvider from '../components/Toast/ToastProvider';
 import { subscribeAccounts, subscribeAuthorizeRequests, subscribeMetadataRequests, subscribeSigningRequests } from '../messaging';
 import { buildHierarchy } from '../util/buildHierarchy';
@@ -44,6 +45,9 @@ import Signing from './Signing';
 import Welcome from './Welcome';
 
 const startSettings = uiSettings.get();
+
+// Load approprite theme based on user preffered settings
+chooseTheme();
 
 // Request permission for video, based on access we can hide/show import
 async function requestMediaAccess (cameraOn: boolean): Promise<boolean> {
@@ -179,7 +183,7 @@ export default function Popup (): React.ReactElement {
                       </ReefContext>
                     </ApolloProvider>)}
                     <ToastProvider>
-                      {isWelcomeDone && accounts?.length > 0 && (<HeaderComponent></HeaderComponent>)}
+                      {isWelcomeDone && accounts?.length > 0 && authRequests?.length <= 0 && (<HeaderComponent></HeaderComponent>)}
                       <Switch>
                         <Route
                           exact

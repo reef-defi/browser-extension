@@ -3,7 +3,10 @@
 
 import type { ThemeProps } from '../../types';
 
-import React, { useContext } from 'react';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 
 import { AuthorizeReqContext } from '../../components';
@@ -18,20 +21,54 @@ interface Props extends ThemeProps {
 function Authorize ({ className = '' }: Props): React.ReactElement {
   const { t } = useTranslation();
   const requests = useContext(AuthorizeReqContext);
+  const [requestIndex, setRequestIndex] = useState(0);
+
+  function handleRequestIndexLoop (index: number): number {
+    if (index < 0) {
+      return requests.length - 1;
+    }
+
+    if (index < requests.length) {
+      return index;
+    }
+
+    return 0;
+  }
 
   return (
     <>
-      <div className={`${className} ${requests.length === 1 ? 'lastRequest' : ''}`}>
-        <Header text={t<string>('Authorize')} />
+      <Header
+        showLogo
+        text={t<string>('Authorize')}>
+        {requests.length > 1 && (<div className='steps'>
+          <div>
+            <FontAwesomeIcon
+              className='steps__arrow'
+              icon={faArrowLeft as IconProp}
+              onClick={() => setRequestIndex(handleRequestIndexLoop(requestIndex + 1))} />
+            <span className='current'>{requestIndex + 1}</span>
+            <span className='total'>/{requests.length}</span>
+            <FontAwesomeIcon
+              icon={faArrowRight as IconProp}
+              className='steps__arrow'
+              onClick={() => setRequestIndex(handleRequestIndexLoop(requestIndex - 1))} />
+          </div>
+        </div>)}
+      </Header>
+
+      <div className='authorize__requests'>
         {requests.map(({ id, request, url }, index): React.ReactNode => (
-          <Request
-            authId={id}
-            className='request'
-            isFirst={index === 0}
-            key={id}
-            request={request}
-            url={url}
-          />
+          <div
+            className={`authorize__request ${index === requestIndex ? 'request--top' : ''}`}
+            key={id}>
+            <Request
+              authId={id}
+              className={`request ${className}`}
+              request={request}
+              key={id}
+              url={url}
+            />
+          </div>
         ))}
       </div>
     </>
@@ -41,15 +78,7 @@ function Authorize ({ className = '' }: Props): React.ReactElement {
 export default styled(Authorize)`
   overflow-y: auto;
 
-  &.lastRequest {
-    overflow: hidden;
-  }
-
   && {
     padding: 0;
-  }
-
-  .request {
-    padding: 0 24px;
   }
 `;

@@ -113,7 +113,7 @@
   background-color: white;
   border-radius: 15px;
   box-shadow: 0 3px 30px 0 rgba(0, 0, 0, 0.07);
-  padding: 15px;
+  padding: 15px 10px;
   width: 100%;
   animation: account-card 0.25s;
   display: flex;
@@ -199,7 +199,7 @@
   flex-flow: column nowrap;
   justify-content: center;
   align-items: flex-start;
-  margin-left: 15px;
+  margin-left: 10px;
   padding: 1px 0;
   max-width: calc(100% - 81px);
 }
@@ -358,8 +358,9 @@ svg + .account-card__address {
 }
 
 .account-card__address label {
-  width: 110px;
+  width: 107px;
   cursor: pointer;
+  display: inline-block;
 }
 
 .account-card__meta svg {
@@ -545,4 +546,46 @@ svg + .account-card__address {
 
 .dark-theme .account-card__address {
   color: rgba(255, 255, 255, 0.8);
+}
+
+.authorize__requests {
+  height: 100vh;
+  padding: 0 !important;
+}
+
+.authorize__request {
+  height: calc(100% - 362px);
+  position: absolute;
+  background: var(--bg);
+}
+
+.dark-theme .authorize__request {
+  background: #26272c;
+}
+
+.steps *::selection {
+  background: transparent;
+}
+.steps > div {
+  display: flex;
+  align-items: center;
+}
+.steps__arrow {
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.steps__arrow:first-child {
+  margin-right: 10px;
+}
+
+.authorize__request.request--top {
+  left: 0;
+  z-index: 2;
+}
+
+.authorize__request {
+  transition: all ease-out 120ms;
+  left: 100%;
+  z-index: 1;
 }

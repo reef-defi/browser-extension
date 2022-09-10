@@ -6,6 +6,7 @@
 
 /* eslint-disable react/jsx-sort-props */
 /* eslint-disable react/jsx-max-props-per-line */
+/* eslint-disable react/no-unknown-property */
 
 import type { ThemeProps } from '../../types';
 
