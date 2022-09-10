@@ -121,7 +121,8 @@ export default function Popup (): React.ReactElement {
     });
 
     // REEF update
-    subscribeNetwork((rpcUrl) => appState.setCurrentNetwork(Object.values(availableNetworks).find((n) => n.rpcUrl === rpcUrl) || availableNetworks.mainnet));
+    subscribeNetwork((rpcUrl) => appState.setCurrentNetwork(Object.values(availableNetworks).find((n) => n.rpcUrl === rpcUrl) || availableNetworks.mainnet))
+      .catch((err) => console.log('Error Popup subscribeNetwork ', err));
 
     _onAction();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -142,7 +143,7 @@ export default function Popup (): React.ReactElement {
       appState.setCurrentAddress(selAcc?.address);
     };
 
-    onAccounts();
+    onAccounts().catch((err) => console.log('Error onAccounts ', err));
   }, [accounts]);
 
   useEffect((): void => {

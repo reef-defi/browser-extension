@@ -19,7 +19,7 @@ export class ReefInjectedSigner {
   }
 
   public subscribeSelectedAccount (cb: (accounts: InjectedAccount | undefined) => unknown): Unsubcall {
-    return  this.accounts.subscribe((accounts) => {
+    return this.accounts.subscribe((accounts) => {
       cb(accounts.find((a) => a.isSelected));
     });
   }
@@ -44,7 +44,8 @@ export class ReefInjectedSigner {
 
   private onSelectedSignerParamUpdate (cb: (accounts: (ReefEVMSigner | undefined)) => unknown) {
     if (this.selectedProvider && this.extSigner) {
-      const reefEVMSigner = this.selectedSignerAccount ? new ReefEVMSigner(this.selectedProvider, this.selectedSignerAccount.address, this.extSigner):undefined;
+      const reefEVMSigner = this.selectedSignerAccount ? new ReefEVMSigner(this.selectedProvider, this.selectedSignerAccount.address, this.extSigner) : undefined;
+
       cb(reefEVMSigner);
     }
   }

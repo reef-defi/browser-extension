@@ -257,20 +257,14 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   };
 
   const isSelected = () => {
-    // const selected = selectedAccount && selectedAccount.address === account?.address;
-    // const selected = account?.isSelected;
-
-    // return !(!!signRequests && !!signRequests.length) && selectedAccount && selected;
     return !(!!signRequests && !!signRequests.length) && account?.isSelected;
   };
 
   const SelectButton = () => {
-    // const selected =  account?.isSelected;
-    // const selected =  selectedAccount?.address === account?.address;
-
     const onSelectAccount = (account: AccountJson | null): void => {
       if (account) {
-        selectAccount(account.address);
+        selectAccount(account.address)
+          .catch((error: Error) => console.log('Error selectAccount ', error));
       }
       // openRoute('/tokens'); // redirect to tokens page
     };

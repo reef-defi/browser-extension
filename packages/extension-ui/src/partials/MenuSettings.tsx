@@ -91,7 +91,7 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
         .find((network: Network) => network.rpcUrl === value);
 
       if (selectedNetwork) {
-        selectNetwork(selectedNetwork.rpcUrl);
+        selectNetwork(selectedNetwork.rpcUrl).catch((err) => console.log('Error selectNetwork ', err));
       }
     }, []
   );
