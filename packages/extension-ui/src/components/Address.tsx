@@ -407,7 +407,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           {
             signer?.evmAddress && signer?.isEvmClaimed
               ? <>
-                <CopyToClipboard text={(signer?.evmAddress) ? `${utils.addReefSpecificStringFromAddress(signer.evmAddress)}` : ''}><div
+                <CopyToClipboard text={(signer?.evmAddress) ? `${utils.toReefEVMAddressWithNotification(signer.evmAddress)}` : ''}><div
                   className='account-card__meta'
                   onClick={() => notify.danger({
                     children:

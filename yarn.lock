@@ -4614,7 +4614,7 @@ __metadata:
     "@reef-defi/hw-ledger": ^7.8.2
     "@reef-defi/keyring": ^7.8.2
     "@reef-defi/networks": ^7.8.2
-    "@reef-defi/react-lib": 1.2.0
+    "@reef-defi/react-lib": 1.2.2
     "@reef-defi/util": ^7.8.2
     "@reef-defi/util-crypto": ^7.8.2
     "@types/bn.js": ^4.11.6
@@ -4731,9 +4731,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reef-defi/react-lib@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@reef-defi/react-lib@npm:1.2.0"
+"@reef-defi/react-lib@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@reef-defi/react-lib@npm:1.2.2"
   dependencies:
     "@apollo/client": ^3.6.2
     "@fortawesome/free-regular-svg-icons": ^6.1.0
@@ -4764,7 +4764,7 @@ __metadata:
     zen-observable-ts: ^1.1.0
   peerDependencies:
     react: ^17.0.2
-  checksum: 2c39f8fea69ec4fed884c182f073e2b437800c39df509d5073472dfbd9f59fd1c581629a3246024d463de03f7f690b79ce1ca0cb67b0e9bdb1d74e13b2956943
+  checksum: 82c10c21794fe0492cd5a5d73a3a1824ae6ec2bd621d9046d8a79b2a8010de05c1209e08b4f8a78057d4761664370a37714c68b4a7ce7eb19365805ec23e8410
   languageName: node
   linkType: hard
 
