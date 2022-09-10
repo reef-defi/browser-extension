@@ -19,21 +19,17 @@ export class ReefInjectedSigner {
   }
 
   public subscribeSelectedAccount (cb: (accounts: InjectedAccount | undefined) => unknown): Unsubcall {
-    this.accounts.subscribe((accounts) => {
+    return  this.accounts.subscribe((accounts) => {
       cb(accounts.find((a) => a.isSelected));
     });
-
-    return (): void => {
-      // FIXME we need the ability to unsubscribe
-    };
   }
 
   public subscribeSelectedAccountSigner (cb: (reefEVMSigner: ReefEVMSigner | undefined) => unknown): Unsubcall {
-    this.network.subscribeSelectedNetworkProvider((provider) => {
+    const unsubProvFn = this.network.subscribeSelectedNetworkProvider((provider) => {
       this.selectedProvider = provider;
       this.onSelectedSignerParamUpdate(cb);
     });
-    this.subscribeSelectedAccount((account) => {
+    const unsubAccFn = this.subscribeSelectedAccount((account) => {
       if (account?.address !== this.selectedSignerAccount?.address) {
         this.selectedSignerAccount = account;
         this.onSelectedSignerParamUpdate(cb);
@@ -41,13 +37,15 @@ export class ReefInjectedSigner {
     });
 
     return (): void => {
-      // FIXME we need the ability to unsubscribe
+      unsubProvFn();
+      unsubAccFn();
     };
   }
 
   private onSelectedSignerParamUpdate (cb: (accounts: (ReefEVMSigner | undefined)) => unknown) {
-    if (this.selectedSignerAccount && this.selectedProvider && this.extSigner) {
-      cb(new ReefEVMSigner(this.selectedProvider, this.selectedSignerAccount.address, this.extSigner));
+    if (this.selectedProvider && this.extSigner) {
+      const reefEVMSigner = this.selectedSignerAccount ? new ReefEVMSigner(this.selectedProvider, this.selectedSignerAccount.address, this.extSigner):undefined;
+      cb(reefEVMSigner);
     }
   }
 }

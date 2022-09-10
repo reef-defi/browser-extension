@@ -17,11 +17,14 @@ export default class Accounts implements InjectedAccounts {
   }
 
   public subscribe (cb: (accounts: InjectedAccount[]) => unknown): Unsubcall {
-    sendRequest('pub(accounts.subscribe)', null, cb)
+    let unsubs = false;
+    sendRequest('pub(accounts.subscribe)', null, (val)=>{
+      !unsubs ? cb(val) : null;
+    })
       .catch((error: Error) => console.error(error));
 
     return (): void => {
-      // FIXME we need the ability to unsubscribe
+      unsubs = true;
     };
   }
 }

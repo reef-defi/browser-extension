@@ -14,13 +14,12 @@ export class ReefInjectedProvider {
 
   private creatingNewProviderRpcUrl: string | null = null;
 
-  private providerCbArr: ProviderCb[] = [];
+  private providerCbArr: { cb: ProviderCb, subsIdent: string }[] = [];
 
   constructor (_sendRequest: SendRequest) {
     this.sendRequest = _sendRequest;
 
     this.subscribeSelectedNetwork(async (rpcUrl) => {
-      console.log('GOT NETWORK SUBS=', rpcUrl);
 
       if (!this.providerCbArr.length) {
         return;
@@ -40,7 +39,7 @@ export class ReefInjectedProvider {
           rpcUrl,
           provider
         };
-        this.providerCbArr.forEach((cb) => cb(this.selectedNetworkProvider!.provider));
+        this.providerCbArr?.forEach((cbObj) => cbObj.cb(this.selectedNetworkProvider!.provider));
         this.creatingNewProviderRpcUrl = null;
       }
     }
@@ -52,14 +51,24 @@ export class ReefInjectedProvider {
   }
 
   subscribeSelectedNetworkProvider (cb: ProviderCb): Unsubcall {
-    this.providerCbArr.push(cb);
+    const subsIdent = (Math.random()).toString();
+    this.providerCbArr.push({cb, subsIdent: subsIdent});
 
     if (!this.creatingNewProviderRpcUrl && this.selectedNetworkProvider) {
       cb(this.selectedNetworkProvider.provider);
     }
 
     return (): void => {
-      // FIXME we need the ability to unsubscribe
+      const removeIdx = this.providerCbArr.findIndex(cbObj => cbObj.subsIdent === subsIdent);
+      this.providerCbArr.splice(removeIdx, 1);
+      this.disconnectProvider();
     };
+  }
+
+  private disconnectProvider() {
+    if(!this.providerCbArr.length || !this.providerCbArr.some(e=>!!e)) {
+      this.selectedNetworkProvider?.provider.api.disconnect();
+      this.selectedNetworkProvider = undefined;
+    }
   }
 }
