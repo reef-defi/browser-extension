@@ -4614,7 +4614,7 @@ __metadata:
     "@reef-defi/hw-ledger": ^7.8.2
     "@reef-defi/keyring": ^7.8.2
     "@reef-defi/networks": ^7.8.2
-    "@reef-defi/react-lib": 1.2.2
+    "@reef-defi/react-lib": 1.2.3
     "@reef-defi/util": ^7.8.2
     "@reef-defi/util-crypto": ^7.8.2
     "@types/bn.js": ^4.11.6
@@ -4731,9 +4731,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reef-defi/react-lib@npm:1.2.2":
-  version: 1.2.2
-  resolution: "@reef-defi/react-lib@npm:1.2.2"
+"@reef-defi/react-lib@npm:1.2.3":
+  version: 1.2.3
+  resolution: "@reef-defi/react-lib@npm:1.2.3"
   dependencies:
     "@apollo/client": ^3.6.2
     "@fortawesome/free-regular-svg-icons": ^6.1.0
@@ -4744,7 +4744,7 @@ __metadata:
     "@reef-defi/extension-base": ^1.0.9
     "@reef-defi/extension-dapp": ^1.0.9
     "@reef-defi/extension-inject": ^1.0.9
-    "@reef-defi/ui-kit": ^1.0.3
+    "@reef-defi/ui-kit": 1.0.5
     "@types/react-router-dom": ^5.3.0
     axios: ^0.21.4
     bignumber.js: ^9.0.2
@@ -4764,7 +4764,7 @@ __metadata:
     zen-observable-ts: ^1.1.0
   peerDependencies:
     react: ^17.0.2
-  checksum: 82c10c21794fe0492cd5a5d73a3a1824ae6ec2bd621d9046d8a79b2a8010de05c1209e08b4f8a78057d4761664370a37714c68b4a7ce7eb19365805ec23e8410
+  checksum: bcbcfeebcc9d25c632e65a34345fe466cae9ee380d8a9b5eba2cd42ba5e8383344a4daaee692355367cac7f2fa1bf8bfec116510000896965fb01c4d70f2aafa
   languageName: node
   linkType: hard
 
@@ -4791,7 +4791,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reef-defi/ui-kit@npm:^1.0.3":
+"@reef-defi/ui-kit@npm:1.0.5":
   version: 1.0.5
   resolution: "@reef-defi/ui-kit@npm:1.0.5"
   dependencies:
