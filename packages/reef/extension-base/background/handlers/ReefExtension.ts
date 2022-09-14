@@ -2,7 +2,7 @@ import Extension from '@reef-defi/extension-base/background/handlers/Extension';
 import { createSubscription, unsubscribe } from '@reef-defi/extension-base/background/handlers/subscriptions';
 import { AccountJson, MessageTypes, RequestAccountSelect, RequestNetworkSelect, RequestTypes, ResponseType } from '@reef-defi/extension-base/background/types';
 import { InjectedAccount } from '@reef-defi/extension-inject/types';
-import { availableNetworks } from '@reef-defi/react-lib';
+// import { availableNetworks } from '@reef-defi/react-lib';
 import { assert } from '@reef-defi/util';
 import { BehaviorSubject } from 'rxjs';
 
@@ -10,7 +10,9 @@ import keyring from '@polkadot/ui-keyring';
 
 const REEF_NETWORK_RPC_URL_KEY = 'reefNetworkRpcUrl';
 
-export const networkRpcUrlSubject: BehaviorSubject<string> = new BehaviorSubject<string>(localStorage.getItem(REEF_NETWORK_RPC_URL_KEY) || availableNetworks.mainnet.rpcUrl);
+const rpcUrl = 'wss://rpc-testnet.reefscan.com/ws'; // availableNetworks.mainnet.rpcUrl;
+
+export const networkRpcUrlSubject: BehaviorSubject<string> = new BehaviorSubject<string>(localStorage.getItem(REEF_NETWORK_RPC_URL_KEY) || rpcUrl);
 
 export function setSelectedAccount<T extends AccountJson|InjectedAccount> (accountsJson: T[], index: number|undefined): T[] {
   if (accountsJson.length && index != null) {
