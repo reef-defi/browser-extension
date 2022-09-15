@@ -10,7 +10,7 @@ import keyring from '@polkadot/ui-keyring';
 
 const REEF_NETWORK_RPC_URL_KEY = 'reefNetworkRpcUrl';
 
-const rpcUrl = 'wss://rpc-testnet.reefscan.com/ws'; // availableNetworks.mainnet.rpcUrl;
+const rpcUrl = 'wss://rpc.reefscan.com/ws'; // availableNetworks.mainnet.rpcUrl;
 
 export const networkRpcUrlSubject: BehaviorSubject<string> = new BehaviorSubject<string>(localStorage.getItem(REEF_NETWORK_RPC_URL_KEY) || rpcUrl);
 
