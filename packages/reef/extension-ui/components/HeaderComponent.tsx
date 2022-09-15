@@ -74,7 +74,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
   };
 
   const showAccount = (): boolean => {
-    return ['/tokens', '/'].includes(location.pathname) && !hasSignRequests;
+    return ['/tokens'].includes(location.pathname) && !hasSignRequests;
   };
 
   return (<div className='navigation__wrapper'>
@@ -90,7 +90,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
         {mainnetSelected ? <ReefLogo /> : <ReefTestnetLogo />}
       </a>
       <div className='navigation__links'>
-        {(location.pathname === '/accounts') && (
+        {(['/accounts', '/'].includes(location.pathname)) && (
           <a
             className='navigation__link'
             href='#'
@@ -107,7 +107,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
             /> Tokens
           </a>
         )}
-        {(['/tokens', '/'].includes(location.pathname)) && (
+        {(['/tokens'].includes(location.pathname)) && (
           <a
             className='navigation__link'
             href='#'

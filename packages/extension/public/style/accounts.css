@@ -407,10 +407,9 @@ svg + .account-card__address {
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 4px;
-  margin-bottom: 7px;
   max-width: 100%;
   overflow: hidden;
+  height: 28px;
 }
 
 .account-card__status img {
