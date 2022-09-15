@@ -1,8 +1,8 @@
+import { availableNetworks } from '@reef-chain/util-lib';
 import Extension from '@reef-defi/extension-base/background/handlers/Extension';
 import { createSubscription, unsubscribe } from '@reef-defi/extension-base/background/handlers/subscriptions';
 import { AccountJson, MessageTypes, RequestAccountSelect, RequestNetworkSelect, RequestTypes, ResponseType } from '@reef-defi/extension-base/background/types';
 import { InjectedAccount } from '@reef-defi/extension-inject/types';
-import { availableNetworks } from '@reef-chain/util-lib';
 import { assert } from '@reef-defi/util';
 import { BehaviorSubject } from 'rxjs';
 

@@ -1,7 +1,7 @@
+import { initProvider } from '@reef-chain/util-lib';
 import { Provider } from '@reef-defi/evm-provider';
 import { SendRequest } from '@reef-defi/extension-base/page/types';
 import { Unsubcall } from '@reef-defi/extension-inject/types';
-import { initProvider } from '@reef-chain/util-lib';
 
 type ProviderRpc = { rpcUrl: string; provider: Provider; };
 
