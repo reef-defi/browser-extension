@@ -1,7 +1,7 @@
+import { initProvider } from '@reef-chain/util-lib';
 import { Provider } from '@reef-defi/evm-provider';
 import { SendRequest } from '@reef-defi/extension-base/page/types';
 import { Unsubcall } from '@reef-defi/extension-inject/types';
-// import { utils } from '@reef-defi/react-lib';
 
 type ProviderRpc = { rpcUrl: string; provider: Provider; };
 
@@ -32,13 +32,13 @@ export class ReefInjectedProvider {
         this.creatingNewProviderRpcUrl = rpcUrl;
         await this.selectedNetworkProvider?.provider.api.disconnect();
 
-        // const provider = await utils.initProvider(rpcUrl);
+        const provider = await initProvider(rpcUrl);
 
-        // this.selectedNetworkProvider = {
-        //   rpcUrl,
-        //   provider
-        // };
-        // this.providerCbArr?.forEach((cbObj) => this.selectedNetworkProvider ? cbObj.cb(this.selectedNetworkProvider.provider) : null);
+        this.selectedNetworkProvider = {
+          rpcUrl,
+          provider
+        };
+        this.providerCbArr?.forEach((cbObj) => this.selectedNetworkProvider ? cbObj.cb(this.selectedNetworkProvider.provider) : null);
         this.creatingNewProviderRpcUrl = null;
       }
     }

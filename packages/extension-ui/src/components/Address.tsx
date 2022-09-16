@@ -107,7 +107,6 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   const { t } = useTranslation();
   const onAction = useContext(ActionContext);
   const { accounts } = useContext(AccountContext);
-  // const selectedAccount: ReefSigner|undefined | null = hooks.useObservableState(appState.selectedSigner$);
   const signers: ReefSigner[]|undefined | null = hooks.useObservableState(appState.signers$);
   const settings = useContext(SettingsContext);
   const [{ account, formatted, genesisHash: recodedGenesis, prefix, type }, setRecoded] = useState<Recoded>(defaultRecoded);
@@ -271,8 +270,8 @@ function Address ({ actions, address, children, className, exporting, genesisHas
 
     return (
       <>
-        {/* {!(!!signRequests && !!signRequests.length) && selectedAccount && (selected */}
-        {!(!!signRequests && !!signRequests.length) && (account?.isSelected
+        {/* TODO remove && signer when selecting account is separate from loading signers */}
+        {!(!!signRequests && !!signRequests.length) && signer && (account?.isSelected
           ? <Button
             className='account-card__select-btn account-card__select-btn--selected'
             fill
