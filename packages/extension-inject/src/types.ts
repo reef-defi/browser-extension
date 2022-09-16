@@ -5,8 +5,9 @@ import type { KeypairType } from '@reef-defi/util-crypto/types';
 import type { Signer as InjectedSigner } from '@polkadot/api/types';
 import type { ProviderInterface } from '@polkadot/rpc-provider/types';
 import type { ExtDef } from '@polkadot/types/extrinsic/signedExtensions/types';
-import {ReefInjectedSigner} from "../../reef/extension-base/src/page/ReefInjectedSigner";
-import {ReefInjectedProvider} from "../../reef/extension-base/src/page/ReefInjectedProvider";
+
+import { ReefInjectedProvider } from '../../reef/extension-base/src/page/ReefInjectedProvider';
+import { ReefInjectedSigner } from '../../reef/extension-base/src/page/ReefInjectedSigner';
 
 // eslint-disable-next-line no-undef
 type This = typeof globalThis;
