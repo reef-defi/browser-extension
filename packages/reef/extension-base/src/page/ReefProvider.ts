@@ -1,20 +1,18 @@
 import { initProvider } from '@reef-chain/util-lib';
 import { Provider } from '@reef-defi/evm-provider';
 import { SendRequest } from '@reef-defi/extension-base/page/types';
-import { Unsubcall } from '@reef-defi/extension-inject/types';
+import { ReefInjectedProvider, Unsubcall } from '@reef-defi/extension-inject/types';
 
 type ProviderRpc = { rpcUrl: string; provider: Provider; };
 
-type ProviderCb = (provider: Provider) => void;
-
-export class ReefInjectedProvider {
+export class ReefProvider implements ReefInjectedProvider {
   private readonly sendRequest: SendRequest;
 
   private selectedNetworkProvider: ProviderRpc | undefined;
 
   private creatingNewProviderRpcUrl: string | null = null;
 
-  private providerCbArr: { cb: ProviderCb, subsIdent: string }[] = [];
+  private providerCbArr: { cb: (provider: Provider) => void, subsIdent: string }[] = [];
 
   constructor (_sendRequest: SendRequest) {
     this.sendRequest = _sendRequest;
@@ -42,14 +40,14 @@ export class ReefInjectedProvider {
         this.creatingNewProviderRpcUrl = null;
       }
     }
-    ).catch((err) => console.log('Error subscribeSelectedNetwork ', err));
+    );
   }
 
-  async subscribeSelectedNetwork (cb: (rpcUrl: string) => void) {
-    return this.sendRequest('pub(network.subscribe)', null, cb);
+  subscribeSelectedNetwork (cb: (rpcUrl: string) => void): void {
+    this.sendRequest('pub(network.subscribe)', null, cb).catch((reason) => console.log('Error subscribeSelectedNetwork ', reason));
   }
 
-  subscribeSelectedNetworkProvider (cb: ProviderCb): Unsubcall {
+  subscribeSelectedNetworkProvider (cb: (provider: Provider) => void): Unsubcall {
     const subsIdent = (Math.random()).toString();
 
     this.providerCbArr.push({ cb, subsIdent: subsIdent });

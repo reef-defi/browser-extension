@@ -6,8 +6,8 @@ import type { Signer as InjectedSigner } from '@polkadot/api/types';
 import type { ProviderInterface } from '@polkadot/rpc-provider/types';
 import type { ExtDef } from '@polkadot/types/extrinsic/signedExtensions/types';
 
-import { ReefInjectedProvider } from '../../reef/extension-base/src/page/ReefInjectedProvider';
-import { ReefInjectedSigner } from '../../reef/extension-base/src/page/ReefInjectedSigner';
+import { Provider } from '@reef-defi/evm-provider';
+import { Signer as ReefEVMSigner } from '@reef-defi/evm-provider/Signer';
 
 // eslint-disable-next-line no-undef
 type This = typeof globalThis;
@@ -105,7 +105,17 @@ export interface Injected {
 
 export interface ReefInjected extends Injected{
   reefSigner: ReefInjectedSigner;
-  reefNetwork: ReefInjectedProvider;
+  reefProvider: ReefInjectedProvider;
+}
+
+export interface ReefInjectedSigner {
+  subscribeSelectedAccount: (cb: (accounts: InjectedAccount | undefined) => unknown) => Unsubcall;
+  subscribeSelectedAccountSigner: (cb: (reefEVMSigner: ReefEVMSigner | undefined) => unknown) => Unsubcall;
+}
+
+export interface ReefInjectedProvider {
+  subscribeSelectedNetwork: (cb: (rpcUrl: string) => void) => void;
+  subscribeSelectedNetworkProvider: (cb: (provider: Provider) => void) => Unsubcall;
 }
 
 export interface InjectedWindowProvider {

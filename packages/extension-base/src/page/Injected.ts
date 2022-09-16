@@ -6,8 +6,8 @@ import type { SendRequest } from './types';
 
 import Accounts from '@reef-defi/extension-base/page/Accounts';
 
-import { ReefInjectedProvider } from '../../../reef/extension-base/src/page/ReefInjectedProvider';
-import { ReefInjectedSigner } from '../../../reef/extension-base/src/page/ReefInjectedSigner';
+import { ReefProvider } from '../../../reef/extension-base/src/page/ReefProvider';
+import { ReefSigner } from '../../../reef/extension-base/src/page/ReefSigner';
 import Metadata from './Metadata';
 import PostMessageProvider from './PostMessageProvider';
 import Signer from './Signer';
@@ -21,9 +21,9 @@ export default class implements ReefInjected {
 
   public readonly signer: Signer;
 
-  public readonly reefSigner: ReefInjectedSigner;
+  public readonly reefSigner: ReefSigner;
 
-  public readonly reefNetwork: ReefInjectedProvider;
+  public readonly reefProvider: ReefProvider;
 
   constructor (sendRequest: SendRequest) {
     this.accounts = new Accounts(sendRequest);
@@ -31,7 +31,7 @@ export default class implements ReefInjected {
     this.provider = new PostMessageProvider(sendRequest);
     this.signer = new Signer(sendRequest);
     // REEF update
-    this.reefNetwork = new ReefInjectedProvider(sendRequest);
-    this.reefSigner = new ReefInjectedSigner(this.accounts, this.signer, this.reefNetwork);
+    this.reefProvider = new ReefProvider(sendRequest);
+    this.reefSigner = new ReefSigner(this.accounts, this.signer, this.reefProvider);
   }
 }
