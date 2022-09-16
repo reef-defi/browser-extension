@@ -4447,9 +4447,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reef-chain/util-lib@npm:^0.0.6":
-  version: 0.0.6
-  resolution: "@reef-chain/util-lib@npm:0.0.6"
+"@reef-chain/util-lib@npm:^0.0.7":
+  version: 0.0.7
+  resolution: "@reef-chain/util-lib@npm:0.0.7"
   dependencies:
     "@apollo/client": ^3.6.9
     "@polkadot/extension-inject": ^0.44.6
@@ -4464,7 +4464,7 @@ __metadata:
     subscriptions-transport-ws: ^0.11.0
   peerDependencies:
     rxjs: ^7.5.6
-  checksum: ad1da951dfca2b58df3d58dd760e1e7b765686b10862d50d9f2aa9cc611b2df5409ac0855498e7b330d99be9869b0577cb0e520e8f0b56bf64cd8a2b869d123e
+  checksum: d00b89421e40b1ecf66ea2421293dd7ee14ed9aea432394ca59e635ea5cb1c1fa4c9b7653848ed7564cdf65deaa3463a8fd13655ad8e37eb2bcee012b123660e
   languageName: node
   linkType: hard
 
@@ -4622,7 +4622,7 @@ __metadata:
     "@polkadot/api": ^6.7.1
     "@polkadot/phishing": ^0.6.407
     "@polkadot/ui-keyring": ^0.86.5
-    "@reef-chain/util-lib": ^0.0.6
+    "@reef-chain/util-lib": ^0.0.7
     "@reef-defi/extension-dapp": ^1.0.13
     "@reef-defi/extension-inject": ^1.0.13
     "@reef-defi/keyring": ^7.8.2
