@@ -270,7 +270,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
 
     return (
       <>
-        {/*TODO remove && signer when selecting account is separate from loading signers*/}
+        {/* TODO remove && signer when selecting account is separate from loading signers */}
         {!(!!signRequests && !!signRequests.length) && signer && (account?.isSelected
           ? <Button
             className='account-card__select-btn account-card__select-btn--selected'
