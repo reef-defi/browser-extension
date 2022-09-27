@@ -42,6 +42,10 @@ export class ReefSigner implements ReefInjectedSigner {
     };
   }
 
+  public getSelected (): Provider | undefined {
+    return this.selectedProvider;
+  }
+
   private onSelectedSignerParamUpdate (cb: (accounts: (ReefEVMSigner | undefined)) => unknown) {
     if (this.selectedProvider && this.extSigner) {
       const reefEVMSigner = this.selectedSignerAccount ? new ReefEVMSigner(this.selectedProvider, this.selectedSignerAccount.address, this.extSigner) : undefined;
