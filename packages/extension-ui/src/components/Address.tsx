@@ -3,7 +3,6 @@
 
 import type { AccountJson, AccountWithChildren } from '@reef-defi/extension-base/background/types';
 import type { Chain } from '@reef-defi/extension-chains/types';
-import type { IconTheme } from '@polkadot/react-identicon/types';
 import type { SettingsStruct } from '@polkadot/ui-settings/types';
 import type { KeypairType } from '@polkadot/util-crypto/types';
 import type { ThemeProps } from '../types';
@@ -21,7 +20,7 @@ import styled from 'styled-components';
 
 import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
 
-import { selectAccount } from '../../../reef/extension-ui/messaging';
+// import { selectAccount } from '../../../reef/extension-ui/messaging';
 import useMetadata from '../hooks/useMetadata';
 import useOutsideClick from '../hooks/useOutsideClick';
 import useTranslation from '../hooks/useTranslation';
@@ -107,20 +106,21 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   const { t } = useTranslation();
   const onAction = useContext(ActionContext);
   const { accounts } = useContext(AccountContext);
-  const signers: ReefSigner[]|undefined | null = hooks.useObservableState(appState.signers$);
+  // const selectedAccount: ReefSigner|undefined | null = hooks.useObservableState(appState.selectedSigner$);
+  const signers: ReefSigner[] | undefined | null = hooks.useObservableState(appState.signers$);
   const settings = useContext(SettingsContext);
-  const [{ account, formatted, genesisHash: recodedGenesis, prefix, type }, setRecoded] = useState<Recoded>(defaultRecoded);
+  const [{ account, formatted, genesisHash: recodedGenesis, prefix }, setRecoded] = useState<Recoded>(defaultRecoded);
   const chain = useMetadata(genesisHash || recodedGenesis, true);
-  const provider: Provider|undefined = hooks.useObservableState(appState.currentProvider$);
+  const provider: Provider | undefined = hooks.useObservableState(appState.currentProvider$);
   const signRequests = useContext(SigningReqContext);
   const [showActionsMenu, setShowActionsMenu] = useState(false);
   const [moveMenuUp, setIsMovedMenu] = useState(false);
   const actionsRef = useRef<HTMLDivElement>(null);
-  const [signer, setSigner] = useState<ReefSigner|undefined>(signerProp);
-  /* const openRoute = useCallback(
-    (path: string) => onAction(path),
-    [onAction]
-  ); */
+  const [signer, setSigner] = useState<ReefSigner | undefined>(signerProp);
+  // const openRoute = useCallback(
+  //   (path: string) => onAction(path),
+  //   [onAction]
+  // );
 
   useEffect(() => {
     const foundSigner = signers?.find((s) => s.address === account?.address);
@@ -166,12 +166,6 @@ function Address ({ actions, address, children, className, exporting, genesisHas
   useEffect((): void => {
     setShowActionsMenu(false);
   }, [toggleActions]);
-
-  const theme = (
-    type === 'ethereum'
-      ? 'ethereum'
-      : (chain?.icon || 'polkadot')
-  ) as IconTheme;
 
   const _onClick = useCallback(
     () => setShowActionsMenu(!showActionsMenu),
@@ -230,83 +224,50 @@ function Address ({ actions, address, children, className, exporting, genesisHas
       </>);
   };
 
-  const OpenApp = () => {
-    return (
-      <>
-        { // @Todo where can we put the URL to the App?
-          <Button
-            className='account-card__bind-btn'
-            fill
-            onClick={() => window.open('https://app.reef.io/', '_blank')}
-            size='small'
-            type='button'
-          >
-            <span>Open App</span>
-          </Button>
-        }
-      </>);
-  };
-
   const Balance = () => {
     return (
       <>
-        <div>{ utils.toReefBalanceDisplay(signer?.balance).replace('-', '0.00').replace(' REEF', '') }</div>
+        <div>{utils.toReefBalanceDisplay(signer?.balance).replace('-', '0.00').replace(' REEF', '')}</div>
       </>
     );
   };
 
-  const isSelected = () => {
-    return !(!!signRequests && !!signRequests.length) && account?.isSelected;
-  };
+  // const Tokens = () => {
+  //   const onSelectAccount = (account: AccountJson | null): void => {
+  //     if (account) {
+  //       selectAccount(account.address)
+  //         .catch((error: Error) => console.log('Error selectAccount ', error));
+  //     }
 
-  const SelectButton = () => {
-    const onSelectAccount = (account: AccountJson | null): void => {
-      if (account) {
-        selectAccount(account.address)
-          .catch((error: Error) => console.log('Error selectAccount ', error));
-      }
-      // openRoute('/tokens'); // redirect to tokens page
-    };
+  //     openRoute('/tokens'); // redirect to tokens page
+  //   };
 
-    return (
-      <>
-        {/* TODO remove && signer when selecting account is separate from loading signers */}
-        {!(!!signRequests && !!signRequests.length) && signer && (account?.isSelected
-          ? <Button
-            className='account-card__select-btn account-card__select-btn--selected'
-            fill
-            size='small'
-            type='button'
-          >Selected
-          </Button>
-          : <Button
-            className='account-card__select-btn'
-            onClick={() => onSelectAccount(account)}
-            size='small'
-            type='button'
-          >Select
-          </Button>
-        )
-        }
-      </>
-    );
-  };
+  //   return (
+  //     <>
+  //       {/* {!(!!signRequests && !!signRequests.length) && selectedAccount && (selected | account?.isSelected */}
+  //       <Button
+  //         className='account-card__select-btn'
+  //         onClick={() => onSelectAccount(account)}
+  //         size='small'
+  //         type='button'
+  //       >Tokens
+  //       </Button>
+  //     </>
+  //   );
+  // };
 
   const parentNameSuri = getParentNameSuri(parentName, suri);
 
   return (
     <div className={`
       account-card__wrapper
-      ${isSelected() && !presentation ? 'account-card__wrapper--selected' : ''}
       ${exporting ? 'account-card__wrapper--exporting' : ''}
     `}
     >
       <div className='account-card__main'>
         <div className='account-card__identicon'>
-          {signer &&
           <Identicon
             className='identityIcon'
-            iconTheme={theme}
             isExternal={isExternal}
             onCopy={
               () => notify.info({
@@ -317,15 +278,14 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             prefix={prefix}
             value={formatted || address}
           />
-          }
-          {!(!!signRequests && !!signRequests.length) && !signer && <div className={'account-card__identicon--loading'}><Loading /></div>}
         </div>
 
         <div className='account-card__info'>
-          {parentName
-            ? (
-              <>
-                <div className='account-card__parent'>
+          <div className='account-card__name'>
+            {!children || exporting
+              ? <div className='account-card__name--line'>
+                <External />
+                {parentName && (<div className='account-card__parent'>
                   <FontAwesomeIcon
                     className='deriveIcon'
                     icon={faCodeBranch as IconProp}
@@ -333,20 +293,13 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                   <span
                     className='account-card__parent-name'
                     data-field='parent'
-                    title = {parentNameSuri}
+                    title={parentNameSuri}
                   >
                     {parentNameSuri}
                   </span>
-                </div>
-              </>
-            )
-            : ''
-          }
-          <div className='account-card__name'>
-            { !children || exporting
-              ? <div>
-                <External />
-                <span>{ name || account?.name || '<No Name>' }</span>
+                </div>)
+                }
+                <div>{name || account?.name || '<No Name>'}</div>
               </div>
               : children }
           </div>
@@ -354,23 +307,23 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           {signer && (!presentation || !hideBalance) && <div className='account-card__status'>
             {
               !presentation &&
-              <FontAwesomeIcon
-                className={`account-card__visibility ${isHidden ? 'account-card__visibility--hidden' : 'account-card__visibility--visible'}`}
-                icon={(isHidden ? faEyeSlash : faEye) as IconProp}
-                onClick={_toggleVisibility}
-                size='sm'
-                title={t('Account Visibility')}
-              />
+                <FontAwesomeIcon
+                  className={`account-card__visibility ${isHidden ? 'account-card__visibility--hidden' : 'account-card__visibility--visible'}`}
+                  icon={(isHidden ? faEyeSlash : faEye) as IconProp}
+                  onClick={_toggleVisibility}
+                  size='sm'
+                  title={t('Account Visibility')}
+                />
             }
             {
               !hideBalance &&
-              <div className='account-card__balance'>
-                <img
-                  alt='balance'
-                  src='https://s2.coinmarketcap.com/static/img/coins/64x64/6951.png'
-                />
-                <div>{<Balance />}</div>
-              </div>
+                <div className='account-card__balance'>
+                  <img
+                    alt='balance'
+                    src='https://s2.coinmarketcap.com/static/img/coins/64x64/6951.png'
+                  />
+                  <div>{<Balance />}</div>
+                </div>
             }
           </div>}
 
@@ -437,9 +390,9 @@ function Address ({ actions, address, children, className, exporting, genesisHas
         !exporting
           ? (
             <div className='account-card__aside'>
-              { !signer?.isEvmClaimed ? <Bind /> : '' }
-              {!isSelected() && !presentation ? <SelectButton /> : ''}
-              {isSelected() && presentation && signer && signer.isEvmClaimed ? <OpenApp /> : ''}
+              {!signer && (<div className={'account-card__identicon--loading'}><Loading /></div>)}
+              {signer && !signer?.isEvmClaimed ? <Bind /> : ''}
+              {/* {signer && !presentation ? <Tokens /> : ''} */}
 
               <div className='account-card__actions'>
                 {actions && (
@@ -467,32 +420,28 @@ function Address ({ actions, address, children, className, exporting, genesisHas
       }
 
       {
-        exporting ? (<div className='account-card__exporting'>{children}</div>) : ''
+        exporting && children ? (<div className='account-card__exporting'>{children}</div>) : ''
       }
-
-      {isSelected() && !presentation && (
-        <div className='account-card__chain'>Selected</div>
-      )}
     </div>
   );
 }
 
 export default styled(Address)(({ theme }: ThemeProps) => `
-  background: ${theme.accountBackground};
-  border: 1px solid ${theme.boxBorderColor};
-  box-sizing: border-box;
-  border-radius: 4px;
-  margin-bottom: 8px;
-  position: relative;
+      background: ${theme.accountBackground};
+      border: 1px solid ${theme.boxBorderColor};
+      box-sizing: border-box;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      position: relative;
 
-  .banner {
-    font-size: 12px;
-    line-height: 16px;
-    position: absolute;
-    top: 0;
+      .banner {
+        font - size: 12px;
+      line-height: 16px;
+      position: absolute;
+      top: 0;
 
-    &.chain {
-      background: ${theme.primaryColor};
+      &.chain {
+        background: ${theme.primaryColor};
       border-radius: 0 0 0 10px;
       color: white;
       padding: 0.1rem 0.5rem 0.1rem 0.75rem;
@@ -501,145 +450,145 @@ export default styled(Address)(({ theme }: ThemeProps) => `
     }
   }
 
-  .addressDisplay {
-    display: flex;
-    justify-content: space-between;
-    position: relative;
+      .addressDisplay {
+        display: flex;
+      justify-content: space-between;
+      position: relative;
 
-    .svg-inline--fa {
-      width: 14px;
+      .svg-inline--fa {
+        width: 14px;
       height: 14px;
       margin-right: 10px;
       color: ${theme.accountDotsIconColor};
       &:hover {
         color: ${theme.labelColor};
-        cursor: pointer;
+      cursor: pointer;
       }
     }
 
-    .hiddenIcon, .visibleIcon {
-      position: absolute;
+      .hiddenIcon, .visibleIcon {
+        position: absolute;
       right: 2px;
       top: -18px;
     }
 
-    .hiddenIcon {
-      color: ${theme.errorColor};
+      .hiddenIcon {
+        color: ${theme.errorColor};
       &:hover {
         color: ${theme.accountDotsIconColor};
       }
     }
   }
 
-  .externalIcon, .hardwareIcon {
-    margin-right: 0.3rem;
-    color: ${theme.labelColor};
-    width: 0.875em;
+      .externalIcon, .hardwareIcon {
+        margin - right: 0.3rem;
+      color: ${theme.labelColor};
+      width: 0.875em;
   }
 
-  .identityIcon {
-    margin-left: 15px;
-    margin-right: 10px;
+      .identityIcon {
+        margin - left: 15px;
+      margin-right: 10px;
 
-    & svg {
-      width: 50px;
+      & svg {
+        width: 50px;
       height: 50px;
     }
   }
 
-  .info {
-    width: 100%;
+      .info {
+        width: 100%;
   }
 
-  .infoRow {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    height: 72px;
-    border-radius: 4px;
+      .infoRow {
+        display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      height: 72px;
+      border-radius: 4px;
   }
 
-  img {
-    max-width: 50px;
-    max-height: 50px;
-    border-radius: 50%;
+      img {
+        max - width: 50px;
+      max-height: 50px;
+      border-radius: 50%;
   }
 
-  .name {
-    font-size: 15px;
-    line-height: 22px;
-    margin: 2px 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 345px;
-    white-space: nowrap;
-    display: flex;
-    justify-content: space-between;
+      .name {
+        font - size: 15px;
+      line-height: 22px;
+      margin: 2px 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 345px;
+      white-space: nowrap;
+      display: flex;
+      justify-content: space-between;
 
-    &.displaced {
-      padding-top: 10px;
+      &.displaced {
+        padding - top: 10px;
     }
   }
 
-  .parentName {
-    color: ${theme.labelColor};
-    font-size: ${theme.inputLabelFontSize};
-    line-height: 14px;
-    overflow: hidden;
-    padding: 0.25rem 0 0 0.8rem;
-    text-overflow: ellipsis;
-    width: 270px;
-    white-space: nowrap;
+      .parentName {
+        color: ${theme.labelColor};
+      font-size: ${theme.inputLabelFontSize};
+      line-height: 14px;
+      overflow: hidden;
+      padding: 0.25rem 0 0 0.8rem;
+      text-overflow: ellipsis;
+      width: 270px;
+      white-space: nowrap;
   }
 
-  .fullAddress {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: ${theme.labelColor};
-    font-size: 12px;
-    line-height: 16px;
+      .fullAddress {
+        overflow: hidden;
+      text-overflow: ellipsis;
+      color: ${theme.labelColor};
+      font-size: 12px;
+      line-height: 16px;
   }
 
-  .detailsIcon {
-    background: ${theme.accountDotsIconColor};
-    width: 3px;
-    height: 19px;
+      .detailsIcon {
+        background: ${theme.accountDotsIconColor};
+      width: 3px;
+      height: 19px;
 
-    &.active {
-      background: ${theme.primaryColor};
+      &.active {
+        background: ${theme.primaryColor};
     }
   }
 
-  .deriveIcon {
-    color: ${theme.labelColor};
-    position: absolute;
-    top: 5px;
-    width: 9px;
-    height: 9px;
+      .deriveIcon {
+        color: ${theme.labelColor};
+      position: absolute;
+      top: 5px;
+      width: 9px;
+      height: 9px;
   }
 
-  .movableMenu {
-    margin-top: -20px;
-    right: 28px;
-    top: 0;
+      .movableMenu {
+        margin - top: -20px;
+      right: 28px;
+      top: 0;
 
-    &.isMoved {
-      top: auto;
+      &.isMoved {
+        top: auto;
       bottom: 0;
     }
   }
 
-  .settings {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 40px;
+      .settings {
+        position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 40px;
 
-    &:before {
-      content: '';
+      &:before {
+        content: '';
       position: absolute;
       left: 0;
       top: 25%;
@@ -648,9 +597,9 @@ export default styled(Address)(({ theme }: ThemeProps) => `
       background: ${theme.boxBorderColor};
     }
 
-    &:hover {
-      cursor: pointer;
+      &:hover {
+        cursor: pointer;
       background: ${theme.readonlyInputBackground};
     }
   }
-`);
+      `);
