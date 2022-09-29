@@ -18,8 +18,15 @@
 }
 
 .navigation__account--selected {
-  background-color: #f3f0f9;
-  box-shadow: 0 5px 10px -5px rgba(0,0,0,.1);
+  box-shadow: 0 5px 10px -5px rgb(0 0 0 / 10%);
+  margin-top: 10px;
+  padding-bottom: 10px;
+}
+
+.navigation__account--selected .account-card__wrapper {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
 }
 
 .navigation--account {
@@ -151,6 +158,33 @@
   transform: translateX(-2px) scale(1.2);
 }
 
+.navigation__link--open-app {
+  margin-right: 12px;
+  font-weight: 500;
+}
+.navigation__link--open-app svg {
+  margin-right: 7px;
+  font-size: 15px;
+}
+.navigation__link--open-app .uik-button__text {
+  height: 17px;
+  display: flex;
+  align-items: center;
+}
+
+.navigation--dark .navigation__link--open-app {
+  color: rgba(255,255,255,.5);
+  box-shadow: none;
+  background-color: #373840;
+}
+
+.navigation--dark .navigation__link--open-app:hover, 
+.navigation--dark .navigation__link--open-app:active {
+  color: rgba(255,255,255,.75);
+  box-shadow: none;
+  background-color: #42444d;
+}
+
 .no-break-text {
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -194,6 +228,7 @@
   font-size: 18px;
   color: #898e9c;
   transition: all 0.125s;
+  cursor: pointer;
 }
 
 .navigation__settings-btn:hover,
@@ -345,4 +380,62 @@
   color: rgba(255,255,255,.75);
   box-shadow: none;
   background-color: #42444d;
+}
+
+.accounts__header .steps {
+  -webkit-box-align: center;
+  align-items: center;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  padding-left: 1em;
+}
+
+.popup__close-btn {
+  position: absolute;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 45px;
+  min-width: 45px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
+  transition: all 0.125s;
+  color: var(--text-light);
+  box-shadow: var(--neomorph-out);
+  font-size: 20px;
+}
+
+.accounts__header .popup__close-btn {
+  margin-right: 20px;
+}
+  
+.popup__close-btn.uik-modal__close-btn-icon {
+  width: 14px;
+  height: 22px;
+}
+
+.popup__close-btn:hover {
+  color: var(--primary);
+  cursor: pointer;
+  box-shadow: var(--neomorph-out-light), var(--neomorph-in-light);
+}
+
+.popup__close-btn:active {
+  color: var(--primary);
+  box-shadow: var(--neomorph-out-light), var(--neomorph-in);
+}
+
+.dark-theme .popup__close-btn {
+  box-shadow: none;
+  background-color: #373840;
+}
+
+.token-balances { 
+  margin-top: 5px;
 }
