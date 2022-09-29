@@ -87,7 +87,7 @@ function Accounts ({ className }: Props): React.ReactElement {
 export default styled(Accounts)`
   height: calc(100vh - 2px);
   overflow-y: scroll;
-  padding-top: 7px;
+  padding-top: 12px;
   padding-bottom: 15px;
   scrollbar-width: none;
 
