@@ -299,7 +299,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                   </span>
                 </div>)
                 }
-                <div>{name || account?.name || '<No Name>'}</div>
+                <span>{name || account?.name || '<No Name>'}</span>
               </div>
               : children }
           </div>

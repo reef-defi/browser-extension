@@ -9,7 +9,7 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { ThemeProvider } from 'styled-components';
 
-import { ActionContext, ActionText, themes } from '../../components';
+import { ActionContext, themes } from '../../components';
 import * as messaging from '../../messaging';
 import { Header } from '../../partials';
 import { flushAllPromises } from '../../testHelpers';
@@ -67,12 +67,12 @@ describe('Create Account', () => {
       expect(wrapper.find('.uik-button').first().prop('disabled')).toBe(true);
     });
 
-    it('action text is "Cancel"', () => {
-      expect(wrapper.find(Header).find(ActionText).text()).toBe('Cancel');
+    it('close button exists', () => {
+      expect(wrapper.find(Header).find('.popup__close-btn').exists()).toBe(true);
     });
 
     it('clicking "Cancel" redirects to main screen', () => {
-      wrapper.find(Header).find(ActionText).simulate('click');
+      wrapper.find(Header).find('.popup__close-btn').simulate('click');
       expect(onActionStub).toBeCalledWith('/');
     });
 
@@ -85,15 +85,15 @@ describe('Create Account', () => {
 
     it('clicking on Next activates phase 2', () => {
       check(wrapper.find('input[type="checkbox"]'));
-      wrapper.find('button').simulate('click');
-      expect(wrapper.find(Header).text()).toBe('Create an account2/2Cancel');
+      wrapper.find('button.uik-button').simulate('click');
+      expect(wrapper.find(Header).text()).toBe('Create an account2/2Close');
     });
   });
 
   describe('Phase 2', () => {
     beforeEach(async () => {
       check(wrapper.find('input[type="checkbox"]'));
-      wrapper.find('button').simulate('click');
+      wrapper.find('button.uik-button').simulate('click');
       await act(flushAllPromises);
       wrapper.update();
     });
