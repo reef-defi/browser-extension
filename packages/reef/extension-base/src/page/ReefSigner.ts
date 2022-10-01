@@ -11,6 +11,7 @@ export class ReefSigner implements ReefInjectedSigner {
   private injectedProvider: ReefProvider;
   private selectedProvider: Provider | undefined;
   private selectedSignerAccount: InjectedAccount | undefined;
+  private selectedSigner: Signer | undefined;
 
   constructor (accounts: Accounts, extSigner: Signer, injectedProvider: ReefProvider) {
     this.accounts = accounts;
@@ -40,6 +41,10 @@ export class ReefSigner implements ReefInjectedSigner {
       unsubProvFn();
       unsubAccFn();
     };
+  }
+
+  public getSelectedSigner (): Signer | undefined {
+    return this.selectedSigner;
   }
 
   private onSelectedSignerParamUpdate (cb: (accounts: (ReefEVMSigner | undefined)) => unknown) {
