@@ -1,14 +1,14 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faCog, faCoins, faPlusCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faExternalLinkAlt, faPlusCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ActionContext, SigningReqContext } from '@reef-defi/extension-ui/components';
 import MenuAdd from '@reef-defi/extension-ui/partials/MenuAdd';
-import Account from '@reef-defi/extension-ui/Popup/Accounts/Account';
-import { appState, availableNetworks, hooks, Network, ReefSigner } from '@reef-defi/react-lib';
+import { appState, availableNetworks, hooks, Network } from '@reef-defi/react-lib';
 import React, { useCallback, useContext, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { Button } from '../uik/Button';
 import useOutsideClick from './../../../extension-ui/src/hooks/useOutsideClick';
 import MenuSettings from './../../../extension-ui/src/partials/MenuSettings';
 import { ReefLogo, ReefTestnetLogo } from './Logos';
@@ -21,7 +21,6 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
   const onAction = useContext(ActionContext);
   const network: Network | undefined = hooks.useObservableState(appState.currentNetwork$);
   const mainnetSelected = network == null || network?.rpcUrl === availableNetworks.mainnet.rpcUrl;
-  const selectedAccount: ReefSigner | undefined | null = hooks.useObservableState(appState.selectedSigner$);
   const openRoute = useCallback(
     (path: string) => onAction(path),
     [onAction]
@@ -60,7 +59,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
       return false;
     }
 
-    if (['/account/create', '/account/export-all', '/account/import-seed', '/bind'].includes(location.pathname)) {
+    if (['/account/create', '/account/export-all', '/account/import-seed', '/bind', '/tokens'].includes(location.pathname)) {
       return false;
     }
 
@@ -77,6 +76,26 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
     return ['/tokens'].includes(location.pathname) && !hasSignRequests;
   };
 
+  const OpenApp = () => {
+    return (
+      <>
+        { // @Todo where can we put the URL to the App?
+          <Button
+            className='navigation__link--open-app'
+            onClick={() => window.open('https://app.reef.io/', '_blank')}
+            size='small'
+            type='button'
+          >
+            <FontAwesomeIcon
+              className={'plusIcon'}
+              icon={faExternalLinkAlt as IconProp}
+              size='lg'
+            /> Open App
+          </Button>
+        }
+      </>);
+  };
+
   return (<div className='navigation__wrapper'>
     {(showNavigation()) && (<div className={['navigation', theme === 'dark' ? 'navigation--dark' : '', !showAccount() ? 'navigation--account' : ''].join(' ')}>
       <a
@@ -85,28 +104,13 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
         onClick={(ev) => {
           ev.stopPropagation();
           ev.preventDefault();
-          openRoute('/tokens');
+          openRoute('/accounts');
         }}>
         {mainnetSelected ? <ReefLogo /> : <ReefTestnetLogo />}
       </a>
       <div className='navigation__links'>
-        {(['/accounts', '/'].includes(location.pathname)) && (
-          <a
-            className='navigation__link'
-            href='#'
-            onClick={(ev) => {
-              ev.stopPropagation();
-              ev.preventDefault();
-              openRoute('/tokens');
-            }}
-            title='Tokens'
-          >
-            <FontAwesomeIcon
-              className='navigation__link-icon'
-              icon={faCoins as any}
-            /> Tokens
-          </a>
-        )}
+        <OpenApp />
+
         {(['/tokens'].includes(location.pathname)) && (
           <a
             className='navigation__link'
@@ -121,7 +125,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
             <FontAwesomeIcon
               className='navigation__link-icon'
               icon={faWallet as any}
-            /> Switch account
+            /> Accounts
           </a>
         )}
         {(location.pathname !== '/account/create') && (
@@ -143,6 +147,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
           </a>
         )}
       </div>
+
       {isAddOpen && (
         <MenuAdd
           className='menu-add-account'
@@ -165,15 +170,6 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
         <MenuSettings reference={setRef} />
       )}
     </div>)}
-    {showAccount() && (
-      <div className='navigation__account--selected'>
-        <Account
-          hideBalance
-          presentation
-          {...selectedAccount}
-        />
-      </div>
-    )}
   </div>);
 }
 

@@ -1,4 +1,7 @@
-import { ActionContext, ActionText, SigningReqContext } from '@reef-defi/extension-ui/components';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ActionContext, SigningReqContext } from '@reef-defi/extension-ui/components';
 import { useTranslation } from '@reef-defi/extension-ui/components/translate';
 import { Header } from '@reef-defi/extension-ui/partials';
 import { appState, Components, hooks, ReefSigner } from '@reef-defi/react-lib';
@@ -78,10 +81,16 @@ export const Bind = (): JSX.Element => {
         text={t<string>('Connect EVM')}
       >
         <div className='steps'>
-          <ActionText
-            onClick={_goHome}
-            text='Cancel'
-          />
+          <button
+            className='popup__close-btn'
+            type='button'
+            onClick={_goHome}>
+            <FontAwesomeIcon
+              className='popup__close-btn-icon'
+              icon={faTimes as IconProp}
+              title='Close'
+            />
+          </button>
         </div>
       </Header>)
       }

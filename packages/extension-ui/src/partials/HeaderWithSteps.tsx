@@ -3,10 +3,13 @@
 
 import type { ThemeProps } from '../types';
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useCallback, useContext } from 'react';
 import styled from 'styled-components';
 
-import { ActionContext, ActionText } from '../components';
+import { ActionContext } from '../components';
 import Header from './Header';
 
 interface Props extends ThemeProps {
@@ -33,10 +36,17 @@ function HeaderWithSteps ({ className, step, text }: Props): React.ReactElement<
           <span className='current'>{step}</span>
           <span className='total'>/2</span>
         </div>
-        <ActionText
-          onClick={_onCancel}
-          text='Cancel'
-        />
+
+        <button
+          className='popup__close-btn'
+          type='button'
+          onClick={_onCancel}>
+          <FontAwesomeIcon
+            className='popup__close-btn-icon'
+            icon={faTimes as IconProp}
+            title='Close'
+          />
+        </button>
       </div>
     </Header>
   );

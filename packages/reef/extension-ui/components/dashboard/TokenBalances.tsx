@@ -1,5 +1,11 @@
-import { TokenWithAmount, utils } from '@reef-defi/react-lib';
-import React from 'react';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ActionContext } from '@reef-defi/extension-ui/components';
+import { Header } from '@reef-defi/extension-ui/partials';
+import Account from '@reef-defi/extension-ui/Popup/Accounts/Account';
+import { appState, hooks, ReefSigner, TokenWithAmount, utils } from '@reef-defi/react-lib';
+import React, { useCallback, useContext } from 'react';
 
 import { Loading, UikText } from './../../uik';
 import { TokenPill } from './TokenPill';
@@ -11,37 +17,62 @@ interface TokenBalances {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const TokenBalances = ({ tokens }: TokenBalances): JSX.Element => (
-  <div className='token-balances'>
-    <div className='token-balances__head'>
-      <UikText
-        text='Tokens'
-        type='title'
-      />
+export const TokenBalances = ({ tokens }: TokenBalances): JSX.Element => {
+  const selectedAccount: ReefSigner | undefined | null = hooks.useObservableState(appState.selectedSigner$);
 
-    </div>
+  const onAction = useContext(ActionContext);
 
-    <div className='token-balances__tokens'>
-      {(!isDataSet(tokens) && tokens === DataProgress.LOADING) && (
-        <div className='mt-5'>
-          <Loading />
-        </div>
-      )}
-      {!!isDataSet(tokens) && (
-        getData(tokens)?.map((token) => (
-          <TokenPill
-            key={token.address}
-            token={token}
+  const _onCancel = useCallback(() => {
+    onAction('/');
+  }, [onAction]);
+
+  return (<>
+    <Header
+      text={('Tokens')}
+      showLogo>
+      <div className='steps'>
+        <button
+          className='popup__close-btn'
+          type='button'
+          onClick={_onCancel}>
+          <FontAwesomeIcon
+            className='popup__close-btn-icon'
+            icon={faTimes as IconProp}
+            title='Close'
           />
-        ))
-      )}
-      {(
-        (!!isDataSet(tokens) && !getData(tokens)?.length) ||
-          (!isDataSet(tokens) && tokens === DataProgress.NO_DATA)
-      ) &&
-      (
-        <UikText>No tokens to display.</UikText>
-      )}
+        </button>
+      </div>
+    </Header>
+    <div className='navigation__account--selected'>
+      <Account
+        hideBalance
+        presentation
+        {...selectedAccount}
+      />
     </div>
-  </div>
-);
+    <div className='token-balances'>
+      <div className='token-balances__tokens'>
+        {(!isDataSet(tokens) && tokens === DataProgress.LOADING) && (
+          <div className='mt-5'>
+            <Loading />
+          </div>
+        )}
+        {!!isDataSet(tokens) && (
+          getData(tokens)?.map((token) => (
+            <TokenPill
+              key={token.address}
+              token={token}
+            />
+          ))
+        )}
+        {(
+          (!!isDataSet(tokens) && !getData(tokens)?.length) ||
+          (!isDataSet(tokens) && tokens === DataProgress.NO_DATA)
+        ) &&
+          (
+            <UikText>No tokens to display.</UikText>
+          )}
+      </div>
+    </div>
+  </>);
+};

@@ -3,13 +3,16 @@
 
 import type { ThemeProps } from '../types';
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { saveAs } from 'file-saver';
 import React, { useCallback, useContext, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import styled from 'styled-components';
 
 import { Button } from '../../../reef/extension-ui/uik/Button';
-import { AccountContext, ActionContext, ActionText, ButtonArea, InputWithLabel, VerticalSpace, Warning } from '../components';
+import { AccountContext, ActionContext, ButtonArea, InputWithLabel, VerticalSpace, Warning } from '../components';
 import useTranslation from '../hooks/useTranslation';
 import { exportAccounts } from '../messaging';
 import { Header } from '../partials';
@@ -67,10 +70,16 @@ function ExportAll ({ className }: Props): React.ReactElement<Props> {
         showLogo
         text={t<string>('Export all accounts')}>
         <div className='steps'>
-          <ActionText
-            onClick={_goHome}
-            text='Cancel'
-          />
+          <button
+            className='popup__close-btn'
+            type='button'
+            onClick={_goHome}>
+            <FontAwesomeIcon
+              className='popup__close-btn-icon'
+              icon={faTimes as IconProp}
+              title='Close'
+            />
+          </button>
         </div>
       </Header>
       <div className={className}>

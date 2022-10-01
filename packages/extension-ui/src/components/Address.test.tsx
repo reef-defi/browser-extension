@@ -290,7 +290,7 @@ describe('Address', () => {
 
     it('shows the child\'s account address and name', () => {
       expect(wrapper.find('.account-card__address').first().prop('title')).toEqual(childAccount.address);
-      expect(wrapper.find('.account-card__name span').text()).toEqual(childAccount.name);
+      expect(wrapper.find('.account-card__name--line > span').text()).toEqual(childAccount.name);
     });
 
     it('shows the parent account and suri', () => {
