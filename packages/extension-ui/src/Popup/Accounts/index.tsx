@@ -26,12 +26,30 @@ function Accounts ({ className }: Props): React.ReactElement {
   const networkMap = useMemo(() => getNetworkMap(), []);
 
   useEffect(() => {
+    const filterChildren = (hierarchy: AccountWithChildren[], filter: string): AccountWithChildren[] => {
+      const flattenHierarchy = (accounts: AccountWithChildren[], list: AccountWithChildren[]): AccountWithChildren[] => {
+        accounts.forEach(function (account) {
+          list.push(account);
+
+          if (account.children) {
+            list.concat(flattenHierarchy(account.children, list));
+          }
+        });
+
+        return list;
+      };
+
+      const list = flattenHierarchy(hierarchy, []);
+
+      return list.filter((account) =>
+        account.name?.toLowerCase().includes(filter) ||
+        (account.genesisHash && networkMap.get(account.genesisHash)?.toLowerCase().includes(filter))
+      );
+    };
+
     setFilteredAccount(
       filter
-        ? hierarchy.filter((account) =>
-          account.name?.toLowerCase().includes(filter) ||
-          (account.genesisHash && networkMap.get(account.genesisHash)?.toLowerCase().includes(filter))
-        )
+        ? filterChildren(hierarchy, filter)
         : hierarchy
     );
   }, [filter, hierarchy, networkMap]);
@@ -69,7 +87,7 @@ function Accounts ({ className }: Props): React.ReactElement {
 export default styled(Accounts)`
   height: calc(100vh - 2px);
   overflow-y: scroll;
-  padding-top: 7px;
+  padding-top: 12px;
   padding-bottom: 15px;
   scrollbar-width: none;
 

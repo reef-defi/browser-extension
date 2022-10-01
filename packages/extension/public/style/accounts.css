@@ -110,18 +110,29 @@
 }
 
 .account-card__wrapper {
-  background-color: white;
-  border-radius: 15px;
-  box-shadow: 0 3px 30px 0 rgba(0, 0, 0, 0.07);
-  padding: 15px 10px;
   width: 100%;
-  animation: account-card 0.25s;
+  border-radius: 15px;
+  padding: 15px 10px;
+  box-shadow: 10px 10px 20px -5px hsl( var(--bg--h),
+              var(--bg--s), calc(var(--bg--l) - 10%) ),
+              -10px -10px 15px -10px hsl( var(--bg--h),
+              var(--bg--s), calc(var(--bg--l) + 10%) );
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  transition: all 0.2s;
-  position: relative;
+  border: none;
+  background-color: transparent;
+  transition: all .125s;
+  animation: account-card 0.25s;
+}
+
+.account-card__wrapper:hover {
+  box-shadow: var(--neomorph-out-light),
+              inset 7.5px 7.5px 15px -3.75px hsl(var(--bg--h),
+              var(--bg--s),calc(var(--bg--l) - 7.5%)),
+              inset -7.5px -7.5px 15px -3.75px hsl(var(--bg--h),var(--bg--s),
+              calc(var(--bg--l) + 7.5%));
 }
 
 .account-card__wrapper--selected {
@@ -172,6 +183,7 @@
   justify-content: flex-start;
   align-items: center;
   max-width: 100%;
+  width: 100%;
 }
 
 .account-card__identicon {
@@ -191,7 +203,7 @@
 }
 
 .account-card__identicon--loading{
-  padding-top: 0.8em;
+  margin-right: 25px;
 }
 
 .account-card__info {
@@ -202,6 +214,7 @@
   margin-left: 10px;
   padding: 1px 0;
   max-width: calc(100% - 81px);
+  position: relative;
 }
 
 .account-card__name {
@@ -222,7 +235,8 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-end;
+  width: 100%;
 }
 
 .account-card__name svg {
@@ -314,12 +328,35 @@
   font-weight: 500;
   margin-bottom: 2px;
   width: 100%;
+  max-width: 20px;
 }
 
 .account-card__parent svg {
   margin-right: 5px;
-  font-size: 0.688rem;
-  transform: translateY(-2px);
+  font-size: 15px;
+  transform: translateY(-1px);
+}
+
+.account-card__parent .account-card__parent-name {
+  display: none;
+}
+
+.account-card__parent:hover .account-card__parent-name {
+  display: flex;
+  position: absolute;
+  background: #eeebf6;
+  width: 100%;
+  max-width: calc(100% - 19px);
+  height: 19px;
+  margin-left: 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-top: -1px;
+}
+
+.dark-theme .account-card__parent:hover .account-card__parent-name {
+  background: #2c2d33;
 }
 
 .account-card__meta-wrapper {

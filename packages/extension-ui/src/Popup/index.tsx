@@ -15,10 +15,8 @@ import { Route, Switch } from 'react-router';
 import uiSettings from '@polkadot/ui-settings';
 
 import { Bind } from '../../../reef/extension-ui/components/Bind';
-import { Dashboard } from '../../../reef/extension-ui/components/dashboard/Dashboard';
 import { HeaderComponent } from '../../../reef/extension-ui/components/HeaderComponent';
 import { ReefContext } from '../../../reef/extension-ui/components/ReefContext';
-import { Swap } from '../../../reef/extension-ui/components/Swap';
 import { useReefSigners } from '../../../reef/extension-ui/hooks/useReefSigners';
 import { selectAccount, subscribeNetwork } from '../../../reef/extension-ui/messaging';
 import { ErrorBoundary, Loading } from '../components';
@@ -202,9 +200,9 @@ export default function Popup (): React.ReactElement {
                         <Route path='/account/derive/:address/locked'>{wrapWithErrorBoundary(<Derive isLocked />, 'derived-address-locked')}</Route>
                         <Route path='/account/derive/:address'>{wrapWithErrorBoundary(<Derive />, 'derive-address')}</Route>
                         <Route path='/accounts'>{wrapWithErrorBoundary(<Accounts className='content-comp' />, 'accounts')}</Route>
-                        <Route path='/tokens'>{wrapWithErrorBoundary(<Dashboard />, 'tokens')}</Route>
                         <Route path='/bind'>{wrapWithErrorBoundary(<Bind />, 'bind')}</Route>
-                        <Route path='/swap'>{wrapWithErrorBoundary(<Swap />, 'swap')}</Route>
+                        {/* <Route path='/tokens'>{wrapWithErrorBoundary(<TokenMenu />, 'tokens')}</Route> */}
+                        {/* <Route path='/swap'>{wrapWithErrorBoundary(<Swap />, 'swap')}</Route> */}
                         <Route path={`${PHISHING_PAGE_REDIRECT}/:website`}>{wrapWithErrorBoundary(<PhishingDetected />, 'phishing-page-redirect')}</Route>
                       </Switch>
                     </ToastProvider>

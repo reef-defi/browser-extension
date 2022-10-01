@@ -9,6 +9,8 @@
   margin: 0;
   max-height: 100vh;
   height: calc(100vh - 4px);
+  background: rgb(238, 235, 246);
+  border-color: rgb(238, 235, 246);
 }
 
 .navigation .menu-add-account {
@@ -99,4 +101,10 @@ div[class^='MenuItem'] > .dropdown,
 
 .dropdown-menu .text-warn {
   color: var(--danger);
+}
+
+.dark-theme .navigation .menu-add-account,
+.dark-theme .navigation .menu-settings {
+  background: #26272c;
+  border-color: #26272c;
 }

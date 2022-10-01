@@ -3,8 +3,8 @@ import React from 'react';
 
 import { TokenBalances } from './TokenBalances';
 
-export const Dashboard = (): JSX.Element => {
-  const tokensWithPrice: TokenWithAmount[]|undefined = hooks.useObservableState(appState.tokenPrices$);
+export const TokenMenu = (): JSX.Element => {
+  const tokensWithPrice: TokenWithAmount[] | undefined = hooks.useObservableState(appState.tokenPrices$);
 
   return (<>
     <TokenBalances

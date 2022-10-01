@@ -1,8 +1,5 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-
-import type { ThemeProps } from '../../types';
-
 import React from 'react';
 import styled from 'styled-components';
 
@@ -31,6 +28,7 @@ export default styled(Toast)<{visible: boolean}>`
   && {
     margin: auto;
     border-radius: 25px;
-    background: ${({ theme }: ThemeProps): string => theme.highlightedAreaBackground};
+    background: #ba24c7;
+    color: #fff;
   }
 `;

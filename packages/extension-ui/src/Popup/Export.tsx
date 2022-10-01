@@ -3,13 +3,16 @@
 
 import type { ThemeProps } from '../types';
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { saveAs } from 'file-saver';
 import React, { useCallback, useContext, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import styled from 'styled-components';
 
 import { Button } from '../../../reef/extension-ui/uik/Button';
-import { ActionContext, ActionText, Address, ButtonArea, InputWithLabel, VerticalSpace, Warning } from '../components';
+import { ActionContext, Address, ButtonArea, InputWithLabel, VerticalSpace, Warning } from '../components';
 import useTranslation from '../hooks/useTranslation';
 import { exportAccount } from '../messaging';
 import { Header } from '../partials';
@@ -66,10 +69,16 @@ function Export ({ className, match: { params: { address } } }: Props): React.Re
         showLogo
         text={t<string>('Export account')}>
         <div className='steps'>
-          <ActionText
-            onClick={_goHome}
-            text='Cancel'
-          />
+          <button
+            className='popup__close-btn'
+            type='button'
+            onClick={_goHome}>
+            <FontAwesomeIcon
+              className='popup__close-btn-icon'
+              icon={faTimes as IconProp}
+              title='Close'
+            />
+          </button>
         </div>
       </Header>
       <div className={className}>
