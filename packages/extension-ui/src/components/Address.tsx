@@ -290,16 +290,18 @@ function Address ({ actions, address, children, className, exporting, genesisHas
                     className='deriveIcon'
                     icon={faCodeBranch as IconProp}
                   />
-                  <span
+                  <div
                     className='account-card__parent-name'
                     data-field='parent'
                     title={parentNameSuri}
                   >
                     {parentNameSuri}
-                  </span>
+                  </div>
                 </div>)
                 }
-                <span>{name || account?.name || '<No Name>'}</span>
+                <div
+                  className='account-card__name--main'
+                  title={name || account?.name || '<No Name>'}>{name || account?.name || '<No Name>'}</div>
               </div>
               : children }
           </div>
@@ -390,7 +392,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
         !exporting
           ? (
             <div className='account-card__aside'>
-              {!signer && (<div className={'account-card__identicon--loading'}><Loading /></div>)}
+              {!signer && (<div className={'account-card__identicon--loading'}><Loading size='small' /></div>)}
               {signer && !signer?.isEvmClaimed ? <Bind /> : ''}
               {/* {signer && !presentation ? <Tokens /> : ''} */}
 
