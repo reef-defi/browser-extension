@@ -352,7 +352,6 @@
 }
 
 .account-card__parent:hover .account-card__parent-name {
-  display: flex;
   position: absolute;
   background: #eeebf6;
   width: 100%;
