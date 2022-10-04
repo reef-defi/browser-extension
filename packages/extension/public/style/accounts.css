@@ -353,6 +353,7 @@
 
 .account-card__parent:hover .account-card__parent-name {
   position: absolute;
+  display: block;
   background: #eeebf6;
   width: 100%;
   max-width: calc(100% - 19px);
