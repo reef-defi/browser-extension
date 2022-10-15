@@ -146,7 +146,9 @@ function Header ({ children, className = '', onFilter, showAdd, showBackArrow, s
           <MenuAdd reference={addRef} />
         )}
         {isSettingsOpen && (
-          <MenuSettings reference={setRef} />
+          <MenuSettings
+            onClose={() => setShowSettings(false)}
+            reference={setRef} />
         )}
         {children}
       </div>
