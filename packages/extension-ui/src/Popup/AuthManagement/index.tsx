@@ -9,7 +9,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import useTranslation from '../../hooks/useTranslation';
-import { getAuthList, toggleAuthorization } from '../../messaging';
+import { getAuthList, removeAuthorization, toggleAuthorization } from '../../messaging';
 import { Header } from '../../partials';
 import WebsiteEntry from './WebsiteEntry';
 
@@ -38,6 +38,12 @@ function AuthManagement ({ className }: Props): React.ReactElement<Props> {
       .catch(console.error);
   }, []);
 
+  const removeAuth = useCallback((url: string) => {
+    removeAuthorization(url)
+      .then(({ list }) => setAuthList(list))
+      .catch(console.error);
+  }, []);
+
   return (
     <>
       <Header
@@ -45,35 +51,36 @@ function AuthManagement ({ className }: Props): React.ReactElement<Props> {
         smallMargin
         text={t<string>('Manage Website Access')}
       />
-      <>
-        <InputFilter
-          onChange={_onChangeFilter}
-          placeholder={t<string>('example.com')}
-          value={filter}
-          withReset
-        />
-        <div className={className}>
-          {
-            !authList || !Object.entries(authList)?.length
-              ? <div className='empty-list'>{t<string>('No website request yet!')}</div>
-              : <>
-                <div className='website-list'>
-                  {Object.entries(authList)
-                    .filter(([url]: [string, AuthUrlInfo]) => url.includes(filter))
-                    .map(
-                      ([url, info]: [string, AuthUrlInfo]) =>
-                        <WebsiteEntry
-                          info={info}
-                          key={url}
-                          toggleAuth={toggleAuth}
-                          url={url}
-                        />
-                    )}
-                </div>
-              </>
-          }
-        </div>
-      </>
+
+      <InputFilter
+        onChange={_onChangeFilter}
+        placeholder={t<string>('example.com')}
+        value={filter}
+        withReset
+      />
+
+      <div className={className}>
+        {
+          !authList || !Object.entries(authList)?.length
+            ? <div className='empty-list'>{t<string>('No website request yet!')}</div>
+            : <>
+              <div className='website-list'>
+                {Object.entries(authList)
+                  .filter(([url]: [string, AuthUrlInfo]) => url.includes(filter))
+                  .map(
+                    ([url, info]: [string, AuthUrlInfo]) =>
+                      <WebsiteEntry
+                        info={info}
+                        key={url}
+                        toggleAuth={toggleAuth}
+                        removeAuth={removeAuth}
+                        url={url}
+                      />
+                  )}
+              </div>
+            </>
+        }
+      </div>
     </>
   );
 }
