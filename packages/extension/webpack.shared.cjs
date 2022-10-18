@@ -20,7 +20,7 @@ const packages = [
   'extension-ui'
 ];
 
-module.exports = (entry, alias = {}, optimization = {}, output = null) => ({
+module.exports = (entry, alias = {}, optimization = {}, output = null, mode = 'production') => ({
   context: __dirname,
   devtool: false,
   entry,
@@ -76,7 +76,7 @@ module.exports = (entry, alias = {}, optimization = {}, output = null) => ({
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('production'),
+        NODE_ENV: JSON.stringify(mode),
         PKG_NAME: JSON.stringify(pkgJson.name),
         PKG_VERSION: JSON.stringify(pkgJson.version)
       }
