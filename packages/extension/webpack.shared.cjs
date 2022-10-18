@@ -22,7 +22,7 @@ const packages = [
 
 module.exports = (entry, alias = {}, optimization = {}, output = null, mode = 'production') => ({
   context: __dirname,
-  devtool: false,
+  devtool: mode === 'production' ? false : 'source-map',
   entry,
   module: {
     rules: [
