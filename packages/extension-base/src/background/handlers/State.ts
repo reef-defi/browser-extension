@@ -343,6 +343,17 @@ export default class State {
     });
   }
 
+  public removeAuthorization (url: string): AuthUrls {
+    const entry = this.#authUrls[url];
+
+    assert(entry, `The source ${url} is not known`);
+
+    delete this.#authUrls[url];
+    this.saveCurrentAuthList();
+
+    return this.#authUrls;
+  }
+
   private popupClose (): void {
     this.#windows.forEach((id: number): void =>
       // eslint-disable-next-line no-void

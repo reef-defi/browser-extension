@@ -167,7 +167,10 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
       </button>
 
       {isSettingsOpen && (
-        <MenuSettings reference={setRef} />
+        <MenuSettings
+          reference={setRef}
+          onClose={() => setShowSettings(false)}
+        />
       )}
     </div>)}
   </div>);

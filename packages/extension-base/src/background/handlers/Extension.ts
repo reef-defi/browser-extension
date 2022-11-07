@@ -77,6 +77,9 @@ export default class Extension {
       case 'pri(authorize.toggle)':
         return this.toggleAuthorization(request as string);
 
+      case 'pri(authorize.remove)':
+        return this.removeAuthorization(request as string);
+
       case 'pri(authorize.requests)':
         return this.authorizeSubscribe(id, port);
 
@@ -344,6 +347,10 @@ export default class Extension {
     });
 
     return true;
+  }
+
+  private removeAuthorization (url: string): ResponseAuthorizeList {
+    return { list: this.#state.removeAuthorization(url) };
   }
 
   private metadataApprove ({ id }: RequestMetadataApprove): boolean {

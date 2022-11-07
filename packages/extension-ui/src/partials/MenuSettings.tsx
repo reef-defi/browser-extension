@@ -20,6 +20,7 @@ import getLanguageOptions from '../util/getLanguageOptions';
 interface Props extends ThemeProps {
   className?: string;
   reference: React.MutableRefObject<null>;
+  onClose?: () => void;
 }
 
 const notificationOptions = ['Extension', 'PopUp', 'Window']
@@ -28,10 +29,9 @@ const notificationOptions = ['Extension', 'PopUp', 'Window']
 const networkOptions = [availableNetworks.mainnet, availableNetworks.testnet]
   .map((network) => ({ text: network.name, value: network.rpcUrl }));
 
-function MenuSettings ({ className, reference }: Props): React.ReactElement<Props> {
+function MenuSettings ({ className, onClose, reference }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const [camera, setCamera] = useState(settings.camera === 'on');
-  // const [prefix, setPrefix] = useState(`${settings.prefix === -1 ? 42 : settings.prefix}`);
   const [notification, updateNotification] = useState(settings.notification);
   const network = hooks.useObservableState(appState.currentNetwork$);
   const themeContext = useContext(ThemeContext as React.Context<Theme>);
@@ -43,14 +43,6 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
   useEffect(() => {
     settings.set({ camera: camera ? 'on' : 'off' });
   }, [camera]);
-
-  /* const _onChangePrefix = useCallback(
-    (value: string): void => {
-      setPrefix(value);
-      settings.set({ prefix: parseInt(value, 10) });
-    },
-    []
-  ); */
 
   const _onChangeNotification = useCallback(
     (value: string): void => {
@@ -82,7 +74,11 @@ function MenuSettings ({ className, reference }: Props): React.ReactElement<Prop
   const _goToAuthList = useCallback(
     () => {
       onAction('auth-list');
-    }, [onAction]
+
+      if (onClose != null) {
+        onClose();
+      }
+    }, [onAction, onClose]
   );
 
   const _onNetworkChange = useCallback(
