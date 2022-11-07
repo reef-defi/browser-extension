@@ -11,5 +11,6 @@ module.exports = createConfig(
     extension: './src/extension.ts',
     page: './src/page.ts'
   },
-  ...chunkingConfigData
+  ...chunkingConfigData,
+  'development'
 );
