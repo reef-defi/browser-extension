@@ -25,7 +25,7 @@ function Menu ({ children, className, reference }: Props): React.ReactElement<Pr
 
 export default styled(Menu)(({ theme }: ThemeProps) => `
   background: ${theme.popupBackground};
-  border-radius: 4px;
+  border-radius: 10px;
   border: 1px solid ${theme.boxBorderColor};
   box-sizing: border-box;
   box-shadow: 0 0 10px ${theme.boxShadow};

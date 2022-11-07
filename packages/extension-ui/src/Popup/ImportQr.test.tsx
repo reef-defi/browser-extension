@@ -79,7 +79,7 @@ describe('ImportQr component', () => {
     });
 
     it('shows the correct name', () => {
-      expect(wrapper.find('.account-card__name span').text()).toEqual(mockedAccount.name);
+      expect(wrapper.find('.account-card__name--main').text()).toEqual(mockedAccount.name);
     });
 
     it('shows the correct address', () => {
@@ -105,7 +105,7 @@ describe('ImportQr component', () => {
     await typeName(wrapper, longName);
     expect(wrapper.find('.warning-message')).toHaveLength(0);
     expect(wrapper.find('.next-step-btn').first().getElement().props.disabled).toBe(false);
-    expect(wrapper.find('.account-card__name span').first().text()).toEqual(longName);
+    expect(wrapper.find('.account-card__name--main').first().text()).toEqual(longName);
   });
 
   it('shows the external name in the input field', () => {

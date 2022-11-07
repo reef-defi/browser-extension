@@ -184,6 +184,7 @@
   align-items: center;
   max-width: 100%;
   width: 100%;
+  overflow: hidden;
 }
 
 .account-card__identicon {
@@ -214,6 +215,7 @@
   margin-left: 10px;
   padding: 1px 0;
   max-width: calc(100% - 81px);
+  width: 100%;
   position: relative;
 }
 
@@ -229,6 +231,14 @@
   width: 100%;
   max-width: 100%;
   word-break: break-all;
+}
+
+.account-card__name--main,
+.account-card__parent-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
 }
 
 .account-card__name > div {
@@ -342,8 +352,8 @@
 }
 
 .account-card__parent:hover .account-card__parent-name {
-  display: flex;
   position: absolute;
+  display: block;
   background: #eeebf6;
   width: 100%;
   max-width: calc(100% - 19px);
@@ -375,6 +385,7 @@
   justify-content: flex-start;
   align-items: center;
   cursor: pointer;
+  max-width: 187px;
 }
 
 .account-card__meta + .account-card__meta {
