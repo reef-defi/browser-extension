@@ -8,6 +8,7 @@ import type { ExtDef } from '@polkadot/types/extrinsic/signedExtensions/types';
 
 import { Provider } from '@reef-defi/evm-provider';
 import { Signer as ReefEVMSigner } from '@reef-defi/evm-provider/Signer';
+import {ReefVM} from "../../reef/extension-base/src/page/ReefSigner";
 
 // eslint-disable-next-line no-undef
 type This = typeof globalThis;
@@ -110,7 +111,7 @@ export interface ReefInjected extends Injected{
 
 export interface ReefInjectedSigner {
   subscribeSelectedAccount: (cb: (accounts: InjectedAccount | undefined) => unknown) => Unsubcall;
-  subscribeSelectedAccountSigner: (cb: (reefEVMSigner: ReefEVMSigner | undefined) => unknown) => Unsubcall;
+  subscribeSelectedSigner: (cb: (reefEVMSigner: ReefEVMSigner | undefined) => unknown, connectedVM?:ReefVM) => Unsubcall;
 }
 
 export interface ReefInjectedProvider {

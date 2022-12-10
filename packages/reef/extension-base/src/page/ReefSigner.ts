@@ -1,9 +1,14 @@
-import { Provider, Signer as ReefEVMSigner } from '@reef-defi/evm-provider';
+import { Provider, Signer as ReefVMSigner } from '@reef-defi/evm-provider';
 import Accounts from '@reef-defi/extension-base/page/Accounts';
 import Signer from '@reef-defi/extension-base/page/Signer';
 import { InjectedAccount, ReefInjectedSigner, Unsubcall } from '@reef-defi/extension-inject/types';
 
 import { ReefProvider } from './ReefProvider';
+
+export enum ReefVM {
+  NATIVE,
+  EVM
+}
 
 export class ReefSigner implements ReefInjectedSigner {
   private accounts: Accounts;
@@ -25,15 +30,15 @@ export class ReefSigner implements ReefInjectedSigner {
     });
   }
 
-  public subscribeSelectedAccountSigner (cb: (reefEVMSigner: ReefEVMSigner | undefined) => unknown): Unsubcall {
+  public subscribeSelectedSigner (cb: (reefSigner: ReefVMSigner | undefined) => unknown, connectedVM:ReefVM = ReefVM.EVM): Unsubcall {
     const unsubProvFn = this.injectedProvider.subscribeSelectedNetworkProvider((provider) => {
       this.selectedProvider = provider;
-      this.onSelectedSignerParamUpdate(cb);
+      this.onSelectedSignerParamUpdate(cb, connectedVM);
     });
     const unsubAccFn = this.subscribeSelectedAccount((account) => {
       if (account?.address !== this.selectedSignerAccount?.address) {
         this.selectedSignerAccount = account;
-        this.onSelectedSignerParamUpdate(cb);
+        this.onSelectedSignerParamUpdate(cb, connectedVM);
       }
     });
 
@@ -47,11 +52,12 @@ export class ReefSigner implements ReefInjectedSigner {
     return this.selectedSigner;
   }
 
-  private onSelectedSignerParamUpdate (cb: (accounts: (ReefEVMSigner | undefined)) => unknown) {
+  private async onSelectedSignerParamUpdate (cb: (reefSigner: (ReefVMSigner | undefined)) => unknown, connectedVM?: ReefVM) {
     if (this.selectedProvider && this.extSigner) {
-      const reefEVMSigner = this.selectedSignerAccount ? new ReefEVMSigner(this.selectedProvider, this.selectedSignerAccount.address, this.extSigner) : undefined;
-
-      cb(reefEVMSigner);
+      const reefVMSigner = this.selectedSignerAccount ? new ReefVMSigner(this.selectedProvider, this.selectedSignerAccount.address, this.extSigner) : undefined;
+      if (!connectedVM || (connectedVM===ReefVM.EVM && await reefVMSigner?.isClaimed())) {
+        cb(reefVMSigner);
+      }
     }
   }
 }

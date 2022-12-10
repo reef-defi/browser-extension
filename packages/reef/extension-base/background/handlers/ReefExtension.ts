@@ -1,4 +1,4 @@
-import { availableNetworks } from '@reef-chain/util-lib';
+import { network } from '@reef-chain/util-lib';
 import Extension from '@reef-defi/extension-base/background/handlers/Extension';
 import { createSubscription, unsubscribe } from '@reef-defi/extension-base/background/handlers/subscriptions';
 import { AccountJson, MessageTypes, RequestAccountSelect, RequestNetworkSelect, RequestTypes, ResponseType } from '@reef-defi/extension-base/background/types';
@@ -10,7 +10,7 @@ import keyring from '@polkadot/ui-keyring';
 
 const REEF_NETWORK_RPC_URL_KEY = 'reefNetworkRpcUrl';
 
-const rpcUrl = availableNetworks.mainnet.rpcUrl;
+const rpcUrl = network.AVAILABLE_NETWORKS.mainnet.rpcUrl;
 
 export const networkRpcUrlSubject: BehaviorSubject<string> = new BehaviorSubject<string>(localStorage.getItem(REEF_NETWORK_RPC_URL_KEY) || rpcUrl);
 

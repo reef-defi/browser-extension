@@ -13,6 +13,7 @@ import { documentReadyPromise } from './util';
 export { unwrapBytes, wrapBytes } from './wrapBytes';
 
 // just a helper (otherwise we cast all-over, so shorter and more readable)
+// TODO window might be undefined if used server-side
 const win = window as Window & InjectedWindow;
 
 // don't clobber the existing object, but ensure non-undefined
