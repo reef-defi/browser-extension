@@ -13,21 +13,23 @@ export function injectExtension (enable: (origin: string) => Promise<Injected>, 
   // small helper with the typescript types, just cast window
   const windowInject = window as Window & InjectedWindow;
 
-  // don't clobber the existing object, we will add it (or create as needed)
-  windowInject.injectedWeb3 = windowInject.injectedWeb3 || {};
+  if(windowInject) {
+    // don't clobber the existing object, we will add it (or create as needed)
+    windowInject.injectedWeb3 = windowInject.injectedWeb3 || {};
 
-  // add our enable function
-  windowInject.injectedWeb3[name] = {
-    enable: (origin: string): Promise<Injected> =>
-      enable(origin),
-    version
-  };
+    // add our enable function
+    windowInject.injectedWeb3[name] = {
+      enable: (origin: string): Promise<Injected> =>
+          enable(origin),
+      version
+    };
+  }
 }
 
 export function isInjected (name: string): boolean {
   const windowInject = window as Window & InjectedWindow;
 
-  return !!windowInject.injectedWeb3 && !!windowInject.injectedWeb3[name];
+  return !!windowInject?.injectedWeb3 && !!windowInject?.injectedWeb3[name];
 }
 
 export function isInjectionStarted (name: string): boolean {

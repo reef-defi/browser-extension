@@ -89,7 +89,7 @@ export default function initMetaMask (): Promise<boolean> {
   return new Promise((resolve): void => {
     const win = window as Window & Web3Window;
 
-    if (win.ethereum) {
+    if (win?.ethereum) {
       injectMetaMaskWeb3(win);
       resolve(true);
     } else {

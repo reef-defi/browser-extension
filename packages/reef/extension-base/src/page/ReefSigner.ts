@@ -64,18 +64,23 @@ export class ReefSigner implements ReefInjectedSigner {
         });
         const acc = await this.getSelectedAccount();
         const prov = await providerPr;
-        unsubProvFn();
-        const selectedSigner = ReefSigner.createReefSigner(acc, prov, this.extSigner);
-        if (await ReefSigner.hasConnectedVM(selectedSigner, connectedVM)) {
-            return selectedSigner;
+        let selectedSigner = ReefSigner.createReefSigner(acc, prov, this.extSigner);
+        if (!(await ReefSigner.hasConnectedVM(selectedSigner, connectedVM))) {
+            selectedSigner = undefined;
         }
-        return undefined;
+        unsubProvFn();
+        return selectedSigner;
     }
 
     private async onSelectedSignerParamUpdate(cb: (reefSigner: (ReefVMSigner | undefined)) => unknown, connectedVM?: ReefVM): Promise<void> {
         const selectedSigner = ReefSigner.createReefSigner(this.selectedSignerAccount, this.selectedProvider, this.extSigner);
-        if (await ReefSigner.hasConnectedVM(selectedSigner, connectedVM)) {
-            cb(selectedSigner);
+        const hasVM = await ReefSigner.hasConnectedVM(selectedSigner, connectedVM);
+
+        if(selectedSigner){
+            cb(hasVM  ? selectedSigner : undefined);
+        }
+        if (!hasVM && selectedSigner) {
+            console.warn('extension subscribeSelectedSigner() - VM not connected for selected account!')
         }
     }
 

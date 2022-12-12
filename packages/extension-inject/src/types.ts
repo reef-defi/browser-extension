@@ -104,7 +104,7 @@ export interface Injected {
   signer: InjectedSigner;
 }
 
-export interface ReefInjected extends Injected{
+export interface ReefInjected extends Injected {
   reefSigner: ReefInjectedSigner;
   reefProvider: ReefInjectedProvider;
 }
