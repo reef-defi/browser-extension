@@ -37,12 +37,14 @@ export class ReefSigner implements ReefInjectedSigner {
     public subscribeSelectedSigner(cb: (reefSigner: ReefVMSigner | undefined) => unknown, connectedVM: ReefVM = ReefVM.EVM): Unsubcall {
         const unsubProvFn = this.injectedProvider.subscribeSelectedNetworkProvider((provider) => {
             this.selectedProvider = provider;
-            this.onSelectedSignerParamUpdate(cb, connectedVM).then(_ => {});
+            this.onSelectedSignerParamUpdate(cb, connectedVM).then(_ => {
+            });
         });
         const unsubAccFn = this.subscribeSelectedAccount((account) => {
             if (account?.address !== this.selectedSignerAccount?.address) {
                 this.selectedSignerAccount = account;
-                this.onSelectedSignerParamUpdate(cb, connectedVM).then(_ =>{} );
+                this.onSelectedSignerParamUpdate(cb, connectedVM).then(_ => {
+                });
             }
         });
 
@@ -53,7 +55,8 @@ export class ReefSigner implements ReefInjectedSigner {
     }
 
     public async getSelectedSigner(connectedVM: ReefVM = ReefVM.EVM): Promise<ReefVMSigner | undefined> {
-        let unsubProvFn = () => {};
+        let unsubProvFn = () => {
+        };
         const providerPr: Promise<Provider> = new Promise(resolve => {
             unsubProvFn = this.injectedProvider.subscribeSelectedNetworkProvider((provider) => {
                 resolve(provider);
@@ -69,7 +72,7 @@ export class ReefSigner implements ReefInjectedSigner {
         return undefined;
     }
 
-    private async onSelectedSignerParamUpdate(cb: (reefSigner: (ReefVMSigner | undefined)) => unknown, connectedVM?: ReefVM):Promise<void> {
+    private async onSelectedSignerParamUpdate(cb: (reefSigner: (ReefVMSigner | undefined)) => unknown, connectedVM?: ReefVM): Promise<void> {
         const selectedSigner = ReefSigner.createReefSigner(this.selectedSignerAccount, this.selectedProvider, this.extSigner);
         if (await ReefSigner.hasConnectedVM(selectedSigner, connectedVM)) {
             cb(selectedSigner);
