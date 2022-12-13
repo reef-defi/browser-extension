@@ -7,7 +7,7 @@ import type { ProviderInterface } from '@polkadot/rpc-provider/types';
 import type { ExtDef } from '@polkadot/types/extrinsic/signedExtensions/types';
 
 import { Provider } from '@reef-defi/evm-provider';
-import {Signer as ReefVMSigner} from '@reef-defi/evm-provider/Signer';
+import { Signer as ReefVMSigner } from '@reef-defi/evm-provider/Signer';
 
 // eslint-disable-next-line no-undef
 type This = typeof globalThis;

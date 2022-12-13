@@ -20,6 +20,7 @@ import styled from 'styled-components';
 
 import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
 
+import { selectAccount } from '../../../reef/extension-ui/messaging';
 import useMetadata from '../hooks/useMetadata';
 import useOutsideClick from '../hooks/useOutsideClick';
 import useTranslation from '../hooks/useTranslation';
@@ -31,7 +32,6 @@ import { Button, Loading } from './../../../reef/extension-ui/uik';
 import { AccountContext, ActionContext, SettingsContext, SigningReqContext } from './contexts';
 import Identicon from './Identicon';
 import Menu from './Menu';
-import {selectAccount} from "../../../reef/extension-ui/messaging";
 
 export interface Props {
   actions?: React.ReactNode;
@@ -243,7 +243,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
 
     return (
       <>
-         {!(!!signRequests && !!signRequests.length) && !account?.isSelected &&
+        {!(!!signRequests && !!signRequests.length) && !account?.isSelected &&
         (<Button
           className='account-card__select-btn'
           onClick={() => onSelectAccount(account)}
@@ -251,7 +251,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
           type='button'
         >Select
         </Button>)
-         }
+        }
       </>
     );
   };
@@ -394,7 +394,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
             <div className='account-card__aside'>
               {!signer && (<div className={'account-card__identicon--loading'}><Loading size='small' /></div>)}
               {signer && !signer?.isEvmClaimed ? <Bind /> : ''}
-               {signer && !presentation ? <Select /> : ''}
+              {signer && !presentation ? <Select /> : ''}
 
               <div className='account-card__actions'>
                 {actions && (
