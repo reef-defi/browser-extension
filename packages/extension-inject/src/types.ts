@@ -7,8 +7,7 @@ import type { ProviderInterface } from '@polkadot/rpc-provider/types';
 import type { ExtDef } from '@polkadot/types/extrinsic/signedExtensions/types';
 
 import { Provider } from '@reef-defi/evm-provider';
-import { Signer as ReefEVMSigner } from '@reef-defi/evm-provider/Signer';
-import {ReefVM} from "../../reef/extension-base/src/page/ReefSigner";
+import {Signer as ReefVMSigner} from '@reef-defi/evm-provider/Signer';
 
 // eslint-disable-next-line no-undef
 type This = typeof globalThis;
@@ -110,8 +109,8 @@ export interface ReefInjected extends Injected {
 }
 
 export interface ReefInjectedSigner {
-  subscribeSelectedAccount: (cb: (accounts: InjectedAccount | undefined) => unknown) => Unsubcall;
-  subscribeSelectedSigner: (cb: (reefEVMSigner: ReefEVMSigner | undefined) => unknown, connectedVM?:ReefVM) => Unsubcall;
+  subscribeSelectedAccount: (cb: (account: InjectedAccount | undefined) => unknown) => Unsubcall;
+  subscribeSelectedSigner: (cb: (signerResponse: ReefSignerResponse) => unknown, connectedVM?: ReefVM) => Unsubcall;
 }
 
 export interface ReefInjectedProvider {
@@ -135,4 +134,22 @@ export type InjectOptions = InjectedExtensionInfo;
 export interface Web3AccountsOptions {
   ss58Format?: number,
   accountType?: KeypairType[]
+}
+
+export enum ReefVM {
+  NATIVE,
+  EVM
+}
+
+export enum ReefSignerStatus {
+  CONNECTING = 'connecting',
+  NO_ACCOUNT_SELECTED = 'no-account-selected',
+  SELECTED_NO_VM_CONNECTION = 'selected-no-vm-connection',
+  OK = 'OK'
+}
+
+export interface ReefSignerResponse {
+  data: ReefVMSigner | undefined;
+  status: ReefSignerStatus;
+  requestedVM: ReefVM;
 }
