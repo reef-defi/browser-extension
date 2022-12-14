@@ -4,6 +4,7 @@
 import type { ThemeProps } from '../../types';
 
 import { AccountWithChildren } from '@reef-defi/extension-base/background/types';
+import Account from '@reef-defi/extension-ui/Popup/Accounts/Account';
 import getNetworkMap from '@reef-defi/extension-ui/util/getNetworkMap';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
@@ -22,7 +23,7 @@ function Accounts ({ className }: Props): React.ReactElement {
   const { t } = useTranslation();
   const [filter, setFilter] = useState('');
   const [filteredAccount, setFilteredAccount] = useState<AccountWithChildren[]>([]);
-  const { hierarchy } = useContext(AccountContext);
+  const { hierarchy, selectedAccount } = useContext(AccountContext);
   const networkMap = useMemo(() => getNetworkMap(), []);
 
   useEffect(() => {
@@ -64,6 +65,12 @@ function Accounts ({ className }: Props): React.ReactElement {
         ? <AddAccount />
         : (
           <>
+            <h3>Selected</h3>
+            <Account
+              {...selectedAccount}
+              /* parentName = {parentName}
+                suri={suri} */
+            />
             <Header
               onFilter={_onFilter}
               showSearch

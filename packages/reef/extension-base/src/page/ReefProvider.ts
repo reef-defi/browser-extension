@@ -1,4 +1,4 @@
-import { initProvider } from '@reef-chain/util-lib';
+import { network } from '@reef-chain/util-lib';
 import { Provider } from '@reef-defi/evm-provider';
 import { SendRequest } from '@reef-defi/extension-base/page/types';
 import { ReefInjectedProvider, Unsubcall } from '@reef-defi/extension-inject/types';
@@ -30,7 +30,7 @@ export class ReefProvider implements ReefInjectedProvider {
         this.creatingNewProviderRpcUrl = rpcUrl;
         await this.selectedNetworkProvider?.provider.api.disconnect();
 
-        const provider = await initProvider(rpcUrl);
+        const provider = await network.initProvider(rpcUrl);
 
         this.selectedNetworkProvider = {
           rpcUrl,

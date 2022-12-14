@@ -14,16 +14,16 @@
   },
   "sideEffects": false,
   "type": "module",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "main": "index.js",
   "dependencies": {
     "@babel/runtime": "^7.16.0",
     "@polkadot/api": "^6.7.1",
     "@polkadot/phishing": "^0.6.407",
     "@polkadot/ui-keyring": "^0.86.5",
-    "@reef-chain/util-lib": "^0.0.8",
-    "@reef-defi/extension-dapp": "^1.0.15",
-    "@reef-defi/extension-inject": "^1.0.15",
+    "@reef-chain/util-lib": "^0.4.0",
+    "@reef-defi/extension-dapp": "^1.0.16",
+    "@reef-defi/extension-inject": "^1.0.16",
     "@reef-defi/keyring": "^7.8.2"
   }
 }

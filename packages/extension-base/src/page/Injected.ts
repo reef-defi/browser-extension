@@ -10,7 +10,7 @@ import { ReefProvider } from '../../../reef/extension-base/src/page/ReefProvider
 import { ReefSigner } from '../../../reef/extension-base/src/page/ReefSigner';
 import Metadata from './Metadata';
 import PostMessageProvider from './PostMessageProvider';
-import Signer from './Signer';
+import SigningKey from './Signer';
 
 export default class implements ReefInjected {
   public readonly accounts: Accounts;
@@ -19,7 +19,7 @@ export default class implements ReefInjected {
 
   public readonly provider: PostMessageProvider;
 
-  public readonly signer: Signer;
+  public readonly signer: SigningKey;
 
   public readonly reefSigner: ReefSigner;
 
@@ -29,7 +29,7 @@ export default class implements ReefInjected {
     this.accounts = new Accounts(sendRequest);
     this.metadata = new Metadata(sendRequest);
     this.provider = new PostMessageProvider(sendRequest);
-    this.signer = new Signer(sendRequest);
+    this.signer = new SigningKey(sendRequest);
     // REEF update
     this.reefProvider = new ReefProvider(sendRequest);
     this.reefSigner = new ReefSigner(this.accounts, this.signer, this.reefProvider);

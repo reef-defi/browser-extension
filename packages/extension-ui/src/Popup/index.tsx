@@ -72,7 +72,8 @@ function initAccountContext (accounts: AccountJson[], selectedAccount: AccountJs
   return {
     accounts,
     hierarchy,
-    master
+    master,
+    selectedAccount
   };
 }
 
