@@ -136,7 +136,6 @@ export default function Popup (): React.ReactElement {
 
         return;
       }
-      console.log("sss=",selAcc, accounts);
       setAccountCtx(initAccountContext(accounts || [], selAcc || null));
 
       appState.setCurrentAddress(selAcc?.address);

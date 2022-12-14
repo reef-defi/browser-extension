@@ -262,6 +262,7 @@ function Address ({ actions, address, children, className, exporting, genesisHas
     <div className={`
       account-card__wrapper
       ${exporting ? 'account-card__wrapper--exporting' : ''}
+      ${account?.isSelected ? 'account-card__wrapper--selected' : ''}
     `}
     >
       <div className='account-card__main'>

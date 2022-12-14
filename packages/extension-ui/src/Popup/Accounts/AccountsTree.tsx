@@ -14,11 +14,11 @@ interface Props extends AccountWithChildren {
 export default function AccountsTree ({ parentName, suri, ...account }: Props): React.ReactElement<Props> {
   return (
     <>
-      <Account
-        {...account}
-        parentName={parentName}
-        suri={suri}
-      />
+        {!account.isSelected && <Account
+            {...account}
+            parentName={parentName}
+            suri={suri}
+        />}
       {account?.children?.map((child, index) => (
         <AccountsTree
           key={`${index}:${child.address}`}

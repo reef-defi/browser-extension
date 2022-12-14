@@ -23,7 +23,7 @@ function Accounts ({ className }: Props): React.ReactElement {
   const { t } = useTranslation();
   const [filter, setFilter] = useState('');
   const [filteredAccount, setFilteredAccount] = useState<AccountWithChildren[]>([]);
-  const { hierarchy, accounts, selectedAccount } = useContext(AccountContext);
+  const { hierarchy, selectedAccount } = useContext(AccountContext);
   const networkMap = useMemo(() => getNetworkMap(), []);
 
   useEffect(() => {
