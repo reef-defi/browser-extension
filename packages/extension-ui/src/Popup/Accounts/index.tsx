@@ -68,7 +68,7 @@ function Accounts ({ className }: Props): React.ReactElement {
             <h3>Selected</h3>
             <Account
               {...selectedAccount}
-              /* parentName={parentName}
+              /* parentName = {parentName}
                 suri={suri} */
             />
             <Header
