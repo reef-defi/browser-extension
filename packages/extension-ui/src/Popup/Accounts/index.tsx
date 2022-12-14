@@ -4,6 +4,7 @@
 import type { ThemeProps } from '../../types';
 
 import { AccountWithChildren } from '@reef-defi/extension-base/background/types';
+import Account from '@reef-defi/extension-ui/Popup/Accounts/Account';
 import getNetworkMap from '@reef-defi/extension-ui/util/getNetworkMap';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
@@ -13,7 +14,6 @@ import useTranslation from '../../hooks/useTranslation';
 import { Header } from '../../partials';
 import AccountsTree from './AccountsTree';
 import AddAccount from './AddAccount';
-import Account from "@reef-defi/extension-ui/Popup/Accounts/Account";
 
 interface Props extends ThemeProps {
   className?: string;
@@ -67,9 +67,9 @@ function Accounts ({ className }: Props): React.ReactElement {
           <>
             <h3>Selected</h3>
             <Account
-                {...selectedAccount}
-                /*parentName={parentName}
-                suri={suri}*/
+              {...selectedAccount}
+              /* parentName={parentName}
+                suri={suri} */
             />
             <Header
               onFilter={_onFilter}
