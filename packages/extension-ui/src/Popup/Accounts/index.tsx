@@ -13,6 +13,7 @@ import useTranslation from '../../hooks/useTranslation';
 import { Header } from '../../partials';
 import AccountsTree from './AccountsTree';
 import AddAccount from './AddAccount';
+import Account from "@reef-defi/extension-ui/Popup/Accounts/Account";
 
 interface Props extends ThemeProps {
   className?: string;
@@ -22,7 +23,7 @@ function Accounts ({ className }: Props): React.ReactElement {
   const { t } = useTranslation();
   const [filter, setFilter] = useState('');
   const [filteredAccount, setFilteredAccount] = useState<AccountWithChildren[]>([]);
-  const { hierarchy } = useContext(AccountContext);
+  const { hierarchy, accounts, selectedAccount } = useContext(AccountContext);
   const networkMap = useMemo(() => getNetworkMap(), []);
 
   useEffect(() => {
@@ -64,6 +65,12 @@ function Accounts ({ className }: Props): React.ReactElement {
         ? <AddAccount />
         : (
           <>
+            <h3>Selected</h3>
+            <Account
+                {...selectedAccount}
+                /*parentName={parentName}
+                suri={suri}*/
+            />
             <Header
               onFilter={_onFilter}
               showSearch

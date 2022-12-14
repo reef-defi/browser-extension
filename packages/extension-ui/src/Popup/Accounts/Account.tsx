@@ -5,7 +5,7 @@ import type { AccountJson } from '@reef-defi/extension-base/background/types';
 
 import { canDerive } from '@reef-defi/extension-base/utils';
 import { ThemeProps } from '@reef-defi/extension-ui/types';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import styled from 'styled-components';
 
 import { Address, Dropdown, Link, MenuDivider } from '../../components';
@@ -29,6 +29,12 @@ function Account ({ address, className, genesisHash, hideBalance, isExternal, is
   const [{ isEditing, toggleActions }, setEditing] = useState<EditState>({ isEditing: false, toggleActions: 0 });
   const [editedName, setName] = useState<string | undefined | null>(name);
   const genesisOptions = useGenesisHashOptions();
+
+  useEffect(() => {
+      if(name){
+          setName(name);
+      }
+  }, [name]);
 
   const _onChangeGenesis = useCallback(
     (genesisHash?: string | null): void => {

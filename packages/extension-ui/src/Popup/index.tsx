@@ -72,7 +72,8 @@ function initAccountContext (accounts: AccountJson[], selectedAccount: AccountJs
   return {
     accounts,
     hierarchy,
-    master
+    master,
+    selectedAccount
   };
 }
 
@@ -135,7 +136,7 @@ export default function Popup (): React.ReactElement {
 
         return;
       }
-
+      console.log("sss=",selAcc, accounts);
       setAccountCtx(initAccountContext(accounts || [], selAcc || null));
 
       appState.setCurrentAddress(selAcc?.address);
