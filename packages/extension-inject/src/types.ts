@@ -111,8 +111,8 @@ export interface ReefInjected extends Injected {
 export interface ReefInjectedSigner {
   subscribeSelectedAccount: (cb: (account: InjectedAccount | undefined) => unknown) => Unsubcall;
   subscribeSelectedSigner: (cb: (signerResponse: ReefSignerResponse) => unknown, connectedVM?: ReefVM) => Unsubcall;
-  getSelectedAccount: ()=>Promise<InjectedAccount | undefined>;
-  getSelectedSigner: (connectedVM: ReefVM)=> Promise<ReefSignerResponse>;
+  getSelectedAccount: () => Promise<InjectedAccount | undefined>;
+  getSelectedSigner: (connectedVM: ReefVM) => Promise<ReefSignerResponse>;
 }
 
 export interface ReefInjectedProvider {

@@ -82,7 +82,7 @@ export default function Popup (): React.ReactElement {
   const provider: Provider|undefined = hooks.useObservableState(appState.currentProvider$);
   const signers = useReefSigners(accounts, provider);
 
-  hooks.useInitReefState('Reef Chain Extension', { signers });
+  hooks.useInitReefState('Reef Chain Wallet Extension', { signers });
   const [accountCtx, setAccountCtx] = useState<AccountsContext>({ accounts: [], hierarchy: [] });
   const [authRequests, setAuthRequests] = useState<null | AuthorizeRequest[]>(null);
   const [cameraOn, setCameraOn] = useState(startSettings.camera === 'on');
