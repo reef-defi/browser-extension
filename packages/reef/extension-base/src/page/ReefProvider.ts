@@ -13,6 +13,8 @@ export class ReefProvider implements ReefInjectedProvider {
   private creatingNewProviderRpcUrl: string | null = null;
 
   private providerCbArr: { cb: (provider: Provider) => void, subsIdent: string }[] = [];
+  private resolvesList: any[] = [];
+  private isGetProviderMethodSubscribed = false;
 
   constructor (_sendRequest: SendRequest) {
     this.sendRequest = _sendRequest;
@@ -64,9 +66,36 @@ export class ReefProvider implements ReefInjectedProvider {
     };
   }
 
+  public async getNetworkProvider (): Promise<Provider> {
+    if (this.selectedNetworkProvider) {
+      return Promise.resolve(this.selectedNetworkProvider.provider);
+    }
+
+    // when multiple initial calls are made save them to list and respond when ready
+    const retPromise = new Promise<Provider>((resolve) => {
+      this.resolvesList.push(resolve);
+    });
+
+    if (!this.isGetProviderMethodSubscribed) {
+      this.isGetProviderMethodSubscribed = true;
+      this.subscribeSelectedNetworkProvider((provider) => {
+        if (!this.resolvesList.length) {
+          return;
+        }
+
+        this.resolvesList.forEach((resolve) => resolve(provider));
+        this.resolvesList = [];
+      });
+    }
+
+    return retPromise;
+  }
+
   private disconnectProvider () {
     if (!this.providerCbArr.length || !this.providerCbArr.some((e) => !!e)) {
-      this.selectedNetworkProvider?.provider.api.disconnect().catch((err) => console.log('Error disconnecting provider', err));
+      try {
+        this.selectedNetworkProvider?.provider.api.disconnect().catch((err) => console.log('Error disconnecting provider', err));
+      }catch (e){}
       this.selectedNetworkProvider = undefined;
     }
   }
