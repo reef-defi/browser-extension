@@ -95,7 +95,8 @@ export class ReefProvider implements ReefInjectedProvider {
     if (!this.providerCbArr.length || !this.providerCbArr.some((e) => !!e)) {
       try {
         this.selectedNetworkProvider?.provider.api.disconnect().catch((err) => console.log('Error disconnecting provider', err));
-      }catch (e){}
+      } catch (e) {}
+
       this.selectedNetworkProvider = undefined;
     }
   }
