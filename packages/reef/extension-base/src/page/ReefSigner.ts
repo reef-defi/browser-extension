@@ -11,6 +11,9 @@ export class ReefSigner implements ReefInjectedSigner {
   private injectedProvider: ReefProvider;
   private selectedProvider: Provider | undefined;
   private selectedSignerAccount: InjectedAccount | undefined;
+  private selectedSignerStatus: ReefSignerResponse|null = null;
+  private isGetSignerMethodSubscribed = false;
+  private resolvesList: any[] = [];
 
   constructor (accounts: Accounts, extSigner: SigningKey, injectedProvider: ReefProvider) {
     this.accounts = accounts;
@@ -61,7 +64,7 @@ export class ReefSigner implements ReefInjectedSigner {
   }
 
   public async getSelectedSigner (connectedVM: ReefVM = ReefVM.EVM): Promise<ReefSignerResponse> {
-    let unsubProvFn = () => {
+    /* let unsubProvFn = () => {
       // do nothing
     };
 
@@ -77,16 +80,42 @@ export class ReefSigner implements ReefInjectedSigner {
 
     unsubProvFn();
 
-    return this.getResponseStatus(selectedSigner, hasVM, connectedVM);
+    return this.getResponseStatus(selectedSigner, hasVM, connectedVM); */
+
+    if (this.selectedSignerStatus) {
+      return Promise.resolve({ ...this.selectedSignerStatus });
+    }
+
+    // when multiple initial calls are made save them to list and respond when ready
+    const retPromise = new Promise<ReefSignerResponse>((resolve) => {
+      this.resolvesList.push(resolve);
+    });
+
+    if (!this.isGetSignerMethodSubscribed) {
+      this.isGetSignerMethodSubscribed = true;
+      this.subscribeSelectedSigner((sig) => {
+        if (!this.resolvesList.length) {
+          return;
+        }
+
+        if (sig.status !== ReefSignerStatus.CONNECTING) {
+          this.selectedSignerStatus = sig;
+          this.resolvesList.forEach((resolve) => resolve({ ...sig }));
+          this.resolvesList = [];
+        }
+      }, connectedVM);
+    }
+
+    return retPromise;
   }
 
   private async onSelectedSignerParamUpdate (cb: (reefSigner: ReefSignerResponse) => unknown, connectedVM: ReefVM): Promise<void> {
     const selectedSigner = ReefSigner.createReefSigner(this.selectedSignerAccount, this.selectedProvider, this.extSigningKey);
     const hasVM = await ReefSigner.hasConnectedVM(connectedVM, selectedSigner);
-    const retStatus = this.getResponseStatus(selectedSigner, hasVM, connectedVM);
+    const responseStatus = this.getResponseStatus(selectedSigner, hasVM, connectedVM);
 
-    if (retStatus.status !== ReefSignerStatus.CONNECTING) {
-      cb(retStatus);
+    if (responseStatus.status !== ReefSignerStatus.CONNECTING) {
+      cb(responseStatus);
     }
   }
 

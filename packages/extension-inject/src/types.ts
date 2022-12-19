@@ -112,12 +112,13 @@ export interface ReefInjectedSigner {
   subscribeSelectedAccount: (cb: (account: InjectedAccount | undefined) => unknown) => Unsubcall;
   subscribeSelectedSigner: (cb: (signerResponse: ReefSignerResponse) => unknown, connectedVM?: ReefVM) => Unsubcall;
   getSelectedAccount: () => Promise<InjectedAccount | undefined>;
-  getSelectedSigner: (connectedVM: ReefVM) => Promise<ReefSignerResponse>;
+  getSelectedSigner: (connectedVM?: ReefVM) => Promise<ReefSignerResponse>;
 }
 
 export interface ReefInjectedProvider {
   subscribeSelectedNetwork: (cb: (rpcUrl: string) => void) => void;
   subscribeSelectedNetworkProvider: (cb: (provider: Provider) => void) => Unsubcall;
+  getNetworkProvider(): Promise<Provider>;
 }
 
 export interface InjectedWindowProvider {
