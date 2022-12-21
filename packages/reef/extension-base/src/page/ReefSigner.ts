@@ -14,6 +14,7 @@ export class ReefSigner implements ReefInjectedSigner {
   private selectedSignerStatus: ReefSignerResponse|null = null;
   private isGetSignerMethodSubscribed = false;
   private resolvesList: any[] = [];
+  private isSelectedAccountReceived: boolean = false;
 
   constructor (accounts: Accounts, extSigner: SigningKey, injectedProvider: ReefProvider) {
     this.accounts = accounts;
@@ -45,7 +46,8 @@ export class ReefSigner implements ReefInjectedSigner {
       );
     });
     const unsubAccFn = this.subscribeSelectedAccount((account) => {
-      if (account?.address !== this.selectedSignerAccount?.address) {
+      this.isSelectedAccountReceived = true;
+      if (!account || account?.address !== this.selectedSignerAccount?.address) {
         this.selectedSignerAccount = account;
         this.onSelectedSignerParamUpdate(cb, connectedVM).then(
           () => { // do nothing
@@ -64,24 +66,6 @@ export class ReefSigner implements ReefInjectedSigner {
   }
 
   public async getSelectedSigner (connectedVM: ReefVM = ReefVM.EVM): Promise<ReefSignerResponse> {
-    /* let unsubProvFn = () => {
-      // do nothing
-    };
-
-    const providerPr: Promise<Provider> = new Promise((resolve) => {
-      unsubProvFn = this.injectedProvider.subscribeSelectedNetworkProvider((provider) => {
-        resolve(provider);
-      });
-    });
-    const acc = await this.getSelectedAccount();
-    const prov = await providerPr;
-    const selectedSigner = ReefSigner.createReefSigner(acc, prov, this.extSigningKey);
-    const hasVM = await ReefSigner.hasConnectedVM(connectedVM, selectedSigner);
-
-    unsubProvFn();
-
-    return this.getResponseStatus(selectedSigner, hasVM, connectedVM); */
-
     if (this.selectedSignerStatus) {
       return Promise.resolve({ ...this.selectedSignerStatus });
     }
@@ -127,7 +111,7 @@ export class ReefSigner implements ReefInjectedSigner {
         return { data: undefined, status: ReefSignerStatus.SELECTED_NO_VM_CONNECTION, requestedVM };
       }
     } else if (this.selectedProvider && this.extSigningKey) {
-      if (!this.selectedSignerAccount) {
+      if (this.isSelectedAccountReceived && !this.selectedSignerAccount) {
         return { data: undefined, status: ReefSignerStatus.NO_ACCOUNT_SELECTED, requestedVM };
       }
     }
