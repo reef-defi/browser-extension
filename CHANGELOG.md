@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 1.0.19 August 28, 2022
+- getSelectedSigner method returning Promise
+- getNetworkProvider method returning Promise
+
+## 1.0.16 August 28, 2022
+- Select account in extension
+- Subscribe to selected account/Signer in dApp 
+- Subscribe to selected network/provider
+
 ## 1.0.10 August 28, 2022
 - Faster start time
 - Simplified UX
