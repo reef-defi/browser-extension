@@ -14,7 +14,7 @@ export class ReefSigner implements ReefInjectedSigner {
   private selectedSignerStatus: ReefSignerResponse|null = null;
   private isGetSignerMethodSubscribed = false;
   private resolvesList: any[] = [];
-  private isSelectedAccountReceived: boolean = false;
+  private isSelectedAccountReceived = false;
 
   constructor (accounts: Accounts, extSigner: SigningKey, injectedProvider: ReefProvider) {
     this.accounts = accounts;
@@ -47,6 +47,7 @@ export class ReefSigner implements ReefInjectedSigner {
     });
     const unsubAccFn = this.subscribeSelectedAccount((account) => {
       this.isSelectedAccountReceived = true;
+
       if (!account || account?.address !== this.selectedSignerAccount?.address) {
         this.selectedSignerAccount = account;
         this.onSelectedSignerParamUpdate(cb, connectedVM).then(
