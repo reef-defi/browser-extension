@@ -1,15 +1,7 @@
 import { Provider, Signer as ReefVMSigner } from '@reef-defi/evm-provider';
 import Accounts from '@reef-defi/extension-base/page/Accounts';
 import SigningKey from '@reef-defi/extension-base/page/Signer';
-import {
-  InjectedAccount,
-  ReefInjectedSigner,
-  ReefSignerReqOptions,
-  ReefSignerResponse,
-  ReefSignerStatus,
-  ReefVM,
-  Unsubcall
-} from '@reef-defi/extension-inject/types';
+import { InjectedAccount, ReefInjectedSigner, ReefSignerReqOptions, ReefSignerResponse, ReefSignerStatus, ReefVM, Unsubcall } from '@reef-defi/extension-inject/types';
 
 import { ReefProvider } from './ReefProvider';
 
@@ -44,9 +36,11 @@ export class ReefSigner implements ReefInjectedSigner {
 
   public subscribeSelectedSigner (cb: (reefSigner: ReefSignerResponse) => unknown, options: ReefSignerReqOptions = {}): Unsubcall {
     let { connectedVM } = options;
-    if(!connectedVM){
+
+    if (!connectedVM) {
       connectedVM = ReefVM.EVM;
     }
+
     const unsubProvFn = this.injectedProvider.subscribeSelectedNetworkProvider((provider) => {
       this.selectedProvider = provider;
       this.onSelectedSignerParamUpdate(cb, connectedVM!).then(
@@ -79,7 +73,6 @@ export class ReefSigner implements ReefInjectedSigner {
   }
 
   public async getSelectedSigner (options: ReefSignerReqOptions = {}): Promise<ReefSignerResponse> {
-
     if (this.selectedSignerStatus) {
       return Promise.resolve({ ...this.selectedSignerStatus });
     }
