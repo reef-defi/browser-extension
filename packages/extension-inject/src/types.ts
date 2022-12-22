@@ -1,13 +1,13 @@
 // Copyright 2019-2021 @polkadot/extension-inject authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { KeypairType } from '@reef-defi/util-crypto/types';
-import type { Signer as InjectedSigner } from '@polkadot/api/types';
-import type { ProviderInterface } from '@polkadot/rpc-provider/types';
-import type { ExtDef } from '@polkadot/types/extrinsic/signedExtensions/types';
+import type {KeypairType} from '@reef-defi/util-crypto/types';
+import type {Signer as InjectedSigner} from '@polkadot/api/types';
+import type {ProviderInterface} from '@polkadot/rpc-provider/types';
+import type {ExtDef} from '@polkadot/types/extrinsic/signedExtensions/types';
 
-import { Provider } from '@reef-defi/evm-provider';
-import { Signer as ReefVMSigner } from '@reef-defi/evm-provider/Signer';
+import {Provider} from '@reef-defi/evm-provider';
+import {Signer as ReefVMSigner} from '@reef-defi/evm-provider/Signer';
 
 // eslint-disable-next-line no-undef
 type This = typeof globalThis;
@@ -15,119 +15,120 @@ type This = typeof globalThis;
 export type Unsubcall = () => void;
 
 export interface InjectedAccount {
-  address: string;
-  genesisHash?: string | null;
-  name?: string;
-  type?: KeypairType;
-  // REEF update
-  isSelected?: boolean;
+    address: string;
+    genesisHash?: string | null;
+    name?: string;
+    type?: KeypairType;
+    // REEF update
+    isSelected?: boolean;
 }
 
 export interface InjectedAccountWithMeta {
-  address: string;
-  meta: {
-    genesisHash?: string | null;
-    name?: string;
-    source: string;
-  };
-  type?: KeypairType;
+    address: string;
+    meta: {
+        genesisHash?: string | null;
+        name?: string;
+        source: string;
+    };
+    type?: KeypairType;
 }
 
 export interface InjectedAccounts {
-  get: (anyType?: boolean) => Promise<InjectedAccount[]>;
-  subscribe: (cb: (accounts: InjectedAccount[]) => void | Promise<void>) => Unsubcall;
+    get: (anyType?: boolean) => Promise<InjectedAccount[]>;
+    subscribe: (cb: (accounts: InjectedAccount[]) => void | Promise<void>) => Unsubcall;
 }
 
 export interface InjectedExtensionInfo {
-  name: string;
-  version: string;
+    name: string;
+    version: string;
 }
 
 // Metadata about a provider
 export interface ProviderMeta {
-  // Network of the provider
-  network: string;
-  // Light or full node
-  node: 'full' | 'light';
-  // The extension source
-  source: string;
-  // Provider transport: 'WsProvider' etc.
-  transport: string;
+    // Network of the provider
+    network: string;
+    // Light or full node
+    node: 'full' | 'light';
+    // The extension source
+    source: string;
+    // Provider transport: 'WsProvider' etc.
+    transport: string;
 }
 
 export interface MetadataDefBase {
-  chain: string;
-  genesisHash: string;
-  icon: string;
-  ss58Format: number;
-  chainType?: 'substrate' | 'ethereum'
+    chain: string;
+    genesisHash: string;
+    icon: string;
+    ss58Format: number;
+    chainType?: 'substrate' | 'ethereum'
 }
 
 export interface MetadataDef extends MetadataDefBase {
-  color?: string;
-  specVersion: number;
-  tokenDecimals: number;
-  tokenSymbol: string;
-  types: Record<string, Record<string, string> | string>;
-  metaCalls?: string;
-  userExtensions?: ExtDef;
+    color?: string;
+    specVersion: number;
+    tokenDecimals: number;
+    tokenSymbol: string;
+    types: Record<string, Record<string, string> | string>;
+    metaCalls?: string;
+    userExtensions?: ExtDef;
 }
 
 export interface InjectedMetadataKnown {
-  genesisHash: string;
-  specVersion: number;
+    genesisHash: string;
+    specVersion: number;
 }
 
 export interface InjectedMetadata {
-  get: () => Promise<InjectedMetadataKnown[]>;
-  provide: (definition: MetadataDef) => Promise<boolean>;
+    get: () => Promise<InjectedMetadataKnown[]>;
+    provide: (definition: MetadataDef) => Promise<boolean>;
 }
 
 export type ProviderList = Record<string, ProviderMeta>
 
 export interface InjectedProvider extends ProviderInterface {
-  listProviders: () => Promise<ProviderList>;
-  startProvider: (key: string) => Promise<ProviderMeta>;
+    listProviders: () => Promise<ProviderList>;
+    startProvider: (key: string) => Promise<ProviderMeta>;
 }
 
 export interface InjectedProviderWithMeta {
-  // provider will actually always be a PostMessageProvider, which implements InjectedProvider
-  provider: InjectedProvider;
-  meta: ProviderMeta;
+    // provider will actually always be a PostMessageProvider, which implements InjectedProvider
+    provider: InjectedProvider;
+    meta: ProviderMeta;
 }
 
 export interface Injected {
-  accounts: InjectedAccounts;
-  metadata?: InjectedMetadata;
-  provider?: InjectedProvider;
-  signer: InjectedSigner;
+    accounts: InjectedAccounts;
+    metadata?: InjectedMetadata;
+    provider?: InjectedProvider;
+    signer: InjectedSigner;
 }
 
 export interface ReefInjected extends Injected {
-  reefSigner: ReefInjectedSigner;
-  reefProvider: ReefInjectedProvider;
+    reefSigner: ReefInjectedSigner;
+    reefProvider: ReefInjectedProvider;
 }
 
 export interface ReefInjectedSigner {
-  subscribeSelectedAccount: (cb: (account: InjectedAccount | undefined) => unknown) => Unsubcall;
-  subscribeSelectedSigner: (cb: (signerResponse: ReefSignerResponse) => unknown, connectedVM?: ReefVM) => Unsubcall;
-  getSelectedAccount: () => Promise<InjectedAccount | undefined>;
-  getSelectedSigner: (connectedVM?: ReefVM) => Promise<ReefSignerResponse>;
+    subscribeSelectedAccount: (cb: (account: InjectedAccount | undefined) => unknown) => Unsubcall;
+    subscribeSelectedSigner: (cb: (signerResponse: ReefSignerResponse) => unknown, options?: ReefSignerReqOptions) => Unsubcall;
+    getSelectedAccount: () => Promise<InjectedAccount | undefined>;
+    getSelectedSigner: (options?: ReefSignerReqOptions) => Promise<ReefSignerResponse>;
 }
 
 export interface ReefInjectedProvider {
-  subscribeSelectedNetwork: (cb: (rpcUrl: string) => void) => void;
-  subscribeSelectedNetworkProvider: (cb: (provider: Provider) => void) => Unsubcall;
-  getNetworkProvider(): Promise<Provider>;
+    subscribeSelectedNetwork: (cb: (rpcUrl: string) => void) => void;
+    subscribeSelectedNetworkProvider: (cb: (provider: Provider) => void) => Unsubcall;
+
+    getNetworkProvider(): Promise<Provider>;
 }
 
 export interface InjectedWindowProvider {
-  enable: (origin: string) => Promise<Injected>;
-  version: string;
+    enable: (origin: string) => Promise<Injected>;
+    version: string;
 }
 
 export interface InjectedWindow extends This {
-  injectedWeb3: Record<string, InjectedWindowProvider>;
+    injectedWeb3: Record<string, InjectedWindowProvider>;
 }
 
 export type InjectedExtension = InjectedExtensionInfo & Injected;
@@ -135,24 +136,29 @@ export type InjectedExtension = InjectedExtensionInfo & Injected;
 export type InjectOptions = InjectedExtensionInfo;
 
 export interface Web3AccountsOptions {
-  ss58Format?: number,
-  accountType?: KeypairType[]
+    ss58Format?: number,
+    accountType?: KeypairType[]
 }
 
 export enum ReefVM {
-  NATIVE,
-  EVM
+    NATIVE,
+    EVM
 }
 
 export enum ReefSignerStatus {
-  CONNECTING = 'connecting',
-  NO_ACCOUNT_SELECTED = 'no-account-selected',
-  SELECTED_NO_VM_CONNECTION = 'selected-no-vm-connection',
-  OK = 'OK'
+    CONNECTING = 'connecting',
+    NO_ACCOUNT_SELECTED = 'no-account-selected',
+    SELECTED_NO_VM_CONNECTION = 'selected-no-vm-connection',
+    OK = 'OK'
 }
 
 export interface ReefSignerResponse {
-  data: ReefVMSigner | undefined;
-  status: ReefSignerStatus;
-  requestedVM: ReefVM;
+    data: ReefVMSigner | undefined;
+    status: ReefSignerStatus;
+    requestedVM: ReefVM;
+}
+
+export interface ReefSignerReqOptions {
+    connectedVM?: ReefVM;
+    // network?: 'mainnet' | 'testnet'
 }
