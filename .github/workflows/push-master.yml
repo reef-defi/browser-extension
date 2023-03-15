@@ -23,5 +23,5 @@ jobs:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: |
         rm -rf node_modules
-        yarn install --immutable | grep -v 'YN0013'
+        yarn install --immutable --check-cache | grep -v 'YN0013'
         yarn ${{ matrix.step }}
