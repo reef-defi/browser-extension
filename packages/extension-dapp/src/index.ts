@@ -14,12 +14,13 @@ export { unwrapBytes, wrapBytes } from './wrapBytes';
 
 // just a helper (otherwise we cast all-over, so shorter and more readable)
 // TODO window might be undefined if used server-side
-const win = typeof window !== 'undefined' ? window as Window & InjectedWindow : null;//window as Window & InjectedWindow;
+const win = typeof window !== 'undefined' ? window as Window & InjectedWindow : null;// window as Window & InjectedWindow;
 
-if(win) {
+if (win) {
   // don't clobber the existing object, but ensure non-undefined
   win.injectedWeb3 = win?.injectedWeb3 || {};
 }
+
 // true when anything has been injected and is available
 function web3IsInjected (): boolean {
   return win ? Object.keys(win.injectedWeb3).length !== 0 : false;
