@@ -22,7 +22,6 @@ jobs:
         GH_RELEASE_FILES: master-build.zip,master-src.zip
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: |
-        node-gyp configure --verbose
         echo $PATH
         echo "-------------------------------------------------"
         rm -rf node_modules
