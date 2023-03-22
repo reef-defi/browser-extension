@@ -28,4 +28,5 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           node -v
+          yarn install
           yarn ${{ matrix.step }}
