@@ -12,20 +12,22 @@ jobs:
         step: ['build:release']
     name: ${{ matrix.step }}
     runs-on: ubuntu-latest
-    env:
-        GH_RELEASE_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GH_RELEASE_FILES: master-build.zip,master-src.zip
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Setup node
+        name: checkout
+      - name: Setup node v16
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: |
+      - name: ${{ matrix.step }}
+        env:
+          GH_RELEASE_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_RELEASE_FILES: master-build.zip,master-src.zip
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
           node -v
           rm -rf node_modules
-          yarn install --immutable --check-cache
+          yarn install --immutable | grep -v 'YN0013'
           yarn ${{ matrix.step }}
