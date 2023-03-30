@@ -107,6 +107,7 @@ function ExportQr ({ className, match: { params: { address } } }: Props): React.
           </Warning>
                 )}
           <div className='actionArea'>
+          {qrCode==''&& (
             <InputWithLabel
               data-export-password
               disabled={isBusy}
@@ -114,7 +115,7 @@ function ExportQr ({ className, match: { params: { address } } }: Props): React.
               label={t<string>('password for this account')}
               onChange={onPassChange}
               type='password'
-            />
+            />)}
             {qrCode!='' && (
                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                  <QRCodeComponent value={qrCode} />

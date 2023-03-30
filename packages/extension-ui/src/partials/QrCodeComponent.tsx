@@ -8,7 +8,7 @@ interface QRCodeProps {
 
 const QRCodeComponent: React.FC<QRCodeProps> = ({ value, size = 256 }) => {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <QRCode value={value} size={size} />
     </div>
   );
