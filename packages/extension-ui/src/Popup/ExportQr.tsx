@@ -6,7 +6,6 @@ import type { ThemeProps } from '../types';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { saveAs } from 'file-saver';
 import React, { useCallback, useContext, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import styled from 'styled-components';
@@ -16,6 +15,7 @@ import { ActionContext, Address, ButtonArea, InputWithLabel, VerticalSpace, Warn
 import useTranslation from '../hooks/useTranslation';
 import { exportAccount } from '../messaging';
 import { Header } from '../partials';
+import QRCodeComponent from './QrCodeComponent';
 
 const MIN_LENGTH = 6;
 
@@ -29,6 +29,7 @@ function ExportQr ({ className, match: { params: { address } } }: Props): React.
   const [isBusy, setIsBusy] = useState(false);
   const [pass, setPass] = useState('');
   const [error, setError] = useState('');
+  const [qrCode, setQrCode] = useState('');
 
   const _goHome = useCallback(
     () => onAction('/'),
@@ -42,17 +43,29 @@ function ExportQr ({ className, match: { params: { address } } }: Props): React.
     }
     , []);
 
+  const displayQrCode = useCallback(
+    (jsonData: string) => {
+      setQrCode(jsonData);
+      
+    }
+    , []);
+
   const _onExportButtonClick = useCallback(
     (): void => {
       setIsBusy(true);
 
       exportAccount(address, pass)
         .then(({ exportedJson }) => {
-          const blob = new Blob([JSON.stringify(exportedJson)], { type: 'application/json; charset=utf-8' });
-
-          saveAs(blob, `${address}.json`);
-
-          onAction('/');
+            const QrCodeValue = {
+                type: 'importAccount',
+                data: JSON.stringify({
+                    encoded: exportedJson.encoded,
+                    encoding: exportedJson.encoding,
+                    address: exportedJson.address,
+                }),
+            };
+        
+          displayQrCode(JSON.stringify(QrCodeValue));
         })
         .catch((error: Error) => {
           console.error(error);
@@ -100,6 +113,9 @@ function ExportQr ({ className, match: { params: { address } } }: Props): React.
               onChange={onPassChange}
               type='password'
             />
+            {qrCode!='' && (
+                <QRCodeComponent value={qrCode}/>
+            )}
             {error && (
               <Warning
                 isBelowInput
