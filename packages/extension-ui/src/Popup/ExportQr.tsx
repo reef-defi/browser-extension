@@ -15,7 +15,7 @@ import { ActionContext, Address, ButtonArea, InputWithLabel, VerticalSpace, Warn
 import useTranslation from '../hooks/useTranslation';
 import { exportAccount } from '../messaging';
 import { Header } from '../partials';
-import QRCodeComponent from './QrCodeComponent';
+import QRCodeComponent from '../partials/QrCodeComponent';
 
 const MIN_LENGTH = 6;
 
