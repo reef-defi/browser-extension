@@ -100,10 +100,12 @@ function ExportQr ({ className, match: { params: { address } } }: Props): React.
           exporting
           presentation
         >
+            {qrCode==''&& (
           <Warning className='movedWarning'>
             {t<string>("You are exporting your account. Keep it safe and don't share it with anyone.")}<br />
             {t<string>('Password must be at least ' + MIN_LENGTH + ' characters long.')}
           </Warning>
+                )}
           <div className='actionArea'>
             <InputWithLabel
               data-export-password
@@ -128,7 +130,8 @@ function ExportQr ({ className, match: { params: { address } } }: Props): React.
         </Address>
       </div>
       <VerticalSpace />
-      <ButtonArea>
+      {qrCode==''&&(
+        <ButtonArea>
         <Button
           className='uik-button--fullWidth export-button'
           rounded
@@ -141,6 +144,7 @@ function ExportQr ({ className, match: { params: { address } } }: Props): React.
           {t<string>('I want to export this account')}
         </Button>
       </ButtonArea>
+      )}
     </>
   );
 }
