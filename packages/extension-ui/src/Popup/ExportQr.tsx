@@ -116,7 +116,9 @@ function ExportQr ({ className, match: { params: { address } } }: Props): React.
               type='password'
             />
             {qrCode!='' && (
-                <QRCodeComponent value={qrCode}/>
+                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                 <QRCodeComponent value={qrCode} />
+               </div>
             )}
             {error && (
               <Warning
