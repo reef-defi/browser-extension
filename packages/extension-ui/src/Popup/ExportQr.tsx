@@ -57,7 +57,7 @@ function ExportQr ({ className, match: { params: { address } } }: Props): React.
       exportAccount(address, pass)
         .then(({ exportedJson }) => {
             const QrCodeValue = {
-                type: 'importAccount',
+                type: 'accountJson',
                 data: JSON.stringify({
                     encoded: exportedJson.encoded,
                     encoding: exportedJson.encoding,
