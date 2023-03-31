@@ -46,7 +46,6 @@ function ExportQr ({ className, match: { params: { address } } }: Props): React.
   const displayQrCode = useCallback(
     (jsonData: string) => {
       setQrCode(jsonData);
-      
     }
     , []);
 
@@ -56,15 +55,15 @@ function ExportQr ({ className, match: { params: { address } } }: Props): React.
 
       exportAccount(address, pass)
         .then(({ exportedJson }) => {
-            const QrCodeValue = {
-                type: 'accountJson',
-                data: JSON.stringify({
-                    encoded: exportedJson.encoded,
-                    encoding: exportedJson.encoding,
-                    address: exportedJson.address,
-                }),
-            };
-        
+          const QrCodeValue = {
+            type: 'accountJson',
+            data: JSON.stringify({
+              encoded: exportedJson.encoded,
+              encoding: exportedJson.encoding,
+              address: exportedJson.address
+            })
+          };
+
           displayQrCode(JSON.stringify(QrCodeValue));
         })
         .catch((error: Error) => {
@@ -73,7 +72,7 @@ function ExportQr ({ className, match: { params: { address } } }: Props): React.
           setIsBusy(false);
         });
     },
-    [address, onAction, pass]
+    [address, pass, displayQrCode]
   );
 
   return (
@@ -100,26 +99,26 @@ function ExportQr ({ className, match: { params: { address } } }: Props): React.
           exporting
           presentation
         >
-            {qrCode==''&& (
-          <Warning className='movedWarning'>
-            {t<string>("You are exporting your account. Keep it safe and don't share it with anyone.")}<br />
-            {t<string>('Password must be at least ' + MIN_LENGTH + ' characters long.')}
-          </Warning>
-                )}
+          {qrCode === '' && (
+            <Warning className='movedWarning'>
+              {t<string>("You are exporting your account. Keep it safe and don't share it with anyone.")}<br />
+              {t<string>('Password must be at least ' + MIN_LENGTH + ' characters long.')}
+            </Warning>
+          )}
           <div className='actionArea'>
-          {qrCode==''&& (
-            <InputWithLabel
-              data-export-password
-              disabled={isBusy}
-              isError={pass.length < MIN_LENGTH || !!error}
-              label={t<string>('password for this account')}
-              onChange={onPassChange}
-              type='password'
-            />)}
-            {qrCode!='' && (
-                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                 <QRCodeComponent value={qrCode} />
-               </div>
+            {qrCode === '' && (
+              <InputWithLabel
+                data-export-password
+                disabled={isBusy}
+                isError={pass.length < MIN_LENGTH || !!error}
+                label={t<string>('password for this account')}
+                onChange={onPassChange}
+                type='password'
+              />)}
+            {qrCode !== '' && (
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <QRCodeComponent value={qrCode} />
+              </div>
             )}
             {error && (
               <Warning
@@ -133,20 +132,20 @@ function ExportQr ({ className, match: { params: { address } } }: Props): React.
         </Address>
       </div>
       <VerticalSpace />
-      {qrCode==''&&(
+      {qrCode === '' && (
         <ButtonArea>
-        <Button
-          className='uik-button--fullWidth export-button'
-          rounded
-          danger
-          size='large'
-          data-export-button
-          disabled={pass.length < MIN_LENGTH || !!error}
-          loading={isBusy}
-          onClick={_onExportButtonClick}>
-          {t<string>('I want to export this account')}
-        </Button>
-      </ButtonArea>
+          <Button
+            className='uik-button--fullWidth export-button'
+            rounded
+            danger
+            size='large'
+            data-export-button
+            disabled={pass.length < MIN_LENGTH || !!error}
+            loading={isBusy}
+            onClick={_onExportButtonClick}>
+            {t<string>('I want to export this account')}
+          </Button>
+        </ButtonArea>
       )}
     </>
   );

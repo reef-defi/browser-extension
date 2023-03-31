@@ -32,6 +32,7 @@ import CreateAccount from './CreateAccount';
 import Derive from './Derive';
 import Export from './Export';
 import ExportAll from './ExportAll';
+import ExportQr from './ExportQr';
 import Forget from './Forget';
 import ImportLedger from './ImportLedger';
 import ImportQr from './ImportQr';
@@ -41,7 +42,6 @@ import PhishingDetected from './PhishingDetected';
 import RestoreJson from './RestoreJson';
 import Signing from './Signing';
 import Welcome from './Welcome';
-import ExportQr from './ExportQr';
 
 const startSettings = uiSettings.get();
 
