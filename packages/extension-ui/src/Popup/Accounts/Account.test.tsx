@@ -39,7 +39,7 @@ describe('Account component', () => {
     wrapper.find('.account-card__actions-btn').first().simulate('click');
     await act(flushAllPromises);
 
-    expect(wrapper.find('a.menuItem').length).toBe(4);
+    expect(wrapper.find('a.menuItem').length).toBe(5);
     expect(wrapper.find('a.menuItem').at(0).text()).toBe('Rename');
     expect(wrapper.find('a.menuItem').at(1).text()).toBe('Derive New Account');
     expect(wrapper.find('a.menuItem').at(2).text()).toBe('Export Account');
@@ -63,7 +63,7 @@ describe('Account component', () => {
     wrapper.find('.account-card__actions-btn').first().simulate('click');
     await act(flushAllPromises);
 
-    expect(wrapper.find('a.menuItem').length).toBe(4);
+    expect(wrapper.find('a.menuItem').length).toBe(5);
     expect(wrapper.find('a.menuItem').at(0).text()).toBe('Rename');
     expect(wrapper.find('a.menuItem').at(1).text()).toBe('Derive New Account');
     expect(wrapper.find('a.menuItem').at(2).text()).toBe('Export Account');
