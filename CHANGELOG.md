@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.0.21 August 28, 2022
+- export with QR code
+
 ## 1.0.20 August 28, 2022
 - fix using libs outside of browser
 
