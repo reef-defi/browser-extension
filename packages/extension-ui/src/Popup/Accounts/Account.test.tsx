@@ -43,7 +43,8 @@ describe('Account component', () => {
     expect(wrapper.find('a.menuItem').at(0).text()).toBe('Rename');
     expect(wrapper.find('a.menuItem').at(1).text()).toBe('Derive New Account');
     expect(wrapper.find('a.menuItem').at(2).text()).toBe('Export Account');
-    expect(wrapper.find('a.menuItem').at(3).text()).toBe('Forget Account');
+    expect(wrapper.find('a.menuItem').at(3).text()).toBe('Export Account using QR');
+    expect(wrapper.find('a.menuItem').at(4).text()).toBe('Forget Account');
     expect(wrapper.find('.genesisSelection').exists()).toBe(true);
   });
 
@@ -67,7 +68,8 @@ describe('Account component', () => {
     expect(wrapper.find('a.menuItem').at(0).text()).toBe('Rename');
     expect(wrapper.find('a.menuItem').at(1).text()).toBe('Derive New Account');
     expect(wrapper.find('a.menuItem').at(2).text()).toBe('Export Account');
-    expect(wrapper.find('a.menuItem').at(3).text()).toBe('Forget Account');
+    expect(wrapper.find('a.menuItem').at(3).text()).toBe('Export Account using QR');
+    expect(wrapper.find('a.menuItem').at(4).text()).toBe('Forget Account');
     expect(wrapper.find('.genesisSelection').exists()).toBe(true);
   });
 
