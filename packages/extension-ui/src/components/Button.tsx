@@ -20,12 +20,16 @@ interface Props extends ThemeProps {
 
 function Button ({ children, className = '', isBusy, isDisabled, onClick, to }: Props): React.ReactElement<Props> {
   const _onClick = useCallback(
-    (): void => {
+    async (): Promise<void> => {
       if (isBusy || isDisabled) {
         return;
       }
 
-      onClick && onClick();
+      try {
+        onClick && await onClick();
+      } catch (e) {
+        console.log('Button onClick ERROR=', e);
+      }
 
       if (to) {
         window.location.hash = to;
