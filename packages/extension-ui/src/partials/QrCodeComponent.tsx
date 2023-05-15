@@ -6,12 +6,14 @@ interface QRCodeProps {
   size?: number;
 }
 
-const QRCodeComponent: React.FC<QRCodeProps> = ({ size = 256, value }) => {
+const QRCodeComponent: React.FC<QRCodeProps> = ({ size = 384, value }) => {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'white', padding: '10px' }}>
       <QRCode
         value={value}
-        size={size} />
+        size={size}
+        bgColor='#FFFFFF'
+      />
     </div>
   );
 };
