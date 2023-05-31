@@ -129,7 +129,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
         {mainnetSelected ? <ReefLogo /> : <ReefTestnetLogo />}
       </a>
       <div className='navigation__links'>
-        <BuyReef/>
+        <BuyReef />
         <OpenApp />
 
         {(['/tokens'].includes(location.pathname)) && (
