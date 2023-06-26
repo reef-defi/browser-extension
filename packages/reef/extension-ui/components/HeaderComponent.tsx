@@ -1,5 +1,5 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faCog, faExternalLinkAlt, faPlusCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faCoins, faExternalLinkAlt, faPlusCircle, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ActionContext, SigningReqContext } from '@reef-defi/extension-ui/components';
 import MenuAdd from '@reef-defi/extension-ui/partials/MenuAdd';
@@ -96,6 +96,26 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
       </>);
   };
 
+  const BuyReef = () => {
+    return (
+      <>
+        { // @Todo where can we put the URL to the App?
+          <Button
+            className='navigation__link--open-app'
+            onClick={() => window.open('https://app.reef.io/buy', '_blank')}
+            size='small'
+            type='button'
+          >
+            <FontAwesomeIcon
+              className={'plusIcon'}
+              icon={faCoins as IconProp}
+              size='lg'
+            /> Buy Reef
+          </Button>
+        }
+      </>);
+  };
+
   return (<div className='navigation__wrapper'>
     {(showNavigation()) && (<div className={['navigation', theme === 'dark' ? 'navigation--dark' : '', !showAccount() ? 'navigation--account' : ''].join(' ')}>
       <a
@@ -109,6 +129,7 @@ function NavHeaderComp (): React.ReactElement<NavHeaderComp> {
         {mainnetSelected ? <ReefLogo /> : <ReefTestnetLogo />}
       </a>
       <div className='navigation__links'>
+        <BuyReef />
         <OpenApp />
 
         {(['/tokens'].includes(location.pathname)) && (
