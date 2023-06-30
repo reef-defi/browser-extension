@@ -4650,15 +4650,9 @@ __metadata:
     "@polkadot/api": ^6.7.1
     "@polkadot/phishing": ^0.6.407
     "@polkadot/ui-keyring": ^0.86.5
-<<<<<<< HEAD
     "@reef-chain/util-lib": ^0.10.6
-    "@reef-defi/extension-dapp": ^1.0.21
-    "@reef-defi/extension-inject": ^1.0.21
-=======
-    "@reef-chain/util-lib": ^0.4.0
     "@reef-defi/extension-dapp": ^1.0.22
     "@reef-defi/extension-inject": ^1.0.22
->>>>>>> master
     "@reef-defi/keyring": ^7.8.2
   languageName: unknown
   linkType: soft
@@ -4688,11 +4682,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-<<<<<<< HEAD
-"@reef-defi/extension-dapp@^1.0.16, @reef-defi/extension-dapp@^1.0.21, @reef-defi/extension-dapp@^1.0.9, @reef-defi/extension-dapp@workspace:packages/extension-dapp":
-=======
-"@reef-defi/extension-dapp@^1.0.10, @reef-defi/extension-dapp@^1.0.22, @reef-defi/extension-dapp@^1.0.9, @reef-defi/extension-dapp@workspace:packages/extension-dapp":
->>>>>>> master
+"@reef-defi/extension-dapp@^1.0.16, @reef-defi/extension-dapp@^1.0.22, @reef-defi/extension-dapp@^1.0.9, @reef-defi/extension-dapp@workspace:packages/extension-dapp":
   version: 0.0.0-use.local
   resolution: "@reef-defi/extension-dapp@workspace:packages/extension-dapp"
   dependencies:
@@ -4707,11 +4697,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-<<<<<<< HEAD
-"@reef-defi/extension-inject@^1.0.16, @reef-defi/extension-inject@^1.0.21, @reef-defi/extension-inject@^1.0.9, @reef-defi/extension-inject@workspace:packages/extension-inject":
-=======
-"@reef-defi/extension-inject@^1.0.10, @reef-defi/extension-inject@^1.0.22, @reef-defi/extension-inject@^1.0.9, @reef-defi/extension-inject@workspace:packages/extension-inject":
->>>>>>> master
+"@reef-defi/extension-inject@^1.0.16, @reef-defi/extension-inject@^1.0.22, @reef-defi/extension-inject@^1.0.9, @reef-defi/extension-inject@workspace:packages/extension-inject":
   version: 0.0.0-use.local
   resolution: "@reef-defi/extension-inject@workspace:packages/extension-inject"
   dependencies:
