@@ -118,6 +118,7 @@ async function getDecodedMethodDataAnu (data:string){
 
 function Extrinsic ({ className, payload: { era, nonce, tip }, request: { blockNumber, genesisHash, method, specVersion: hexSpec }, url }: Props): React.ReactElement<Props> {
   const [resolvedMethodName, setResolvedMethodName] = useState<string>(''); 
+  const [resolvedMethodParams, setResolvedMethodParams] = useState<string>(''); 
   const { t } = useTranslation();
   const chain = useMetadata(genesisHash);
   const specVersion = useRef(bnToBn(hexSpec)).current;
@@ -127,10 +128,21 @@ function Extrinsic ({ className, payload: { era, nonce, tip }, request: { blockN
       : { args: null, method: null },
     [method, chain, specVersion]
   );
+  
   const resolvedDataPromise = getDecodedMethodDataAnu(method);
   resolvedDataPromise.then((rsd) => {
-   console.log(rsd);
    setResolvedMethodName(rsd['methodName']);
+   let allArgs = '';
+   for(let i=0;i<rsd['args'].length;i++){
+    let temp = ''
+    if(typeof(rsd['args'][i])=='object'){
+        temp = JSON.stringify(rsd['args'][i])
+    }else{
+      temp = rsd['args'][i];
+    }
+    allArgs = allArgs + ',' +  temp;
+   }
+   setResolvedMethodParams(allArgs);
   });
   return (
     <Table
@@ -165,10 +177,17 @@ function Extrinsic ({ className, payload: { era, nonce, tip }, request: { blockN
         <td className='data'>{mortalityAsString(era, blockNumber, t)}</td>
       </tr>
       {resolvedMethodName!=''?
+      <>
       <tr>
         <td className='label'>method name</td>
         <td className='data'>{resolvedMethodName}</td>
-      </tr>:<></>
+      </tr>
+      <tr>
+        <td className='label'>method args</td>
+        <td className='data'>{resolvedMethodParams.replace(/^\s*,{"Id":"([^"]+)"},(.*)$/, '$1,$2')}</td>
+      </tr>
+      </>
+      :<></>
     }
     </Table>
   );
