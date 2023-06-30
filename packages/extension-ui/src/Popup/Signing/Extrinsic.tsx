@@ -4,15 +4,17 @@
 import type { Chain } from '@reef-defi/extension-chains/types';
 import type { Call, ExtrinsicEra, ExtrinsicPayload } from '@polkadot/types/interfaces';
 import type { AnyJson, SignerPayloadJSON } from '@polkadot/types/types';
-
+import { WsProvider } from "@polkadot/api";
 import { bnToBn, formatNumber } from '@reef-defi/util';
 import BN from 'bn.js';
 import { TFunction } from 'i18next';
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef,useState } from 'react';
 
 import { Table } from '../../components';
 import useMetadata from '../../hooks/useMetadata';
 import useTranslation from '../../hooks/useTranslation';
+import {signatureUtils} from '@reef-chain/util-lib';
+import { Provider } from "@reef-defi/evm-provider";
 
 interface Decoded {
   args: AnyJson | null;
@@ -106,7 +108,16 @@ function mortalityAsString (era: ExtrinsicEra, hexBlockNumber: string, t: TFunct
   });
 }
 
+async function getDecodedMethodDataAnu (data:string){
+  const provider=  new Provider({
+    provider: new WsProvider("wss://rpc.reefscan.info/ws"),
+  });
+  const res = await signatureUtils.decodePayloadMethod(provider,data,[]);
+  return res;
+}
+
 function Extrinsic ({ className, payload: { era, nonce, tip }, request: { blockNumber, genesisHash, method, specVersion: hexSpec }, url }: Props): React.ReactElement<Props> {
+  const [resolvedMethodName, setResolvedMethodName] = useState<string>(''); 
   const { t } = useTranslation();
   const chain = useMetadata(genesisHash);
   const specVersion = useRef(bnToBn(hexSpec)).current;
@@ -116,7 +127,11 @@ function Extrinsic ({ className, payload: { era, nonce, tip }, request: { blockN
       : { args: null, method: null },
     [method, chain, specVersion]
   );
-
+  const resolvedDataPromise = getDecodedMethodDataAnu(method);
+  resolvedDataPromise.then((rsd) => {
+   console.log(rsd);
+   setResolvedMethodName(rsd['methodName']);
+  });
   return (
     <Table
       className={`${className || ''} extrinsic-table`}
@@ -149,6 +164,12 @@ function Extrinsic ({ className, payload: { era, nonce, tip }, request: { blockN
         <td className='label'>{t<string>('lifetime')}</td>
         <td className='data'>{mortalityAsString(era, blockNumber, t)}</td>
       </tr>
+      {resolvedMethodName!=''?
+      <tr>
+        <td className='label'>method name</td>
+        <td className='data'>{resolvedMethodName}</td>
+      </tr>:<></>
+    }
     </Table>
   );
 }
