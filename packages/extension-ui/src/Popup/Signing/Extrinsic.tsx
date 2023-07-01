@@ -117,8 +117,9 @@ async function getDecodedMethodDataAnu (data:string){
 }
 
 function Extrinsic ({ className, payload: { era, nonce, tip }, request: { blockNumber, genesisHash, method, specVersion: hexSpec }, url }: Props): React.ReactElement<Props> {
-  const [resolvedMethodName, setResolvedMethodName] = useState<string>(''); 
-  const [resolvedMethodParams, setResolvedMethodParams] = useState<string>(''); 
+  const [resolvedMethodName, setResolvedMethodName] = useState<any[]>([]); 
+  const [methodCalled, setMethodCalled] = useState<string>(''); 
+  const [resolvedMethodParams, setResolvedMethodParams] = useState<any[]>([]); 
   const { t } = useTranslation();
   const chain = useMetadata(genesisHash);
   const specVersion = useRef(bnToBn(hexSpec)).current;
@@ -131,18 +132,18 @@ function Extrinsic ({ className, payload: { era, nonce, tip }, request: { blockN
   
   const resolvedDataPromise = getDecodedMethodDataAnu(method);
   resolvedDataPromise.then((rsd) => {
-   setResolvedMethodName(rsd['methodName']);
-   let allArgs = '';
-   for(let i=0;i<rsd['args'].length;i++){
-    let temp = ''
-    if(typeof(rsd['args'][i])=='object'){
-        temp = JSON.stringify(rsd['args'][i])
-    }else{
-      temp = rsd['args'][i];
+   setMethodCalled(rsd['methodName']);
+   let allMethodNames = rsd['methodName'].split('(')[1].split(',');
+   allMethodNames[allMethodNames.length-1]=allMethodNames[allMethodNames.length-1].slice(0, -1);
+   const newArray = rsd['args'].map((element:any) => {
+    if (typeof element === 'object' && !Array.isArray(element)) {
+      const values = Object.values(element);
+      return values.length > 0 ? values[0] : null;
     }
-    allArgs = allArgs + ',' +  temp;
-   }
-   setResolvedMethodParams(allArgs);
+    return element;
+  });
+   setResolvedMethodName(allMethodNames);
+   setResolvedMethodParams(newArray);
   });
   return (
     <Table
@@ -176,19 +177,18 @@ function Extrinsic ({ className, payload: { era, nonce, tip }, request: { blockN
         <td className='label'>{t<string>('lifetime')}</td>
         <td className='data'>{mortalityAsString(era, blockNumber, t)}</td>
       </tr>
-      {resolvedMethodName!=''?
-      <>
+      {methodCalled!=''?<>
       <tr>
-        <td className='label'>method name</td>
-        <td className='data'>{resolvedMethodName}</td>
-      </tr>
-      <tr>
-        <td className='label'>method args</td>
-        <td className='data'>{resolvedMethodParams.replace(/^\s*,{"Id":"([^"]+)"},(.*)$/, '$1,$2')}</td>
-      </tr>
-      </>
-      :<></>
-    }
+    <td className='label'>method called</td>
+    <td className='data'>{methodCalled}</td>
+  </tr>
+      </>:<></>}
+      {resolvedMethodName.map((name, index) => (
+  <tr key={index}>
+    <td className='label'>{name}</td>
+    <td className='data'>{resolvedMethodParams[index]}</td>
+  </tr>
+))}
     </Table>
   );
 }
