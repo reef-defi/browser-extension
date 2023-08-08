@@ -35,15 +35,11 @@ export class ReefSigner implements ReefInjectedSigner {
   }
 
   public subscribeSelectedSigner (cb: (reefSigner: ReefSignerResponse) => unknown, options: ReefSignerReqOptions = {}): Unsubcall {
-    let { connectedVM } = options;
-
-    if (!connectedVM) {
-      connectedVM = ReefVM.EVM;
-    }
+    const connectedVM = options.connectedVM || ReefVM.EVM;
 
     const unsubProvFn = this.injectedProvider.subscribeSelectedNetworkProvider((provider) => {
       this.selectedProvider = provider;
-      this.onSelectedSignerParamUpdate(cb, connectedVM!).then(
+      this.onSelectedSignerParamUpdate(cb, connectedVM).then(
         () => { // do nothing
         },
         () => {
@@ -56,7 +52,7 @@ export class ReefSigner implements ReefInjectedSigner {
 
       if (!account || account?.address !== this.selectedSignerAccount?.address) {
         this.selectedSignerAccount = account;
-        this.onSelectedSignerParamUpdate(cb, connectedVM!).then(
+        this.onSelectedSignerParamUpdate(cb, connectedVM).then(
           () => { // do nothing
           },
           () => {
@@ -135,6 +131,6 @@ export class ReefSigner implements ReefInjectedSigner {
       return false;
     }
 
-    return !connectedVM || (connectedVM === ReefVM.EVM && await signer?.isClaimed());
+    return !connectedVM || (connectedVM === ReefVM.EVM && signer && await signer.isClaimed());
   }
 }

@@ -141,6 +141,7 @@ export interface Web3AccountsOptions {
 }
 
 export enum ReefVM {
+  _NO_VALUE,
   NATIVE,
   EVM
 }
