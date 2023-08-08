@@ -39,11 +39,12 @@ describe('Account component', () => {
     wrapper.find('.account-card__actions-btn').first().simulate('click');
     await act(flushAllPromises);
 
-    expect(wrapper.find('a.menuItem').length).toBe(4);
+    expect(wrapper.find('a.menuItem').length).toBe(5);
     expect(wrapper.find('a.menuItem').at(0).text()).toBe('Rename');
     expect(wrapper.find('a.menuItem').at(1).text()).toBe('Derive New Account');
     expect(wrapper.find('a.menuItem').at(2).text()).toBe('Export Account');
-    expect(wrapper.find('a.menuItem').at(3).text()).toBe('Forget Account');
+    expect(wrapper.find('a.menuItem').at(3).text()).toBe('Export Account using QR');
+    expect(wrapper.find('a.menuItem').at(4).text()).toBe('Forget Account');
     expect(wrapper.find('.genesisSelection').exists()).toBe(true);
   });
 
@@ -63,11 +64,12 @@ describe('Account component', () => {
     wrapper.find('.account-card__actions-btn').first().simulate('click');
     await act(flushAllPromises);
 
-    expect(wrapper.find('a.menuItem').length).toBe(4);
+    expect(wrapper.find('a.menuItem').length).toBe(5);
     expect(wrapper.find('a.menuItem').at(0).text()).toBe('Rename');
     expect(wrapper.find('a.menuItem').at(1).text()).toBe('Derive New Account');
     expect(wrapper.find('a.menuItem').at(2).text()).toBe('Export Account');
-    expect(wrapper.find('a.menuItem').at(3).text()).toBe('Forget Account');
+    expect(wrapper.find('a.menuItem').at(3).text()).toBe('Export Account using QR');
+    expect(wrapper.find('a.menuItem').at(4).text()).toBe('Forget Account');
     expect(wrapper.find('.genesisSelection').exists()).toBe(true);
   });
 

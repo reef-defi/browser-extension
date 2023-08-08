@@ -13,14 +13,20 @@ jobs:
     name: ${{ matrix.step }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-    - name: ${{ matrix.step }}
-      env:
-        GH_RELEASE_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GH_RELEASE_FILES: master-build.zip,master-src.zip
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      run: |
-        yarn install --immutable | grep -v 'YN0013'
-        yarn ${{ matrix.step }}
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+        name: checkout
+      - name: Setup node v16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: ${{ matrix.step }}
+        env:
+          GH_RELEASE_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_RELEASE_FILES: master-build.zip,master-src.zip
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          node -v
+          yarn install
+          yarn ${{ matrix.step }}

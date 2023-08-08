@@ -90,6 +90,7 @@ export default function Request ({ account: { accountIndex, addressOffset, isExt
             genesisHash={json.genesisHash}
             isExternal={isExternal}
             isHardware={isHardware}
+            hideBalance={true}
             presentation
           />
         </div>
@@ -143,6 +144,7 @@ export default function Request ({ account: { accountIndex, addressOffset, isExt
             address={address}
             exporting
             isExternal={isExternal}
+            hideBalance={true}
             presentation
           />
         </div>

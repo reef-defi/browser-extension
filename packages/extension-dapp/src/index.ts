@@ -14,14 +14,16 @@ export { unwrapBytes, wrapBytes } from './wrapBytes';
 
 // just a helper (otherwise we cast all-over, so shorter and more readable)
 // TODO window might be undefined if used server-side
-const win = window as Window & InjectedWindow;
+const win = typeof window !== 'undefined' ? window as Window & InjectedWindow : null;// window as Window & InjectedWindow;
 
-// don't clobber the existing object, but ensure non-undefined
-win.injectedWeb3 = win?.injectedWeb3 || {};
+if (win) {
+  // don't clobber the existing object, but ensure non-undefined
+  win.injectedWeb3 = win?.injectedWeb3 || {};
+}
 
 // true when anything has been injected and is available
 function web3IsInjected (): boolean {
-  return Object.keys(win.injectedWeb3).length !== 0;
+  return win ? Object.keys(win.injectedWeb3).length !== 0 : false;
 }
 
 // helper to throw a consistent error when not enabled
@@ -51,6 +53,10 @@ let web3EnablePromise: Promise<InjectedExtension[]> | null = null;
 export { isWeb3Injected, web3EnablePromise };
 
 function getWindowExtensions (originName: string): Promise<[InjectedExtensionInfo, Injected | void][]> {
+  if (!win) {
+    return Promise.resolve([]);
+  }
+
   return Promise.all(
     Object.entries(win.injectedWeb3).map(
       ([name, { enable, version }]): Promise<[InjectedExtensionInfo, Injected | void]> =>
