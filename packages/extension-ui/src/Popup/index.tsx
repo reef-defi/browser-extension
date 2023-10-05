@@ -39,10 +39,10 @@ import ImportQr from './ImportQr';
 import ImportSeed from './ImportSeed';
 import Metadata from './Metadata';
 import PhishingDetected from './PhishingDetected';
+import PrivateKey from './PrivateKey';
 import RestoreJson from './RestoreJson';
 import Signing from './Signing';
 import Welcome from './Welcome';
-import PrivateKey from './PrivateKey';
 
 const startSettings = uiSettings.get();
 

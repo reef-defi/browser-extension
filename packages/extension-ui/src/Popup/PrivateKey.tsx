@@ -7,17 +7,18 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCopy, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useCallback, useContext, useState } from 'react';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import { RouteComponentProps, withRouter } from 'react-router';
 import styled from 'styled-components';
+
+import { u8aEq, u8aToHex } from '@polkadot/util';
+import { jsonDecrypt } from '@polkadot/util-crypto';
 
 import { Button } from '../../../reef/extension-ui/uik/Button';
 import { ActionContext, Address, ButtonArea, InputWithLabel, VerticalSpace, Warning } from '../components';
 import useTranslation from '../hooks/useTranslation';
 import { exportAccount } from '../messaging';
 import { Header } from '../partials';
-import { jsonDecrypt } from '@polkadot/util-crypto';
-import { u8aEq, u8aToHex } from '@polkadot/util';
-import CopyToClipboard from 'react-copy-to-clipboard';
 import notify from './../../../reef/extension-ui/notify';
 
 const MIN_LENGTH = 6;
@@ -65,34 +66,34 @@ function PrivateKey ({ className, match: { params: { address } } }: Props): Reac
 
       exportAccount(address, pass)
         .then(({ exportedJson }) => {
-            const decrypted = jsonDecrypt(exportedJson,pass);
-            const header = decrypted.subarray(0, PKCS8_HEADER.length);
+          const decrypted = jsonDecrypt(exportedJson, pass);
+          const header = decrypted.subarray(0, PKCS8_HEADER.length);
 
-  if (!u8aEq(header, PKCS8_HEADER)) {
-    // throw new Error('Invalid Pkcs8 header found in body');
-    setError('Encountered some error');
-  }
+          if (!u8aEq(header, PKCS8_HEADER)) {
+            // throw new Error('Invalid Pkcs8 header found in body');
+            setError('Encountered some error');
+          }
 
-  let secretKey = decrypted.subarray(SEED_OFFSET, SEED_OFFSET + SEC_LENGTH);
-  let divOffset = SEED_OFFSET + SEC_LENGTH;
-  let divider = decrypted.subarray(divOffset, divOffset + PKCS8_DIVIDER.length);
+          let secretKey = decrypted.subarray(SEED_OFFSET, SEED_OFFSET + SEC_LENGTH);
+          let divOffset = SEED_OFFSET + SEC_LENGTH;
+          let divider = decrypted.subarray(divOffset, divOffset + PKCS8_DIVIDER.length);
 
-  if (!u8aEq(divider, PKCS8_DIVIDER)) {
-    divOffset = SEED_OFFSET + SEED_LENGTH;
-    secretKey = decrypted.subarray(SEED_OFFSET, divOffset);
-    divider = decrypted.subarray(divOffset, divOffset + PKCS8_DIVIDER.length);
+          if (!u8aEq(divider, PKCS8_DIVIDER)) {
+            divOffset = SEED_OFFSET + SEED_LENGTH;
+            secretKey = decrypted.subarray(SEED_OFFSET, divOffset);
+            divider = decrypted.subarray(divOffset, divOffset + PKCS8_DIVIDER.length);
 
-    if (!u8aEq(divider, PKCS8_DIVIDER)) {
-      throw new Error('Invalid Pkcs8 divider found in body');
-    }
-  }
+            if (!u8aEq(divider, PKCS8_DIVIDER)) {
+              throw new Error('Invalid Pkcs8 divider found in body');
+            }
+          }
 
-        const pubOffset = divOffset + PKCS8_DIVIDER.length;
-        const publicKey = decrypted.subarray(pubOffset, pubOffset + PUB_LENGTH);
-        const combinedPublicAndSecretKey = new Uint8Array([...publicKey,...secretKey]);
-    
-        const pk = u8aToHex(combinedPublicAndSecretKey); //NOTE - to create keypair from pk , we need to extract public and secret key like this 
-        /*
+          const pubOffset = divOffset + PKCS8_DIVIDER.length;
+          const publicKey = decrypted.subarray(pubOffset, pubOffset + PUB_LENGTH);
+          const combinedPublicAndSecretKey = new Uint8Array([...publicKey, ...secretKey]);
+
+          const pk = u8aToHex(combinedPublicAndSecretKey); // NOTE - to create keypair from pk , we need to extract public and secret key like this
+          /*
             const publicKey = u8aToHex(hexToU8a(pk).slice(0,32));
             const secretKey = hexToU8a(pk).slice(32,pk.length)
             const pair = keyring.createFromPair({publicKey,secretKey}, {}, 'sr25519');
@@ -150,39 +151,43 @@ function PrivateKey ({ className, match: { params: { address } } }: Props): Reac
                 type='password'
               />)}
             {privateKey !== '' && (
-             
-             <CopyToClipboard text={(privateKey)}>
-                
+
+              <CopyToClipboard text={(privateKey)}>
+
                 <div>
-                  <div style={{display:'flex'}}>
+                  <div style={{ display: 'flex' }}>
                     <div>Private Key</div>
-                  <div className='pk-copy-btn'               onClick={() => notify.info({
-                aliveFor: 2,
-                message: 'Copied Private Key to Clipboard.'
-              })}>
-                <FontAwesomeIcon
-                className='copyIcon'
-                icon={faCopy as IconProp}
-                size='sm'
-                title={t('Copy Private Key')}
-                
-              />
+                    <div
+                      className='pk-copy-btn'
+                      onClick={() => notify.info({
+                        aliveFor: 2,
+                        message: 'Copied Private Key to Clipboard.'
+                      })}>
+                      <FontAwesomeIcon
+                        className='copyIcon'
+                        icon={faCopy as IconProp}
+                        size='sm'
+                        title={t('Copy Private Key')}
+
+                      />
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      whiteSpace: 'pre-wrap',
+                      wordWrap: 'break-word',
+                      maxWidth: '-webkit-fill-available',
+                      padding: '8px',
+                      border: '1px solid #373840',
+                      borderRadius: '4px',
+                      backgroundColor: '#373840'
+                    }}
+                  >
+                    {privateKey}
                   </div>
                 </div>
-                <div 
-                style={{
-                whiteSpace: 'pre-wrap',
-                wordWrap: 'break-word',
-                maxWidth: '-webkit-fill-available',
-                padding: '8px',
-                border:'1px solid #373840',borderRadius:'4px',backgroundColor:'#373840'
-              }}
-              >
-            {privateKey}
-             </div>
-             </div>
-         </CopyToClipboard>
-           
+              </CopyToClipboard>
+
             )}
             {error && (
               <Warning
