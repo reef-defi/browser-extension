@@ -436,6 +436,15 @@ svg + .account-card__address {
   color: var(--primary);
 }
 
+.pk-copy-btn{
+  margin-left: 6px;
+}
+
+.pk-copy-btn:hover{
+  color: var(--primary);
+  cursor: pointer;
+}
+
 .account-card__meta:active svg,
 .account-card__meta:hover svg
 {
