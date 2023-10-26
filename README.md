@@ -14,7 +14,7 @@ As it stands, it does one thing: it _only_ manages accounts and allows the signi
 - On Firefox, install via [Firefox add-ons](https://addons.mozilla.org/en-US/firefox/addon/reef-js-extension/)
 
 <a name="manual-installation"></a>
-## Install on Chrome / Brave Browser
+## Manually Install on Chrome / Brave Browser
 1. Go to the source file by [clicking here](https://github.com/reef-defi/browser-extension/blob/master/source.zip)
    
 2. Click on the download icon at top right
