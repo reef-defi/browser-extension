@@ -10,8 +10,19 @@ As it stands, it does one thing: it _only_ manages accounts and allows the signi
 
 ## Installation
 
-- On Chrome, install via [Chrome web store](https://chrome.google.com/webstore/detail/reefjs-extension/mjgkpalnahacmhkikiommfiomhjipgjn)
+- On Chrome / Brave , install via [Read Instructions](#manual-installation)
 - On Firefox, install via [Firefox add-ons](https://addons.mozilla.org/en-US/firefox/addon/reef-js-extension/)
+
+<a name="manual-installation"></a>
+## Install on Chrome / Brave Browser
+1. Go to the source file by [clicking here](https://github.com/reef-defi/browser-extension/blob/master/source.zip)
+2. Click on the download icon at top right 
+<img width="720" alt="Screenshot 2023-10-26 at 3 38 05 PM" src="https://github.com/reef-defi/browser-extension/assets/62092256/a13afdc5-7a4a-4330-9e29-400892299ad2">
+3. After downloading the file , unzip it.
+4. Open Chrome/Brave browser and click on the three dots at top
+<img width="720" alt="Screenshot 2023-10-26 at 3 43 25 PM" src="https://github.com/reef-defi/browser-extension/assets/62092256/49c638c8-ff7d-452b-821b-7991e9537584">
+5. After clicking three dots, a menu will be there , from there hover over `Extensions` and click on `Manage Extensions`
+<img width="720" alt="Screenshot 2023-10-26 at 3 45 42 PM" src="https://github.com/reef-defi/browser-extension/assets/62092256/a85a5346-5bc2-40c1-9bbb-f5cab32056e1">
 
 ## Usage
 To install the component, do `yarn add @reef-defi/extension-dapp`.
