@@ -16,13 +16,39 @@ As it stands, it does one thing: it _only_ manages accounts and allows the signi
 <a name="manual-installation"></a>
 ## Install on Chrome / Brave Browser
 1. Go to the source file by [clicking here](https://github.com/reef-defi/browser-extension/blob/master/source.zip)
-2. Click on the download icon at top right 
+   
+2. Click on the download icon at top right
+
 <img width="720" alt="Screenshot 2023-10-26 at 3 38 05 PM" src="https://github.com/reef-defi/browser-extension/assets/62092256/a13afdc5-7a4a-4330-9e29-400892299ad2">
+
 3. After downloading the file , unzip it.
+
 4. Open Chrome/Brave browser and click on the three dots at top
+   
 <img width="720" alt="Screenshot 2023-10-26 at 3 43 25 PM" src="https://github.com/reef-defi/browser-extension/assets/62092256/49c638c8-ff7d-452b-821b-7991e9537584">
+
 5. After clicking three dots, a menu will be there , from there hover over `Extensions` and click on `Manage Extensions`
+
 <img width="720" alt="Screenshot 2023-10-26 at 3 45 42 PM" src="https://github.com/reef-defi/browser-extension/assets/62092256/a85a5346-5bc2-40c1-9bbb-f5cab32056e1">
+
+6. Enable developer's mode by clicking on the switch at top right
+7. 
+   <img width="720" alt="Screenshot 2023-10-26 at 3 51 42 PM" src="https://github.com/reef-defi/browser-extension/assets/62092256/f757f692-9748-407b-a2d9-f00ea48c8e3a">
+
+8. Click on Load Unpacked at top left
+   
+<img width="1126" alt="Screenshot 2023-10-26 at 3 54 06 PM" src="https://github.com/reef-defi/browser-extension/assets/62092256/62657dee-3a1a-45e3-b562-1ff8bdc65bb6">
+
+9. Select the Folder which you unzipped at Step 3 and click on `Select`
+    
+<img width="1123" alt="Screenshot 2023-10-26 at 3 57 04 PM" src="https://github.com/reef-defi/browser-extension/assets/62092256/ddd66547-25ca-434e-8f66-2e5e1e48bd24">
+
+10. Now you can see Reef Extension here
+    
+<img width="1125" alt="Screenshot 2023-10-26 at 3 57 31 PM" src="https://github.com/reef-defi/browser-extension/assets/62092256/d48f791c-a096-4a97-8854-d59ec22f23ea">
+
+11. To access it easily on all web pages, click on top right Puzzle icon and Click on Pin , to Pin the Reef Extension
+<img width="460" alt="Screenshot 2023-10-26 at 3 58 24 PM" src="https://github.com/reef-defi/browser-extension/assets/62092256/1856dbde-ce08-4b16-890a-16e8d5cfd1da">
 
 ## Usage
 To install the component, do `yarn add @reef-defi/extension-dapp`.
