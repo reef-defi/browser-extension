@@ -21,7 +21,7 @@
     "@polkadot/api": "^6.7.1",
     "@polkadot/phishing": "^0.6.407",
     "@polkadot/ui-keyring": "^0.86.5",
-    "@reef-chain/util-lib": "^0.4.0",
+    "@reef-chain/util-lib": "^0.10.6",
     "@reef-defi/extension-dapp": "^1.0.22",
     "@reef-defi/extension-inject": "^1.0.22",
     "@reef-defi/keyring": "^7.8.2"
