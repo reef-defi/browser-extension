@@ -14,11 +14,11 @@
   },
   "sideEffects": false,
   "type": "module",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "main": "index.js",
   "dependencies": {
     "@babel/runtime": "^7.16.0",
-    "@reef-defi/extension-inject": "^1.0.22",
+    "@reef-defi/extension-inject": "^1.0.23",
     "@reef-defi/util": "^7.8.2",
     "@reef-defi/util-crypto": "^7.8.2"
   },

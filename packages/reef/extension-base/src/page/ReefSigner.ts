@@ -1,7 +1,7 @@
 import { Provider, Signer as ReefVMSigner } from '@reef-defi/evm-provider';
 import Accounts from '@reef-defi/extension-base/page/Accounts';
 import SigningKey from '@reef-defi/extension-base/page/Signer';
-import { InjectedAccount, ReefInjectedSigner, ReefSignerResponse, ReefSignerStatus, ReefVM, Unsubcall } from '@reef-defi/extension-inject/types';
+import { InjectedAccount, ReefInjectedSigner, ReefSignerReqOptions, ReefSignerResponse, ReefSignerStatus, ReefVM, Unsubcall } from '@reef-defi/extension-inject/types';
 
 import { ReefProvider } from './ReefProvider';
 
@@ -34,7 +34,9 @@ export class ReefSigner implements ReefInjectedSigner {
     return accounts.find((a) => a.isSelected);
   }
 
-  public subscribeSelectedSigner (cb: (reefSigner: ReefSignerResponse) => unknown, connectedVM: ReefVM = ReefVM.EVM): Unsubcall {
+  public subscribeSelectedSigner (cb: (reefSigner: ReefSignerResponse) => unknown, options: ReefSignerReqOptions = {}): Unsubcall {
+    const connectedVM = options.connectedVM || ReefVM.EVM;
+
     const unsubProvFn = this.injectedProvider.subscribeSelectedNetworkProvider((provider) => {
       this.selectedProvider = provider;
       this.onSelectedSignerParamUpdate(cb, connectedVM).then(
@@ -66,7 +68,7 @@ export class ReefSigner implements ReefInjectedSigner {
     };
   }
 
-  public async getSelectedSigner (connectedVM: ReefVM = ReefVM.EVM): Promise<ReefSignerResponse> {
+  public async getSelectedSigner (options: ReefSignerReqOptions = {}): Promise<ReefSignerResponse> {
     if (this.selectedSignerStatus) {
       return Promise.resolve({ ...this.selectedSignerStatus });
     }
@@ -88,7 +90,7 @@ export class ReefSigner implements ReefInjectedSigner {
           this.resolvesList.forEach((resolve) => resolve({ ...sig }));
           this.resolvesList = [];
         }
-      }, connectedVM);
+      }, options);
     }
 
     return retPromise;
@@ -129,6 +131,6 @@ export class ReefSigner implements ReefInjectedSigner {
       return false;
     }
 
-    return !connectedVM || (connectedVM === ReefVM.EVM && await signer?.isClaimed());
+    return !connectedVM || (connectedVM === ReefVM.EVM && signer && await signer.isClaimed());
   }
 }

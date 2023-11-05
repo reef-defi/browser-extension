@@ -1,5 +1,5 @@
 const fs = require('fs');
-const NEW_VERSION = '1.0.22';
+const NEW_VERSION = '1.0.23';
 
 function getPackageJson (filePath) {
   return { json: JSON.parse(fs.readFileSync(filePath, 'utf8')), filePath: filePath };
