@@ -4451,24 +4451,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reef-chain/util-lib@npm:^0.4.0":
-  version: 0.4.0
-  resolution: "@reef-chain/util-lib@npm:0.4.0"
+"@reef-chain/util-lib@npm:^0.10.6":
+  version: 0.10.6
+  resolution: "@reef-chain/util-lib@npm:0.10.6"
   dependencies:
     "@apollo/client": ^3.6.9
     "@polkadot/extension-inject": ^0.44.6
-    "@reef-defi/evm-provider": ^1.0.9
+    "@reef-defi/evm-provider": ^1.0.10
     "@reef-defi/extension-base": ^1.0.10
-    "@reef-defi/extension-dapp": ^1.0.10
-    "@reef-defi/extension-inject": ^1.0.10
+    "@reef-defi/extension-dapp": ^1.0.16
+    "@reef-defi/extension-inject": ^1.0.16
+    "@types/react": 17.0.2
     axios: ^0.27.2
     bignumber.js: ^9.1.0
-    crypto-browserify: ^3.12.0
     graphql: ^16.6.0
-    subscriptions-transport-ws: ^0.11.0
+    graphql-ws: ^5.11.2
+    react: 17.0.2
   peerDependencies:
     rxjs: ^7.5.6
-  checksum: 863d02d43e60b7f79ee586c493636377c7559cf0d4cc2e45c11fcd10a47bea0bbdda72f16e95fc6789d583d84ddead765aee12233bccedf56c97f8dd63bab36a
+  checksum: 44daaee66c83b532ebb1acfb84181cf295ef9974d3274df93533e53059344a6bec3beaaf41659c1777e5763534a0f1e97792fc3e82c82c4cc4cbe18aa0068850
   languageName: node
   linkType: hard
 
@@ -4595,6 +4596,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@reef-defi/evm-provider@npm:^1.0.10":
+  version: 1.0.11
+  resolution: "@reef-defi/evm-provider@npm:1.0.11"
+  dependencies:
+    "@open-web3/dev-config": 0.1.13
+    "@open-web3/scanner": 1.0.1
+    "@polkadot/api": ~6.4.2
+    "@polkadot/keyring": ~7.9.2
+    "@polkadot/rpc-provider": ~6.4.2
+    "@polkadot/types": ~6.4.2
+    "@polkadot/util": ~7.9.2
+    "@polkadot/util-crypto": ~7.9.2
+    "@reef-defi/api": ^1.0.4
+    "@reef-defi/api-derive": ^1.0.4
+    "@reef-defi/type-definitions": ^1.0.4
+    "@reef-defi/types": ^1.0.4
+    "@typescript-eslint/eslint-plugin": 4.8.1
+    blakejs: ~1.1.0
+    ethers: ~5.5.0
+  checksum: 50e2fee3a44c99a3ccecf94d3aac1cd38f32edd16a36142ab9c75db2e129331357b1fce060a5539895bb6ecceb76910d92ada3489a247f6f04008a8b9ac65b14
+  languageName: node
+  linkType: hard
+
 "@reef-defi/evm-provider@npm:^1.0.9":
   version: 1.0.9
   resolution: "@reef-defi/evm-provider@npm:1.0.9"
@@ -4626,7 +4650,7 @@ __metadata:
     "@polkadot/api": ^6.7.1
     "@polkadot/phishing": ^0.6.407
     "@polkadot/ui-keyring": ^0.86.5
-    "@reef-chain/util-lib": ^0.4.0
+    "@reef-chain/util-lib": ^0.10.6
     "@reef-defi/extension-dapp": ^1.0.22
     "@reef-defi/extension-inject": ^1.0.22
     "@reef-defi/keyring": ^7.8.2
@@ -4658,7 +4682,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reef-defi/extension-dapp@^1.0.10, @reef-defi/extension-dapp@^1.0.22, @reef-defi/extension-dapp@^1.0.9, @reef-defi/extension-dapp@workspace:packages/extension-dapp":
+"@reef-defi/extension-dapp@^1.0.16, @reef-defi/extension-dapp@^1.0.22, @reef-defi/extension-dapp@^1.0.9, @reef-defi/extension-dapp@workspace:packages/extension-dapp":
   version: 0.0.0-use.local
   resolution: "@reef-defi/extension-dapp@workspace:packages/extension-dapp"
   dependencies:
@@ -4673,7 +4697,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@reef-defi/extension-inject@^1.0.10, @reef-defi/extension-inject@^1.0.22, @reef-defi/extension-inject@^1.0.9, @reef-defi/extension-inject@workspace:packages/extension-inject":
+"@reef-defi/extension-inject@^1.0.16, @reef-defi/extension-inject@^1.0.22, @reef-defi/extension-inject@^1.0.9, @reef-defi/extension-inject@workspace:packages/extension-inject":
   version: 0.0.0-use.local
   resolution: "@reef-defi/extension-inject@workspace:packages/extension-inject"
   dependencies:
@@ -13019,6 +13043,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"graphql-ws@npm:^5.11.2":
+  version: 5.13.1
+  resolution: "graphql-ws@npm:5.13.1"
+  peerDependencies:
+    graphql: ">=0.11 <=16"
+  checksum: 7a820c15d6d99f1b4c40b928131899a66edf2fdbca3db09a03dd7f6bde1e81f0a76ccda8e26254aabb0dc30f2a8c133cb0c5c5627c2dde8d032a8dc5a21f0ed3
+  languageName: node
+  linkType: hard
+
 "graphql@npm:^16.2.0, graphql@npm:^16.6.0":
   version: 16.6.0
   resolution: "graphql@npm:16.6.0"
@@ -18907,7 +18940,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^17.0.2":
+"react@npm:17.0.2, react@npm:^17.0.2":
   version: 17.0.2
   resolution: "react@npm:17.0.2"
   dependencies:
