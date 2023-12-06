@@ -12,7 +12,8 @@ const QRCodeComponent: React.FC<QRCodeProps> = ({ size = 384, value }) => {
       justifyContent: 'center',
       alignItems: 'center',
       background: 'white',
-      padding: '10px' }}>
+      padding: '10px' ,
+      borderRadius:'10px'}}>
       <QRCode
         value={value}
         size={size}
