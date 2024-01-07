@@ -7,6 +7,7 @@ import styled, { css } from 'styled-components';
 
 interface Props extends ThemeProps {
   withError?: boolean;
+  [key: string]: any;
 }
 
 const TextInput = css(({ theme, withError }: Props) => `
