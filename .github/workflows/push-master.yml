@@ -17,10 +17,10 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
         name: checkout
-      - name: Setup node v16
+      - name: Setup node v18
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
       - name: ${{ matrix.step }}
         env:
           GH_RELEASE_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
