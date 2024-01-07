@@ -27,9 +27,10 @@ function Button ({ children, className = '', isBusy, isDisabled, onClick, to }: 
 
       try {
         onClick && await onClick();
-      }catch (e: any) {
+      } catch (e: any) {
         console.log('btn onClick err=', e.message);
       }
+
       if (to) {
         window.location.hash = to;
       }
