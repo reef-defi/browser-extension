@@ -10,13 +10,13 @@ As it stands, it does one thing: it _only_ manages accounts and allows the signi
 
 ## Installation
 
-- On Chrome / Brave , install via [Read Instructions](#manual-installation)
-- On Firefox, install via [Firefox add-ons](https://addons.mozilla.org/en-US/firefox/addon/reef-js-extension/)
+- On Chrome / Brave , install via [Chrome extension](https://chromewebstore.google.com/detail/reef-chain-wallet-extensi/mjgkpalnahacmhkikiommfiomhjipgjn) or [manual installation](#manual-installation-chr)
+- On Firefox install manually [install manually](#manual-installation-ff)
 
-<a name="manual-installation"></a>
+<a name="manual-installation-chr"></a>
 ## Manually Install on Chrome / Brave Browser
 1. Go to the source file by [clicking here](https://github.com/reef-defi/browser-extension/blob/master/source.zip)
-   
+
 2. Click on the download icon at top right
 
 <img width="720" alt="Screenshot 2023-10-26 at 3 38 05 PM" src="https://github.com/reef-defi/browser-extension/assets/62092256/a13afdc5-7a4a-4330-9e29-400892299ad2">
@@ -24,7 +24,7 @@ As it stands, it does one thing: it _only_ manages accounts and allows the signi
 3. After downloading the file , unzip it.
 
 4. Open Chrome/Brave browser and click on the three dots at top
-   
+
 <img width="720" alt="Screenshot 2023-10-26 at 3 43 25 PM" src="https://github.com/reef-defi/browser-extension/assets/62092256/49c638c8-ff7d-452b-821b-7991e9537584">
 <br>
 
@@ -39,17 +39,17 @@ As it stands, it does one thing: it _only_ manages accounts and allows the signi
 
 
 7. Click on Load Unpacked at top left
-   
+
 <img width="1126" alt="Screenshot 2023-10-26 at 3 54 06 PM" src="https://github.com/reef-defi/browser-extension/assets/62092256/62657dee-3a1a-45e3-b562-1ff8bdc65bb6">
 
 
 8. Select the Folder which you unzipped at Step 3 and click on `Select`
-    
+
 <img width="1123" alt="Screenshot 2023-10-26 at 3 57 04 PM" src="https://github.com/reef-defi/browser-extension/assets/62092256/ddd66547-25ca-434e-8f66-2e5e1e48bd24">
 
 
 9. Now you can see Reef Extension here
-    
+
 <img width="1125" alt="Screenshot 2023-10-26 at 3 57 31 PM" src="https://github.com/reef-defi/browser-extension/assets/62092256/d48f791c-a096-4a97-8854-d59ec22f23ea">
 
 
@@ -57,6 +57,21 @@ As it stands, it does one thing: it _only_ manages accounts and allows the signi
 <img width="460" alt="Screenshot 2023-10-26 at 3 58 24 PM" src="https://github.com/reef-defi/browser-extension/assets/62092256/1856dbde-ce08-4b16-890a-16e8d5cfd1da">
 
 11. Voila! Now Reef Extension is installed on your browser!
+
+
+<a name="manual-installation-ff"></a>
+## Manually Install on Firefox Browser
+1. Go to the source file by [clicking here](https://github.com/reef-defi/browser-extension/blob/master/source.zip)
+
+2. Click on the download icon at top right
+
+<img width="720" alt="Screenshot 2023-10-26 at 3 38 05 PM" src="https://github.com/reef-defi/browser-extension/assets/62092256/a13afdc5-7a4a-4330-9e29-400892299ad2">
+
+3. After downloading the file open Firefox and type `about:debugging#/runtime/this-firefox` in url input. Or click `Manage extensions` from top right Extensions menu. Then open settings cog in `Manage Your Extensions` page and select `Debug Add-ons`.
+
+4. On `about:debugging#/runtime/this-firefox` page click `Load Temporary Add-on` button and select downloaded source.zip file.
+
+5. Extension is installed in browser and you can pin it to toolbar from menu.
 
 ## Usage
 To install the component, do `yarn add @reef-defi/extension-dapp`.
