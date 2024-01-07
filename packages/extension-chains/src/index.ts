@@ -31,7 +31,7 @@ export function metadataExpand (definition: MetadataDef, isPartial = false): Cha
     registry.register(types);
   }
 
-  //@ts-ignore
+  // @ts-ignore
   registry.setChainProperties(registry.createType('ChainProperties', {
     ss58Format,
     tokenDecimals,
