@@ -19,6 +19,7 @@ jobs:
           node-version: 18
       - name: ${{ matrix.step }}
         run: |
+          npm -v
           node -v
           yarn install
           yarn ${{ matrix.step }}
