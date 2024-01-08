@@ -19,5 +19,5 @@ jobs:
           node-version: 18
       - name: ${{ matrix.step }}
         run: |
-          yarn install
+          yarn install --immutable
           yarn ${{ matrix.step }}
