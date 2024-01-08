@@ -16,8 +16,4 @@ jobs:
     - name: ${{ matrix.step }}
       run: |
         yarn install --immutable
-        npm install -g node-gyp
-        cd node_modules/usb-detection
-        node-gyp rebuild
-        cd ..
         yarn ${{ matrix.step }}
