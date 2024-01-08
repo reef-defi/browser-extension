@@ -17,5 +17,5 @@ jobs:
         node-version: 'lts/*'
     - name: ${{ matrix.step }}
       run: |
-        yarn install --immutable
+        yarn install
         yarn ${{ matrix.step }}
