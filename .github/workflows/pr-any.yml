@@ -1,5 +1,9 @@
 name: PR
-on: [pull_request]
+
+on:
+  pull_request:
+    paths:
+      - '**/*'
 
 jobs:
   pr:
@@ -9,15 +13,15 @@ jobs:
     name: ${{ matrix.step }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-        name: checkout
-      - name: Setup node v18
+      - name: Setup Node.js v18
         uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: ${{ matrix.step }}
+      - name: Install Dependencies and Run ${{ matrix.step }}
         run: |
           yarn install --immutable | grep -v 'YN0013'
-          yarn ${{ matrix.step }}
+          NODE_OPTIONS=--max_old_space_size=4096 yarn ${{ matrix.step }}
