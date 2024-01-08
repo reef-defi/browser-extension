@@ -29,7 +29,7 @@
     "lint": "polkadot-dev-run-lint",
     "postinstall": "polkadot-dev-yarn-only",
     "start": "yarn watch",
-    "test": "polkadot-dev-run-test --detectOpenHandles",
+    "test": "polkadot-dev-run-test --coverage --runInBand --testPathIgnorePatterns e2e",
     "test:one": "polkadot-dev-run-test --detectOpenHandles",
     "watch": "cd packages/extension && yarn polkadot-exec-webpack --config webpack.watch.cjs --mode development --watch"
   },
