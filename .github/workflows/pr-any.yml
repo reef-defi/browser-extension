@@ -22,4 +22,3 @@ jobs:
           npm -v
           node -v
           yarn install
-          yarn ${{ matrix.step }}
