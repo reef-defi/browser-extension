@@ -94,6 +94,15 @@ function Account ({ address, className, genesisHash, hideBalance, isExternal, is
         <Link
           className='menuItem'
           isDanger
+          to={`/account/account-qr/${address}`}
+        >
+          {t<string>('Show Account Address')}
+        </Link>
+      )}
+      {!isExternal && (
+        <Link
+          className='menuItem'
+          isDanger
           to={`/account/export-qr/${address}`}
         >
           {t<string>('Export Account using QR')}
