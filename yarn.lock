@@ -4973,6 +4973,7 @@ __metadata:
     sinon-chrome: ^3.0.1
     styled-components: ^5.3.3
     subscriptions-transport-ws: ^0.11.0
+    usb-detection: ^4.14.2
   languageName: unknown
   linkType: soft
 
@@ -9013,9 +9014,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30000844, caniuse-lite@npm:^1.0.30001565":
-  version: 1.0.30001574
-  resolution: "caniuse-lite@npm:1.0.30001574"
-  checksum: 4064719755371a9716446ee79714ff5cee347861492d6325c2e3db00c37cb27f184742f53f2b6e4c15cc2e1a47fae32cc44c9b15e957a9290982bf4108933245
+  version: 1.0.30001576
+  resolution: "caniuse-lite@npm:1.0.30001576"
+  checksum: b8b332675fe703d5e57b02df5f100345f2a3796c537a42422f5bfc82d3256b8bad3f4e2788553656d2650006d13a4b5db99725e2a9462cc0c8035ba494ba1857
   languageName: node
   linkType: hard
 
@@ -17676,13 +17677,13 @@ __metadata:
   linkType: hard
 
 "node-gyp-build@npm:^4.2.0, node-gyp-build@npm:^4.3.0":
-  version: 4.7.1
-  resolution: "node-gyp-build@npm:4.7.1"
+  version: 4.8.0
+  resolution: "node-gyp-build@npm:4.8.0"
   bin:
     node-gyp-build: bin.js
     node-gyp-build-optional: optional.js
     node-gyp-build-test: build-test.js
-  checksum: 2ef8248021489db03be3e8098977cdc797b80a9b12b77c6dcb89b0dc89b8c62e6a482672ee298f61021740ae7f080fb33154cfec8fb158cec620f57b0fae87c0
+  checksum: b82a56f866034b559dd3ed1ad04f55b04ae381b22ec2affe74b488d1582473ca6e7f85fccf52da085812d3de2b0bf23109e752a57709ac7b9963951c710fea40
   languageName: node
   linkType: hard
 
@@ -22436,7 +22437,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"usb-detection@npm:^4.13.0":
+"usb-detection@npm:^4.13.0, usb-detection@npm:^4.14.2":
   version: 4.14.2
   resolution: "usb-detection@npm:4.14.2"
   dependencies:

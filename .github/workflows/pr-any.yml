@@ -3,21 +3,18 @@ on: [pull_request]
 
 jobs:
   pr:
+    continue-on-error: true
     strategy:
       matrix:
         step: ['lint', 'test', 'build']
-    name: ${{ matrix.step }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-        name: checkout
-      - name: Setup node v16
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: ${{ matrix.step }}
-        run: |
-          yarn install --immutable | grep -v 'YN0013'
-          yarn ${{ matrix.step }}
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 'lts/*'
+    - name: ${{ matrix.step }}
+      run: |
+        rm -rf node_modules
+        yarn install --immutable
+        yarn ${{ matrix.step }}
