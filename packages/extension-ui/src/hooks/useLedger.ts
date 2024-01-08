@@ -1,7 +1,7 @@
 // Copyright 2019-2021 @polkadot/extension-ui authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Ledger } from '@reef-defi/hw-ledger';
+// import { Ledger } from '@reef-defi/hw-ledger';
 import { Network } from '@reef-defi/networks/types';
 import { assert } from '@reef-defi/util';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -23,7 +23,7 @@ interface State extends StateBase {
   isLedgerEnabled: boolean;
   isLoading: boolean;
   isLocked: boolean;
-  ledger: Ledger | null;
+  ledger: any;
   refresh: () => void;
   warning: string | null;
 }
@@ -32,8 +32,8 @@ function getNetwork (genesis: string): Network | undefined {
   return ledgerChains.find(({ genesisHash }) => genesisHash[0] === genesis);
 }
 
-function retrieveLedger (genesis: string): Ledger {
-  let ledger: Ledger | null = null;
+function retrieveLedger (genesis: string): any {
+  let ledger:any = null;
 
   const { isLedgerCapable } = getState();
 
@@ -43,7 +43,7 @@ function retrieveLedger (genesis: string): Ledger {
 
   assert(def, `Unable to find supported chain for ${genesis}`);
 
-  ledger = new Ledger('webusb', def.network);
+  // ledger = new Ledger('webusb', def.network);
 
   return ledger;
 }
@@ -95,7 +95,7 @@ export function useLedger (genesis?: string | null, accountIndex = 0, addressOff
     setWarning(null);
 
     ledger.getAddress(false, accountIndex, addressOffset)
-      .then((res) => {
+      .then((res:any) => {
         setIsLoading(false);
         setAddress(res.address);
       }).catch((e: Error) => {
