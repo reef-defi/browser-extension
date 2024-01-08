@@ -9,15 +9,8 @@ jobs:
     name: ${{ matrix.step }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-        name: checkout
-      - name: Setup node v18
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-      - name: ${{ matrix.step }}
-        run: |
-          yarn install --immutable
-          yarn ${{ matrix.step }}
+    - uses: actions/checkout@v2
+    - name: ${{ matrix.step }}
+      run: |
+        yarn install --immutable | grep -v 'YN0013'
+        yarn ${{ matrix.step }}
