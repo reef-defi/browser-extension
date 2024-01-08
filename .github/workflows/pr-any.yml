@@ -19,5 +19,5 @@ jobs:
           node-version: 16
       - name: ${{ matrix.step }}
         run: |
-          yarn install
+          yarn install --immutable | grep -v 'YN0013'
           yarn ${{ matrix.step }}
