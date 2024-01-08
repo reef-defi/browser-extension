@@ -20219,6 +20219,7 @@ __metadata:
     i18next-scanner: ^3.1.0
     node-gyp: ^10.0.1
     sinon-chrome: ^3.0.1
+    usb-detection: ^4.14.2
   languageName: unknown
   linkType: soft
 
@@ -22436,7 +22437,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"usb-detection@npm:^4.13.0":
+"usb-detection@npm:^4.13.0, usb-detection@npm:^4.14.2":
   version: 4.14.2
   resolution: "usb-detection@npm:4.14.2"
   dependencies:
